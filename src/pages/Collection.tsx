@@ -3,16 +3,19 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { getCollectionById, getProductsByCollection } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
+import heroMural from '@/assets/hero-mural.jpg';
+import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
 import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
+import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
-const imageMap: Record<string, string> = {
-  'silentia': mural2,
-  'botanica': mural3,
-  'forma': mural4,
-  'materia': mural6,
+const collectionImages: Record<string, string[]> = {
+  'silentia': [mural2, heroMural, mural1, mural6],
+  'botanica': [mural3, mural5, heroMural, mural1],
+  'forma': [mural4, mural1, mural6, mural2],
+  'materia': [mural6, mural2, mural4, mural3],
 };
 
 const Collection = () => {
@@ -33,7 +36,7 @@ const Collection = () => {
     );
   }
 
-  const heroImage = imageMap[collection.id];
+  const images = collectionImages[collection.id] || [mural2, mural3, mural4, mural5];
 
   return (
     <div>
@@ -41,7 +44,7 @@ const Collection = () => {
       <section className="relative h-[70vh] min-h-[500px] flex items-end">
         <div className="absolute inset-0">
           <img
-            src={heroImage}
+            src={images[0]}
             alt={collection.name}
             className="w-full h-full object-cover"
           />
@@ -67,24 +70,80 @@ const Collection = () => {
         </div>
       </section>
 
-      {/* About */}
+      {/* Presentation Gallery */}
       <section className="section">
-        <div className="container-narrow">
+        <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="text-center mb-16"
           >
             <h2 className="text-title mb-6">Идея коллекции</h2>
-            <p className="text-body-lg">{collection.longDescription}</p>
+            <p className="text-body-lg max-w-3xl mx-auto">{collection.longDescription}</p>
           </motion.div>
+
+          {/* Grid presentation with images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            {/* Large image */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="md:row-span-2"
+            >
+              <div className="aspect-[3/4] overflow-hidden">
+                <img
+                  src={images[1]}
+                  alt={`${collection.name} в интерьере`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">В интерьере гостиной</p>
+            </motion.div>
+            
+            {/* Two smaller images */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={images[2]}
+                  alt={`${collection.name} крупный план`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">Детализация изображения</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={images[3]}
+                  alt={`${collection.name} в интерьере`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">В интерьере спальни</p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Colors */}
       <section className="section-sm bg-card">
         <div className="container-wide">
+          <div className="text-center mb-8">
+            <p className="text-caption">Цветовая палитра</p>
+          </div>
           <div className="flex flex-wrap justify-center gap-4">
             {collection.colors.map((color) => (
               <span 

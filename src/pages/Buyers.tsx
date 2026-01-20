@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { materials } from '@/data/products';
+import mural1 from '@/assets/mural-1.jpg';
+import mural2 from '@/assets/mural-2.jpg';
+import mural3 from '@/assets/mural-3.jpg';
+import mural4 from '@/assets/mural-4.jpg';
+import mural5 from '@/assets/mural-5.jpg';
+import mural6 from '@/assets/mural-6.jpg';
 
 const faqs = [
   {
@@ -34,9 +40,38 @@ const faqs = [
 const Buyers = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
+  const steps = [
+    {
+      step: '01',
+      title: 'Определите тип продукта',
+      desc: 'Мурал — для всей стены. Панно — как арт-объект. Фоновые обои — для спокойного фона.',
+      image: mural2,
+    },
+    {
+      step: '02',
+      title: 'Измерьте стену',
+      desc: 'Ширина и высота в сантиметрах. Учтите проёмы, если есть.',
+      image: mural3,
+    },
+    {
+      step: '03',
+      title: 'Выберите материал',
+      desc: 'Для жилых помещений — флизелин. Для влажных зон — винил.',
+      image: mural5,
+    },
+    {
+      step: '04',
+      title: 'Рассчитайте стоимость',
+      desc: 'Используйте калькулятор на сайте или свяжитесь с нами.',
+      image: mural4,
+    },
+  ];
+
+  const materialImages = [mural4, mural6, mural1, mural5, mural2];
+
   return (
     <div className="min-h-screen">
-      {/* Header */}
+      {/* Header - Clean */}
       <section className="section-sm bg-card">
         <div className="container-wide">
           <motion.div
@@ -46,67 +81,57 @@ const Buyers = () => {
           >
             <h1 className="text-display mb-4">Покупателям</h1>
             <p className="text-body-lg">
-              Всё, что нужно знать о выборе, заказе и уходе за продукцией CALMÉ
+              Всё о выборе, заказе и уходе за продукцией CALMÉ
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* How to choose */}
+      {/* How to choose - Visual Presentation */}
       <section className="section">
         <div className="container-wide">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-title text-center mb-12">Как выбрать</h2>
-            
-            <div className="space-y-8">
-              {[
-                {
-                  step: '01',
-                  title: 'Определите тип продукта',
-                  desc: 'Мурал — для оформления всей стены. Панно — как самостоятельный арт-объект. Фоновые обои — для создания спокойного фона.',
-                },
-                {
-                  step: '02',
-                  title: 'Измерьте стену',
-                  desc: 'Ширина и высота стены в сантиметрах. Учтите дверные проёмы и окна, если они есть.',
-                },
-                {
-                  step: '03',
-                  title: 'Выберите материал',
-                  desc: 'Для жилых помещений — флизелин премиум. Для влажных зон — винил. Для HoReCa — коммерческие варианты.',
-                },
-                {
-                  step: '04',
-                  title: 'Рассчитайте стоимость',
-                  desc: 'Используйте калькулятор на сайте или свяжитесь с нами для индивидуального расчёта.',
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex gap-6"
-                >
-                  <span className="font-display text-4xl text-muted-foreground/30 flex-shrink-0">
-                    {item.step}
-                  </span>
-                  <div>
-                    <h3 className="font-display text-xl mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          <div className="text-center mb-16">
+            <p className="text-caption mb-4">Процесс</p>
+            <h2 className="text-title">Как выбрать</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {steps.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative aspect-[16/10] overflow-hidden"
+              >
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
+                  <span className="font-display text-3xl opacity-50 block mb-2">{item.step}</span>
+                  <h3 className="font-display text-2xl mb-2">{item.title}</h3>
+                  <p className="text-sm opacity-90">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Materials */}
+      {/* Materials - Visual */}
       <section className="section bg-card">
         <div className="container-wide">
-          <h2 className="text-title text-center mb-12">Материалы</h2>
+          <div className="text-center mb-16">
+            <p className="text-caption mb-4">Материалы</p>
+            <h2 className="text-title mb-6">Выберите подходящий</h2>
+            <p className="text-body-lg max-w-2xl mx-auto">
+              Каждый материал подобран для своих задач. Закажите бесплатные образцы.
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {materials.map((material, i) => (
@@ -116,18 +141,24 @@ const Buyers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="p-6 bg-background"
+                className="group"
               >
-                <h3 className="font-display text-lg mb-2">{material.name}</h3>
+                <div className="aspect-[4/3] overflow-hidden mb-4">
+                  <img 
+                    src={materialImages[i % materialImages.length]} 
+                    alt={material.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <h3 className="font-display text-xl mb-2">{material.name}</h3>
                 <p className="text-sm text-muted-foreground mb-4">{material.description}</p>
-                <ul className="space-y-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {material.features.map((feature, j) => (
-                    <li key={j} className="flex items-center gap-2 text-xs">
-                      <span className="w-1 h-1 bg-foreground rounded-full" />
+                    <span key={j} className="text-xs px-2 py-1 bg-background">
                       {feature}
-                    </li>
+                    </span>
                   ))}
-                </ul>
+                </div>
                 {material.forHoreca && (
                   <span className="inline-block px-2 py-1 bg-accent text-accent-foreground text-xs">
                     Для HoReCa
@@ -141,85 +172,79 @@ const Buyers = () => {
 
       {/* Delivery & Payment */}
       <section className="section">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-subtitle mb-6">Оплата</h2>
-              <div className="space-y-4">
-                <p className="text-muted-foreground">
-                  Принимаем оплату картами, банковским переводом, через СБП. Для юридических лиц — по счёту.
-                </p>
-                <ul className="space-y-2">
-                  {[
-                    'Предоплата 50% при заказе',
-                    'Оставшиеся 50% перед отправкой',
-                    'Для постоянных клиентов — особые условия',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+        <div className="container-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="aspect-[4/3] overflow-hidden mb-6">
+                <img
+                  src={mural6}
+                  alt="Доставка"
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </div>
-            <div>
-              <h2 className="text-subtitle mb-6">Доставка</h2>
-              <div className="space-y-4">
-                <p className="text-muted-foreground">
-                  Доставляем по всей России. Мурал упакован в защитный тубус для безопасной транспортировки.
-                </p>
-                <ul className="space-y-2">
-                  {[
-                    'Москва — 1-2 дня',
-                    'Санкт-Петербург — 2-3 дня',
-                    'Регионы — 3-10 дней',
-                    'Самовывоз из Москвы',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm">
-                      <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <h2 className="text-subtitle mb-4">Доставка</h2>
+              <p className="text-muted-foreground mb-4">
+                Доставляем по всей России. Мурал упакован в защитный тубус для безопасной транспортировки.
+              </p>
+              <ul className="space-y-2">
+                {[
+                  'Москва — 1-2 дня',
+                  'Санкт-Петербург — 2-3 дня',
+                  'Регионы — 3-10 дней',
+                  'Самовывоз из Москвы',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm">
+                    <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-      {/* Care */}
-      <section className="section bg-card">
-        <div className="container-narrow">
-          <h2 className="text-title text-center mb-12">Уход за покрытием</h2>
-          
-          <div className="space-y-6">
-            <div className="p-6 bg-background">
-              <h3 className="font-display text-lg mb-2">Флизелин премиум</h3>
-              <p className="text-sm text-muted-foreground">
-                Сухая чистка мягкой щёткой или тканью. Избегайте влаги и прямого солнечного света.
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="aspect-[4/3] overflow-hidden mb-6">
+                <img
+                  src={mural1}
+                  alt="Оплата"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-subtitle mb-4">Оплата</h2>
+              <p className="text-muted-foreground mb-4">
+                Принимаем оплату картами, банковским переводом, через СБП. Для юридических лиц — по счёту.
               </p>
-            </div>
-            <div className="p-6 bg-background">
-              <h3 className="font-display text-lg mb-2">Винил</h3>
-              <p className="text-sm text-muted-foreground">
-                Влажная уборка с мягкими моющими средствами. Можно протирать влажной тканью.
-              </p>
-            </div>
-            <div className="p-6 bg-background">
-              <h3 className="font-display text-lg mb-2">Холст</h3>
-              <p className="text-sm text-muted-foreground">
-                Протирка сухой мягкой тканью. Избегайте влаги и прямого солнечного света.
-              </p>
-            </div>
+              <ul className="space-y-2">
+                {[
+                  'Предоплата 50% при заказе',
+                  'Оставшиеся 50% перед отправкой',
+                  'Для постоянных клиентов — особые условия',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm">
+                    <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="section">
+      <section className="section bg-card">
         <div className="container-narrow">
-          <h2 className="text-title text-center mb-12">Частые вопросы</h2>
+          <div className="text-center mb-12">
+            <p className="text-caption mb-4">FAQ</p>
+            <h2 className="text-title">Частые вопросы</h2>
+          </div>
           
           <div className="space-y-2">
             {faqs.map((faq, i) => (
@@ -229,7 +254,7 @@ const Buyers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="border border-border"
+                className="border border-border bg-background"
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -252,11 +277,11 @@ const Buyers = () => {
       </section>
 
       {/* CTA */}
-      <section className="section bg-card">
+      <section className="section">
         <div className="container-narrow text-center">
           <h2 className="text-title mb-6">Остались вопросы?</h2>
           <p className="text-body-lg mb-8">
-            Свяжитесь с нами — мы поможем с выбором и ответим на все вопросы
+            Свяжитесь с нами — мы поможем с выбором
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/catalog" className="btn-primary">
