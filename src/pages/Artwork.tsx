@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
-import { getProductById, materials, products, patternTypes, roomTypes, Material } from '@/data/products';
+import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'sonner';
@@ -26,7 +26,7 @@ const imageMap: Record<string, string> = {
 };
 
 // 6 aspect ratio variants from PDF: 1:1, 3:4, 5:3, 2:1, 5:2, 4:1
-type AspectRatioVariant = '1:1' | '3:4' | '5:3' | '2:1' | '5:2' | '4:1';
+type AspectRatioVariant = AspectRatio;
 
 const aspectRatioConfigs: Record<AspectRatioVariant, {
   heroAspect: string;
@@ -202,19 +202,16 @@ const Artwork = () => {
 
   return (
     <div className="bg-background">
-      {/* Full-screen hero - image fills entire viewport including under header */}
-      <section className="fixed inset-0 h-screen w-screen -z-10">
+      {/* Full-screen hero - absolute positioned within viewport */}
+      <section className="relative h-screen w-full overflow-hidden">
         <img
           src={mainImage}
           alt={product.name}
-          className={`w-full h-full object-cover ${config.heroObjectPosition}`}
+          className={`absolute inset-0 w-full h-full object-cover ${config.heroObjectPosition}`}
         />
         {/* Gradient overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/10 to-foreground/20" />
-      </section>
+        <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-foreground/30" />
 
-      {/* Spacer for hero */}
-      <div className="h-screen relative">
         {/* Title at bottom left - extra large typography */}
         <div className="absolute bottom-0 left-0 right-0 pb-20 md:pb-28">
           <div className="container-wide">
@@ -225,11 +222,11 @@ const Artwork = () => {
             >
               <Link 
                 to={`/collection/${product.collectionId}`}
-                className="text-base md:text-lg uppercase tracking-[0.25em] text-background/90 mb-4 block hover:text-background transition-colors font-medium"
+                className="text-base md:text-lg uppercase tracking-[0.25em] text-white/90 mb-4 block hover:text-white transition-colors font-medium"
               >
                 {product.collection}
               </Link>
-              <h1 className="text-7xl md:text-[10rem] lg:text-[12rem] font-light tracking-tight text-background uppercase leading-[0.85]">
+              <h1 className="text-7xl md:text-[10rem] lg:text-[12rem] font-light tracking-tight text-white uppercase leading-[0.85]">
                 {product.name}
               </h1>
             </motion.div>
@@ -242,12 +239,12 @@ const Artwork = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="absolute bottom-8 left-6 md:left-12 flex items-center gap-3 text-background hover:text-background/80 transition-colors group"
+          className="absolute bottom-8 left-6 md:left-12 flex items-center gap-3 text-white hover:text-white/80 transition-colors group"
         >
           <ChevronDown className="w-5 h-5 animate-bounce" />
           <span className="text-sm uppercase tracking-[0.15em] font-medium">Листайте вниз</span>
         </motion.button>
-      </div>
+      </section>
 
       {/* Product Details Section - Gallery + Compact Info */}
       <section className="relative bg-background py-12 md:py-16">
