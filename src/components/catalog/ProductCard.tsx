@@ -41,29 +41,30 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
+      transition={{ duration: 0.8, delay: index * 0.05 }}
     >
       <Link 
         to={`/artwork/${product.slug}`}
         className="group block"
       >
         {/* Image */}
-        <div className={`overflow-hidden bg-muted mb-4 relative ${large ? 'aspect-[4/5]' : 'aspect-artwork'}`}>
+        <div className={`overflow-hidden bg-muted mb-6 relative ${large ? 'aspect-[4/5]' : 'aspect-artwork'}`}>
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            style={{ filter: 'saturate(0.85) contrast(0.95)' }}
           />
           
           {/* Badges */}
           <div className="absolute top-4 left-4 flex gap-2">
             {product.isNew && (
-              <span className="px-3 py-1 bg-background/90 backdrop-blur-sm text-xs uppercase tracking-wide">
+              <span className="px-3 py-1.5 bg-background/90 backdrop-blur-sm text-[10px] font-extralight uppercase tracking-[0.15em]">
                 Новинка
               </span>
             )}
             {product.isBestseller && (
-              <span className="px-3 py-1 bg-foreground text-background text-xs uppercase tracking-wide">
+              <span className="px-3 py-1.5 bg-foreground text-background text-[10px] font-extralight uppercase tracking-[0.15em]">
                 Бестселлер
               </span>
             )}
@@ -72,7 +73,7 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
           {/* Image dots for hover slideshow */}
           {product.images.length > 1 && (
             <div 
-              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -87,7 +88,7 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
                 {product.images.map((_, i) => (
                   <div
                     key={i}
-                    className={`h-0.5 flex-1 transition-colors ${
+                    className={`h-px flex-1 transition-colors duration-400 ${
                       i === imageIndex ? 'bg-foreground' : 'bg-foreground/30'
                     }`}
                   />
@@ -98,13 +99,13 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
         </div>
 
         {/* Info */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           <p className="text-caption">{product.collection}</p>
-          <h3 className={`font-display tracking-wide ${large ? 'text-2xl' : 'text-xl'}`}>{product.name}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <h3 className={`font-thin uppercase tracking-[0.15em] ${large ? 'text-xl' : 'text-base'}`}>{product.name}</h3>
+          <p className="text-xs font-extralight text-muted-foreground line-clamp-2 tracking-wide">
             {product.shortDescription}
           </p>
-          <p className="text-sm font-medium">
+          <p className="text-xs font-extralight uppercase tracking-[0.1em]">
             {product.type === 'panel' && product.panelSizes ? (
               <>от {formatPrice(product.panelSizes[0].price)} ₽</>
             ) : (

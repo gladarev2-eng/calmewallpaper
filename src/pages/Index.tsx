@@ -14,11 +14,11 @@ import { ProductCard } from '@/components/catalog/ProductCard';
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
+  transition: { duration: 0.8, ease: 'easeOut' }
 };
 
 const stagger = {
-  animate: { transition: { staggerChildren: 0.1 } }
+  animate: { transition: { staggerChildren: 0.15 } }
 };
 
 const Index = () => {
@@ -50,14 +50,15 @@ const Index = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-screen min-h-[600px] flex items-center">
+      <section className="relative h-screen min-h-[700px] flex items-center">
         <div className="absolute inset-0">
           <img 
             src={heroMural} 
             alt="CALMÉ Hero" 
             className="w-full h-full object-cover"
+            style={{ filter: 'saturate(0.85) contrast(0.95)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/30 to-transparent" />
         </div>
         
         <div className="container-wide relative z-10">
@@ -68,29 +69,29 @@ const Index = () => {
             variants={stagger}
           >
             <motion.p 
-              className="text-caption mb-6"
+              className="text-caption mb-8"
               variants={fadeUp}
             >
               Бутик настенных покрытий
             </motion.p>
             <motion.h1 
-              className="text-display mb-6"
+              className="text-display mb-8"
               variants={fadeUp}
             >
-              Тишина,<br />масштаб,<br />детализация
+              Тишина<br />Масштаб<br />Детализация
             </motion.h1>
             <motion.p 
-              className="text-body-lg mb-8 max-w-lg"
+              className="text-body-lg mb-12 max-w-md"
               variants={fadeUp}
             >
-              CALMÉ создаёт изображения с невероятной детализацией, которые становятся архитектурой вашего пространства.
+              Изображения, которые становятся архитектурой вашего пространства
             </motion.p>
             <motion.div 
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-6"
               variants={fadeUp}
             >
               <Link to="/catalog" className="btn-primary">
-                Смотреть каталог
+                Каталог
               </Link>
               <Link to="/collections" className="btn-outline">
                 Коллекции
@@ -101,12 +102,12 @@ const Index = () => {
 
         {/* Scroll indicator */}
         <motion.div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-12 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
         >
-          <ChevronDown className="w-6 h-6 animate-bounce" />
+          <ChevronDown className="w-5 h-5 stroke-[1] animate-bounce" />
         </motion.div>
       </section>
 
@@ -114,36 +115,38 @@ const Index = () => {
       <section className="section bg-card">
         <div className="container-wide">
           <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="text-center max-w-3xl mx-auto mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="text-caption mb-4">Почему CALMÉ</p>
+            <p className="text-caption mb-6">Почему Calmé</p>
             <h2 className="text-title">
-              Не декор, а атмосфера интерьера
+              Не декор<br />Атмосфера интерьера
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {whyCalmeFeatures.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
                 className="group relative aspect-[16/10] overflow-hidden"
               >
                 <img 
                   src={item.image} 
                   alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  style={{ filter: 'saturate(0.85) contrast(0.95)' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-background">
-                  <h3 className="font-display text-2xl md:text-3xl mb-2">{item.title}</h3>
-                  <p className="text-sm md:text-base opacity-90">{item.desc}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 text-background">
+                  <h3 className="text-lg md:text-xl font-thin uppercase tracking-[0.15em] mb-2">{item.title}</h3>
+                  <p className="text-xs font-extralight opacity-80 tracking-wide">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -151,34 +154,39 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* Scale demonstration */}
       <section className="section">
         <div className="container-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
               className="order-2 lg:order-1"
             >
-              <p className="text-caption mb-4">Создано для масштаба</p>
-              <h2 className="text-title mb-6">
+              <p className="text-caption mb-6">Масштаб</p>
+              <h2 className="text-title mb-8">
                 Стена как холст художника
               </h2>
-              <p className="text-body-lg mb-6">
-                Наши муралы достигают 6 метров в ширину, сохраняя безупречную детализацию в каждом сантиметре. Это не просто обои — это произведение искусства, созданное для вашего пространства.
+              <p className="text-body-lg mb-10">
+                Муралы до 6 метров в ширину с безупречной детализацией в каждом сантиметре. Произведение искусства для вашего пространства.
               </p>
               <Link 
                 to="/catalog" 
-                className="inline-flex items-center gap-2 text-sm hover:gap-4 transition-all"
+                className="inline-flex items-center gap-3 text-xs font-extralight uppercase tracking-[0.15em] hover:gap-5 transition-all duration-400"
               >
-                Смотреть работы <ArrowRight className="w-4 h-4" />
+                Смотреть работы <ArrowRight className="w-4 h-4 stroke-[1.5]" />
               </Link>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
               className="order-1 lg:order-2"
             >
               <div className="aspect-[4/3] overflow-hidden">
@@ -186,6 +194,7 @@ const Index = () => {
                   src={mural3} 
                   alt="Scale demonstration" 
                   className="w-full h-full object-cover"
+                  style={{ filter: 'saturate(0.85) contrast(0.95)' }}
                 />
               </div>
             </motion.div>
@@ -193,36 +202,40 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* Product Types */}
       <section className="section bg-card">
         <div className="container-wide">
           <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="text-center max-w-3xl mx-auto mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="text-caption mb-4">Форматы</p>
+            <p className="text-caption mb-6">Форматы</p>
             <h2 className="text-title">Три типа продуктов</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {[
               { 
                 title: 'Муралы', 
-                desc: 'Обои с изображением, продаются по площади. Адаптируются под вашу стену.',
+                desc: 'Обои с изображением по площади',
                 image: mural2,
                 link: '/catalog?type=mural'
               },
               { 
                 title: 'Панно', 
-                desc: 'Готовые арт-объекты на холсте с подрамником. Фиксированные размеры.',
+                desc: 'Арт-объекты на холсте',
                 image: mural4,
                 link: '/catalog?type=panel'
               },
               { 
                 title: 'Фоновые обои', 
-                desc: 'Обои-компаньоны для соседних стен. Тот же материал, спокойный фон.',
+                desc: 'Обои-компаньоны',
                 image: mural6,
                 link: '/catalog?type=companion'
               },
@@ -232,20 +245,21 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
               >
                 <Link to={item.link} className="group block">
-                  <div className="aspect-[3/4] overflow-hidden mb-4">
+                  <div className="aspect-[3/4] overflow-hidden mb-6">
                     <img 
                       src={item.image} 
                       alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                      style={{ filter: 'saturate(0.85) contrast(0.95)' }}
                     />
                   </div>
-                  <h3 className="font-display text-2xl mb-2">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{item.desc}</p>
-                  <span className="inline-flex items-center gap-2 text-sm group-hover:gap-4 transition-all">
-                    Смотреть <ArrowRight className="w-4 h-4" />
+                  <h3 className="text-subtitle mb-3">{item.title}</h3>
+                  <p className="text-sm font-extralight text-muted-foreground mb-4 tracking-wide">{item.desc}</p>
+                  <span className="inline-flex items-center gap-3 text-xs font-extralight uppercase tracking-[0.15em] group-hover:gap-5 transition-all duration-400">
+                    Смотреть <ArrowRight className="w-4 h-4 stroke-[1.5]" />
                   </span>
                 </Link>
               </motion.div>
@@ -254,23 +268,26 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* Collections */}
       <section className="section">
         <div className="container-wide">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex justify-between items-end mb-16">
             <div>
-              <p className="text-caption mb-4">Коллекции</p>
-              <h2 className="text-title">Идеи, объединённые концепцией</h2>
+              <p className="text-caption mb-6">Коллекции</p>
+              <h2 className="text-title">Идеи объединённые концепцией</h2>
             </div>
             <Link 
               to="/collections" 
-              className="hidden md:inline-flex items-center gap-2 text-sm hover:gap-4 transition-all"
+              className="hidden md:inline-flex items-center gap-3 text-xs font-extralight uppercase tracking-[0.15em] hover:gap-5 transition-all duration-400"
             >
-              Все коллекции <ArrowRight className="w-4 h-4" />
+              Все коллекции <ArrowRight className="w-4 h-4 stroke-[1.5]" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {collections.slice(0, 4).map((collection, i) => {
               const images = [mural2, mural3, mural4, mural6];
               return (
@@ -279,22 +296,23 @@ const Index = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: i * 0.1, duration: 0.8 }}
                 >
                   <Link to={`/collection/${collection.slug}`} className="group block">
-                    <div className="aspect-[16/10] overflow-hidden mb-4">
+                    <div className="aspect-[16/10] overflow-hidden mb-6">
                       <img 
                         src={images[i]} 
                         alt={collection.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                        style={{ filter: 'saturate(0.85) contrast(0.95)' }}
                       />
                     </div>
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-display text-2xl mb-2">{collection.name}</h3>
-                        <p className="text-sm text-muted-foreground">{collection.description}</p>
+                        <h3 className="text-subtitle mb-2">{collection.name}</h3>
+                        <p className="text-sm font-extralight text-muted-foreground tracking-wide">{collection.description}</p>
                       </div>
-                      <ArrowRight className="w-5 h-5 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ArrowRight className="w-4 h-4 stroke-[1.5] mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                     </div>
                   </Link>
                 </motion.div>
@@ -302,7 +320,7 @@ const Index = () => {
             })}
           </div>
 
-          <div className="mt-8 text-center md:hidden">
+          <div className="mt-12 text-center md:hidden">
             <Link to="/collections" className="btn-outline">
               Все коллекции
             </Link>
@@ -310,19 +328,22 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* Featured Works */}
       <section className="section bg-card">
         <div className="container-wide">
-          <div className="flex justify-between items-end mb-12">
+          <div className="flex justify-between items-end mb-16">
             <div>
-              <p className="text-caption mb-4">Избранное</p>
+              <p className="text-caption mb-6">Избранное</p>
               <h2 className="text-title">Популярные работы</h2>
             </div>
             <Link 
               to="/catalog" 
-              className="hidden md:inline-flex items-center gap-2 text-sm hover:gap-4 transition-all"
+              className="hidden md:inline-flex items-center gap-3 text-xs font-extralight uppercase tracking-[0.15em] hover:gap-5 transition-all duration-400"
             >
-              Весь каталог <ArrowRight className="w-4 h-4" />
+              Весь каталог <ArrowRight className="w-4 h-4 stroke-[1.5]" />
             </Link>
           </div>
 
@@ -332,7 +353,7 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="mt-12 text-center md:hidden">
+          <div className="mt-16 text-center md:hidden">
             <Link to="/catalog" className="btn-outline">
               Весь каталог
             </Link>
@@ -340,20 +361,25 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* HoReCa */}
       <section className="section">
         <div className="container-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img 
                   src={mural5} 
                   alt="HoReCa" 
                   className="w-full h-full object-cover"
+                  style={{ filter: 'saturate(0.85) contrast(0.95)' }}
                 />
               </div>
             </motion.div>
@@ -361,69 +387,77 @@ const Index = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
             >
-              <p className="text-caption mb-4">Для бизнеса</p>
-              <h2 className="text-title mb-6">HoReCa проекты</h2>
-              <p className="text-body-lg mb-6">
-                Работаем с отелями, ресторанами и общественными пространствами. Специальные материалы, большие масштабы, сжатые сроки.
+              <p className="text-caption mb-6">Для бизнеса</p>
+              <h2 className="text-title mb-8">HoReCa проекты</h2>
+              <p className="text-body-lg mb-10">
+                Отели, рестораны, общественные пространства. Специальные материалы, большие масштабы.
               </p>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-4 mb-12">
                 {[
                   'Материалы повышенной износостойкости',
-                  'Адаптация под брендбук заведения',
-                  'Работа с архитекторами и дизайнерами',
+                  'Адаптация под брендбук',
+                  'Работа с архитекторами',
                   'Монтаж под ключ',
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm">
-                    <span className="w-1.5 h-1.5 bg-foreground rounded-full" />
+                  <li key={i} className="flex items-center gap-4 text-sm font-extralight tracking-wide">
+                    <span className="w-6 h-px bg-foreground/30" />
                     {item}
                   </li>
                 ))}
               </ul>
               <Link to="/designers" className="btn-primary">
-                Узнать подробнее
+                Подробнее
               </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
+      {/* Divider */}
+      <div className="divider" />
+
       {/* How we work */}
       <section className="section bg-card">
         <div className="container-wide">
           <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="text-center max-w-3xl mx-auto mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="text-caption mb-4">Процесс</p>
+            <p className="text-caption mb-6">Процесс</p>
             <h2 className="text-title">Как мы работаем</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             {[
-              { step: '01', title: 'Выбор', desc: 'Выбираете изображение из каталога или обсуждаете индивидуальный заказ' },
-              { step: '02', title: 'Расчёт', desc: 'Указываете размеры стены, выбираете материал, получаете стоимость' },
-              { step: '03', title: 'Адаптация', desc: 'Мы адаптируем изображение под ваши размеры и цветовую гамму интерьера' },
-              { step: '04', title: 'Производство', desc: 'Печатаем, упаковываем и доставляем. По желанию — монтаж' },
+              { step: '01', title: 'Выбор', desc: 'Изображение из каталога или индивидуальный заказ' },
+              { step: '02', title: 'Расчёт', desc: 'Размеры стены, материал, стоимость' },
+              { step: '03', title: 'Адаптация', desc: 'Подгонка под размеры и цветовую гамму' },
+              { step: '04', title: 'Производство', desc: 'Печать, упаковка, доставка, монтаж' },
             ].map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
                 className="text-center"
               >
-                <span className="font-display text-5xl text-muted-foreground/30">{item.step}</span>
-                <h3 className="font-display text-xl mt-4 mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <span className="text-5xl font-thin text-muted-foreground/20 tracking-[0.2em]">{item.step}</span>
+                <h3 className="text-subtitle mt-6 mb-3">{item.title}</h3>
+                <p className="text-sm font-extralight text-muted-foreground tracking-wide">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Divider */}
+      <div className="divider" />
 
       {/* CTA */}
       <section className="section">
@@ -432,17 +466,21 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <h2 className="text-title mb-6">Готовы начать?</h2>
-            <p className="text-body-lg mb-8 max-w-xl mx-auto">
-              Выберите изображение из каталога или свяжитесь с нами для индивидуального проекта
+            <p className="text-caption mb-6">Начните</p>
+            <h2 className="text-title mb-8">
+              Готовы создать атмосферу
+            </h2>
+            <p className="text-body-lg mb-12 max-w-xl mx-auto">
+              Свяжитесь с нами для консультации или посетите каталог
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-6">
               <Link to="/catalog" className="btn-primary">
-                Смотреть каталог
+                Каталог
               </Link>
               <Link to="/designers" className="btn-outline">
-                Связаться с нами
+                Связаться
               </Link>
             </div>
           </motion.div>

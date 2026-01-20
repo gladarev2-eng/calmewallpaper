@@ -14,8 +14,18 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Cormorant', 'serif'],
+        display: ['Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+      },
+      fontWeight: {
+        thin: '100',
+        extralight: '200',
+        light: '300',
+      },
+      letterSpacing: {
+        'luxury': '0.2em',
+        'wide-luxury': '0.3em',
+        'nav': '0.1em',
       },
       colors: {
         border: "hsl(var(--border))",
@@ -92,13 +102,14 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.6s ease-out forwards",
-        "fade-up": "fade-up 0.6s ease-out forwards",
+        "fade-in": "fade-in 0.8s ease-out forwards",
+        "fade-up": "fade-up 0.8s ease-out forwards",
         "slide-in": "slide-in 0.4s ease-out forwards",
       },
       transitionDuration: {
         '400': '400ms',
         '600': '600ms',
+        '800': '800ms',
       },
     },
   },
