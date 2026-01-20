@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Search, X, ChevronDown } from 'lucide-react';
+import { Search, X, ChevronDown, RotateCcw } from 'lucide-react';
 import { collections, patternTypes, roomTypes, colorOptions } from '@/data/products';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface CatalogFiltersProps {
   selectedTypes: string[];
@@ -22,9 +23,10 @@ interface CatalogFiltersProps {
 }
 
 const productTypes = [
-  { id: 'mural', label: 'Муралы' },
-  { id: 'panel', label: 'Панно' },
-  { id: 'companion', label: 'Фоновые обои' },
+  { id: 'all', label: 'Все типы' },
+  { id: 'mural', label: 'Панорамы' },
+  { id: 'panel', label: 'Абстракции' },
+  { id: 'companion', label: 'Фоновые' },
 ];
 
 const sortOptions = [
@@ -34,13 +36,26 @@ const sortOptions = [
   { id: 'price-desc', label: 'Цена ↓' },
 ];
 
-interface DropdownProps {
+// Underline-style dropdown like reference
+interface UnderlineDropdownProps {
   label: string;
-  selectedCount: number;
-  children: React.ReactNode;
+  value: string;
+  options: { id: string; label: string }[];
+  onChange: (value: string) => void;
+  multiSelect?: boolean;
+  selectedValues?: string[];
+  onMultiChange?: (values: string[]) => void;
 }
 
-const FilterDropdown = ({ label, selectedCount, children }: DropdownProps) => {
+const UnderlineDropdown = ({ 
+  label, 
+  value, 
+  options, 
+  onChange,
+  multiSelect = false,
+  selectedValues = [],
+  onMultiChange
+}: UnderlineDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -54,28 +69,68 @@ const FilterDropdown = ({ label, selectedCount, children }: DropdownProps) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const displayValue = multiSelect 
+    ? (selectedValues.length > 0 
+        ? options.filter(o => selectedValues.includes(o.id)).map(o => o.label).join(', ')
+        : options[0]?.label || 'Все')
+    : options.find(o => o.id === value)?.label || options[0]?.label;
+
+  const toggleMulti = (id: string) => {
+    if (!onMultiChange) return;
+    if (id === 'all') {
+      onMultiChange([]);
+    } else if (selectedValues.includes(id)) {
+      onMultiChange(selectedValues.filter(v => v !== id));
+    } else {
+      onMultiChange([...selectedValues, id]);
+    }
+  };
+
   return (
-    <div ref={dropdownRef} className="relative">
+    <div ref={dropdownRef} className="relative flex-1 min-w-[180px]">
+      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
+        {label}
+      </div>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-4 py-2.5 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
-          selectedCount > 0
-            ? 'bg-foreground text-background border-foreground'
-            : 'border-border hover:border-foreground bg-transparent'
-        }`}
+        className="w-full flex items-center justify-between pb-2 border-b border-foreground/20 hover:border-foreground/40 transition-colors text-left"
       >
-        {label}
-        {selectedCount > 0 && (
-          <span className="ml-1 text-[10px]">({selectedCount})</span>
-        )}
-        <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-sm truncate pr-4">{displayValue}</span>
+        <ChevronDown className={`w-4 h-4 flex-shrink-0 text-muted-foreground transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
-      {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-background border border-border z-50 min-w-[200px] max-h-[300px] overflow-y-auto">
-          {children}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-full left-0 right-0 mt-2 bg-background border border-border/50 z-50 max-h-[280px] overflow-y-auto"
+          >
+            {options.map(option => (
+              <button
+                key={option.id}
+                onClick={() => {
+                  if (multiSelect) {
+                    toggleMulti(option.id);
+                  } else {
+                    onChange(option.id);
+                    setIsOpen(false);
+                  }
+                }}
+                className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                  (multiSelect ? selectedValues.includes(option.id) : value === option.id)
+                    ? 'bg-foreground/5'
+                    : 'hover:bg-foreground/5'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -107,167 +162,65 @@ export const CatalogFilters = ({
            searchQuery.length > 0;
   }, [selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms, searchQuery]);
 
-  const toggleFilter = (value: string, selected: string[], onChange: (values: string[]) => void) => {
-    if (selected.includes(value)) {
-      onChange(selected.filter(v => v !== value));
-    } else {
-      onChange([...selected, value]);
-    }
-  };
-
   return (
-    <div className="bg-background/95 backdrop-blur-sm border-b border-border/50">
-      <div className="container-wide py-6">
-        {/* Main Filter Row */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Поиск..."
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-[180px] pl-10 pr-4 py-2.5 bg-transparent border border-border text-xs tracking-wide focus:outline-none focus:border-foreground transition-colors placeholder:text-muted-foreground"
+    <div className="bg-background">
+      <div className="container-wide">
+        {/* Header with title and count */}
+        <div className="pt-24 pb-16">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-4">
+            Галерея работ
+          </p>
+          <div className="flex items-end justify-between">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.1em] font-light">
+              Каталог принтов
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {totalCount} объектов
+            </p>
+          </div>
+        </div>
+        
+        {/* Filters Row */}
+        <div className="pb-12 border-b border-foreground/10">
+          <div className="flex flex-wrap gap-8 lg:gap-12">
+            <UnderlineDropdown
+              label="Тип покрытия"
+              value={selectedTypes[0] || 'all'}
+              options={productTypes}
+              onChange={(val) => onTypesChange(val === 'all' ? [] : [val])}
             />
-          </div>
+            
+            <UnderlineDropdown
+              label="Настроение"
+              value={selectedPatterns[0] || 'all'}
+              options={[
+                { id: 'all', label: 'Любое' },
+                ...patternTypes
+              ]}
+              onChange={(val) => onPatternsChange(val === 'all' ? [] : [val])}
+            />
+            
+            <UnderlineDropdown
+              label="Помещение"
+              value={selectedRooms[0] || 'all'}
+              options={[
+                { id: 'all', label: 'Все помещения' },
+                ...roomTypes
+              ]}
+              onChange={(val) => onRoomsChange(val === 'all' ? [] : [val])}
+            />
 
-          {/* Divider */}
-          <div className="h-8 w-px bg-border/50 mx-2 hidden lg:block" />
-
-          {/* Type Filter - Inline Buttons */}
-          <div className="flex gap-2">
-            {productTypes.map(type => (
-              <button
-                key={type.id}
-                onClick={() => toggleFilter(type.id, selectedTypes, onTypesChange)}
-                className={`px-4 py-2.5 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
-                  selectedTypes.includes(type.id)
-                    ? 'bg-foreground text-background border-foreground'
-                    : 'border-border hover:border-foreground bg-transparent'
-                }`}
-              >
-                {type.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Divider */}
-          <div className="h-8 w-px bg-border/50 mx-2 hidden lg:block" />
-
-          {/* Collection Dropdown */}
-          <FilterDropdown label="Коллекция" selectedCount={selectedCollections.length}>
-            <div className="p-2">
-              {collections.map(collection => (
-                <button
-                  key={collection.id}
-                  onClick={() => toggleFilter(collection.id, selectedCollections, onCollectionsChange)}
-                  className={`w-full text-left px-3 py-2 text-xs tracking-wide transition-colors ${
-                    selectedCollections.includes(collection.id)
-                      ? 'bg-foreground text-background'
-                      : 'hover:bg-muted'
-                  }`}
-                >
-                  {collection.name}
-                </button>
-              ))}
-            </div>
-          </FilterDropdown>
-
-          {/* Pattern Dropdown */}
-          <FilterDropdown label="Рисунок" selectedCount={selectedPatterns.length}>
-            <div className="p-2">
-              {patternTypes.map(pattern => (
-                <button
-                  key={pattern.id}
-                  onClick={() => toggleFilter(pattern.id, selectedPatterns, onPatternsChange)}
-                  className={`w-full text-left px-3 py-2 text-xs tracking-wide transition-colors ${
-                    selectedPatterns.includes(pattern.id)
-                      ? 'bg-foreground text-background'
-                      : 'hover:bg-muted'
-                  }`}
-                >
-                  {pattern.label}
-                </button>
-              ))}
-            </div>
-          </FilterDropdown>
-
-          {/* Room Dropdown */}
-          <FilterDropdown label="Помещение" selectedCount={selectedRooms.length}>
-            <div className="p-2">
-              {roomTypes.map(room => (
-                <button
-                  key={room.id}
-                  onClick={() => toggleFilter(room.id, selectedRooms, onRoomsChange)}
-                  className={`w-full text-left px-3 py-2 text-xs tracking-wide transition-colors ${
-                    selectedRooms.includes(room.id)
-                      ? 'bg-foreground text-background'
-                      : 'hover:bg-muted'
-                  }`}
-                >
-                  {room.label}
-                </button>
-              ))}
-            </div>
-          </FilterDropdown>
-
-          {/* Color Dropdown */}
-          <FilterDropdown label="Цвет" selectedCount={selectedColors.length}>
-            <div className="p-3 grid grid-cols-5 gap-2">
-              {colorOptions.map(color => (
-                <button
-                  key={color.name}
-                  onClick={() => toggleFilter(color.name, selectedColors, onColorsChange)}
-                  className={`w-7 h-7 rounded-full transition-all ${
-                    selectedColors.includes(color.name)
-                      ? 'ring-2 ring-foreground ring-offset-2 scale-110'
-                      : 'hover:scale-110'
-                  }`}
-                  style={{ backgroundColor: color.hex }}
-                  title={color.name}
-                />
-              ))}
-            </div>
-          </FilterDropdown>
-
-          {/* Spacer */}
-          <div className="flex-1" />
-
-          {/* Sort */}
-          <div className="flex items-center gap-3">
-            <select
-              value={sortBy}
-              onChange={(e) => onSortChange(e.target.value)}
-              className="px-4 py-2.5 bg-transparent border border-border text-xs uppercase tracking-[0.1em] focus:outline-none focus:border-foreground cursor-pointer appearance-none pr-8"
-              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231A1A1A' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', backgroundSize: '14px' }}
-            >
-              {sortOptions.map(option => (
-                <option key={option.id} value={option.id}>{option.label}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Clear & Count */}
-          {hasActiveFilters && (
-            <>
-              <div className="h-8 w-px bg-border/50 mx-2" />
+            {/* Reset Button */}
+            {hasActiveFilters && (
               <button
                 onClick={onClearAll}
-                className="flex items-center gap-2 text-xs uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors self-end pb-2"
               >
-                <X className="w-3 h-3" />
+                <RotateCcw className="w-4 h-4" />
                 Сбросить
               </button>
-            </>
-          )}
-        </div>
-
-        {/* Results Count */}
-        <div className="mt-4 pt-4 border-t border-border/30">
-          <p className="text-xs tracking-[0.1em] text-muted-foreground">
-            {totalCount} {totalCount === 1 ? 'товар' : totalCount < 5 ? 'товара' : 'товаров'}
-          </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -311,14 +264,25 @@ export const MobileFilters = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 lg:hidden">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 lg:hidden"
+    >
       <div 
         className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="absolute left-0 top-0 bottom-0 w-full max-w-sm bg-background overflow-y-auto">
+      <motion.div 
+        initial={{ x: '-100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '-100%' }}
+        transition={{ type: 'tween', duration: 0.3 }}
+        className="absolute left-0 top-0 bottom-0 w-full max-w-sm bg-background overflow-y-auto"
+      >
         {/* Header */}
-        <div className="sticky top-0 bg-background border-b border-border/50 p-6 flex justify-between items-center">
+        <div className="sticky top-0 bg-background p-6 flex justify-between items-center">
           <h2 className="text-sm uppercase tracking-[0.2em]">Фильтры</h2>
           <button onClick={onClose} className="p-2 hover:bg-muted transition-colors">
             <X className="w-5 h-5" />
@@ -328,7 +292,7 @@ export const MobileFilters = ({
         <div className="p-6 space-y-8">
           {/* Search */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Поиск</label>
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Поиск</label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
@@ -336,23 +300,23 @@ export const MobileFilters = ({
                 placeholder="Название, коллекция..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-transparent border border-border text-sm focus:outline-none focus:border-foreground transition-colors"
+                className="w-full pl-10 pr-4 py-3 bg-transparent border-b border-foreground/20 text-sm focus:outline-none focus:border-foreground transition-colors"
               />
             </div>
           </div>
 
           {/* Sort */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Сортировка</label>
-            <div className="grid grid-cols-2 gap-2">
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Сортировка</label>
+            <div className="space-y-1">
               {sortOptions.map(option => (
                 <button
                   key={option.id}
                   onClick={() => onSortChange(option.id)}
-                  className={`px-3 py-2.5 text-xs border transition-all ${
+                  className={`w-full text-left px-3 py-3 text-sm transition-colors ${
                     sortBy === option.id
-                      ? 'bg-foreground text-background border-foreground'
-                      : 'border-border hover:border-foreground'
+                      ? 'bg-foreground/5'
+                      : 'hover:bg-foreground/5'
                   }`}
                 >
                   {option.label}
@@ -363,16 +327,16 @@ export const MobileFilters = ({
 
           {/* Type */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Тип</label>
-            <div className="flex flex-wrap gap-2">
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Тип покрытия</label>
+            <div className="space-y-1">
               {productTypes.map(type => (
                 <button
                   key={type.id}
-                  onClick={() => toggleFilter(type.id, selectedTypes, onTypesChange)}
-                  className={`px-4 py-2.5 text-xs border transition-all ${
-                    selectedTypes.includes(type.id)
-                      ? 'bg-foreground text-background border-foreground'
-                      : 'border-border hover:border-foreground'
+                  onClick={() => onTypesChange(type.id === 'all' ? [] : [type.id])}
+                  className={`w-full text-left px-3 py-3 text-sm transition-colors ${
+                    (type.id === 'all' && selectedTypes.length === 0) || selectedTypes.includes(type.id)
+                      ? 'bg-foreground/5'
+                      : 'hover:bg-foreground/5'
                   }`}
                 >
                   {type.label}
@@ -381,38 +345,26 @@ export const MobileFilters = ({
             </div>
           </div>
 
-          {/* Collections */}
-          <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Коллекция</label>
-            <div className="max-h-[200px] overflow-y-auto border border-border p-2 space-y-1">
-              {collections.map(collection => (
-                <button
-                  key={collection.id}
-                  onClick={() => toggleFilter(collection.id, selectedCollections, onCollectionsChange)}
-                  className={`w-full text-left px-3 py-2 text-sm transition-colors ${
-                    selectedCollections.includes(collection.id)
-                      ? 'bg-foreground text-background'
-                      : 'hover:bg-muted'
-                  }`}
-                >
-                  {collection.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Pattern */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Рисунок</label>
-            <div className="flex flex-wrap gap-2">
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Настроение</label>
+            <div className="space-y-1">
+              <button
+                onClick={() => onPatternsChange([])}
+                className={`w-full text-left px-3 py-3 text-sm transition-colors ${
+                  selectedPatterns.length === 0 ? 'bg-foreground/5' : 'hover:bg-foreground/5'
+                }`}
+              >
+                Любое
+              </button>
               {patternTypes.map(pattern => (
                 <button
                   key={pattern.id}
                   onClick={() => toggleFilter(pattern.id, selectedPatterns, onPatternsChange)}
-                  className={`px-3 py-2 text-xs border transition-all ${
+                  className={`w-full text-left px-3 py-3 text-sm transition-colors ${
                     selectedPatterns.includes(pattern.id)
-                      ? 'bg-foreground text-background border-foreground'
-                      : 'border-border hover:border-foreground'
+                      ? 'bg-foreground/5'
+                      : 'hover:bg-foreground/5'
                   }`}
                 >
                   {pattern.label}
@@ -423,16 +375,24 @@ export const MobileFilters = ({
 
           {/* Room */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Помещение</label>
-            <div className="flex flex-wrap gap-2">
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Помещение</label>
+            <div className="space-y-1">
+              <button
+                onClick={() => onRoomsChange([])}
+                className={`w-full text-left px-3 py-3 text-sm transition-colors ${
+                  selectedRooms.length === 0 ? 'bg-foreground/5' : 'hover:bg-foreground/5'
+                }`}
+              >
+                Все помещения
+              </button>
               {roomTypes.map(room => (
                 <button
                   key={room.id}
                   onClick={() => toggleFilter(room.id, selectedRooms, onRoomsChange)}
-                  className={`px-3 py-2 text-xs border transition-all ${
+                  className={`w-full text-left px-3 py-3 text-sm transition-colors ${
                     selectedRooms.includes(room.id)
-                      ? 'bg-foreground text-background border-foreground'
-                      : 'border-border hover:border-foreground'
+                      ? 'bg-foreground/5'
+                      : 'hover:bg-foreground/5'
                   }`}
                 >
                   {room.label}
@@ -443,7 +403,7 @@ export const MobileFilters = ({
 
           {/* Colors */}
           <div>
-            <label className="block text-xs uppercase tracking-[0.15em] text-muted-foreground mb-3">Цвет</label>
+            <label className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">Цвет</label>
             <div className="flex flex-wrap gap-3">
               {colorOptions.map(color => (
                 <button
@@ -463,23 +423,23 @@ export const MobileFilters = ({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-background border-t border-border/50 p-6 space-y-3">
-          {(selectedTypes.length > 0 || selectedCollections.length > 0 || selectedColors.length > 0 || selectedPatterns.length > 0 || selectedRooms.length > 0) && (
+        <div className="sticky bottom-0 bg-background p-6 border-t border-foreground/10">
+          <div className="flex gap-4">
             <button
               onClick={onClearAll}
-              className="w-full py-3 text-xs uppercase tracking-[0.15em] border border-border hover:border-foreground transition-colors"
+              className="flex-1 py-3 text-sm uppercase tracking-[0.1em] border border-foreground/20 hover:border-foreground transition-colors"
             >
-              Сбросить фильтры
+              Сбросить
             </button>
-          )}
-          <button
-            onClick={onClose}
-            className="w-full py-3 text-xs uppercase tracking-[0.15em] bg-foreground text-background hover:bg-foreground/90 transition-colors"
-          >
-            Показать {totalCount} {totalCount === 1 ? 'товар' : totalCount < 5 ? 'товара' : 'товаров'}
-          </button>
+            <button
+              onClick={onClose}
+              className="flex-1 py-3 text-sm uppercase tracking-[0.1em] bg-foreground text-background"
+            >
+              Показать ({totalCount})
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

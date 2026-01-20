@@ -8,11 +8,11 @@
 
 @layer base {
   :root {
-    /* Core palette - warm off-white and charcoal */
-    --background: 40 15% 97%;
+    /* Core palette - warm gray like reference */
+    --background: 40 12% 94%;
     --foreground: 0 0% 10%;
 
-    --card: 35 15% 94%;
+    --card: 35 10% 91%;
     --card-foreground: 0 0% 10%;
 
     --popover: 40 15% 97%;

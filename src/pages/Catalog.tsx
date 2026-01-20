@@ -105,20 +105,30 @@ const Catalog = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Desktop Filters - Sticky */}
-      <div className="hidden lg:block sticky top-20 z-30">
+      {/* Desktop Filters */}
+      <div className="hidden lg:block">
         <CatalogFilters {...filterProps} />
       </div>
 
-      {/* Mobile Filter Bar */}
-      <div className="lg:hidden sticky top-20 z-30 bg-background border-b border-border/50">
-        <div className="container-wide py-4 flex justify-between items-center">
-          <p className="text-xs tracking-[0.1em] text-muted-foreground">
-            {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : filteredProducts.length < 5 ? 'товара' : 'товаров'}
+      {/* Mobile Header */}
+      <div className="lg:hidden">
+        <div className="container-wide pt-12 pb-8">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
+            Галерея работ
           </p>
+          <div className="flex items-end justify-between">
+            <h1 className="text-3xl uppercase tracking-[0.1em] font-light">
+              Каталог принтов
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {filteredProducts.length} объектов
+            </p>
+          </div>
+        </div>
+        <div className="container-wide pb-6 border-b border-foreground/10">
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-[0.15em] border border-border hover:border-foreground transition-colors"
+            className="flex items-center gap-2 text-sm text-muted-foreground"
           >
             <SlidersHorizontal className="w-4 h-4" />
             Фильтры
@@ -127,7 +137,7 @@ const Catalog = () => {
       </div>
 
       {/* Product Grid */}
-      <section className="py-8 lg:py-12">
+      <section className="py-12 lg:py-16">
         <div className="container-wide">
           <AnimatePresence mode="wait">
             {filteredProducts.length > 0 ? (
@@ -137,7 +147,7 @@ const Catalog = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
               >
                 {filteredProducts.map((product, i) => (
                   <ProductCard key={product.id} product={product} index={i} large />
@@ -151,12 +161,12 @@ const Catalog = () => {
                 exit={{ opacity: 0 }}
                 className="text-center py-32"
               >
-                <p className="text-sm tracking-[0.1em] text-muted-foreground mb-6">
+                <p className="text-sm text-muted-foreground mb-6">
                   По вашему запросу ничего не найдено
                 </p>
                 <button
                   onClick={clearAllFilters}
-                  className="text-xs uppercase tracking-[0.15em] border-b border-foreground pb-1 hover:border-transparent transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
                 >
                   Сбросить фильтры
                 </button>
