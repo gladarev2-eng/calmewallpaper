@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { SlidersHorizontal, X } from 'lucide-react';
-import { products, PatternType, RoomType } from '@/data/products';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SlidersHorizontal } from 'lucide-react';
+import { products } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
-import { CatalogFilters } from '@/components/catalog/CatalogFilters';
+import { CatalogFilters, MobileFilters } from '@/components/catalog/CatalogFilters';
 
 const Catalog = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -84,54 +84,41 @@ const Catalog = () => {
     setSearchQuery('');
   };
 
-  return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <section className="section-sm bg-card">
-        <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-display mb-4">Каталог</h1>
-            <p className="text-body-lg">
-              Муралы, панно и фоновые обои для любых интерьеров
-            </p>
-          </motion.div>
-        </div>
-      </section>
+  const filterProps = {
+    selectedTypes,
+    selectedCollections,
+    selectedColors,
+    selectedPatterns,
+    selectedRooms,
+    searchQuery,
+    sortBy,
+    onTypesChange: setSelectedTypes,
+    onCollectionsChange: setSelectedCollections,
+    onColorsChange: setSelectedColors,
+    onPatternsChange: setSelectedPatterns,
+    onRoomsChange: setSelectedRooms,
+    onSearchChange: setSearchQuery,
+    onSortChange: setSortBy,
+    onClearAll: clearAllFilters,
+    totalCount: filteredProducts.length,
+  };
 
-      {/* Filters - Desktop */}
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Desktop Filters - Sticky */}
       <div className="hidden lg:block sticky top-20 z-30">
-        <CatalogFilters
-          selectedTypes={selectedTypes}
-          selectedCollections={selectedCollections}
-          selectedColors={selectedColors}
-          selectedPatterns={selectedPatterns}
-          selectedRooms={selectedRooms}
-          searchQuery={searchQuery}
-          sortBy={sortBy}
-          onTypesChange={setSelectedTypes}
-          onCollectionsChange={setSelectedCollections}
-          onColorsChange={setSelectedColors}
-          onPatternsChange={setSelectedPatterns}
-          onRoomsChange={setSelectedRooms}
-          onSearchChange={setSearchQuery}
-          onSortChange={setSortBy}
-          onClearAll={clearAllFilters}
-        />
+        <CatalogFilters {...filterProps} />
       </div>
 
-      {/* Mobile filter button */}
-      <div className="lg:hidden sticky top-20 z-30 bg-background border-b border-border py-4">
-        <div className="container-wide flex justify-between items-center">
-          <p className="text-sm text-muted-foreground">
-            {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
+      {/* Mobile Filter Bar */}
+      <div className="lg:hidden sticky top-20 z-30 bg-background border-b border-border/50">
+        <div className="container-wide py-4 flex justify-between items-center">
+          <p className="text-xs tracking-[0.1em] text-muted-foreground">
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : filteredProducts.length < 5 ? 'товара' : 'товаров'}
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 text-sm border border-border px-4 py-2"
+            className="flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-[0.15em] border border-border hover:border-foreground transition-colors"
           >
             <SlidersHorizontal className="w-4 h-4" />
             Фильтры
@@ -139,86 +126,56 @@ const Catalog = () => {
         </div>
       </div>
 
-      {/* Catalog */}
-      <section className="section">
+      {/* Product Grid */}
+      <section className="py-8 lg:py-12">
         <div className="container-wide">
-          {/* Products count - desktop */}
-          <div className="hidden lg:block mb-8">
-            <p className="text-sm text-muted-foreground">
-              Найдено {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
-            </p>
-          </div>
-
-          {/* Product grid - larger cards */}
-          {filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-              {filteredProducts.map((product, i) => (
-                <ProductCard key={product.id} product={product} index={i} large />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20">
-              <p className="text-muted-foreground mb-4">
-                По вашему запросу ничего не найдено
-              </p>
-              <button
-                onClick={clearAllFilters}
-                className="text-sm underline hover:no-underline"
+          <AnimatePresence mode="wait">
+            {filteredProducts.length > 0 ? (
+              <motion.div
+                key="products"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
               >
-                Сбросить фильтры
-              </button>
-            </div>
-          )}
+                {filteredProducts.map((product, i) => (
+                  <ProductCard key={product.id} product={product} index={i} large />
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-center py-32"
+              >
+                <p className="text-sm tracking-[0.1em] text-muted-foreground mb-6">
+                  По вашему запросу ничего не найдено
+                </p>
+                <button
+                  onClick={clearAllFilters}
+                  className="text-xs uppercase tracking-[0.15em] border-b border-foreground pb-1 hover:border-transparent transition-colors"
+                >
+                  Сбросить фильтры
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
-      {/* Mobile Filters */}
-      {showMobileFilters && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 lg:hidden"
-        >
-          <div 
-            className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
-            onClick={() => setShowMobileFilters(false)}
+      {/* Mobile Filters Drawer */}
+      <AnimatePresence>
+        {showMobileFilters && (
+          <MobileFilters
+            {...filterProps}
+            isOpen={showMobileFilters}
+            onClose={() => setShowMobileFilters(false)}
           />
-          <motion.div
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="absolute left-0 top-0 bottom-0 w-full max-w-sm bg-background p-6 overflow-y-auto"
-          >
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="font-display text-xl">Фильтры</h2>
-              <button
-                onClick={() => setShowMobileFilters(false)}
-                className="p-2 hover:bg-muted rounded-sm transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            {/* Mobile filters content would go here */}
-            <div className="space-y-6">
-              <p className="text-sm text-muted-foreground">
-                Используйте десктопную версию для расширенных фильтров
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <button
-                onClick={() => setShowMobileFilters(false)}
-                className="btn-primary w-full"
-              >
-                Показать {filteredProducts.length} товаров
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </div>
   );
 };
