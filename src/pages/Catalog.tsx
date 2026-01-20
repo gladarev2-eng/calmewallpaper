@@ -11,6 +11,8 @@ const Catalog = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedPatterns, setSelectedPatterns] = useState<string[]>([]);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedWidths, setSelectedWidths] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popularity');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -81,6 +83,8 @@ const Catalog = () => {
     setSelectedColors([]);
     setSelectedPatterns([]);
     setSelectedRooms([]);
+    setSelectedSizes([]);
+    setSelectedWidths([]);
     setSearchQuery('');
   };
 
@@ -90,6 +94,8 @@ const Catalog = () => {
     selectedColors,
     selectedPatterns,
     selectedRooms,
+    selectedSizes,
+    selectedWidths,
     searchQuery,
     sortBy,
     onTypesChange: setSelectedTypes,
@@ -97,10 +103,20 @@ const Catalog = () => {
     onColorsChange: setSelectedColors,
     onPatternsChange: setSelectedPatterns,
     onRoomsChange: setSelectedRooms,
+    onSizesChange: setSelectedSizes,
+    onWidthsChange: setSelectedWidths,
     onSearchChange: setSearchQuery,
     onSortChange: setSortBy,
     onClearAll: clearAllFilters,
     totalCount: filteredProducts.length,
+  };
+
+  const currentType = selectedTypes[0] || 'all';
+  const typeLabels: Record<string, string> = {
+    all: 'Все',
+    mural: 'Муралы',
+    panel: 'Панно',
+    companion: 'Фоновые обои',
   };
 
   return (
@@ -112,32 +128,47 @@ const Catalog = () => {
 
       {/* Mobile Header */}
       <div className="lg:hidden">
-        <div className="container-wide pt-12 pb-8">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground mb-3">
-            Галерея работ
-          </p>
-          <div className="flex items-end justify-between">
-            <h1 className="text-3xl uppercase tracking-[0.1em] font-light">
-              Каталог принтов
-            </h1>
+        <div className="container-wide pt-16 pb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {['all', 'mural', 'panel', 'companion'].map(type => (
+                <button
+                  key={type}
+                  onClick={() => {
+                    setSelectedTypes(type === 'all' ? [] : [type]);
+                    setSelectedSizes([]);
+                    setSelectedWidths([]);
+                  }}
+                  className={`text-xs uppercase tracking-[0.1em] pb-1 transition-all ${
+                    currentType === type
+                      ? 'text-foreground border-b border-foreground'
+                      : 'text-muted-foreground'
+                  }`}
+                >
+                  {typeLabels[type]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="container-wide pb-6">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => setShowMobileFilters(true)}
+              className="flex items-center gap-2 text-sm text-muted-foreground"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              Фильтры
+            </button>
             <p className="text-sm text-muted-foreground">
               {filteredProducts.length} объектов
             </p>
           </div>
         </div>
-        <div className="container-wide pb-6 border-b border-foreground/10">
-          <button
-            onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 text-sm text-muted-foreground"
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-            Фильтры
-          </button>
-        </div>
       </div>
 
       {/* Product Grid */}
-      <section className="py-12 lg:py-16">
+      <section className="pb-16 lg:pb-24">
         <div className="container-wide">
           <AnimatePresence mode="wait">
             {filteredProducts.length > 0 ? (
