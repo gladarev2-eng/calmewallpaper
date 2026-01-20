@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, X } from 'lucide-react';
-import { products } from '@/data/products';
+import { products, PatternType, RoomType } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { CatalogFilters } from '@/components/catalog/CatalogFilters';
 
@@ -9,11 +9,14 @@ const Catalog = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedCollections, setSelectedCollections] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedPatterns, setSelectedPatterns] = useState<string[]>([]);
+  const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('popularity');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
+    let result = products.filter(product => {
       // Type filter
       if (selectedTypes.length > 0 && !selectedTypes.includes(product.type)) {
         return false;
@@ -29,6 +32,16 @@ const Catalog = () => {
         return false;
       }
 
+      // Pattern filter
+      if (selectedPatterns.length > 0 && !selectedPatterns.includes(product.patternType)) {
+        return false;
+      }
+
+      // Room filter
+      if (selectedRooms.length > 0 && !product.roomTypes.some(r => selectedRooms.includes(r))) {
+        return false;
+      }
+
       // Search
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -41,12 +54,33 @@ const Catalog = () => {
 
       return true;
     });
-  }, [selectedTypes, selectedCollections, selectedColors, searchQuery]);
+
+    // Sort
+    switch (sortBy) {
+      case 'newest':
+        result = result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+        break;
+      case 'price-asc':
+        result = result.sort((a, b) => a.pricePerSqm - b.pricePerSqm);
+        break;
+      case 'price-desc':
+        result = result.sort((a, b) => b.pricePerSqm - a.pricePerSqm);
+        break;
+      case 'popularity':
+      default:
+        result = result.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+        break;
+    }
+
+    return result;
+  }, [selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms, searchQuery, sortBy]);
 
   const clearAllFilters = () => {
     setSelectedTypes([]);
     setSelectedCollections([]);
     setSelectedColors([]);
+    setSelectedPatterns([]);
+    setSelectedRooms([]);
     setSearchQuery('');
   };
 
@@ -68,72 +102,73 @@ const Catalog = () => {
         </div>
       </section>
 
+      {/* Filters - Desktop */}
+      <div className="hidden lg:block sticky top-20 z-30">
+        <CatalogFilters
+          selectedTypes={selectedTypes}
+          selectedCollections={selectedCollections}
+          selectedColors={selectedColors}
+          selectedPatterns={selectedPatterns}
+          selectedRooms={selectedRooms}
+          searchQuery={searchQuery}
+          sortBy={sortBy}
+          onTypesChange={setSelectedTypes}
+          onCollectionsChange={setSelectedCollections}
+          onColorsChange={setSelectedColors}
+          onPatternsChange={setSelectedPatterns}
+          onRoomsChange={setSelectedRooms}
+          onSearchChange={setSearchQuery}
+          onSortChange={setSortBy}
+          onClearAll={clearAllFilters}
+        />
+      </div>
+
+      {/* Mobile filter button */}
+      <div className="lg:hidden sticky top-20 z-30 bg-background border-b border-border py-4">
+        <div className="container-wide flex justify-between items-center">
+          <p className="text-sm text-muted-foreground">
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
+          </p>
+          <button
+            onClick={() => setShowMobileFilters(true)}
+            className="flex items-center gap-2 text-sm border border-border px-4 py-2"
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            Фильтры
+          </button>
+        </div>
+      </div>
+
       {/* Catalog */}
       <section className="section">
-        <div className="container-full">
-          <div className="flex gap-12">
-            {/* Desktop Filters */}
-            <aside className="hidden lg:block w-72 flex-shrink-0">
-              <div className="sticky top-28">
-                <CatalogFilters
-                  selectedTypes={selectedTypes}
-                  selectedCollections={selectedCollections}
-                  selectedColors={selectedColors}
-                  searchQuery={searchQuery}
-                  onTypesChange={setSelectedTypes}
-                  onCollectionsChange={setSelectedCollections}
-                  onColorsChange={setSelectedColors}
-                  onSearchChange={setSearchQuery}
-                  onClearAll={clearAllFilters}
-                />
-              </div>
-            </aside>
-
-            {/* Products */}
-            <div className="flex-1">
-              {/* Mobile filter button */}
-              <div className="lg:hidden mb-6 flex justify-between items-center">
-                <p className="text-sm text-muted-foreground">
-                  {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
-                </p>
-                <button
-                  onClick={() => setShowMobileFilters(true)}
-                  className="flex items-center gap-2 text-sm border border-border px-4 py-2"
-                >
-                  <SlidersHorizontal className="w-4 h-4" />
-                  Фильтры
-                </button>
-              </div>
-
-              {/* Products count - desktop */}
-              <div className="hidden lg:block mb-8">
-                <p className="text-sm text-muted-foreground">
-                  {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
-                </p>
-              </div>
-
-              {/* Product grid */}
-              {filteredProducts.length > 0 ? (
-                <div className="grid-catalog">
-                  {filteredProducts.map((product, i) => (
-                    <ProductCard key={product.id} product={product} index={i} />
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-20">
-                  <p className="text-muted-foreground mb-4">
-                    По вашему запросу ничего не найдено
-                  </p>
-                  <button
-                    onClick={clearAllFilters}
-                    className="text-sm underline hover:no-underline"
-                  >
-                    Сбросить фильтры
-                  </button>
-                </div>
-              )}
-            </div>
+        <div className="container-wide">
+          {/* Products count - desktop */}
+          <div className="hidden lg:block mb-8">
+            <p className="text-sm text-muted-foreground">
+              Найдено {filteredProducts.length} {filteredProducts.length === 1 ? 'товар' : 'товаров'}
+            </p>
           </div>
+
+          {/* Product grid - larger cards */}
+          {filteredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+              {filteredProducts.map((product, i) => (
+                <ProductCard key={product.id} product={product} index={i} large />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground mb-4">
+                По вашему запросу ничего не найдено
+              </p>
+              <button
+                onClick={clearAllFilters}
+                className="text-sm underline hover:no-underline"
+              >
+                Сбросить фильтры
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
@@ -166,17 +201,12 @@ const Catalog = () => {
               </button>
             </div>
             
-            <CatalogFilters
-              selectedTypes={selectedTypes}
-              selectedCollections={selectedCollections}
-              selectedColors={selectedColors}
-              searchQuery={searchQuery}
-              onTypesChange={setSelectedTypes}
-              onCollectionsChange={setSelectedCollections}
-              onColorsChange={setSelectedColors}
-              onSearchChange={setSearchQuery}
-              onClearAll={clearAllFilters}
-            />
+            {/* Mobile filters content would go here */}
+            <div className="space-y-6">
+              <p className="text-sm text-muted-foreground">
+                Используйте десктопную версию для расширенных фильтров
+              </p>
+            </div>
 
             <div className="mt-8">
               <button

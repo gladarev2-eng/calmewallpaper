@@ -1,17 +1,22 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Search, X, ChevronDown } from 'lucide-react';
-import { collections } from '@/data/products';
+import { useMemo } from 'react';
+import { Search, X } from 'lucide-react';
+import { collections, patternTypes, roomTypes, colorOptions } from '@/data/products';
 
 interface CatalogFiltersProps {
   selectedTypes: string[];
   selectedCollections: string[];
   selectedColors: string[];
+  selectedPatterns: string[];
+  selectedRooms: string[];
   searchQuery: string;
+  sortBy: string;
   onTypesChange: (types: string[]) => void;
   onCollectionsChange: (collections: string[]) => void;
   onColorsChange: (colors: string[]) => void;
+  onPatternsChange: (patterns: string[]) => void;
+  onRoomsChange: (rooms: string[]) => void;
   onSearchChange: (query: string) => void;
+  onSortChange: (sort: string) => void;
   onClearAll: () => void;
 }
 
@@ -21,31 +26,38 @@ const productTypes = [
   { id: 'companion', label: 'Фоновые обои' },
 ];
 
-const allColors = [
-  'Серый', 'Голубой', 'Белый', 'Розовый', 'Зелёный', 
-  'Бежевый', 'Терракота', 'Кремовый', 'Персиковый', 
-  'Песочный', 'Оливковый', 'Шалфей'
+const sortOptions = [
+  { id: 'popularity', label: 'По популярности' },
+  { id: 'newest', label: 'Новинки' },
+  { id: 'price-asc', label: 'Цена: по возрастанию' },
+  { id: 'price-desc', label: 'Цена: по убыванию' },
 ];
 
 export const CatalogFilters = ({
   selectedTypes,
   selectedCollections,
   selectedColors,
+  selectedPatterns,
+  selectedRooms,
   searchQuery,
+  sortBy,
   onTypesChange,
   onCollectionsChange,
   onColorsChange,
+  onPatternsChange,
+  onRoomsChange,
   onSearchChange,
+  onSortChange,
   onClearAll,
 }: CatalogFiltersProps) => {
-  const [openSection, setOpenSection] = useState<string | null>('type');
-
   const hasActiveFilters = useMemo(() => {
     return selectedTypes.length > 0 || 
            selectedCollections.length > 0 || 
            selectedColors.length > 0 || 
+           selectedPatterns.length > 0 ||
+           selectedRooms.length > 0 ||
            searchQuery.length > 0;
-  }, [selectedTypes, selectedCollections, selectedColors, searchQuery]);
+  }, [selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms, searchQuery]);
 
   const toggleFilter = (value: string, selected: string[], onChange: (values: string[]) => void) => {
     if (selected.includes(value)) {
@@ -55,133 +67,147 @@ export const CatalogFilters = ({
     }
   };
 
-  const FilterSection = ({ 
-    id, 
-    title, 
-    children 
-  }: { 
-    id: string; 
-    title: string; 
-    children: React.ReactNode;
-  }) => (
-    <div className="border-b border-border last:border-b-0">
-      <button
-        onClick={() => setOpenSection(openSection === id ? null : id)}
-        className="w-full flex items-center justify-between py-4 text-sm tracking-wide hover:text-muted-foreground transition-colors"
-      >
-        {title}
-        <ChevronDown 
-          className={`w-4 h-4 transition-transform ${openSection === id ? 'rotate-180' : ''}`}
-        />
-      </button>
-      <motion.div
-        initial={false}
-        animate={{ 
-          height: openSection === id ? 'auto' : 0,
-          opacity: openSection === id ? 1 : 0
-        }}
-        transition={{ duration: 0.2 }}
-        className="overflow-hidden"
-      >
-        <div className="pb-4">
-          {children}
-        </div>
-      </motion.div>
-    </div>
-  );
-
   return (
-    <div className="space-y-6">
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Поиск..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-muted/50 border-none text-sm focus:outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground"
-        />
-      </div>
-
-      {/* Clear all */}
-      {hasActiveFilters && (
-        <button
-          onClick={onClearAll}
-          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <X className="w-4 h-4" />
-          Сбросить фильтры
-        </button>
-      )}
-
-      {/* Filters */}
-      <div>
-        <FilterSection id="type" title="Тип продукта">
-          <div className="space-y-2">
-            {productTypes.map(type => (
-              <label 
-                key={type.id} 
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <div className={`w-4 h-4 border ${
-                  selectedTypes.includes(type.id) 
-                    ? 'bg-foreground border-foreground' 
-                    : 'border-muted-foreground group-hover:border-foreground'
-                } transition-colors flex items-center justify-center`}>
-                  {selectedTypes.includes(type.id) && (
-                    <svg className="w-3 h-3 text-background" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </div>
-                <span className="text-sm">{type.label}</span>
-              </label>
-            ))}
+    <div className="bg-card border-b border-border py-6">
+      <div className="container-wide">
+        {/* Search and Sort Row */}
+        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-6">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Поиск по каталогу..."
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring placeholder:text-muted-foreground"
+            />
           </div>
-        </FilterSection>
 
-        <FilterSection id="collection" title="Коллекция">
-          <div className="space-y-2 max-h-48 overflow-y-auto">
-            {collections.map(collection => (
-              <label 
-                key={collection.id} 
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <div className={`w-4 h-4 border ${
-                  selectedCollections.includes(collection.id) 
-                    ? 'bg-foreground border-foreground' 
-                    : 'border-muted-foreground group-hover:border-foreground'
-                } transition-colors flex items-center justify-center`}>
-                  {selectedCollections.includes(collection.id) && (
-                    <svg className="w-3 h-3 text-background" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  )}
-                </div>
-                <span className="text-sm">{collection.name}</span>
-              </label>
-            ))}
-          </div>
-        </FilterSection>
+          <div className="flex items-center gap-4">
+            <select
+              value={sortBy}
+              onChange={(e) => onSortChange(e.target.value)}
+              className="px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring appearance-none cursor-pointer min-w-[200px]"
+            >
+              {sortOptions.map(option => (
+                <option key={option.id} value={option.id}>{option.label}</option>
+              ))}
+            </select>
 
-        <FilterSection id="color" title="Цвет">
-          <div className="flex flex-wrap gap-2">
-            {allColors.map(color => (
+            {hasActiveFilters && (
               <button
-                key={color}
-                onClick={() => toggleFilter(color, selectedColors, onColorsChange)}
-                className={`px-3 py-1.5 text-xs border transition-colors ${
-                  selectedColors.includes(color)
-                    ? 'bg-foreground text-background border-foreground'
-                    : 'border-border hover:border-foreground'
-                }`}
+                onClick={onClearAll}
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
-                {color}
+                <X className="w-4 h-4" />
+                Сбросить
               </button>
-            ))}
+            )}
           </div>
-        </FilterSection>
+        </div>
+
+        {/* Filters Row */}
+        <div className="flex flex-wrap gap-6">
+          {/* Product Type */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Тип:</span>
+            <div className="flex gap-2">
+              {productTypes.map(type => (
+                <button
+                  key={type.id}
+                  onClick={() => toggleFilter(type.id, selectedTypes, onTypesChange)}
+                  className={`px-3 py-1.5 text-xs border transition-colors ${
+                    selectedTypes.includes(type.id)
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'border-border hover:border-foreground'
+                  }`}
+                >
+                  {type.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Collection */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Коллекция:</span>
+            <div className="flex gap-2">
+              {collections.map(collection => (
+                <button
+                  key={collection.id}
+                  onClick={() => toggleFilter(collection.id, selectedCollections, onCollectionsChange)}
+                  className={`px-3 py-1.5 text-xs border transition-colors ${
+                    selectedCollections.includes(collection.id)
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'border-border hover:border-foreground'
+                  }`}
+                >
+                  {collection.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Pattern Type */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Рисунок:</span>
+            <div className="flex gap-2 flex-wrap">
+              {patternTypes.map(pattern => (
+                <button
+                  key={pattern.id}
+                  onClick={() => toggleFilter(pattern.id, selectedPatterns, onPatternsChange)}
+                  className={`px-3 py-1.5 text-xs border transition-colors ${
+                    selectedPatterns.includes(pattern.id)
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'border-border hover:border-foreground'
+                  }`}
+                >
+                  {pattern.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Room Type */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Помещение:</span>
+            <div className="flex gap-2 flex-wrap">
+              {roomTypes.map(room => (
+                <button
+                  key={room.id}
+                  onClick={() => toggleFilter(room.id, selectedRooms, onRoomsChange)}
+                  className={`px-3 py-1.5 text-xs border transition-colors ${
+                    selectedRooms.includes(room.id)
+                      ? 'bg-foreground text-background border-foreground'
+                      : 'border-border hover:border-foreground'
+                  }`}
+                >
+                  {room.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Colors */}
+          <div className="flex items-center gap-3">
+            <span className="text-xs uppercase tracking-wide text-muted-foreground">Цвет:</span>
+            <div className="flex gap-2 flex-wrap">
+              {colorOptions.map(color => (
+                <button
+                  key={color.name}
+                  onClick={() => toggleFilter(color.name, selectedColors, onColorsChange)}
+                  className={`w-6 h-6 rounded-full border-2 transition-all ${
+                    selectedColors.includes(color.name)
+                      ? 'border-foreground scale-110 ring-2 ring-foreground ring-offset-2'
+                      : 'border-border hover:scale-110'
+                  }`}
+                  style={{ backgroundColor: color.hex }}
+                  title={color.name}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

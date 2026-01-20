@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Maximize, Sparkles, Users, Palette } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -23,6 +23,29 @@ const stagger = {
 
 const Index = () => {
   const featuredProducts = products.filter(p => p.isBestseller || p.isNew).slice(0, 6);
+
+  const whyCalmeFeatures = [
+    { 
+      title: 'Масштаб до 6 метров', 
+      desc: 'Полотна для любых пространств',
+      image: mural3,
+    },
+    { 
+      title: 'Сверхдетализация', 
+      desc: 'Раскрывается при рассмотрении вблизи',
+      image: mural2,
+    },
+    { 
+      title: 'Адаптация под интерьер', 
+      desc: 'Цвета и пропорции под ваше пространство',
+      image: mural5,
+    },
+    { 
+      title: 'Сервис для дизайнеров', 
+      desc: 'Партнёрская программа и поддержка',
+      image: mural4,
+    },
+  ];
 
   return (
     <div>
@@ -75,9 +98,19 @@ const Index = () => {
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div 
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <ChevronDown className="w-6 h-6 animate-bounce" />
+        </motion.div>
       </section>
 
-      {/* Why CALMÉ */}
+      {/* Why CALMÉ - Visual Presentation */}
       <section className="section bg-card">
         <div className="container-wide">
           <motion.div 
@@ -92,42 +125,26 @@ const Index = () => {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { 
-                icon: Maximize, 
-                title: 'Масштаб до 6 метров', 
-                desc: 'Создаём полотна для любых пространств — от спальни до атриума отеля' 
-              },
-              { 
-                icon: Sparkles, 
-                title: 'Сверхдетализация', 
-                desc: 'Изображения раскрываются при рассмотрении вблизи' 
-              },
-              { 
-                icon: Palette, 
-                title: 'Адаптация под интерьер', 
-                desc: 'Подстраиваем цветовую гамму и пропорции под ваше пространство' 
-              },
-              { 
-                icon: Users, 
-                title: 'Сервис для дизайнеров', 
-                desc: 'Партнёрская программа и персональный менеджер' 
-              },
-            ].map((item, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {whyCalmeFeatures.map((item, i) => (
               <motion.div
                 key={i}
-                className="text-center p-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
+                className="group relative aspect-[16/10] overflow-hidden"
               >
-                <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-muted rounded-full">
-                  <item.icon className="w-5 h-5" />
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-background">
+                  <h3 className="font-display text-2xl md:text-3xl mb-2">{item.title}</h3>
+                  <p className="text-sm md:text-base opacity-90">{item.desc}</p>
                 </div>
-                <h3 className="font-display text-xl mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -418,11 +435,11 @@ const Index = () => {
           >
             <h2 className="text-title mb-6">Готовы начать?</h2>
             <p className="text-body-lg mb-8 max-w-xl mx-auto">
-              Выберите изображение из каталога или свяжитесь с нами для обсуждения индивидуального проекта
+              Выберите изображение из каталога или свяжитесь с нами для индивидуального проекта
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/catalog" className="btn-primary">
-                Перейти в каталог
+                Смотреть каталог
               </Link>
               <Link to="/designers" className="btn-outline">
                 Связаться с нами
