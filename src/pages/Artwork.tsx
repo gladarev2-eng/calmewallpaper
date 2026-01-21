@@ -847,34 +847,6 @@ const Artwork = () => {
                 <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none" />
               </div>
             </div>
-
-            {/* Paint matching CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-12 p-6 md:p-8 border border-foreground/10 bg-card/50"
-            >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
-                    Подбор краски
-                  </p>
-                  <h3 className="text-lg font-light mb-1">
-                    Нужна краска в тон?
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    Подберём идеальный оттенок краски для стен, которые дополнят ваш мурал
-                  </p>
-                </div>
-                <button
-                  onClick={() => toast.info('Функция в разработке', { description: 'Свяжитесь с нами через страницу контактов' })}
-                  className="btn-primary whitespace-nowrap"
-                >
-                  Связаться с нами
-                </button>
-              </div>
-            </motion.div>
           </div>
         </section>
       )}
@@ -896,23 +868,28 @@ const Artwork = () => {
             </h2>
           </motion.div>
 
-          {/* Service Grid - 3 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Service Grid - 4 columns */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground/10">
             {[
               {
-                icon: '🎨',
+                num: '01',
                 title: 'Визуализация',
-                desc: 'Покажем, как принт будет смотреться на вашей стене',
+                desc: 'Покажем принт на вашей стене',
               },
               {
-                icon: '📐',
+                num: '02',
                 title: 'Адаптация',
-                desc: 'Подстроим пропорции под размеры стены',
+                desc: 'Подстроим под размеры',
               },
               {
-                icon: '✉️',
+                num: '03',
                 title: 'Образцы',
-                desc: 'Пришлём образцы материалов бесплатно',
+                desc: 'Пришлём бесплатно',
+              },
+              {
+                num: '04',
+                title: 'Подбор краски',
+                desc: 'Найдём идеальный тон',
               },
             ].map((item, i) => (
               <motion.div
@@ -920,18 +897,18 @@ const Artwork = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="text-center p-6 border border-foreground/10"
+                transition={{ delay: i * 0.08 }}
+                className="bg-card p-6 md:p-8"
               >
-                <div className="text-2xl mb-3">{item.icon}</div>
+                <span className="text-[10px] tracking-[0.2em] text-muted-foreground block mb-4">{item.num}</span>
                 <h3 className="text-sm font-medium mb-2">{item.title}</h3>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Additional Services - 2 cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
             {[
               {
                 title: 'Помощь с подбором',
@@ -939,8 +916,8 @@ const Artwork = () => {
                 image: mural2,
               },
               {
-                title: 'Фоновые обои',
-                desc: 'Подберём обои-компаньоны для соседних стен',
+                title: 'Фоновые обои и краска',
+                desc: 'Подберём обои-компаньоны и краску в тон',
                 image: mural6,
               },
             ].map((item, i) => (
