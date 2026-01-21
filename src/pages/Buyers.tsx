@@ -70,7 +70,7 @@ const Buyers = () => {
   const materialImages = [mural4, mural6, mural1, mural5, mural2];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Header - Clean */}
       <section className="section-sm bg-card">
         <div className="container-wide">
