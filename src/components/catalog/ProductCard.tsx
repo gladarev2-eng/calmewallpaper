@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Heart } from 'lucide-react';
 import { Product } from '@/data/products';
+import { useFavorites } from '@/context/FavoritesContext';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -28,6 +30,8 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, index = 0, large = false }: ProductCardProps) => {
   const [imageIndex, setImageIndex] = useState(0);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const isInFavorites = isFavorite(product.id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('ru-RU').format(price);
@@ -35,6 +39,12 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
 
   const getImageSrc = (imagePath: string) => {
     return imageMap[imagePath] || imagePath;
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(product.id);
   };
 
   return (
@@ -55,6 +65,16 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             style={{ filter: 'saturate(0.85) contrast(0.95)' }}
           />
+          
+          {/* Favorite button */}
+          <button
+            onClick={handleFavoriteClick}
+            className={`absolute top-4 right-4 p-2 bg-background/80 backdrop-blur-sm transition-all hover:bg-background ${
+              isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            }`}
+          >
+            <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-foreground stroke-foreground' : 'stroke-foreground'}`} />
+          </button>
           
           {/* Badges */}
           <div className="absolute top-4 left-4 flex gap-2">
