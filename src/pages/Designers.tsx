@@ -8,21 +8,6 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
 const Designers = () => {
-  const benefits = [
-    {
-      title: 'Специальные цены',
-      desc: 'Скидки до 25% для партнёров программы',
-    },
-    {
-      title: 'Персональный менеджер',
-      desc: 'Выделенный специалист для ваших проектов',
-    },
-    {
-      title: 'Приоритетное производство',
-      desc: 'Сокращённые сроки для партнёрских заказов',
-    },
-  ];
-
   const services = [
     {
       title: 'Бесплатные визуализации',
@@ -69,12 +54,44 @@ const Designers = () => {
     },
   ];
 
+  const loyaltyTiers = [
+    {
+      level: 'Партнёр',
+      discount: '10%',
+      condition: 'Регистрация в программе',
+      benefits: ['Скидка 10%', 'Доступ к 3D-библиотеке', 'Персональный менеджер'],
+      highlighted: false,
+    },
+    {
+      level: 'Серебряный',
+      discount: '15%',
+      condition: 'От 500 000 ₽ в год',
+      benefits: ['Скидка 15%', 'Приоритетное производство', 'Бесплатная доставка'],
+      highlighted: false,
+    },
+    {
+      level: 'Золотой',
+      discount: '20%',
+      condition: 'От 1 500 000 ₽ в год',
+      benefits: ['Скидка 20%', 'Индивидуальные решения', 'VIP-поддержка 24/7'],
+      highlighted: false,
+    },
+    {
+      level: 'Платиновый',
+      discount: '25%',
+      condition: 'От 5 000 000 ₽ в год',
+      benefits: ['Скидка 25%', 'Эксклюзивные коллекции', 'Совместные проекты'],
+      highlighted: true,
+    },
+  ];
+
   return (
     <div className="min-h-screen">
-      {/* Hero - Clean, no background image */}
-      <section className="section bg-card">
+      {/* Hero + Loyalty Program Combined */}
+      <section className="section-lg bg-card">
         <div className="container-wide">
-          <div className="max-w-3xl">
+          {/* Hero Header */}
+          <div className="max-w-3xl mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -84,79 +101,14 @@ const Designers = () => {
                 Среда для<br />профессионалов
               </h1>
               <p className="text-body-lg">
-                Мы понимаем специфику проектной работы и предлагаем инструменты, минимизирующие рутину
+                Чем больше проектов — тем выгоднее условия. Четыре уровня партнёрства с растущими привилегиями.
               </p>
             </motion.div>
           </div>
-        </div>
-      </section>
 
-      {/* Benefits */}
-      <section className="section">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 bg-card"
-              >
-                <span className="font-display text-5xl text-muted-foreground/30 block mb-4">
-                  0{i + 1}
-                </span>
-                <h3 className="font-display text-xl mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Loyalty Program */}
-      <section className="section bg-card">
-        <div className="container-wide">
-          <div className="text-center mb-16">
-            <p className="text-caption mb-4">Программа лояльности</p>
-            <h2 className="text-title mb-4">Растите вместе с нами</h2>
-            <p className="text-body-lg max-w-2xl mx-auto">
-              Чем больше проектов — тем выгоднее условия. Четыре уровня партнёрства с растущими привилегиями.
-            </p>
-          </div>
-
+          {/* Loyalty Tiers Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10">
-            {[
-              {
-                level: 'Партнёр',
-                discount: '10%',
-                condition: 'Регистрация в программе',
-                benefits: ['Скидка 10%', 'Доступ к 3D-библиотеке', 'Персональный менеджер'],
-                highlighted: false,
-              },
-              {
-                level: 'Серебряный',
-                discount: '15%',
-                condition: 'От 500 000 ₽ в год',
-                benefits: ['Скидка 15%', 'Приоритетное производство', 'Бесплатная доставка'],
-                highlighted: false,
-              },
-              {
-                level: 'Золотой',
-                discount: '20%',
-                condition: 'От 1 500 000 ₽ в год',
-                benefits: ['Скидка 20%', 'Индивидуальные решения', 'VIP-поддержка 24/7'],
-                highlighted: false,
-              },
-              {
-                level: 'Платиновый',
-                discount: '25%',
-                condition: 'От 5 000 000 ₽ в год',
-                benefits: ['Скидка 25%', 'Эксклюзивные коллекции', 'Совместные проекты'],
-                highlighted: true,
-              },
-            ].map((tier, i) => (
+            {loyaltyTiers.map((tier, i) => (
               <motion.div
                 key={tier.level}
                 initial={{ opacity: 0, y: 20 }}
