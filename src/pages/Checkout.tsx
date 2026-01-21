@@ -28,7 +28,7 @@ const Checkout = () => {
 
   if (items.length === 0 && step !== 3) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl mb-4">Корзина пуста</h1>
           <Link to="/catalog" className="btn-primary">
@@ -40,7 +40,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
       <section className="section-sm bg-card">
         <div className="container-wide">

@@ -51,11 +51,11 @@ const Contacts = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero */}
       <section className="section-lg bg-card">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -312,10 +312,10 @@ const Contacts = () => {
       {/* Quick Links */}
       <section className="section-lg bg-card">
         <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <Link 
               to="/catalog"
-              className="group p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
+              className="group p-6 sm:p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
             >
               <p className="text-caption mb-4">Каталог</p>
               <h3 className="text-xl font-light mb-2 group-hover:opacity-70 transition-opacity">
@@ -326,7 +326,7 @@ const Contacts = () => {
             
             <Link 
               to="/designers"
-              className="group p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
+              className="group p-6 sm:p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
             >
               <p className="text-caption mb-4">Для дизайнеров</p>
               <h3 className="text-xl font-light mb-2 group-hover:opacity-70 transition-opacity">
@@ -337,7 +337,7 @@ const Contacts = () => {
             
             <Link 
               to="/buyers"
-              className="group p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
+              className="group p-6 sm:p-8 border border-foreground/10 hover:border-foreground/30 transition-colors"
             >
               <p className="text-caption mb-4">Покупателям</p>
               <h3 className="text-xl font-light mb-2 group-hover:opacity-70 transition-opacity">

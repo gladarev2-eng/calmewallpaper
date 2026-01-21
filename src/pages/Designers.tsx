@@ -111,12 +111,12 @@ const Designers = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero + Loyalty Program Combined */}
       <section className="section-lg bg-card">
         <div className="container-wide">
           {/* Hero Header */}
-          <div className="max-w-3xl mb-20">
+          <div className="max-w-3xl mb-12 lg:mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ const Designers = () => {
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="space-y-24 lg:space-y-32">
+          <div className="space-y-16 md:space-y-24 lg:space-y-32">
             {services.map((item, i) => (
               <motion.div
                 key={item.num}
@@ -197,7 +197,7 @@ const Designers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center ${
                   i % 2 === 1 ? 'lg:grid-flow-dense' : ''
                 }`}
               >

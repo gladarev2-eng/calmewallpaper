@@ -25,7 +25,7 @@ const Collection = () => {
 
   if (!collection) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl mb-4">Коллекция не найдена</h1>
           <Link to="/collections" className="btn-primary">

@@ -24,7 +24,7 @@ export const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide">
-          <div className="flex items-center justify-between h-24">
+          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
             {/* Logo */}
             <Link 
               to="/" 
@@ -120,67 +120,94 @@ export const Header = () => {
               className="fixed inset-0 bg-foreground/10 backdrop-blur-sm z-50"
               onClick={() => setIsMenuOpen(false)}
             />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.4, ease: 'easeOut' }}
-              className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-background z-50 p-8"
-            >
-              <div className="flex justify-between items-center mb-16">
-                <span className="text-sm font-thin uppercase tracking-[0.3em]">
-                  Calmé
-                </span>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-2 transition-colors duration-400"
-                >
-                  <X className="w-4 h-4 stroke-[1.5]" />
-                </button>
-              </div>
-
-              <nav className="flex flex-col gap-8">
-                {navItems.map((item, index) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.4 }}
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'tween', duration: 0.4, ease: 'easeOut' }}
+                className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-background z-50 flex flex-col"
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center p-6 sm:p-8">
+                  <span className="text-sm font-thin uppercase tracking-[0.3em]">
+                    Calmé
+                  </span>
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-2 -mr-2 transition-colors duration-400"
                   >
-                    <Link
-                      to={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className={`text-xl font-thin uppercase tracking-[0.2em] transition-colors duration-400 ${
-                        location.pathname === item.href
-                          ? 'text-foreground'
-                          : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
+                    <X className="w-5 h-5 stroke-[1.5]" />
+                  </button>
+                </div>
 
-              <div className="absolute bottom-8 left-8 right-8 space-y-3">
-                <Link
-                  to="/favorites"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-3 py-3 border border-foreground/20 text-sm uppercase tracking-[0.1em] hover:border-foreground transition-colors"
-                >
-                  <Heart className={`w-4 h-4 stroke-[1.5] ${totalFavorites > 0 ? 'fill-foreground' : ''}`} />
-                  <span>Избранное {totalFavorites > 0 && `(${totalFavorites})`}</span>
-                </Link>
-                <Link
-                  to="/cart"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="btn-primary w-full flex items-center justify-center gap-3"
-                >
-                  <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
-                  <span>Корзина {totalItems > 0 && `(${totalItems})`}</span>
-                </Link>
-              </div>
-            </motion.div>
+                {/* Navigation */}
+                <nav className="flex-1 px-6 sm:px-8 py-8 overflow-y-auto">
+                  <div className="space-y-6">
+                    {navItems.map((item, index) => (
+                      <motion.div
+                        key={item.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05, duration: 0.4 }}
+                      >
+                        <Link
+                          to={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={`block text-lg font-light uppercase tracking-[0.15em] py-2 transition-colors duration-400 ${
+                            location.pathname === item.href
+                              ? 'text-foreground'
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </div>
+                </nav>
+
+                {/* Contact & Actions */}
+                <div className="p-6 sm:p-8 border-t border-foreground/10 space-y-4">
+                  {/* Phone */}
+                  <a 
+                    href="tel:+74951234567"
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                  >
+                    <Phone className="w-4 h-4" strokeWidth={1.5} />
+                    <span>+7 (495) 123-45-67</span>
+                  </a>
+                  
+                  {/* Messenger */}
+                  <a 
+                    href="https://wa.me/79001234567"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors py-2"
+                  >
+                    <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
+                    <span>WhatsApp</span>
+                  </a>
+
+                  <div className="pt-4 space-y-3">
+                    <Link
+                      to="/favorites"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="w-full flex items-center justify-center gap-3 py-3.5 border border-foreground/20 text-sm uppercase tracking-[0.1em] hover:border-foreground transition-colors"
+                    >
+                      <Heart className={`w-4 h-4 stroke-[1.5] ${totalFavorites > 0 ? 'fill-foreground' : ''}`} />
+                      <span>Избранное {totalFavorites > 0 && `(${totalFavorites})`}</span>
+                    </Link>
+                    <Link
+                      to="/cart"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="btn-primary w-full flex items-center justify-center gap-3"
+                    >
+                      <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
+                      <span>Корзина {totalItems > 0 && `(${totalItems})`}</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
           </>
         )}
       </AnimatePresence>

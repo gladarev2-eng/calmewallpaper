@@ -120,7 +120,7 @@ const Catalog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
       {/* Desktop Filters */}
       <div className="hidden lg:block">
         <CatalogFilters {...filterProps} />

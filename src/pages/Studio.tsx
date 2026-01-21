@@ -46,7 +46,7 @@ const Studio = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero - Clean */}
       <section className="section bg-card">
         <div className="container-wide">
