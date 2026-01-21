@@ -2,8 +2,9 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
-import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio, collections } from '@/data/products';
+import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
+import { ColorVariantSelector } from '@/components/artwork/ColorVariantSelector';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'sonner';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -132,8 +133,17 @@ const Artwork = () => {
   };
 
   const mainImage = getImageSrc(product.images[selectedImage]);
+  
+  // Get color variants for this product
+  const colorVariants = useMemo(() => getColorVariants(product), [product]);
+  
+  // Get related products excluding color variants
   const relatedProducts = products
-    .filter(p => p.collectionId === product.collectionId && p.id !== product.id)
+    .filter(p => 
+      p.collectionId === product.collectionId && 
+      p.id !== product.id && 
+      p.colorVariantGroup !== product.colorVariantGroup
+    )
     .slice(0, 3);
 
   // Calculator logic
@@ -344,6 +354,14 @@ const Artwork = () => {
 
                 {/* Description - compact */}
                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{product.description}</p>
+
+                {/* Color Variant Selector */}
+                {colorVariants.length > 1 && (
+                  <ColorVariantSelector 
+                    currentProduct={product} 
+                    variants={colorVariants} 
+                  />
+                )}
 
                 {/* Price & Calculator or Panel Sizes */}
                 {product.type === 'panel' && product.panelSizes ? (
