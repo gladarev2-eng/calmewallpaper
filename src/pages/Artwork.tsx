@@ -847,6 +847,34 @@ const Artwork = () => {
                 <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none" />
               </div>
             </div>
+
+            {/* Paint matching CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-12 p-6 md:p-8 border border-foreground/10 bg-card/50"
+            >
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
+                    Подбор краски
+                  </p>
+                  <h3 className="text-lg font-light mb-1">
+                    Нужна краска в тон?
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Подберём идеальный оттенок краски для стен, которые дополнят ваш мурал
+                  </p>
+                </div>
+                <button
+                  onClick={() => toast.info('Функция в разработке', { description: 'Свяжитесь с нами через страницу контактов' })}
+                  className="btn-primary whitespace-nowrap"
+                >
+                  Связаться с нами
+                </button>
+              </div>
+            </motion.div>
           </div>
         </section>
       )}
