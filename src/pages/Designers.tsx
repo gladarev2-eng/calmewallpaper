@@ -162,6 +162,22 @@ const Designers = () => {
               </motion.div>
             ))}
           </div>
+          
+          {/* CTA after loyalty tiers */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <a 
+              href="#contact-form"
+              className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase hover:opacity-70 transition-opacity"
+            >
+              <span>Вступить в программу</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </a>
+          </motion.div>
         </div>
       </section>
 
@@ -222,6 +238,22 @@ const Designers = () => {
               </motion.div>
             ))}
           </div>
+          
+          {/* CTA after services */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-20 text-center"
+          >
+            <a 
+              href="#contact-form"
+              className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase hover:opacity-70 transition-opacity"
+            >
+              <span>Обсудить сотрудничество</span>
+              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+            </a>
+          </motion.div>
         </div>
       </section>
 
@@ -367,12 +399,28 @@ const Designers = () => {
                 </p>
               </motion.div>
             </div>
+            
+            {/* CTA for HoReCa */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-16 pt-12 border-t border-foreground/10"
+            >
+              <a 
+                href="#contact-form"
+                className="inline-flex items-center gap-3 text-sm tracking-[0.1em] uppercase hover:opacity-70 transition-opacity"
+              >
+                <span>Обсудить проект</span>
+                <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+              </a>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Contact form */}
-      <section className="section bg-card">
+      <section id="contact-form" className="section bg-card">
         <div className="container-narrow">
           <div className="text-center mb-12">
             <h2 className="text-title mb-4">Стать партнёром</h2>
