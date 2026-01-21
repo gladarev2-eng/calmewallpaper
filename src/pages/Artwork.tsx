@@ -149,6 +149,14 @@ const Artwork = () => {
     )
     .slice(0, 3);
 
+  // Get companion wallpapers for this collection
+  const companionWallpapers = useMemo(() => {
+    return products.filter(p => 
+      p.type === 'companion' && 
+      p.collectionId === product.collectionId
+    );
+  }, [product.collectionId]);
+
   // Calculator logic
   const area = (width * height) / 10000;
   const areaWithMargin = area * (1 + margin / 100);
@@ -263,6 +271,17 @@ const Artwork = () => {
       {/* Product Details Section - Gallery + Compact Info */}
       <section className="relative bg-background py-12 md:py-16">
         <div className="container-wide">
+          {/* Breadcrumbs */}
+          <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8">
+            <Link to="/" className="hover:text-foreground transition-colors">Главная</Link>
+            <span>/</span>
+            <Link to="/catalog" className="hover:text-foreground transition-colors">Каталог</Link>
+            <span>/</span>
+            <Link to={`/collection/${product.collectionId}`} className="hover:text-foreground transition-colors">{product.collection}</Link>
+            <span>/</span>
+            <span className="text-foreground">{product.name}</span>
+          </nav>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             {/* Left - Large Gallery */}
             <div className={`${config.galleryClass} space-y-3`}>
@@ -739,75 +758,92 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* Materials Presentation - Visual Demo */}
-      <section className="py-16 md:py-24">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
-                Материалы
-              </p>
-              <h2 className="text-2xl md:text-3xl font-light tracking-wide mb-4">
-                Почувствуйте качество
-              </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                Каждый материал подобран для своих задач. Закажите бесплатные образцы.
-              </p>
-              <Link 
-                to="/buyers"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] group"
+      {/* Companion Wallpapers Section */}
+      {companionWallpapers.length > 0 && (
+        <section className="py-16 md:py-24">
+          <div className="container-wide">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="lg:col-span-4"
               >
-                Заказать образцы
-                <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </motion.div>
-
-            {/* Materials Grid - Magazine style */}
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {materials.filter(m => m.id !== 'canvas' || product.type === 'panel').slice(0, 4).map((material, i) => (
-                <motion.div
-                  key={material.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="border border-foreground/10 p-5"
+                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+                  Обои-компаньоны
+                </p>
+                <h2 className="text-2xl md:text-3xl font-light tracking-wide mb-4">
+                  Фоновые обои к этому принту
+                </h2>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                  Подобрали обои в тон для оформления соседних стен. Идеально сочетаются с выбранным муралом.
+                </p>
+                <Link 
+                  to="/catalog?type=companion"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.15em] group"
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-sm font-medium">{material.name}</h3>
-                    <span className="text-xs text-muted-foreground">
-                      ×{material.priceCoefficient.toFixed(2)}
-                    </span>
-                  </div>
-                  
-                  {material.forHoreca && (
-                    <span className="inline-block mb-2 text-[9px] uppercase tracking-[0.15em] text-muted-foreground border border-foreground/20 px-1.5 py-0.5">
-                      HoReCa
-                    </span>
-                  )}
-                  
-                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{material.description}</p>
-                  
-                  {/* Features - compact list */}
-                  <div className="flex flex-wrap gap-x-3 gap-y-1">
-                    {material.features.slice(0, 3).map((feature, j) => (
-                      <div key={j} className="flex items-center gap-1.5 text-[11px]">
-                        <Check className="w-2.5 h-2.5 text-foreground/40" />
-                        <span>{feature}</span>
+                  Все фоновые обои
+                  <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+
+              {/* Companion Wallpapers Grid */}
+              <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                {companionWallpapers.map((wallpaper, i) => (
+                  <motion.a
+                    key={wallpaper.id}
+                    href={`/artwork/${wallpaper.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="group block border border-foreground/10 hover:border-foreground/30 transition-colors"
+                  >
+                    <div className="aspect-[16/9] overflow-hidden bg-muted relative">
+                      <img
+                        src={getImageSrc(wallpaper.images[0])}
+                        alt={wallpaper.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ filter: 'saturate(0.7)' }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
+                            {wallpaper.collection}
+                          </p>
+                          <h3 className="text-sm font-medium">{wallpaper.name}</h3>
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          от {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+                      <p className="text-xs text-muted-foreground line-clamp-2">{wallpaper.shortDescription}</p>
+                      
+                      {/* Color swatches */}
+                      <div className="flex items-center gap-2 mt-3">
+                        <span className="text-[10px] text-muted-foreground">Цвета:</span>
+                        <div className="flex gap-1">
+                          {wallpaper.colors.slice(0, 3).map((color, j) => (
+                            <span key={j} className="text-[10px] text-muted-foreground">
+                              {color}{j < Math.min(wallpaper.colors.length, 3) - 1 ? ',' : ''}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Service Section - Presentation style */}
       <section className="py-16 md:py-24 bg-card">
