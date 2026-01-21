@@ -1,53 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import heroMural from '@/assets/hero-mural.jpg';
-import mural1 from '@/assets/mural-1.jpg';
-import mural2 from '@/assets/mural-2.jpg';
-import mural3 from '@/assets/mural-3.jpg';
-import mural4 from '@/assets/mural-4.jpg';
-import mural5 from '@/assets/mural-5.jpg';
-import mural6 from '@/assets/mural-6.jpg';
-
-const galleryImages = [
-  { id: 1, src: mural3, aspect: 'tall' },
-  { id: 2, src: mural5, aspect: 'wide' },
-  { id: 3, src: heroMural, aspect: 'square' },
-  { id: 4, src: mural2, aspect: 'wide' },
-  { id: 5, src: mural4, aspect: 'tall' },
-  { id: 6, src: mural1, aspect: 'square' },
-  { id: 7, src: mural6, aspect: 'wide' },
-  { id: 8, src: mural3, aspect: 'square' },
-];
-
-const projects = [
-  {
-    id: 'hotel-aurora',
-    title: 'Отель «Аврора»',
-    location: 'Москва',
-    type: 'HoReCa',
-    description: 'Оформление лобби и ресторана отеля панорамными муралами',
-    image: mural3,
-    images: [mural3, mural5, heroMural],
-  },
-  {
-    id: 'apartment-nevsky',
-    title: 'Апартаменты на Невском',
-    location: 'Санкт-Петербург',
-    type: 'Частный интерьер',
-    description: 'Ботанический мурал для спальни с адаптацией цветовой гаммы',
-    image: mural5,
-    images: [mural5, mural3, mural2],
-  },
-  {
-    id: 'spa-resort',
-    title: 'SPA-комплекс «Тишина»',
-    location: 'Сочи',
-    type: 'HoReCa',
-    description: 'Серия муралов для зон отдыха и процедурных кабинетов',
-    image: mural2,
-    images: [mural2, mural6, mural4],
-  },
-];
+import { InspirationGallery } from '@/components/inspiration/InspirationGallery';
+import { projects } from '@/data/inspiration';
 
 const Inspiration = () => {
   return (
@@ -68,35 +22,8 @@ const Inspiration = () => {
         </div>
       </section>
 
-      {/* Gallery Grid - Masonry-like */}
-      <section className="section">
-        <div className="container-wide">
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            {galleryImages.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="break-inside-avoid"
-              >
-                <div className={`overflow-hidden ${
-                  item.aspect === 'tall' ? 'aspect-[3/4]' : 
-                  item.aspect === 'wide' ? 'aspect-[16/10]' : 
-                  'aspect-square'
-                }`}>
-                  <img
-                    src={item.src}
-                    alt={`Интерьер ${item.id}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Gallery with Filters */}
+      <InspirationGallery />
 
       {/* Featured Projects */}
       <section className="section bg-card">
