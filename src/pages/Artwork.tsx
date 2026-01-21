@@ -788,57 +788,57 @@ const Artwork = () => {
                 </Link>
               </motion.div>
 
-              {/* Companion Wallpapers Grid */}
-              <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {companionWallpapers.map((wallpaper, i) => (
-                  <motion.a
-                    key={wallpaper.id}
-                    href={`/artwork/${wallpaper.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="group block border border-foreground/10 hover:border-foreground/30 transition-colors"
-                  >
-                    <div className="aspect-[16/9] overflow-hidden bg-muted relative">
-                      <img
-                        src={getImageSrc(wallpaper.images[0])}
-                        alt={wallpaper.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                        style={{ filter: 'saturate(0.7)' }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                    <div className="p-5">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
+              {/* Companion Wallpapers - Horizontal Scroll */}
+              <div className="lg:col-span-8 relative">
+                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+                  <div className="flex gap-4" style={{ width: 'max-content' }}>
+                    {companionWallpapers.slice(0, 5).map((wallpaper, i) => (
+                      <motion.a
+                        key={wallpaper.id}
+                        href={`/artwork/${wallpaper.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.08 }}
+                        className="group block border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
+                        style={{ width: '260px' }}
+                      >
+                        <div className="aspect-[4/3] overflow-hidden bg-muted relative">
+                          <img
+                            src={getImageSrc(wallpaper.images[0])}
+                            alt={wallpaper.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            style={{ filter: 'saturate(0.7)' }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                        <div className="p-4">
                           <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
                             {wallpaper.collection}
                           </p>
-                          <h3 className="text-sm font-medium">{wallpaper.name}</h3>
-                        </div>
-                        <span className="text-xs text-muted-foreground">
-                          от {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground line-clamp-2">{wallpaper.shortDescription}</p>
-                      
-                      {/* Color swatches */}
-                      <div className="flex items-center gap-2 mt-3">
-                        <span className="text-[10px] text-muted-foreground">Цвета:</span>
-                        <div className="flex gap-1">
-                          {wallpaper.colors.slice(0, 3).map((color, j) => (
-                            <span key={j} className="text-[10px] text-muted-foreground">
-                              {color}{j < Math.min(wallpaper.colors.length, 3) - 1 ? ',' : ''}
+                          <h3 className="text-sm font-medium mb-1">{wallpaper.name}</h3>
+                          <p className="text-xs text-muted-foreground line-clamp-1">{wallpaper.shortDescription}</p>
+                          <div className="flex items-center justify-between mt-3">
+                            <div className="flex gap-1">
+                              {wallpaper.colors.slice(0, 2).map((color, j) => (
+                                <span key={j} className="text-[10px] text-muted-foreground">
+                                  {color}{j < Math.min(wallpaper.colors.length, 2) - 1 ? ',' : ''}
+                                </span>
+                              ))}
+                            </div>
+                            <span className="text-[10px] text-muted-foreground">
+                              {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
                             </span>
-                          ))}
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </motion.a>
-                ))}
+                      </motion.a>
+                    ))}
+                  </div>
+                </div>
+                {/* Scroll hint gradient */}
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none hidden md:block" />
               </div>
             </div>
           </div>
