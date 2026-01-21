@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag } from 'lucide-react';
+import { Menu, X, ShoppingBag, Heart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 
 const navItems = [
   { label: 'Каталог', href: '/catalog' },
@@ -17,6 +18,7 @@ export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { totalItems } = useCart();
+  const { totalFavorites } = useFavorites();
 
   return (
     <>
@@ -49,7 +51,21 @@ export const Header = () => {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
+              {/* Favorites */}
+              <Link 
+                to="/favorites"
+                className="relative p-2 transition-colors duration-400"
+              >
+                <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground' : ''}`} />
+                {totalFavorites > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[9px] font-extralight flex items-center justify-center">
+                    {totalFavorites}
+                  </span>
+                )}
+              </Link>
+              
+              {/* Cart */}
               <Link 
                 to="/cart"
                 className="relative p-2 transition-colors duration-400"
@@ -128,7 +144,15 @@ export const Header = () => {
                 ))}
               </nav>
 
-              <div className="absolute bottom-8 left-8 right-8">
+              <div className="absolute bottom-8 left-8 right-8 space-y-3">
+                <Link
+                  to="/favorites"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-3 py-3 border border-foreground/20 text-sm uppercase tracking-[0.1em] hover:border-foreground transition-colors"
+                >
+                  <Heart className={`w-4 h-4 stroke-[1.5] ${totalFavorites > 0 ? 'fill-foreground' : ''}`} />
+                  <span>Избранное {totalFavorites > 0 && `(${totalFavorites})`}</span>
+                </Link>
                 <Link
                   to="/cart"
                   onClick={() => setIsMenuOpen(false)}

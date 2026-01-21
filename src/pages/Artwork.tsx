@@ -6,6 +6,7 @@ import { getProductById, materials, products, patternTypes, roomTypes, Material,
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { ColorVariantSelector } from '@/components/artwork/ColorVariantSelector';
 import { useCart } from '@/context/CartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 import { toast } from 'sonner';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import heroMural from '@/assets/hero-mural.jpg';
@@ -91,6 +92,8 @@ const Artwork = () => {
   const [materialOpen, setMaterialOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'print' | 'material'>('print');
   const { addItem } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const isInFavorites = product ? isFavorite(product.id) : false;
 
   // Calculator state
   const [width, setWidth] = useState(300);
@@ -327,11 +330,18 @@ const Artwork = () => {
                 {/* Action buttons - Favorite & Ask Question */}
                 <div className="flex gap-2">
                   <button
-                    onClick={() => toast.success('Добавлено в избранное')}
-                    className="flex items-center gap-2 px-4 py-2 border border-foreground/15 text-xs uppercase tracking-[0.1em] hover:border-foreground/40 transition-colors"
+                    onClick={() => {
+                      toggleFavorite(product.id);
+                      toast.success(isInFavorites ? 'Удалено из избранного' : 'Добавлено в избранное');
+                    }}
+                    className={`flex items-center gap-2 px-4 py-2 border text-xs uppercase tracking-[0.1em] transition-colors ${
+                      isInFavorites 
+                        ? 'border-foreground bg-foreground text-background hover:bg-foreground/90' 
+                        : 'border-foreground/15 hover:border-foreground/40'
+                    }`}
                   >
-                    <Heart className="w-4 h-4" />
-                    Избранное
+                    <Heart className={`w-4 h-4 ${isInFavorites ? 'fill-background' : ''}`} />
+                    {isInFavorites ? 'В избранном' : 'Избранное'}
                   </button>
                   <button
                     onClick={() => toast.info('Функция в разработке', { description: 'Свяжитесь с нами через страницу контактов' })}
