@@ -793,26 +793,22 @@ const Artwork = () => {
                 <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
                   <div className="flex gap-4" style={{ width: 'max-content' }}>
                     {companionWallpapers.slice(0, 5).map((wallpaper, i) => (
-                      <motion.a
+                      <motion.div
                         key={wallpaper.id}
-                        href={`/artwork/${wallpaper.slug}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: i * 0.08 }}
-                        className="group block border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
+                        className="group border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
                         style={{ width: '260px' }}
                       >
                         <div className="aspect-[4/3] overflow-hidden bg-muted relative">
                           <img
                             src={getImageSrc(wallpaper.images[0])}
                             alt={wallpaper.name}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-cover"
                             style={{ filter: 'saturate(0.7)' }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
                         <div className="p-4">
                           <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
@@ -832,8 +828,17 @@ const Artwork = () => {
                               {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
                             </span>
                           </div>
+                          <a
+                            href={`/artwork/${wallpaper.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-3 flex items-center justify-center gap-2 w-full py-2 border border-foreground/15 text-[10px] uppercase tracking-[0.1em] hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
+                          >
+                            <ArrowRight className="w-3 h-3" />
+                            Смотреть
+                          </a>
                         </div>
-                      </motion.a>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
