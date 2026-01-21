@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, Heart } from 'lucide-react';
+import { Menu, X, ShoppingBag, Heart, Phone, MessageCircle } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 
 const navItems = [
   { label: 'Каталог', href: '/catalog' },
   { label: 'Коллекции', href: '/collections' },
-  { label: 'Вдохновение', href: '/inspiration' },
   { label: 'Дизайнерам', href: '/designers' },
+  { label: 'Покупателям', href: '/buyers' },
   { label: 'О студии', href: '/studio' },
   { label: 'Контакты', href: '/contacts' },
 ];
@@ -49,6 +49,24 @@ export const Header = () => {
                 </Link>
               ))}
             </nav>
+
+            {/* Phone & Messenger - Desktop */}
+            <div className="hidden lg:flex items-center gap-4 mr-4">
+              <a 
+                href="tel:+74951234567" 
+                className="text-[11px] font-extralight tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                +7 (495) 123-45-67
+              </a>
+              <a 
+                href="https://wa.me/79001234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 stroke-[1.5]" />
+              </a>
+            </div>
 
             {/* Actions */}
             <div className="flex items-center gap-4">
