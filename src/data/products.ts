@@ -28,6 +28,10 @@ export interface Product {
   maxWidth?: number;
   maxHeight?: number;
   aspectRatio?: AspectRatio;
+  // Color variant system
+  colorVariantGroup?: string; // Group ID to link color variants together
+  colorVariantName?: string;  // Name of this color variant (e.g., "Тёплый", "Холодный")
+  colorVariantHex?: string;   // Dominant color hex for filter display
 }
 
 export interface Collection {
@@ -188,6 +192,7 @@ export const collections: Collection[] = [
 ];
 
 export const products: Product[] = [
+  // Morning Whisper - 3 color variants
   {
     id: 'morning-whisper',
     name: 'Morning Whisper',
@@ -207,7 +212,55 @@ export const products: Product[] = [
     popularity: 95,
     maxWidth: 600,
     maxHeight: 320,
+    colorVariantGroup: 'morning-whisper',
+    colorVariantName: 'Холодный',
+    colorVariantHex: '#6B8CAE',
   },
+  {
+    id: 'morning-whisper-warm',
+    name: 'Morning Whisper',
+    slug: 'morning-whisper-warm',
+    type: 'mural',
+    collection: 'Silentia',
+    collectionId: 'silentia',
+    description: 'Туманные горы на рассвете. Тёплая палитра с персиковыми и песочными оттенками.',
+    shortDescription: 'Туманные горы — тёплая гамма',
+    pricePerSqm: 4500,
+    images: ['/hero-mural.jpg', '/mural-1.jpg', '/mural-2.jpg'],
+    tags: ['Пейзаж', 'Горы', 'Минимализм'],
+    colors: ['Бежевый', 'Персиковый', 'Песочный'],
+    patternType: 'landscape',
+    roomTypes: ['living', 'bedroom', 'office'],
+    popularity: 90,
+    maxWidth: 600,
+    maxHeight: 320,
+    colorVariantGroup: 'morning-whisper',
+    colorVariantName: 'Тёплый',
+    colorVariantHex: '#D4B896',
+  },
+  {
+    id: 'morning-whisper-mono',
+    name: 'Morning Whisper',
+    slug: 'morning-whisper-mono',
+    type: 'mural',
+    collection: 'Silentia',
+    collectionId: 'silentia',
+    description: 'Туманные горы на рассвете. Монохромное исполнение в глубоких серых тонах.',
+    shortDescription: 'Туманные горы — монохром',
+    pricePerSqm: 4500,
+    images: ['/mural-6.jpg', '/mural-2.jpg', '/hero-mural.jpg'],
+    tags: ['Пейзаж', 'Горы', 'Минимализм'],
+    colors: ['Серый', 'Белый'],
+    patternType: 'landscape',
+    roomTypes: ['living', 'bedroom', 'office'],
+    popularity: 85,
+    maxWidth: 600,
+    maxHeight: 320,
+    colorVariantGroup: 'morning-whisper',
+    colorVariantName: 'Монохром',
+    colorVariantHex: '#7A7A7A',
+  },
+  // Peony Garden - 3 color variants
   {
     id: 'peony-garden',
     name: 'Peony Garden',
@@ -227,6 +280,53 @@ export const products: Product[] = [
     popularity: 88,
     maxWidth: 500,
     maxHeight: 300,
+    colorVariantGroup: 'peony-garden',
+    colorVariantName: 'Розовый',
+    colorVariantHex: '#E8A4B8',
+  },
+  {
+    id: 'peony-garden-blush',
+    name: 'Peony Garden',
+    slug: 'peony-garden-blush',
+    type: 'mural',
+    collection: 'Botanica',
+    collectionId: 'botanica',
+    description: 'Пионы в полном цвету. Нежная палитра румяных и персиковых оттенков.',
+    shortDescription: 'Пионы — персиковая гамма',
+    pricePerSqm: 4800,
+    images: ['/mural-5.jpg', '/mural-3.jpg', '/hero-mural.jpg'],
+    tags: ['Цветы', 'Ботаника', 'Романтика'],
+    colors: ['Персиковый', 'Кремовый', 'Розовый'],
+    patternType: 'botanical',
+    roomTypes: ['bedroom', 'living'],
+    popularity: 82,
+    maxWidth: 500,
+    maxHeight: 300,
+    colorVariantGroup: 'peony-garden',
+    colorVariantName: 'Персиковый',
+    colorVariantHex: '#FFCBA4',
+  },
+  {
+    id: 'peony-garden-sage',
+    name: 'Peony Garden',
+    slug: 'peony-garden-sage',
+    type: 'mural',
+    collection: 'Botanica',
+    collectionId: 'botanica',
+    description: 'Пионы в полном цвету. Приглушённая зелёная палитра с акцентами шалфея.',
+    shortDescription: 'Пионы — зелёная гамма',
+    pricePerSqm: 4800,
+    images: ['/hero-mural.jpg', '/mural-3.jpg', '/mural-5.jpg'],
+    tags: ['Цветы', 'Ботаника', 'Романтика'],
+    colors: ['Шалфей', 'Серо-зелёный', 'Кремовый'],
+    patternType: 'botanical',
+    roomTypes: ['bedroom', 'living'],
+    popularity: 78,
+    maxWidth: 500,
+    maxHeight: 300,
+    colorVariantGroup: 'peony-garden',
+    colorVariantName: 'Шалфей',
+    colorVariantHex: '#9DC183',
   },
   {
     id: 'terracotta-flow',
@@ -506,4 +606,10 @@ export const getProductsByCollection = (collectionId: string): Product[] => {
 
 export const getProductsByType = (type: ProductType): Product[] => {
   return products.filter(p => p.type === type);
+};
+
+// Get all color variants for a product group
+export const getColorVariants = (product: Product): Product[] => {
+  if (!product.colorVariantGroup) return [product];
+  return products.filter(p => p.colorVariantGroup === product.colorVariantGroup);
 };
