@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn } from 'lucide-react';
+import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
-import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio } from '@/data/products';
+import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'sonner';
@@ -312,7 +312,24 @@ const Artwork = () => {
 
             {/* Right - Compact Product Info */}
             <div className={`${config.galleryClass === 'lg:col-span-12' ? 'lg:col-span-12' : config.galleryClass === 'lg:col-span-9' ? 'lg:col-span-3' : config.galleryClass === 'lg:col-span-8' ? 'lg:col-span-4' : config.galleryClass === 'lg:col-span-7' ? 'lg:col-span-5' : 'lg:col-span-6'} lg:sticky lg:top-20 lg:self-start`}>
-              <div className="space-y-5">
+              <div className="space-y-4">
+                {/* Action buttons - Favorite & Ask Question */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => toast.success('Добавлено в избранное')}
+                    className="flex items-center gap-2 px-4 py-2 border border-foreground/15 text-xs uppercase tracking-[0.1em] hover:border-foreground/40 transition-colors"
+                  >
+                    <Heart className="w-4 h-4" />
+                    Избранное
+                  </button>
+                  <button
+                    onClick={() => toast.info('Функция в разработке', { description: 'Свяжитесь с нами через страницу контактов' })}
+                    className="flex items-center gap-2 px-4 py-2 border border-foreground/15 text-xs uppercase tracking-[0.1em] hover:border-foreground/40 transition-colors"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Задать вопрос
+                  </button>
+                </div>
                 {/* Title & Price header */}
                 <div>
                   <Link 
@@ -489,72 +506,149 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* Technical Data Section */}
-      <section className="py-16 md:py-24 bg-card">
+      {/* Technical Info Section - 3 columns */}
+      <section className="py-12 md:py-16 border-t border-foreground/10">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Technical Data */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
+            {/* Column 1 - Print Technical Data */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="space-y-4"
             >
-              <h3 className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
-                Технические данные
+              <h3 className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                О принте
               </h3>
-              
               <div className="space-y-0">
                 {[
-                  { label: 'Настроение', value: getPatternLabel() },
+                  { label: 'Коллекция', value: product.collection },
+                  { label: 'Пропорция', value: aspectRatio },
+                  { label: 'Макс. размер', value: `${product.maxWidth || 600}×${product.maxHeight || 320} см` },
+                  { label: 'Разрешение', value: '2400 DPI / 45K px' },
                   { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
-                  { label: 'Разрешение', value: '2400 DPI' },
-                  { label: 'Макс. ширина', value: `${product.maxWidth || 600} см` },
-                  { label: 'Макс. высота', value: `${product.maxHeight || 320} см (бесшовно)` },
-                  { label: 'Помещения', value: getRoomLabels() },
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="flex justify-between items-baseline py-3 border-b border-foreground/10"
+                    className="flex justify-between items-baseline py-2.5 border-b border-foreground/8"
                   >
-                    <span className="text-sm text-muted-foreground">{item.label}</span>
-                    <span className="text-sm text-right">{item.value}</span>
+                    <span className="text-xs text-muted-foreground">{item.label}</span>
+                    <span className="text-xs font-medium">{item.value}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Scale Section */}
+            {/* Column 2 - Material Texture Preview + Info */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
+              className="space-y-4"
             >
-              <h3 className="text-xs uppercase tracking-[0.3em] text-muted-foreground mb-6">
-                Детализация
+              <h3 className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                Текстура материала
               </h3>
-              <h2 className="text-2xl md:text-3xl font-light tracking-wide mb-4">
-                Масштаб в каждом пикселе
-              </h2>
-              <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
-                Наши принты сохраняют безупречную четкость даже на высоте 6 метров. Каждая прожилка камня или мазок кисти выглядят так, будто они нанесены вручную.
-              </p>
               
-              {/* Stats */}
-              <div className="flex gap-10">
-                <div>
-                  <p className="text-3xl md:text-4xl font-light mb-1">45K</p>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                    Пикселей по ширине
-                  </p>
-                </div>
-                <div>
-                  <p className="text-3xl md:text-4xl font-light mb-1">2400</p>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-                    DPI разрешение
+              {/* Texture preview image placeholder */}
+              <div className="aspect-[4/3] bg-muted/30 border border-foreground/8 overflow-hidden relative">
+                <img 
+                  src={mainImage}
+                  alt="Текстура материала"
+                  className="w-full h-full object-cover scale-150 blur-[0.5px]"
+                  style={{ filter: 'saturate(0.3) contrast(0.9)' }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="text-xs font-medium">{selectedMaterial.name}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">
+                    {selectedMaterial.texture || selectedMaterial.description}
                   </p>
                 </div>
               </div>
+
+              {/* Material tech specs */}
+              <div className="space-y-0">
+                {[
+                  { label: 'Шов', value: selectedMaterial.id === 'fleece-premium' || selectedMaterial.id === 'fleece-commercial' ? 'Бесшовный до 320 см' : 'Шовный' },
+                  { label: 'Основа', value: selectedMaterial.id.includes('fleece') ? 'Флизелин' : selectedMaterial.id === 'vinyl' ? 'Винил на флизелине' : selectedMaterial.id === 'textile' ? 'Текстиль' : 'Холст' },
+                  { label: 'Плотность', value: selectedMaterial.id === 'vinyl' ? '350 г/м²' : selectedMaterial.id === 'textile' ? '280 г/м²' : '220 г/м²' },
+                  { label: 'Макс. ширина', value: selectedMaterial.id === 'canvas' ? '150 см' : '320 см' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-baseline py-2 border-b border-foreground/8"
+                  >
+                    <span className="text-[11px] text-muted-foreground">{item.label}</span>
+                    <span className="text-[11px]">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Column 3 - Material Selection + Link */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="space-y-4"
+            >
+              <h3 className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                Выбор материала
+              </h3>
+              
+              {/* Material selection - synced with top */}
+              <div className="space-y-1.5">
+                {materials.filter(m => product.type === 'panel' ? m.id === 'canvas' : m.id !== 'canvas').map((material) => (
+                  <button
+                    key={material.id}
+                    onClick={() => setSelectedMaterial(material)}
+                    className={`w-full flex items-center justify-between py-2.5 px-3 text-left text-xs border transition-all ${
+                      selectedMaterial.id === material.id
+                        ? 'border-foreground bg-foreground/5'
+                        : 'border-foreground/10 hover:border-foreground/25'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className={`w-2 h-2 rounded-full ${
+                        selectedMaterial.id === material.id
+                          ? 'bg-foreground'
+                          : 'border border-foreground/30'
+                      }`} />
+                      <span>{material.name}</span>
+                      {material.forHoreca && (
+                        <span className="text-[8px] uppercase tracking-wider text-muted-foreground px-1 py-0.5 border border-foreground/15">HoReCa</span>
+                      )}
+                    </div>
+                    {material.priceCoefficient > 1 && (
+                      <span className="text-[10px] text-muted-foreground">
+                        +{Math.round((material.priceCoefficient - 1) * 100)}%
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+
+              {/* Features of selected material */}
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                {selectedMaterial.features.map((feature, i) => (
+                  <div key={i} className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                    <Check className="w-2.5 h-2.5" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Link to materials page */}
+              <Link 
+                to="/buyers"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors pt-2"
+              >
+                Подробнее о материалах
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             </motion.div>
           </div>
         </div>
