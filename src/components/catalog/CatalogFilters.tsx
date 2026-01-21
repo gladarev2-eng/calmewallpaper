@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { Search, X, ChevronDown, RotateCcw } from 'lucide-react';
 import { collections, patternTypes, roomTypes, colorOptions } from '@/data/products';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 interface CatalogFiltersProps {
   selectedTypes: string[];
@@ -216,6 +216,21 @@ export const CatalogFilters = ({
   totalCount,
 }: CatalogFiltersProps) => {
   const currentType = selectedTypes[0] || 'all';
+  const [isSticky, setIsSticky] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+  
+  // Handle sticky state
+  useEffect(() => {
+    const handleScroll = () => {
+      if (filterRef.current) {
+        const rect = filterRef.current.getBoundingClientRect();
+        setIsSticky(rect.top <= 96); // 96px = header height (h-24 = 6rem = 96px)
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   const hasActiveFilters = useMemo(() => {
     return selectedCollections.length > 0 || 
@@ -357,66 +372,78 @@ export const CatalogFilters = ({
   };
 
   return (
-    <div className="bg-background">
-      <div className="container-wide">
-        {/* Top level: Product type tabs */}
-        <div className="pt-20 pb-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              {productTypes.map(type => (
-                <button
-                  key={type.id}
-                  onClick={() => {
-                    onTypesChange(type.id === 'all' ? [] : [type.id]);
-                    // Clear type-specific filters when changing type
-                    onSizesChange([]);
-                    onWidthsChange([]);
-                  }}
-                  className={`text-sm uppercase tracking-[0.15em] pb-1 transition-all ${
-                    currentType === type.id
-                      ? 'text-foreground border-b border-foreground'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {type.label}
-                </button>
-              ))}
+    <>
+      {/* Spacer for sticky positioning */}
+      <div ref={filterRef} className="pt-24" />
+      
+      {/* Sticky filter bar */}
+      <div 
+        className={`sticky top-24 z-40 transition-all duration-300 ${
+          isSticky 
+            ? 'bg-background/95 backdrop-blur-md shadow-[0_1px_0_0_hsl(var(--foreground)/0.08)]' 
+            : 'bg-background'
+        }`}
+      >
+        <div className="container-wide">
+          {/* Top level: Product type tabs */}
+          <div className={`transition-all duration-300 ${isSticky ? 'py-4' : 'pt-4 pb-6'}`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-8">
+                {productTypes.map(type => (
+                  <button
+                    key={type.id}
+                    onClick={() => {
+                      onTypesChange(type.id === 'all' ? [] : [type.id]);
+                      // Clear type-specific filters when changing type
+                      onSizesChange([]);
+                      onWidthsChange([]);
+                    }}
+                    className={`text-sm uppercase tracking-[0.15em] pb-1 transition-all ${
+                      currentType === type.id
+                        ? 'text-foreground border-b border-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {type.label}
+                  </button>
+                ))}
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {totalCount} {totalCount === 1 ? 'объект' : totalCount < 5 ? 'объекта' : 'объектов'}
+              </p>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {totalCount} {totalCount === 1 ? 'объект' : totalCount < 5 ? 'объекта' : 'объектов'}
-            </p>
           </div>
-        </div>
-        
-        {/* Second level: Contextual filters */}
-        <div className="pb-10">
-          <div className="flex flex-wrap items-center gap-6 lg:gap-8">
-            {getSecondLevelFilters()}
-            
-            {/* Sort */}
-            <div className="ml-auto">
-              <UnderlineDropdown
-                label="Сортировка"
-                options={sortOptions}
-                selectedValues={[sortBy]}
-                onChange={(vals) => onSortChange(vals[0] || 'popularity')}
-              />
+          
+          {/* Second level: Contextual filters */}
+          <div className={`transition-all duration-300 ${isSticky ? 'pb-4' : 'pb-8'}`}>
+            <div className="flex flex-wrap items-center gap-6 lg:gap-8">
+              {getSecondLevelFilters()}
+              
+              {/* Sort */}
+              <div className="ml-auto">
+                <UnderlineDropdown
+                  label="Сортировка"
+                  options={sortOptions}
+                  selectedValues={[sortBy]}
+                  onChange={(vals) => onSortChange(vals[0] || 'popularity')}
+                />
+              </div>
+              
+              {/* Reset */}
+              {hasActiveFilters && (
+                <button
+                  onClick={onClearAll}
+                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  Сбросить
+                </button>
+              )}
             </div>
-            
-            {/* Reset */}
-            {hasActiveFilters && (
-              <button
-                onClick={onClearAll}
-                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                Сбросить
-              </button>
-            )}
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
