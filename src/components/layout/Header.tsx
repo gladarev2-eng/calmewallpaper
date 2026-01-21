@@ -11,7 +11,7 @@ const navItems = [
   { label: 'Вдохновение', href: '/inspiration' },
   { label: 'Дизайнерам', href: '/designers' },
   { label: 'О студии', href: '/studio' },
-  { label: 'Покупателям', href: '/buyers' },
+  { label: 'Контакты', href: '/contacts' },
 ];
 
 export const Header = () => {
