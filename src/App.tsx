@@ -15,6 +15,7 @@ import Inspiration from "./pages/Inspiration";
 import Designers from "./pages/Designers";
 import Studio from "./pages/Studio";
 import Buyers from "./pages/Buyers";
+import Contacts from "./pages/Contacts";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Favorites from "./pages/Favorites";
@@ -41,6 +42,7 @@ const App = () => (
                 <Route path="/designers" element={<Designers />} />
                 <Route path="/studio" element={<Studio />} />
                 <Route path="/buyers" element={<Buyers />} />
+                <Route path="/contacts" element={<Contacts />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/favorites" element={<Favorites />} />
