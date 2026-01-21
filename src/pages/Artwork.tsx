@@ -789,61 +789,62 @@ const Artwork = () => {
               </motion.div>
 
               {/* Companion Wallpapers - Horizontal Scroll */}
-              <div className="lg:col-span-8 relative">
-                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-                  <div className="flex gap-4" style={{ width: 'max-content' }}>
-                    {companionWallpapers.slice(0, 5).map((wallpaper, i) => (
-                      <motion.div
-                        key={wallpaper.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.08 }}
-                        className="group border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
-                        style={{ width: '260px' }}
-                      >
-                        <div className="aspect-[4/3] overflow-hidden bg-muted relative">
-                          <img
-                            src={getImageSrc(wallpaper.images[0])}
-                            alt={wallpaper.name}
-                            className="w-full h-full object-cover"
-                            style={{ filter: 'saturate(0.7)' }}
-                          />
-                        </div>
-                        <div className="p-4">
-                          <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
-                            {wallpaper.collection}
-                          </p>
-                          <h3 className="text-sm font-medium mb-1">{wallpaper.name}</h3>
-                          <p className="text-xs text-muted-foreground line-clamp-1">{wallpaper.shortDescription}</p>
-                          <div className="flex items-center justify-between mt-3">
-                            <div className="flex gap-1">
-                              {wallpaper.colors.slice(0, 2).map((color, j) => (
-                                <span key={j} className="text-[10px] text-muted-foreground">
-                                  {color}{j < Math.min(wallpaper.colors.length, 2) - 1 ? ',' : ''}
-                                </span>
-                              ))}
-                            </div>
-                            <span className="text-[10px] text-muted-foreground">
-                              {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
-                            </span>
+              <div className="lg:col-span-8 relative overflow-hidden">
+                <div 
+                  className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
+                  style={{ scrollSnapType: 'x mandatory' }}
+                >
+                  {companionWallpapers.slice(0, 5).map((wallpaper, i) => (
+                    <motion.div
+                      key={wallpaper.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.08 }}
+                      className="group border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0"
+                      style={{ width: '260px', scrollSnapAlign: 'start' }}
+                    >
+                      <div className="aspect-[4/3] overflow-hidden bg-muted relative">
+                        <img
+                          src={getImageSrc(wallpaper.images[0])}
+                          alt={wallpaper.name}
+                          className="w-full h-full object-cover"
+                          style={{ filter: 'saturate(0.7)' }}
+                        />
+                      </div>
+                      <div className="p-4">
+                        <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-1">
+                          {wallpaper.collection}
+                        </p>
+                        <h3 className="text-sm font-medium mb-1">{wallpaper.name}</h3>
+                        <p className="text-xs text-muted-foreground line-clamp-1">{wallpaper.shortDescription}</p>
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex gap-1">
+                            {wallpaper.colors.slice(0, 2).map((color, j) => (
+                              <span key={j} className="text-[10px] text-muted-foreground">
+                                {color}{j < Math.min(wallpaper.colors.length, 2) - 1 ? ',' : ''}
+                              </span>
+                            ))}
                           </div>
-                          <a
-                            href={`/artwork/${wallpaper.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-3 flex items-center justify-center gap-2 w-full py-2 border border-foreground/15 text-[10px] uppercase tracking-[0.1em] hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
-                          >
-                            <ArrowRight className="w-3 h-3" />
-                            Смотреть
-                          </a>
+                          <span className="text-[10px] text-muted-foreground">
+                            {new Intl.NumberFormat('ru-RU').format(wallpaper.pricePerSqm)} ₽/м²
+                          </span>
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                        <a
+                          href={`/artwork/${wallpaper.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 flex items-center justify-center gap-2 w-full py-2 border border-foreground/15 text-[10px] uppercase tracking-[0.1em] hover:border-foreground hover:bg-foreground hover:text-background transition-colors"
+                        >
+                          <ArrowRight className="w-3 h-3" />
+                          Смотреть
+                        </a>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
                 {/* Scroll hint gradient */}
-                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none hidden md:block" />
+                <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
