@@ -225,136 +225,145 @@ const Designers = () => {
         </div>
       </section>
 
-      {/* HoReCa - Large Slider + Text Content */}
-      <section className="section-lg">
+      {/* HoReCa - Minimalist Design */}
+      <section className="section-lg bg-background">
         <div className="container-wide">
-          <div className="text-center mb-16">
-            <p className="text-caption mb-4">Для бизнеса</p>
-            <h2 className="text-title">HoReCa проекты</h2>
+          {/* Header with Controls */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12">
+            <div>
+              <p className="text-caption mb-4">Для бизнеса</p>
+              <h2 className="text-title">HoReCa проекты</h2>
+            </div>
+            
+            {/* Modern Slider Controls */}
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-1">
+                {horecaImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => emblaApi?.scrollTo(i)}
+                    className={`h-[2px] transition-all duration-300 ${
+                      currentSlide === i 
+                        ? 'w-8 bg-foreground' 
+                        : 'w-4 bg-foreground/20 hover:bg-foreground/40'
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={scrollPrev}
+                  className="w-10 h-10 border border-foreground/10 flex items-center justify-center hover:border-foreground/30 transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
+                </button>
+                <button 
+                  onClick={scrollNext}
+                  className="w-10 h-10 border border-foreground/10 flex items-center justify-center hover:border-foreground/30 transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                </button>
+              </div>
+            </div>
           </div>
 
-          {/* Large Image Slider */}
-          <div className="relative mb-20">
+          {/* Full-width Image Slider */}
+          <div className="mb-20 -mx-4 lg:-mx-8">
             <div className="overflow-hidden" ref={emblaRef}>
               <div className="flex">
                 {horecaImages.map((image, i) => (
-                  <div key={i} className="flex-[0_0_100%] min-w-0">
-                    <div className="aspect-[21/9] overflow-hidden">
+                  <motion.div 
+                    key={i} 
+                    className="flex-[0_0_100%] min-w-0 px-4 lg:px-8"
+                    initial={{ opacity: 0.5, scale: 0.98 }}
+                    animate={{ 
+                      opacity: currentSlide === i ? 1 : 0.5,
+                      scale: currentSlide === i ? 1 : 0.98
+                    }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <div className="aspect-[2/1] lg:aspect-[21/9] overflow-hidden">
                       <img 
                         src={image} 
                         alt={`HoReCa проект ${i + 1}`}
                         className="w-full h-full object-cover"
                       />
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
-            
-            {/* Slider Controls */}
-            <div className="absolute bottom-6 right-6 flex items-center gap-4">
-              <button 
-                onClick={scrollPrev}
-                className="w-12 h-12 border border-background/30 bg-foreground/20 backdrop-blur-sm flex items-center justify-center text-background hover:bg-foreground/40 transition-colors"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <span className="text-background text-sm font-light tracking-wider">
-                {String(currentSlide + 1).padStart(2, '0')} / {String(horecaImages.length).padStart(2, '0')}
-              </span>
-              <button 
-                onClick={scrollNext}
-                className="w-12 h-12 border border-background/30 bg-foreground/20 backdrop-blur-sm flex items-center justify-center text-background hover:bg-foreground/40 transition-colors"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
           </div>
 
-          {/* Text Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-            {/* Left Column - Main Description */}
+          {/* Clean Text Layout */}
+          <div className="max-w-5xl mx-auto">
+            {/* Main Intro */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="mb-20"
             >
-              <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-6">
-                Комплексный подход
-              </p>
-              <h3 className="text-2xl lg:text-3xl font-light mb-6 leading-snug">
-                Создаём атмосферу для гостей и клиентов вашего бизнеса
-              </h3>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                Работаем с отелями, ресторанами, спа-салонами, офисами и общественными пространствами. 
-                Понимаем специфику коммерческих проектов: высокие требования к износостойкости, 
-                пожарная безопасность, соответствие санитарным нормам.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Каждый проект — индивидуальная работа с архитектором или дизайнером. Адаптируем 
-                изображения под пространство, учитываем освещение, трафик и назначение помещения.
+              <p className="text-xl lg:text-2xl font-light leading-relaxed text-foreground/90 max-w-3xl">
+                Работаем с отелями, ресторанами, спа-салонами и общественными пространствами. 
+                Понимаем специфику коммерческих проектов и создаём решения, которые служат годами.
               </p>
             </motion.div>
 
-            {/* Right Column - Details */}
-            <div className="space-y-12">
+            {/* Features Grid - 2x2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="border-t border-foreground/10 pt-6"
+              >
+                <h4 className="text-base mb-4">Материалы для высоких нагрузок</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Винил на флизелине класса А. Антивандальное покрытие, устойчивость 
+                  к UV и влаге. Сертификаты КМ1-КМ2 для общественных пространств.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.05 }}
+                className="border-t border-foreground/10 pt-6"
+              >
+                <h4 className="text-base mb-4">Масштабные панорамы</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Полотна до 6 метров без швов. Многометровые панорамы для лобби 
+                  отелей и ресторанных залов. Расчёт раскладки для сложных форм.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
+                className="border-t border-foreground/10 pt-6"
               >
-                <p className="text-[11px] tracking-[0.3em] text-muted-foreground/50 mb-3">01</p>
-                <h4 className="text-lg font-light mb-3">Материалы для высоких нагрузок</h4>
+                <h4 className="text-base mb-4">Адаптация под бренд</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Винил на флизелине с повышенной износостойкостью. Влагостойкость класса А, 
-                  антивандальное покрытие, устойчивость к ультрафиолету. Сертификаты пожарной 
-                  безопасности КМ1-КМ2 для общественных пространств.
+                  Корректируем палитру под брендбук заведения. Создаём уникальные 
+                  решения, отражающие концепцию и философию пространства.
                 </p>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.15 }}
+                className="border-t border-foreground/10 pt-6"
               >
-                <p className="text-[11px] tracking-[0.3em] text-muted-foreground/50 mb-3">02</p>
-                <h4 className="text-lg font-light mb-3">Масштабные панорамы</h4>
+                <h4 className="text-base mb-4">Монтаж и сопровождение</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Опыт работы с полотнами до 6 метров в ширину без швов. Многометровые панорамы 
-                  для лобби отелей, ресторанных залов и конференц-центров. Профессиональный 
-                  расчёт раскладки для сложных архитектурных форм.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                <p className="text-[11px] tracking-[0.3em] text-muted-foreground/50 mb-3">03</p>
-                <h4 className="text-lg font-light mb-3">Адаптация под бренд</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Корректируем цветовую гамму под брендбук заведения. Интегрируем корпоративные 
-                  цвета в палитру изображения. Создаём уникальные решения, отражающие концепцию 
-                  и философию пространства.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.25 }}
-              >
-                <p className="text-[11px] tracking-[0.3em] text-muted-foreground/50 mb-3">04</p>
-                <h4 className="text-lg font-light mb-3">Монтаж и сопровождение</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Профессиональный монтаж нашей командой в Москве и Санкт-Петербурге. 
-                  Для регионов — координация с рекомендованными подрядчиками, инструкции 
-                  и удалённое сопровождение. Гарантия на работы — 2 года.
+                  Профессиональный монтаж в Москве и Петербурге. Координация 
+                  подрядчиков в регионах. Гарантия на работы — 2 года.
                 </p>
               </motion.div>
             </div>
