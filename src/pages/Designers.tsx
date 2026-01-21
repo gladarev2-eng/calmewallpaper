@@ -10,23 +10,51 @@ import mural6 from '@/assets/mural-6.jpg';
 const Designers = () => {
   const services = [
     {
+      num: '01',
       title: 'Бесплатные визуализации',
-      desc: 'Подготовим визуализации для презентации клиентам',
+      subtitle: 'Покажем принт в вашем интерьере',
+      desc: 'Присылайте фотографии или планы помещения — мы подготовим профессиональные визуализации для презентации клиентам. Это бесплатно для всех партнёров программы.',
+      details: [
+        'Монтаж на реальные фото интерьера',
+        'До 3 ракурсов на каждый проект',
+        'Готовность в течение 24 часов',
+      ],
       image: mural2,
     },
     {
+      num: '02',
       title: 'Адаптация под интерьер',
-      desc: 'Скорректируем цвета и пропорции под конкретное пространство',
+      subtitle: 'Индивидуальная работа с каждым проектом',
+      desc: 'Скорректируем цветовую гамму, пропорции и детализацию под конкретное пространство. Работаем с палитрой заказчика, подстраиваем под освещение и соседние материалы.',
+      details: [
+        'Коррекция цветовой температуры',
+        'Масштабирование под размеры стены',
+        'Интеграция с элементами интерьера',
+      ],
       image: mural3,
     },
     {
+      num: '03',
       title: 'Образцы материалов',
-      desc: 'Пришлём образцы для презентации клиентам',
+      subtitle: 'Тактильный опыт для ваших клиентов',
+      desc: 'Пришлём образцы всех доступных материалов для презентации заказчикам. Клиент сможет оценить текстуру, плотность и качество печати до оформления заказа.',
+      details: [
+        'Все 5 типов материалов',
+        'Бесплатная доставка по России',
+        'Образцы с реальной печатью',
+      ],
       image: mural5,
     },
     {
+      num: '04',
       title: 'Консультации и поддержка',
-      desc: 'Поможем с выбором и техническими вопросами',
+      subtitle: 'Персональный менеджер на связи',
+      desc: 'Выделенный специалист для ваших проектов. Поможем с выбором принта, расчётом материалов, техническими вопросами монтажа и координацией доставки.',
+      details: [
+        'Ответ в течение 2 часов',
+        'Помощь с техническими расчётами',
+        'Сопровождение до завершения проекта',
+      ],
       image: mural6,
     },
   ];
@@ -140,33 +168,59 @@ const Designers = () => {
         </div>
       </section>
 
-      {/* Services - Visual Presentation */}
-      <section className="section bg-card">
+      {/* Services - Sequential Presentation */}
+      <section className="section">
         <div className="container-wide">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <p className="text-caption mb-4">Что мы предлагаем</p>
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-24 lg:space-y-32">
             {services.map((item, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
+                key={item.num}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative aspect-[16/10] overflow-hidden"
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 0.6 }}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+                  i % 2 === 1 ? 'lg:grid-flow-dense' : ''
+                }`}
               >
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
-                  <h3 className="font-display text-2xl mb-2">{item.title}</h3>
-                  <p className="text-sm opacity-90">{item.desc}</p>
+                {/* Image */}
+                <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
+                  <span className="text-[11px] tracking-[0.3em] text-muted-foreground/50 block mb-6">
+                    {item.num}
+                  </span>
+                  <h3 className="text-2xl lg:text-3xl font-light mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm uppercase tracking-[0.1em] text-muted-foreground mb-6">
+                    {item.subtitle}
+                  </p>
+                  <p className="text-base text-muted-foreground leading-relaxed mb-8">
+                    {item.desc}
+                  </p>
+                  <ul className="space-y-3">
+                    {item.details.map((detail, j) => (
+                      <li key={j} className="flex items-start gap-3 text-sm">
+                        <span className="w-1 h-1 rounded-full bg-foreground/40 mt-2 shrink-0" />
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             ))}
