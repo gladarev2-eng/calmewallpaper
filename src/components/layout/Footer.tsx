@@ -64,7 +64,9 @@ export const Footer = () => {
               <a href="mailto:hello@calme.studio" className="hover:text-foreground transition-colors duration-400">
                 hello@calme.studio
               </a>
-              <p>Москва, Россия</p>
+              <Link to="/contacts" className="hover:text-foreground transition-colors duration-400">
+                Шоурумы и адреса
+              </Link>
             </div>
           </div>
         </div>
