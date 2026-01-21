@@ -115,6 +115,79 @@ const Designers = () => {
         </div>
       </section>
 
+      {/* Loyalty Program */}
+      <section className="section bg-card">
+        <div className="container-wide">
+          <div className="text-center mb-16">
+            <p className="text-caption mb-4">Программа лояльности</p>
+            <h2 className="text-title mb-4">Растите вместе с нами</h2>
+            <p className="text-body-lg max-w-2xl mx-auto">
+              Чем больше проектов — тем выгоднее условия. Четыре уровня партнёрства с растущими привилегиями.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10">
+            {[
+              {
+                level: 'Партнёр',
+                discount: '10%',
+                condition: 'Регистрация в программе',
+                benefits: ['Скидка 10%', 'Доступ к 3D-библиотеке', 'Персональный менеджер'],
+                highlighted: false,
+              },
+              {
+                level: 'Серебряный',
+                discount: '15%',
+                condition: 'От 500 000 ₽ в год',
+                benefits: ['Скидка 15%', 'Приоритетное производство', 'Бесплатная доставка'],
+                highlighted: false,
+              },
+              {
+                level: 'Золотой',
+                discount: '20%',
+                condition: 'От 1 500 000 ₽ в год',
+                benefits: ['Скидка 20%', 'Индивидуальные решения', 'VIP-поддержка 24/7'],
+                highlighted: false,
+              },
+              {
+                level: 'Платиновый',
+                discount: '25%',
+                condition: 'От 5 000 000 ₽ в год',
+                benefits: ['Скидка 25%', 'Эксклюзивные коллекции', 'Совместные проекты'],
+                highlighted: true,
+              },
+            ].map((tier, i) => (
+              <motion.div
+                key={tier.level}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-background'}`}
+              >
+                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 ${tier.highlighted ? 'text-background/70' : 'text-muted-foreground'}`}>
+                  {tier.level}
+                </p>
+                <p className="font-display text-5xl md:text-6xl font-light mb-2">
+                  {tier.discount}
+                </p>
+                <p className={`text-sm mb-6 ${tier.highlighted ? 'text-background/80' : 'text-muted-foreground'}`}>
+                  {tier.condition}
+                </p>
+                <ul className="space-y-2">
+                  {tier.benefits.map((benefit, j) => (
+                    <li key={j} className={`text-sm flex items-start gap-2 ${tier.highlighted ? 'text-background' : 'text-foreground'}`}>
+                      <span className={tier.highlighted ? 'text-background/50' : 'text-muted-foreground'}>•</span>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services - Visual Presentation */}
       <section className="section bg-card">
         <div className="container-wide">
