@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
@@ -11,7 +10,6 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
 const Studio = () => {
-  const [activeValue, setActiveValue] = useState(0);
 
   const values = [
     {
@@ -166,97 +164,82 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Values - Interactive Tabs with Large Image */}
-      <section className="section bg-card">
-        <div className="container-wide">
+      {/* Values - Sequential Blocks */}
+      <section className="py-0">
+        <div className="container-wide mb-16 md:mb-20 pt-20 md:pt-28">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center"
           >
             <p className="text-caption mb-4">Ценности</p>
             <h2 className="text-title">Что нас отличает</h2>
           </motion.div>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Image Side */}
-            <div className="relative aspect-[4/5] overflow-hidden order-2 lg:order-1">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={activeValue}
-                  src={values[activeValue].image}
-                  alt={values[activeValue].title}
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-background">
-                <motion.p
-                  key={`num-${activeValue}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="font-display text-6xl md:text-7xl opacity-30"
-                >
-                  {values[activeValue].num}
-                </motion.p>
-              </div>
-            </div>
-
-            {/* Tabs Side */}
-            <div className="flex flex-col justify-center order-1 lg:order-2">
-              {values.map((value, i) => (
+        {values.map((value, i) => (
+          <div 
+            key={i} 
+            className={`${i % 2 === 0 ? 'bg-card' : 'bg-background'}`}
+          >
+            <div className="container-full">
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 ${i % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+                {/* Image */}
                 <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  onClick={() => setActiveValue(i)}
-                  className={`cursor-pointer border-b border-border py-6 md:py-8 transition-all duration-300 ${
-                    activeValue === i ? 'opacity-100' : 'opacity-50 hover:opacity-75'
-                  }`}
+                  transition={{ duration: 0.6 }}
+                  className={`relative aspect-square lg:aspect-auto lg:min-h-[600px] ${i % 2 === 1 ? 'lg:order-2' : ''}`}
                 >
-                  <div className="flex items-start gap-4">
-                    <span className="text-caption font-mono">{value.num}</span>
-                    <div className="flex-1">
-                      <h3 className="font-display text-2xl md:text-3xl mb-1">{value.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">{value.subtitle}</p>
-                      
-                      <AnimatePresence>
-                        {activeValue === i && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <p className="text-sm mb-4">{value.desc}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {value.features.map((feature, fi) => (
-                                <span
-                                  key={fi}
-                                  className="text-xs px-3 py-1.5 bg-background rounded-full"
-                                >
-                                  {feature}
-                                </span>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                  <img
+                    src={value.image}
+                    alt={value.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-background">
+                    <p className="font-display text-7xl md:text-8xl opacity-20">
+                      {value.num}
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Content */}
+                <motion.div
+                  initial={{ opacity: 0, x: i % 2 === 0 ? 50 : -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className={`flex items-center p-8 md:p-12 lg:p-16 xl:p-20 ${i % 2 === 1 ? 'lg:order-1' : ''}`}
+                >
+                  <div className="max-w-lg">
+                    <span className="text-caption font-mono mb-4 block">{value.num}</span>
+                    <h3 className="font-display text-3xl md:text-4xl lg:text-5xl mb-2">{value.title}</h3>
+                    <p className="text-lg text-muted-foreground mb-6">{value.subtitle}</p>
+                    <p className="text-body-lg mb-8">{value.desc}</p>
+                    
+                    <div className="flex flex-wrap gap-3">
+                      {value.features.map((feature, fi) => (
+                        <motion.span
+                          key={fi}
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: fi * 0.1 }}
+                          className="text-sm px-4 py-2 bg-muted rounded-full"
+                        >
+                          {feature}
+                        </motion.span>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
-              ))}
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </section>
 
       {/* Materials Preview - Horizontal Scroll Feel */}
