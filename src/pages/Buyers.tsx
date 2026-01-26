@@ -89,16 +89,16 @@ const steps = [
 const Buyers = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
-      {/* Hero - Minimal */}
-      <section className="py-12 md:py-16 bg-card">
+      {/* Hero */}
+      <section className="section-sm bg-card">
         <div className="container-wide">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl"
+            className="text-center max-w-3xl mx-auto"
           >
-            <h1 className="font-display text-3xl md:text-4xl mb-3">Покупателям</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-display mb-4">Покупателям</h1>
+            <p className="text-body-lg">
               От выбора изображения до установки — сопровождаем на каждом этапе
             </p>
           </motion.div>
@@ -106,62 +106,74 @@ const Buyers = () => {
       </section>
 
       {/* Service & Guarantees */}
-      <section className="py-16 md:py-20">
+      <section className="section">
         <div className="container-wide">
-          <h2 className="font-display text-xl md:text-2xl mb-10">Что мы гарантируем</h2>
+          <div className="text-center mb-12 md:mb-16">
+            <p className="text-caption mb-4">Сервис</p>
+            <h2 className="text-title">Что мы гарантируем</h2>
+          </div>
           <ServiceGuarantees />
         </div>
       </section>
 
       {/* Process Steps - Sequential Vertical Presentation */}
-      <section className="py-16 md:py-24 bg-card">
+      <section className="section bg-card">
         <div className="container-wide">
-          <h2 className="font-display text-xl md:text-2xl mb-12 md:mb-16">Как заказать</h2>
+          <div className="text-center mb-12 md:mb-20">
+            <p className="text-caption mb-4">Процесс</p>
+            <h2 className="text-title">Как заказать</h2>
+          </div>
           <ProcessSteps steps={steps} />
         </div>
       </section>
 
-      {/* Materials */}
-      <section className="py-16 md:py-24">
+      {/* Materials - Image + Structured List */}
+      <section className="section">
         <div className="container-wide">
-          <h2 className="font-display text-xl md:text-2xl mb-10">Материалы</h2>
+          <div className="text-center mb-12 md:mb-16">
+            <p className="text-caption mb-4">Материалы</p>
+            <h2 className="text-title">Выберите подходящий</h2>
+          </div>
           <MaterialsSection materials={materials} images={[mural4, mural6, mural1, mural5, heroMural]} />
         </div>
       </section>
 
-      {/* Delivery & Payment */}
-      <section className="py-16 md:py-24 bg-card">
+      {/* Delivery & Payment - Image + Structured Text */}
+      <section className="section bg-card">
         <div className="container-wide">
           <DeliveryPayment image={mural1} />
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-16 md:py-24">
+      {/* FAQ - Open by Default */}
+      <section className="section">
         <div className="container-narrow">
-          <h2 className="font-display text-xl md:text-2xl mb-10">Частые вопросы</h2>
+          <div className="text-center mb-12">
+            <p className="text-caption mb-4">FAQ</p>
+            <h2 className="text-title">Частые вопросы</h2>
+          </div>
           <FAQAccordion faqs={faqs} />
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-16 md:py-20 bg-card">
+      <section className="section bg-card">
         <div className="container-narrow text-center">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-display text-xl md:text-2xl mb-3">Готовы начать?</h2>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Выберите изображение из каталога или свяжитесь с нами
+            <h2 className="text-title mb-4">Готовы начать?</h2>
+            <p className="text-body-lg mb-8 max-w-lg mx-auto">
+              Выберите изображение из каталога или свяжитесь с нами для консультации
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link to="/catalog" className="btn-primary">
-                В каталог
+                Перейти в каталог
               </Link>
               <Link to="/contacts" className="btn-outline">
-                Связаться
+                Связаться с нами
               </Link>
             </div>
           </motion.div>
