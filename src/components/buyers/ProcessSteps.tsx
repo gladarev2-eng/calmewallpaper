@@ -42,11 +42,11 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
           {/* Content */}
           <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
             <div className="max-w-md">
-              <span className="font-display text-4xl md:text-5xl text-muted-foreground/30 block mb-4">
-                {item.step}
-              </span>
-              <h3 className="font-display text-2xl md:text-3xl mb-4">{item.title}</h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">{item.desc}</p>
+            <span className="font-display text-2xl md:text-3xl text-muted-foreground/20 block mb-3">
+              {item.step}
+            </span>
+            <h3 className="font-display text-xl md:text-2xl mb-3">{item.title}</h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">{item.desc}</p>
               
               <ul className="space-y-3 mb-8">
                 {item.bullets.map((bullet, j) => (
