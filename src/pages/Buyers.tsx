@@ -5,6 +5,7 @@ import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
 import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
+import heroMural from '@/assets/hero-mural.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 import ProcessSteps from '@/components/buyers/ProcessSteps';
@@ -133,7 +134,7 @@ const Buyers = () => {
             <p className="text-caption mb-4">Материалы</p>
             <h2 className="text-title">Выберите подходящий</h2>
           </div>
-          <MaterialsSection materials={materials} image={mural6} />
+          <MaterialsSection materials={materials} images={[mural4, mural6, mural1, mural5, heroMural]} />
         </div>
       </section>
 
