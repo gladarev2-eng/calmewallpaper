@@ -16,8 +16,11 @@ interface FAQAccordionProps {
 }
 
 const FAQAccordion = ({ faqs }: FAQAccordionProps) => {
+  // Create array of all values to open by default
+  const defaultOpenValues = faqs.map((_, i) => `faq-${i}`);
+
   return (
-    <Accordion type="single" collapsible className="space-y-2">
+    <Accordion type="multiple" defaultValue={defaultOpenValues} className="space-y-2">
       {faqs.map((faq, i) => (
         <motion.div
           key={i}
