@@ -1,59 +1,82 @@
 import { motion } from 'framer-motion';
-import { Truck, CreditCard, Clock, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-const DeliveryPayment = () => {
-  const deliveryInfo = [
-    { icon: MapPin, text: 'Москва — 1-2 дня' },
-    { icon: Clock, text: 'Регионы — 3-10 дней' },
-    { icon: Truck, text: 'Надёжная упаковка в тубус' },
-  ];
+interface DeliveryPaymentProps {
+  image: string;
+}
 
-  const paymentInfo = [
-    { icon: CreditCard, text: 'Карты, СБП, банковский перевод' },
-    { icon: Clock, text: 'Предоплата 50%, остаток перед отправкой' },
-  ];
-
+const DeliveryPayment = ({ image }: DeliveryPaymentProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        className="space-y-4"
-      >
-        <h3 className="font-display text-xl md:text-2xl mb-4">Доставка</h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-          Доставляем по всей России. Мурал упакован в защитный тубус.
-        </p>
-        <ul className="space-y-3">
-          {deliveryInfo.map((item, i) => (
-            <li key={i} className="flex items-center gap-3 text-sm">
-              <item.icon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-              {item.text}
-            </li>
-          ))}
-        </ul>
-      </motion.div>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      {/* Content */}
+      <div className="lg:order-1">
+        <div className="max-w-md">
+          <h3 className="font-display text-2xl md:text-3xl mb-6">Доставка и оплата</h3>
+          
+          <div className="space-y-8">
+            <div>
+              <h4 className="font-medium mb-3">Доставка</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Москва — 1-2 рабочих дня
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Санкт-Петербург — 2-3 рабочих дня
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Регионы России — 3-10 рабочих дней
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Упаковка в защитный тубус
+                </li>
+              </ul>
+            </div>
 
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        className="space-y-4"
-      >
-        <h3 className="font-display text-xl md:text-2xl mb-4">Оплата</h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-          Для юридических лиц — работаем по счёту с НДС.
-        </p>
-        <ul className="space-y-3">
-          {paymentInfo.map((item, i) => (
-            <li key={i} className="flex items-center gap-3 text-sm">
-              <item.icon className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-              {item.text}
-            </li>
-          ))}
-        </ul>
-      </motion.div>
+            <div>
+              <h4 className="font-medium mb-3">Оплата</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Банковские карты, СБП, перевод
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Предоплата 50% при заказе
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
+                  Для юрлиц — работаем по счёту с НДС
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <Link 
+              to="/contacts" 
+              className="inline-flex items-center text-xs uppercase tracking-widest hover:opacity-70 transition-opacity"
+            >
+              Задать вопрос
+              <span className="ml-2">→</span>
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Image */}
+      <div className="lg:order-2">
+        <div className="aspect-[4/3] overflow-hidden">
+          <img 
+            src={image} 
+            alt="Доставка CALMÉ"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
     </div>
   );
 };
