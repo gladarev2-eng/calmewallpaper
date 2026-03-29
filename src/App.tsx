@@ -20,6 +20,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
+import Landing from "./pages/Landing";
 
 const queryClient = new QueryClient();
 
@@ -31,24 +32,29 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/catalog" element={<Catalog />} />
-                <Route path="/collections" element={<Collections />} />
-                <Route path="/collection/:id" element={<Collection />} />
-                <Route path="/artwork/:id" element={<Artwork />} />
-                <Route path="/inspiration" element={<Inspiration />} />
-                <Route path="/designers" element={<Designers />} />
-                <Route path="/studio" element={<Studio />} />
-                <Route path="/buyers" element={<Buyers />} />
-                <Route path="/contacts" element={<Contacts />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/favorites" element={<Favorites />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Layout>
+            <Routes>
+              <Route path="/landing" element={<Landing />} />
+              <Route path="*" element={
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/catalog" element={<Catalog />} />
+                    <Route path="/collections" element={<Collections />} />
+                    <Route path="/collection/:id" element={<Collection />} />
+                    <Route path="/artwork/:id" element={<Artwork />} />
+                    <Route path="/inspiration" element={<Inspiration />} />
+                    <Route path="/designers" element={<Designers />} />
+                    <Route path="/studio" element={<Studio />} />
+                    <Route path="/buyers" element={<Buyers />} />
+                    <Route path="/contacts" element={<Contacts />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/favorites" element={<Favorites />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Layout>
+              } />
+            </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </FavoritesProvider>
