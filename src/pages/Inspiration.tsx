@@ -205,14 +205,14 @@ const Inspiration = () => {
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
-      <div className="container-wide pt-20 pb-10">
+      <div className="container-wide section-sm">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
           <p className="text-caption mb-4">Вдохновение</p>
-          <h1 className="text-title mb-4 font-display">Муралы в интерьере</h1>
+          <h1 className="text-display mb-4">Муралы в интерьере</h1>
           <p className="text-body-lg max-w-xl">
             Кураторская подборка интерьерных решений. Найдите своё пространство по помещению и цвету.
           </p>
@@ -373,7 +373,7 @@ const Inspiration = () => {
                     </>
                   )}
                 </div>
-                <h2 className="text-xl font-light mb-4 text-foreground">{selectedItem.productName}</h2>
+                <h2 className="text-h3 mb-4">{selectedItem.productName}</h2>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {getMoodLabels(selectedItem.mood).map(mood => (
                     <span key={mood} className="px-2 py-1 text-[10px] uppercase tracking-[0.1em] border border-foreground/15 text-foreground/40 font-light">

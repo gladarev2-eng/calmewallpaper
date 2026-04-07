@@ -140,7 +140,7 @@ const Designers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/50'}`}
+                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/30'}`}
               >
                 <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 font-light ${tier.highlighted ? 'text-background/60' : 'text-foreground/35'}`}>
                   {tier.level}
@@ -214,10 +214,10 @@ const Designers = () => {
 
                 {/* Content */}
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
+                  <span className="text-step-num">
                     {item.num}
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-light mb-3 tracking-[-0.02em] font-display">
+                  <h3 className="text-h3 mb-3">
                     {item.title}
                   </h3>
                   <p className="text-[11px] uppercase tracking-[0.12em] text-foreground/35 mb-6 font-light">

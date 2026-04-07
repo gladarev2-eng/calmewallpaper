@@ -66,8 +66,12 @@ const Catalog = () => {
 
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
-      {/* Desktop Filters */}
+      {/* Desktop Header + Filters */}
       <div className="hidden lg:block">
+        <div className="container-wide section-sm pb-0">
+          <h1 className="text-display mb-4">Каталог</h1>
+          <p className="text-body-lg max-w-xl">Авторские муралы, панно и фоновые обои для вашего пространства</p>
+        </div>
         <CatalogFilters {...filterProps} />
       </div>
 

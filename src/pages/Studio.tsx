@@ -31,7 +31,7 @@ const Studio = () => {
             transition={{ duration: 1 }}
           >
             <p className="text-[10px] font-light uppercase tracking-[0.25em] text-white/50 mb-4">О студии</p>
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
               На пересечении дизайна<br />интерьера и цифрового искусства
             </h1>
           </motion.div>
@@ -89,7 +89,7 @@ const Studio = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 bg-card/50"
+              className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 bg-card/30"
             >
               <div>
                 <p className="text-caption mb-5">Философия</p>
@@ -171,7 +171,7 @@ const Studio = () => {
                   </div>
                 </div>
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <h3 className="text-2xl lg:text-3xl font-light mb-3 tracking-[-0.02em] text-foreground font-display">{value.title}</h3>
+                  <h3 className="text-h3 mb-3">{value.title}</h3>
                   <p className="text-[12px] uppercase tracking-[0.1em] text-foreground/35 mb-8 font-light">{value.subtitle}</p>
                   <p className="text-body-lg">{value.desc}</p>
                 </div>
@@ -226,7 +226,7 @@ const Studio = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-lg bg-card/50">
+      <section className="section-lg bg-card/30">
         <div className="container-narrow text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

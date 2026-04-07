@@ -251,13 +251,13 @@
   .text-body {
     @apply text-[13px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.55);
+    color: hsl(var(--foreground) / 0.50);
   }
 
   .text-body-lg {
     @apply text-[15px] md:text-[17px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.55);
+    color: hsl(var(--foreground) / 0.50);
   }
 
   .text-caption {
@@ -271,6 +271,36 @@
     @apply text-[10px] uppercase;
     letter-spacing: 0.14em;
     font-weight: 300;
+  }
+
+  /* Sectional h3 — unified across pages */
+  .text-h3 {
+    @apply text-[18px] lg:text-[20px] font-light;
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  /* Step number — unified across pages */
+  .text-step-num {
+    @apply text-[10px] block mb-5 font-light;
+    letter-spacing: 0.2em;
+    color: hsl(var(--foreground) / 0.20);
+  }
+
+  /* Standard input field */
+  .input-field {
+    @apply w-full px-4 py-3 bg-transparent text-[13px] font-light transition-colors duration-500;
+    border: 1px solid hsl(var(--foreground) / 0.12);
+  }
+
+  .input-field:focus {
+    outline: none;
+    border-color: hsl(var(--foreground) / 0.30);
+  }
+
+  .input-field::placeholder {
+    color: hsl(var(--foreground) / 0.30);
   }
 
   /* Grid layouts */

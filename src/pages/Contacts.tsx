@@ -161,7 +161,7 @@ const Contacts = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-[18px] font-light tracking-[-0.01em] font-display">{showroom.city}</h3>
+                  <h3 className="text-h3">{showroom.city}</h3>
                   
                   <div className="space-y-2.5">
                     <p className="flex items-start gap-3 text-[13px] font-light text-foreground/50">
@@ -317,7 +317,7 @@ const Contacts = () => {
                 className="group p-6 sm:p-8 border border-foreground/8 hover:border-foreground/20 transition-colors duration-700"
               >
                 <p className="text-caption mb-4">{item.caption}</p>
-                <h3 className="text-[16px] font-light mb-3 group-hover:text-foreground/70 transition-colors duration-700">
+                <h3 className="text-[15px] font-light mb-3 group-hover:text-foreground/70 transition-colors duration-700">
                   {item.title}
                 </h3>
                 <ArrowRight className="w-4 h-4 text-foreground/25" strokeWidth={1.5} />

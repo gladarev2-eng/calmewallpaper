@@ -55,13 +55,14 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
           </div>
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
           <motion.h1
             className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-5 font-display"
+            style={{ textShadow: '0 2px 40px rgba(0,0,0,0.3)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -329,7 +330,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <span className="text-[11px] tracking-[0.2em] text-foreground/20 block mb-5 font-light">{item.step}</span>
+                <span className="text-step-num">{item.step}</span>
                 <h3 className="text-[15px] font-light mb-3 tracking-[-0.01em]">{item.title}</h3>
                 <p className="text-body">{item.desc}</p>
               </motion.div>
@@ -339,7 +340,7 @@ const Index = () => {
       </section>
 
       {/* ── For designers ── */}
-      <section className="section bg-card/50">
+      <section className="section bg-card/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <motion.div

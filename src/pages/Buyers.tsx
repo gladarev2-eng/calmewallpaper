@@ -118,7 +118,7 @@ const Buyers = () => {
       </section>
 
       {/* Process Steps */}
-      <section className="section bg-card/50">
+      <section className="section bg-card/30">
         <div className="container-wide">
           <div className="mb-20">
             <p className="text-caption mb-4">Процесс</p>
@@ -140,7 +140,7 @@ const Buyers = () => {
       </section>
 
       {/* Delivery & Payment */}
-      <section className="section bg-card/50">
+      <section className="section bg-card/30">
         <div className="container-wide">
           <DeliveryPayment image={mural1} />
         </div>
