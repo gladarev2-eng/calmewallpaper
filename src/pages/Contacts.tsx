@@ -156,7 +156,7 @@ const Contacts = () => {
                   <img 
                     src={showroom.image} 
                     alt={`Шоурум ${showroom.city}`}
-                    className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
                   />
                 </div>
                 
