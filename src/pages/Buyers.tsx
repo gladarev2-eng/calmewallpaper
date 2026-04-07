@@ -131,7 +131,7 @@ const Buyers = () => {
       {/* Materials */}
       <section className="section bg-background">
         <div className="container-wide">
-          <div className="mb-16">
+          <div className="mb-20">
             <p className="text-caption mb-4">Материалы</p>
             <h2 className="text-title">Глубокая детализация и тактильные ощущения</h2>
           </div>
