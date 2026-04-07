@@ -394,21 +394,20 @@ export const CatalogFilters = ({
                     key={type.id}
                     onClick={() => {
                       onTypesChange(type.id === 'all' ? [] : [type.id]);
-                      // Clear type-specific filters when changing type
                       onSizesChange([]);
                       onWidthsChange([]);
                     }}
-                    className={`text-sm uppercase tracking-[0.15em] pb-1 transition-all ${
+                    className={`text-[11px] uppercase tracking-[0.14em] font-light pb-1 transition-all duration-500 ${
                       currentType === type.id
-                        ? 'text-foreground border-b border-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'text-foreground border-b border-foreground/30'
+                        : 'text-foreground/40 hover:text-foreground/70'
                     }`}
                   >
                     {type.label}
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-[12px] font-light text-foreground/35">
                 {totalCount} {totalCount === 1 ? 'объект' : totalCount < 5 ? 'объекта' : 'объектов'}
               </p>
             </div>
