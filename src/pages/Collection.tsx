@@ -65,7 +65,7 @@ const Collection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em] mb-4">{collection.name}</h1>
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] mb-4 font-display">{collection.name}</h1>
             <p className="text-[14px] md:text-[16px] font-light text-white/70 max-w-2xl">{collection.description}</p>
           </motion.div>
         </div>
