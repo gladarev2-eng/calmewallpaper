@@ -39,7 +39,7 @@ export const Header = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`text-[11px] font-extralight uppercase tracking-[0.15em] transition-all duration-400 hover:text-foreground ${
+                  className={`text-[10px] font-light uppercase tracking-[0.18em] transition-all duration-500 hover:text-foreground ${
                     location.pathname === item.href 
                       ? 'text-foreground' 
                       : 'text-muted-foreground'
