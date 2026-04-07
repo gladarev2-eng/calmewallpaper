@@ -27,7 +27,7 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
       material: selectedMaterial,
       width,
       height,
-      area: areaWithMargin,
+      area,
       price: totalPrice,
       quantity: 1,
     });
