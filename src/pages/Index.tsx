@@ -330,7 +330,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <span className="text-[11px] tracking-[0.2em] text-foreground/20 block mb-5 font-light">{item.step}</span>
+                <span className="text-step-num">{item.step}</span>
                 <h3 className="text-[15px] font-light mb-3 tracking-[-0.01em]">{item.title}</h3>
                 <p className="text-body">{item.desc}</p>
               </motion.div>
