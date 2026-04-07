@@ -14,7 +14,7 @@ import { inspirationItems } from '@/data/inspiration';
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
 const Index = () => {
-  const collectionImages = [mural1, mural2, mural3, mural4];
+  
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
