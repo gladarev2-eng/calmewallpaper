@@ -272,7 +272,7 @@ const Contacts = () => {
             <p className="text-[10px] uppercase tracking-[0.3em] text-background/50 mb-6 font-light">
               Начните сейчас
             </p>
-            <h2 className="text-2xl lg:text-3xl font-extralight mb-6 tracking-[-0.02em]">
+            <h2 className="text-2xl lg:text-3xl font-light mb-6 tracking-[-0.02em] font-display">
               Запишитесь на консультацию
             </h2>
             <p className="text-[14px] font-light text-background/60 mb-10 max-w-lg mx-auto leading-[1.8]">
