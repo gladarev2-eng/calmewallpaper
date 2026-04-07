@@ -116,6 +116,7 @@ const Artwork = () => {
           <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
+      </section>
         {/* Scroll down hint */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 animate-bounce">
           <span className="text-[10px] uppercase tracking-[0.15em]">Листайте вниз</span>
