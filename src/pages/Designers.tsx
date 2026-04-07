@@ -342,62 +342,26 @@ const Designers = () => {
               </p>
             </motion.div>
 
-            {/* Features Grid - 2x2 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Материалы для высоких нагрузок</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Винил на флизелине класса А. Антивандальное покрытие, устойчивость 
-                  к UV и влаге. Сертификаты КМ1-КМ2 для общественных пространств.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.05 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Масштабные панорамы</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Полотна до 6 метров без швов. Многометровые панорамы для лобби 
-                  отелей и ресторанных залов. Расчёт раскладки для сложных форм.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Адаптация под бренд</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Корректируем палитру под брендбук заведения. Создаём уникальные 
-                  решения, отражающие концепцию и философию пространства.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.15 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Монтаж и сопровождение</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Профессиональный монтаж в Москве и Петербурге. Координация 
-                  подрядчиков в регионах. Гарантия на работы — 2 года.
-                </p>
-              </motion.div>
+             {/* Features Grid - 2x2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+              {[
+                { title: 'Материалы для высоких нагрузок', desc: 'Винил на флизелине класса А. Антивандальное покрытие, устойчивость к UV и влаге. Сертификаты КМ1-КМ2 для общественных пространств.' },
+                { title: 'Масштабные панорамы', desc: 'Полотна до 6 метров без швов. Многометровые панорамы для лобби отелей и ресторанных залов. Расчёт раскладки для сложных форм.' },
+                { title: 'Адаптация под бренд', desc: 'Корректируем палитру под брендбук заведения. Создаём уникальные решения, отражающие концепцию и философию пространства.' },
+                { title: 'Монтаж и сопровождение', desc: 'Профессиональный монтаж в Москве и Петербурге. Координация подрядчиков в регионах. Гарантия на работы — 2 года.' },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06, duration: 0.6 }}
+                  className="border-t border-foreground/8 pt-6"
+                >
+                  <h4 className="text-[15px] font-light mb-3 text-foreground">{item.title}</h4>
+                  <p className="text-body">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
             
             {/* CTA for HoReCa */}
