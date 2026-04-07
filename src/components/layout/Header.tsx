@@ -24,22 +24,22 @@ export const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide">
-          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
+          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-[88px]">
             {/* Logo */}
             <Link 
               to="/" 
-              className="text-sm font-thin uppercase tracking-[0.3em]"
+              className="text-[13px] font-extralight uppercase tracking-[0.35em]"
             >
               Calmé
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-12">
+            <nav className="hidden lg:flex items-center gap-10">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`text-[11px] font-extralight uppercase tracking-[0.15em] transition-all duration-400 hover:text-foreground ${
+                  className={`text-[10px] font-light uppercase tracking-[0.18em] transition-all duration-500 hover:text-foreground ${
                     location.pathname === item.href 
                       ? 'text-foreground' 
                       : 'text-muted-foreground'

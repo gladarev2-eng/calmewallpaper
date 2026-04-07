@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Inter', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        display: ['Outfit', 'sans-serif'],
+        body: ['Outfit', 'sans-serif'],
       },
       fontWeight: {
         thin: '100',
