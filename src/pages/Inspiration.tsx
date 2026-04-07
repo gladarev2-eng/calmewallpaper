@@ -205,7 +205,7 @@ const Inspiration = () => {
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
-      <div className="container-wide pt-20 pb-10">
+      <div className="container-wide section-sm">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
