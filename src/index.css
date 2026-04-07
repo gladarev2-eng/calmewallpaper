@@ -121,7 +121,9 @@
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
     font-weight: 300;
-    letter-spacing: 0.01em;
+    font-size: 15px;
+    letter-spacing: 0.005em;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -129,7 +131,8 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     @apply font-extralight;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
   }
 }
 
@@ -144,32 +147,34 @@
 
   /* Button styles — premium, refined */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-foreground text-background px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] tracking-[0.18em] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-foreground text-background px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     min-height: 48px;
   }
 
   .btn-primary:hover {
     @apply bg-foreground/85;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center bg-transparent text-foreground px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] tracking-[0.18em] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-transparent text-foreground px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
     font-weight: 400;
+    letter-spacing: 0.16em;
     border: 0.5px solid hsl(var(--foreground) / 0.2);
     min-height: 48px;
   }
 
   .btn-outline:hover {
     border-color: hsl(var(--foreground));
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center bg-white/10 text-white px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] tracking-[0.18em] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-white/10 text-white px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
     font-weight: 400;
+    letter-spacing: 0.16em;
     border: 0.5px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px);
     min-height: 48px;
@@ -177,7 +182,7 @@
 
   .btn-light:hover {
     @apply bg-white text-foreground;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   /* Section spacing — generous, architectural */
@@ -208,38 +213,43 @@
 
   /* Typography — editorial hierarchy */
   .text-display {
-    @apply text-5xl md:text-7xl lg:text-[7rem] font-extralight leading-[0.92] tracking-tighter;
+    @apply text-4xl md:text-6xl lg:text-[5.5rem] font-extralight leading-[0.95] tracking-[-0.03em];
   }
 
   .text-hero-tagline {
-    @apply text-[10px] md:text-xs font-normal uppercase tracking-[0.25em];
+    @apply text-[10.5px] md:text-[11.5px] font-light uppercase tracking-[0.28em];
+    color: inherit;
   }
 
   .text-title {
-    @apply text-2xl md:text-[2rem] lg:text-4xl font-extralight leading-tight;
+    @apply text-[1.4rem] md:text-[1.75rem] lg:text-[2.1rem] font-extralight leading-[1.15];
     letter-spacing: -0.02em;
   }
 
   .text-subtitle {
-    @apply text-lg md:text-xl font-extralight leading-snug;
-    letter-spacing: -0.01em;
+    @apply text-base md:text-lg font-light leading-[1.35];
+    letter-spacing: -0.005em;
   }
 
   .text-body {
-    @apply text-[15px] leading-[1.7] text-muted-foreground font-light;
+    @apply text-[14px] leading-[1.75] text-muted-foreground;
+    font-weight: 300;
   }
 
   .text-body-lg {
-    @apply text-lg md:text-xl leading-[1.7] text-muted-foreground font-extralight;
+    @apply text-[16px] md:text-[17px] leading-[1.75] text-muted-foreground;
+    font-weight: 300;
   }
 
   .text-caption {
-    @apply text-[10px] uppercase text-muted-foreground tracking-[0.2em];
+    @apply text-[10px] uppercase text-muted-foreground;
+    letter-spacing: 0.18em;
     font-weight: 400;
   }
 
   .text-label {
-    @apply text-[10px] uppercase tracking-[0.15em];
+    @apply text-[10px] uppercase;
+    letter-spacing: 0.14em;
     font-weight: 400;
   }
 
@@ -257,13 +267,14 @@
 
   /* Link hover — editorial */
   .link-arrow {
-    @apply inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] transition-all duration-500;
+    @apply inline-flex items-center gap-2 text-[10.5px] uppercase transition-all duration-500;
+    letter-spacing: 0.16em;
     font-weight: 400;
   }
 
   .link-arrow:hover {
-    gap: 14px;
-    letter-spacing: 0.22em;
+    gap: 12px;
+    letter-spacing: 0.2em;
   }
 }
 
