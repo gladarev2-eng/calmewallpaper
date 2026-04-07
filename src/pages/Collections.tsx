@@ -60,7 +60,7 @@ const CollectionCard = ({ collection, index }: { collection: typeof collections[
         </div>
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-xl font-extralight mb-2 tracking-[-0.02em]">{collection.name}</h2>
+            <h2 className="text-xl font-light mb-2 tracking-[-0.02em] font-display">{collection.name}</h2>
             <p className="text-body mb-3">{collection.description}</p>
             <div className="flex flex-wrap gap-3">
               {collection.colors.map((color) => (
