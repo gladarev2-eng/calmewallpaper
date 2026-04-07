@@ -167,7 +167,7 @@ const Studio = () => {
               >
                 <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                   <div className="aspect-[4/5] overflow-hidden">
-                    <img src={value.image} alt={value.title} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]" />
+                    <img src={value.image} alt={value.title} className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]" />
                   </div>
                 </div>
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
