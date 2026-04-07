@@ -28,7 +28,7 @@ export const Header = () => {
             {/* Logo */}
             <Link 
               to="/" 
-              className="text-[13px] font-light uppercase tracking-[0.35em] text-foreground/90"
+              className="text-[14px] font-light uppercase tracking-[0.35em] text-foreground"
             >
               Calmé
             </Link>
@@ -39,10 +39,10 @@ export const Header = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`text-[10px] font-light uppercase tracking-[0.18em] transition-all duration-500 ${
+                  className={`text-[11px] font-light uppercase tracking-[0.16em] transition-all duration-500 ${
                     location.pathname === item.href 
-                      ? 'text-foreground/80' 
-                      : 'text-foreground/45 hover:text-foreground/70'
+                      ? 'text-foreground' 
+                      : 'text-foreground/50 hover:text-foreground/80'
                   }`}
                 >
                   {item.label}
@@ -52,16 +52,11 @@ export const Header = () => {
 
             {/* Right side */}
             <div className="flex items-center gap-6">
-              {/* Tagline */}
-              <span className="hidden xl:block text-[9px] font-light tracking-[0.12em] text-foreground/35 uppercase">
-                Сделано под ваш интерьер
-              </span>
-
               {/* Phone & Messenger */}
               <div className="hidden lg:flex items-center gap-3">
                 <a 
                   href="tel:+74951234567" 
-                  className="text-[10px] font-light tracking-[0.08em] text-foreground/40 hover:text-foreground/70 transition-colors duration-500"
+                  className="text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
                 >
                   +7 (495) 123-45-67
                 </a>
@@ -69,7 +64,7 @@ export const Header = () => {
                   href="https://wa.me/79001234567"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-foreground/35 hover:text-foreground/60 transition-colors duration-500"
+                  className="p-2 text-foreground/40 hover:text-foreground/70 transition-colors duration-500"
                 >
                   <MessageCircle className="w-3.5 h-3.5 stroke-[1.5]" />
                 </a>
@@ -79,11 +74,11 @@ export const Header = () => {
               <div className="flex items-center gap-3">
                 <Link 
                   to="/favorites"
-                  className="relative p-2 text-foreground/45 hover:text-foreground/70 transition-colors duration-500"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
                 >
                   <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
                   {totalFavorites > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground/80 text-background text-[8px] font-light flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
                       {totalFavorites}
                     </span>
                   )}
@@ -91,11 +86,11 @@ export const Header = () => {
                 
                 <Link 
                   to="/cart"
-                  className="relative p-2 text-foreground/45 hover:text-foreground/70 transition-colors duration-500"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
                 >
                   <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
                   {totalItems > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground/80 text-background text-[8px] font-light flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
                       {totalItems}
                     </span>
                   )}
@@ -103,7 +98,7 @@ export const Header = () => {
                 
                 <button
                   onClick={() => setIsMenuOpen(true)}
-                  className="lg:hidden p-2 text-foreground/50 transition-colors duration-500"
+                  className="lg:hidden p-2 text-foreground/60 transition-colors duration-500"
                 >
                   <Menu className="w-4 h-4 stroke-[1.5]" />
                 </button>
@@ -133,7 +128,7 @@ export const Header = () => {
                 className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-background z-50 flex flex-col"
               >
                 <div className="flex justify-between items-center p-6 sm:p-8">
-                  <span className="text-sm font-light uppercase tracking-[0.3em] text-foreground/70">
+                  <span className="text-sm font-light uppercase tracking-[0.3em] text-foreground/80">
                     Calmé
                   </span>
                   <button
@@ -158,8 +153,8 @@ export const Header = () => {
                           onClick={() => setIsMenuOpen(false)}
                           className={`block text-lg font-light uppercase tracking-[0.15em] py-2 transition-colors duration-500 ${
                             location.pathname === item.href
-                              ? 'text-foreground/80'
-                              : 'text-foreground/45 hover:text-foreground/70'
+                              ? 'text-foreground'
+                              : 'text-foreground/50 hover:text-foreground/80'
                           }`}
                         >
                           {item.label}
@@ -172,7 +167,7 @@ export const Header = () => {
                 <div className="p-6 sm:p-8 border-t border-foreground/8 space-y-4">
                   <a 
                     href="tel:+74951234567"
-                    className="flex items-center gap-3 text-sm font-light text-foreground/45 hover:text-foreground/70 transition-colors py-2"
+                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors py-2"
                   >
                     <Phone className="w-4 h-4" strokeWidth={1.5} />
                     <span>+7 (495) 123-45-67</span>
@@ -182,15 +177,11 @@ export const Header = () => {
                     href="https://wa.me/79001234567"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-sm font-light text-foreground/45 hover:text-foreground/70 transition-colors py-2"
+                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors py-2"
                   >
                     <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
                     <span>WhatsApp</span>
                   </a>
-
-                  <p className="text-[9px] uppercase tracking-[0.12em] text-foreground/30 pt-2">
-                    Сделано под ваш интерьер
-                  </p>
 
                   <div className="pt-4 space-y-3">
                     <Link

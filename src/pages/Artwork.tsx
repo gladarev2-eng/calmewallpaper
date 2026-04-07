@@ -88,6 +88,10 @@ const Artwork = () => {
   const nextImage = () => setSelectedImage((prev) => (prev + 1) % product.images.length);
   const prevImage = () => setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
 
+  // Get pattern and room labels for info block
+  const patternLabel = patternTypes.find(p => p.id === product.patternType)?.label || '';
+  const roomLabels = product.roomTypes.map(r => roomTypes.find(rt => rt.id === r)?.label).filter(Boolean).join(', ');
+
   return (
     <div className="bg-background">
       {/* ── Full-screen Hero with slow zoom ── */}
@@ -125,12 +129,12 @@ const Artwork = () => {
 
       {/* Breadcrumbs */}
       <div className="container-wide pt-8 pb-4">
-        <nav className="flex items-center gap-2 text-[10px] text-foreground/35 font-light">
-          <Link to="/" className="hover:text-foreground/60 transition-colors duration-500">Главная</Link>
+        <nav className="flex items-center gap-2 text-[10px] text-foreground/40 font-light">
+          <Link to="/" className="hover:text-foreground/70 transition-colors duration-500">Главная</Link>
           <span className="text-foreground/20">/</span>
-          <Link to="/catalog" className="hover:text-foreground/60 transition-colors duration-500">Каталог</Link>
+          <Link to="/catalog" className="hover:text-foreground/70 transition-colors duration-500">Каталог</Link>
           <span className="text-foreground/20">/</span>
-          <span className="text-foreground/50">{product.name}</span>
+          <span className="text-foreground/60">{product.name}</span>
         </nav>
       </div>
 
@@ -164,24 +168,50 @@ const Artwork = () => {
               </h2>
 
               {/* Artistic description */}
-              <p className="text-[14px] text-foreground/50 leading-[1.85] font-light">
+              <p className="text-[14px] text-foreground/60 leading-[1.85] font-light">
                 {product.description}
               </p>
 
-              {/* Custom-fit statement */}
-              <div className="py-5 border-t border-foreground/8">
-                <p className="text-[13px] text-foreground/40 leading-[1.85] font-light italic">
-                  Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
-                  под размеры вашей стены, сохраняя баланс и глубину сцены.
-                </p>
+              {/* Material & type info block */}
+              <div className="py-4 border-t border-b border-foreground/8 space-y-2">
+                <div className="flex justify-between text-[12px] font-light">
+                  <span className="text-foreground/40">Тип</span>
+                  <span className="text-foreground/60">
+                    {product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои'}
+                  </span>
+                </div>
+                <div className="flex justify-between text-[12px] font-light">
+                  <span className="text-foreground/40">Сюжет</span>
+                  <span className="text-foreground/60">{patternLabel}</span>
+                </div>
+                <div className="flex justify-between text-[12px] font-light">
+                  <span className="text-foreground/40">Помещение</span>
+                  <span className="text-foreground/60">{roomLabels}</span>
+                </div>
+                {product.maxWidth && (
+                  <div className="flex justify-between text-[12px] font-light">
+                    <span className="text-foreground/40">Макс. ширина</span>
+                    <span className="text-foreground/60">до {product.maxWidth} см</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-[12px] font-light">
+                  <span className="text-foreground/40">Коллекция</span>
+                  <span className="text-foreground/60">{product.collection}</span>
+                </div>
               </div>
+
+              {/* Custom-fit statement */}
+              <p className="text-[13px] text-foreground/45 leading-[1.85] font-light italic">
+                Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
+                под размеры вашей стены, сохраняя баланс и глубину сцены.
+              </p>
 
               {/* Action buttons */}
               <div className="flex gap-3">
                 <button
                   onClick={() => { toggleFavorite(product.id); toast.success(isInFavorites ? 'Удалено из избранного' : 'Добавлено в избранное'); }}
                   className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.12em] font-light transition-all duration-500 ${
-                    isInFavorites ? 'border-foreground/40 text-foreground/80' : 'border-foreground/12 text-foreground/45 hover:border-foreground/30'
+                    isInFavorites ? 'border-foreground/40 text-foreground/80' : 'border-foreground/15 text-foreground/50 hover:border-foreground/30'
                   }`}
                 >
                   <Heart className={`w-3.5 h-3.5 ${isInFavorites ? 'fill-foreground/50' : ''}`} />
@@ -189,7 +219,7 @@ const Artwork = () => {
                 </button>
                 <button
                   onClick={() => toast.info('Свяжитесь через страницу контактов')}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/12 text-[10px] uppercase tracking-[0.12em] font-light text-foreground/45 hover:border-foreground/30 transition-all duration-500"
+                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/15 text-[10px] uppercase tracking-[0.12em] font-light text-foreground/50 hover:border-foreground/30 transition-all duration-500"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   Задать вопрос
@@ -208,22 +238,22 @@ const Artwork = () => {
 
               {product.type === 'panel' && product.panelSizes ? (
                 <div className="space-y-3">
-                  <p className="text-[12px] text-foreground/40 font-light">Выберите размер</p>
+                  <p className="text-[12px] text-foreground/50 font-light">Выберите размер</p>
                   {product.panelSizes.map((size, i) => (
                     <label
                       key={i}
                       onClick={() => setSelectedPanelSize(i)}
                       className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-[12px] font-light transition-all duration-500 ${
-                        selectedPanelSize === i ? 'border-foreground/30' : 'border-foreground/8 hover:border-foreground/18'
+                        selectedPanelSize === i ? 'border-foreground/30' : 'border-foreground/10 hover:border-foreground/20'
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center transition-colors duration-500 ${selectedPanelSize === i ? 'border-foreground/50 bg-foreground/40' : 'border-foreground/20'}`}>
                           {selectedPanelSize === i && <Check className="w-1.5 h-1.5 text-background" />}
                         </div>
-                        <span className="text-foreground/60">{size.size}</span>
+                        <span className="text-foreground/70">{size.size}</span>
                       </div>
-                      <span className="text-foreground/40">{formatPrice(size.price)} ₽</span>
+                      <span className="text-foreground/50">{formatPrice(size.price)} ₽</span>
                     </label>
                   ))}
                   <button onClick={handleAddToCart} className="btn-primary w-full mt-4">
@@ -232,15 +262,15 @@ const Artwork = () => {
                 </div>
               ) : (
                 <div className="space-y-5">
-                  <p className="text-[12px] text-foreground/40 font-light">Укажите размеры вашей стены</p>
+                  <p className="text-[12px] text-foreground/50 font-light">Укажите размеры вашей стены</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[9px] text-foreground/30 uppercase tracking-[0.1em] block mb-1.5 font-light">Ширина, см</span>
+                      <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-1.5 font-light">Ширина, см</span>
                       <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
                         className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
                     </div>
                     <div>
-                      <span className="text-[9px] text-foreground/30 uppercase tracking-[0.1em] block mb-1.5 font-light">Высота, см</span>
+                      <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-1.5 font-light">Высота, см</span>
                       <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
                         className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
                     </div>
@@ -249,8 +279,8 @@ const Artwork = () => {
                   {/* Material */}
                   <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
                     <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/12 text-[12px] font-light hover:border-foreground/22 transition-colors duration-500">
-                      <span className="text-foreground/40">Материал</span>
-                      <div className="flex items-center gap-2 text-foreground/60">
+                      <span className="text-foreground/50">Материал</span>
+                      <div className="flex items-center gap-2 text-foreground/70">
                         <span>{selectedMaterial.name}</span>
                         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-500 ${materialOpen ? 'rotate-180' : ''}`} />
                       </div>
@@ -265,9 +295,9 @@ const Artwork = () => {
                           >
                             <div className="flex items-center gap-2">
                               <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/50' : 'border border-foreground/20'}`} />
-                              <span className="text-foreground/60">{material.name}</span>
+                              <span className="text-foreground/70">{material.name}</span>
                             </div>
-                            {material.priceCoefficient > 1 && <span className="text-foreground/30">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
+                            {material.priceCoefficient > 1 && <span className="text-foreground/35">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
                           </button>
                         ))}
                       </div>
@@ -277,19 +307,19 @@ const Artwork = () => {
                   {/* Summary */}
                   <div className="pt-4 border-t border-foreground/8 space-y-2">
                     <div className="flex justify-between text-[12px] font-light">
-                      <span className="text-foreground/35">Площадь</span>
-                      <span className="text-foreground/50">{area.toFixed(2)} м²</span>
+                      <span className="text-foreground/40">Площадь</span>
+                      <span className="text-foreground/60">{area.toFixed(2)} м²</span>
                     </div>
                     <div className="flex justify-between items-baseline">
-                      <span className="text-foreground/35 text-[12px] font-light">Стоимость</span>
-                      <span className="text-xl font-light text-foreground/70">{formatPrice(totalPrice)} ₽</span>
+                      <span className="text-foreground/40 text-[12px] font-light">Стоимость</span>
+                      <span className="text-xl font-light text-foreground/80">{formatPrice(totalPrice)} ₽</span>
                     </div>
                   </div>
 
                   <button onClick={handleAddToCart} className="btn-primary w-full">
                     В корзину
                   </button>
-                  <p className="text-[10px] text-foreground/30 text-center font-light">
+                  <p className="text-[10px] text-foreground/35 text-center font-light">
                     Финальная стоимость уточняется после согласования макета
                   </p>
                 </div>
@@ -392,7 +422,7 @@ const Artwork = () => {
                       <div className="aspect-[4/3] overflow-hidden bg-muted mb-3">
                         <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                       </div>
-                      <p className="text-[12px] font-light text-foreground/50">{wallpaper.name}</p>
+                      <p className="text-[12px] font-light text-foreground/60">{wallpaper.name}</p>
                     </Link>
                   ))}
                 </div>
@@ -410,7 +440,7 @@ const Artwork = () => {
               <p className="text-caption mb-3">Из этой коллекции</p>
               <h2 className="text-title">{product.collection}</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {relatedProducts.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}
