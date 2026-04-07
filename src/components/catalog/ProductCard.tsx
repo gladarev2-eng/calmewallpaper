@@ -104,15 +104,15 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
 
         {/* Info — name, subline, price */}
         <div className="pt-4 pb-2">
-          <h3 className="text-[13px] font-light tracking-[0.01em] leading-snug text-foreground">
+          <h3 className="text-[14px] font-light tracking-[0.01em] leading-snug text-foreground">
             {product.name}
           </h3>
           <div className="flex items-baseline justify-between mt-1.5">
-            <p className="text-[11px] text-foreground/35 font-extralight tracking-[0.02em]">
+            <p className="text-[11px] text-foreground/40 font-extralight tracking-[0.02em]">
               {getSubline(product)}
             </p>
             {showPrice && (
-              <p className="text-[11px] text-foreground/30 font-extralight">
+              <p className="text-[12px] text-foreground/60 font-light">
                 от {formatPrice(product.pricePerSqm)} ₽/м²
               </p>
             )}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
@@ -11,12 +11,23 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 import { products, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
-import { inspirationItems } from '@/data/inspiration';
+import { inspirationRoomTypes } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
+// Room categories for inspiration navigation
+const roomCategories = [
+  { id: 'living', label: 'Гостиная', image: mural1 },
+  { id: 'bedroom', label: 'Спальня', image: mural3 },
+  { id: 'hallway', label: 'Прихожая', image: mural4 },
+  { id: 'kitchen', label: 'Кухня', image: mural5 },
+  { id: 'bathroom', label: 'Ванная', image: mural6 },
+  { id: 'horeca', label: 'HoReCa', image: mural2 },
+];
+
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -59,7 +70,7 @@ const Index = () => {
             Тихая архитектура стены
           </motion.h1>
           <motion.p
-            className="text-[13px] md:text-[15px] font-light text-white/75 tracking-[0.02em] mb-12 max-w-lg"
+            className="text-[14px] md:text-[16px] font-light text-white/80 tracking-[0.02em] mb-12 max-w-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
@@ -93,61 +104,34 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── WOW block — immersive interior scenes, no text ── */}
-      <section className="bg-background">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
-          {[mural4, mural2, mural5, mural3].map((img, i) => (
+      {/* ── Positioning block — image + 3 short theses ── */}
+      <section className="relative overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="aspect-[4/3] lg:aspect-auto lg:min-h-[600px] overflow-hidden">
+            <img
+              src={mural2}
+              alt="CALMÉ в интерьере"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="flex items-center px-8 md:px-14 lg:px-20 xl:px-28 py-16 lg:py-0 bg-card/30">
             <motion.div
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8 }}
-              className={`overflow-hidden ${i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'}`}
+              transition={{ duration: 0.8 }}
+              className="space-y-10"
             >
-              <img
-                src={img}
-                alt="CALMÉ в интерьере"
-                className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.5s]"
-              />
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Three positioning blocks ── */}
-      <section className="section-lg bg-background">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
-            {[
-              {
-                title: 'Архитектурный подход',
-                text: 'Каждый мурал воспринимается как часть пространства, а не декор. Мы проектируем визуальную среду, в которой стена становится продолжением архитектурной идеи.',
-              },
-              {
-                title: 'Адаптация под интерьер',
-                text: 'Масштаб, композиция и цвет настраиваются под конкретную стену. Мы работаем с пропорциями вашего пространства, чтобы изображение стало его органичной частью.',
-              },
-              {
-                title: 'Контроль результата',
-                text: 'Клиент утверждает финальный макет перед печатью. Визуализация в интерьере, согласование цветов и масштаба — всё до начала производства.',
-              },
-            ].map((block, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.12, duration: 0.8 }}
-              >
-                <h3 className="text-[16px] font-light mb-5 tracking-[-0.01em] text-foreground">
-                  {block.title}
-                </h3>
-                <p className="text-body leading-[1.9]">
-                  {block.text}
+              {[
+                'Архитектурный подход',
+                'Адаптация под интерьер',
+                'Контроль результата',
+              ].map((text, i) => (
+                <p key={i} className="text-[18px] md:text-[20px] font-extralight tracking-[-0.01em] text-foreground/80">
+                  {text}
                 </p>
-              </motion.div>
-            ))}
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
@@ -216,7 +200,7 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {featuredProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
@@ -236,7 +220,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Inspiration — curated selection ── */}
+      {/* ── Inspiration — room categories ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <div className="flex items-end justify-between mb-16">
@@ -249,22 +233,26 @@ const Index = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-            {inspirationItems.slice(0, 6).map((item, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+            {roomCategories.map((room, i) => (
               <motion.div
-                key={item.id}
+                key={room.id}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.7 }}
               >
-                <Link to="/inspiration" className="group block">
-                  <div className={`overflow-hidden ${i === 0 || i === 5 ? 'aspect-[3/4]' : 'aspect-square'}`}>
-                    <img
-                      src={item.image}
-                      alt={item.productName}
-                      className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
-                    />
+                <Link to={`/inspiration?room=${room.id}`} className="group block relative overflow-hidden aspect-[4/3]">
+                  <img
+                    src={room.image}
+                    alt={room.label}
+                    className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  <div className="absolute bottom-4 left-5">
+                    <p className="text-[13px] font-light text-white tracking-[0.02em]">
+                      {room.label}
+                    </p>
                   </div>
                 </Link>
               </motion.div>

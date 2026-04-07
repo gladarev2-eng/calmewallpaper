@@ -80,7 +80,7 @@ const Catalog = () => {
                 key={type}
                 onClick={() => { setSelectedTypes(type === 'all' ? [] : [type]); setSelectedSizes([]); setSelectedWidths([]); }}
                 className={`text-[11px] uppercase tracking-[0.14em] font-light pb-1 transition-all duration-500 ${
-                  currentType === type ? 'text-foreground/70 border-b border-foreground/30' : 'text-foreground/30'
+                  currentType === type ? 'text-foreground border-b border-foreground/30' : 'text-foreground/40'
                 }`}
               >
                 {typeLabels[type]}
@@ -90,18 +90,18 @@ const Catalog = () => {
         </div>
         <div className="container-wide pb-6">
           <div className="flex items-center justify-between">
-            <button onClick={() => setShowMobileFilters(true)} className="flex items-center gap-2 text-[11px] font-light text-foreground/40">
+            <button onClick={() => setShowMobileFilters(true)} className="flex items-center gap-2 text-[11px] font-light text-foreground/50">
               <SlidersHorizontal className="w-3.5 h-3.5" />
               Фильтры
             </button>
-            <p className="text-[11px] font-extralight text-foreground/30">
+            <p className="text-[11px] font-light text-foreground/40">
               {filteredProducts.length} работ
             </p>
           </div>
         </div>
       </div>
 
-      {/* Product Grid — generous spacing */}
+      {/* Product Grid */}
       <section className="pb-24 lg:pb-32">
         <div className="container-wide">
           <AnimatePresence mode="wait">
@@ -112,7 +112,7 @@ const Catalog = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
               >
                 {filteredProducts.map((product, i) => (
                   <ProductCard key={product.id} product={product} index={i} />
@@ -126,12 +126,12 @@ const Catalog = () => {
                 exit={{ opacity: 0 }}
                 className="text-center py-40"
               >
-                <p className="text-[14px] font-light text-foreground/35 mb-8">
+                <p className="text-[14px] font-light text-foreground/40 mb-8">
                   По вашему запросу ничего не найдено
                 </p>
                 <button
                   onClick={clearAllFilters}
-                  className="text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors duration-500 underline underline-offset-4 decoration-foreground/15"
+                  className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500 underline underline-offset-4 decoration-foreground/15"
                 >
                   Сбросить фильтры
                 </button>

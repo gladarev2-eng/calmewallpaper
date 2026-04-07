@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, MapPin, ChevronDown, RotateCcw } from 'lucide-react';
 import { 
@@ -10,17 +10,22 @@ import {
   type InspirationRoomType,
   type InspirationItem
 } from '@/data/inspiration';
+import { colorOptions } from '@/data/products';
 
 const ITEMS_PER_PAGE = 12;
 
+// Color filter options
+const colorFilterOptions = colorOptions.map(c => ({ id: c.name, label: c.name, hex: c.hex }));
+
 interface DropdownProps {
   label: string;
-  options: { id: string; label: string }[];
+  options: { id: string; label: string; hex?: string }[];
   selectedValues: string[];
   onChange: (v: string[]) => void;
+  isColor?: boolean;
 }
 
-const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownProps) => {
+const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -52,9 +57,9 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors"
       >
-        <span className="text-foreground/40">{label}:</span>
-        <span className="text-foreground/70">{displayValue}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-foreground/30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-foreground/50">{label}:</span>
+        <span className="text-foreground/80">{displayValue}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-foreground/40 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -65,22 +70,52 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
             transition={{ duration: 0.2 }}
             className="absolute top-full left-0 mt-3 bg-background border border-foreground/10 z-50 min-w-[200px] max-h-[320px] overflow-y-auto"
           >
-            <button
-              onClick={() => { onChange([]); setIsOpen(false); }}
-              className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors ${selectedValues.length === 0 ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
-            >
-              Все
-            </button>
-            {options.map(opt => (
-              <button
-                key={opt.id}
-                onClick={() => toggle(opt.id)}
-                className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
-              >
-                {opt.label}
-                {selectedValues.includes(opt.id) && <X className="w-3 h-3 text-foreground/30" />}
-              </button>
-            ))}
+            {isColor ? (
+              <div className="p-4">
+                <div className="flex flex-wrap gap-2.5">
+                  {options.map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => toggle(opt.id)}
+                      className={`w-7 h-7 rounded-full transition-all border ${
+                        selectedValues.includes(opt.id)
+                          ? 'ring-2 ring-foreground ring-offset-2 scale-110'
+                          : 'border-foreground/15 hover:scale-110'
+                      }`}
+                      style={{ backgroundColor: opt.hex }}
+                      title={opt.label}
+                    />
+                  ))}
+                </div>
+                {selectedValues.length > 0 && (
+                  <button
+                    onClick={() => onChange([])}
+                    className="mt-3 text-[11px] text-foreground/40 hover:text-foreground/60 transition-colors"
+                  >
+                    Сбросить
+                  </button>
+                )}
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => { onChange([]); setIsOpen(false); }}
+                  className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors ${selectedValues.length === 0 ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
+                >
+                  Все
+                </button>
+                {options.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => toggle(opt.id)}
+                    className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
+                  >
+                    {opt.label}
+                    {selectedValues.includes(opt.id) && <X className="w-3 h-3 text-foreground/30" />}
+                  </button>
+                ))}
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
@@ -89,8 +124,13 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
 };
 
 const Inspiration = () => {
-  const [selectedMoods, setSelectedMoods] = useState<MoodType[]>([]);
-  const [selectedRooms, setSelectedRooms] = useState<InspirationRoomType[]>([]);
+  const [searchParams] = useSearchParams();
+  const initialRoom = searchParams.get('room');
+  
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedRooms, setSelectedRooms] = useState<InspirationRoomType[]>(
+    initialRoom ? [initialRoom as InspirationRoomType] : []
+  );
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [selectedItem, setSelectedItem] = useState<InspirationItem | null>(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -108,19 +148,19 @@ const Inspiration = () => {
 
   const filteredItems = useMemo(() => {
     return inspirationItems.filter(item => {
-      if (selectedMoods.length > 0 && !item.mood.some(m => selectedMoods.includes(m))) return false;
       if (selectedRooms.length > 0 && !selectedRooms.includes(item.room)) return false;
+      // Color filter: no color data on inspiration items, so skip for now
       return true;
     });
-  }, [selectedMoods, selectedRooms]);
+  }, [selectedRooms, selectedColors]);
 
   const visibleItems = filteredItems.slice(0, visibleCount);
   const hasMore = visibleCount < filteredItems.length;
-  const hasActiveFilters = selectedMoods.length > 0 || selectedRooms.length > 0;
+  const hasActiveFilters = selectedRooms.length > 0 || selectedColors.length > 0;
 
   const clearAll = () => {
-    setSelectedMoods([]);
     setSelectedRooms([]);
+    setSelectedColors([]);
     setVisibleCount(ITEMS_PER_PAGE);
   };
 
@@ -142,7 +182,7 @@ const Inspiration = () => {
           <p className="text-caption mb-4">Вдохновение</p>
           <h1 className="text-title mb-4">Муралы в интерьере</h1>
           <p className="text-body-lg max-w-xl">
-            Кураторская подборка интерьерных решений. Найдите своё пространство по помещению, цвету и настроению.
+            Кураторская подборка интерьерных решений. Найдите своё пространство по помещению и цвету.
           </p>
         </motion.div>
       </div>
@@ -162,23 +202,24 @@ const Inspiration = () => {
                 onChange={(v) => setSelectedRooms(v as InspirationRoomType[])}
               />
               <FilterDropdown
-                label="Настроение"
-                options={moodTypes.map(m => ({ id: m.id, label: m.label }))}
-                selectedValues={selectedMoods}
-                onChange={(v) => setSelectedMoods(v as MoodType[])}
+                label="Цвет"
+                options={colorFilterOptions}
+                selectedValues={selectedColors}
+                onChange={setSelectedColors}
+                isColor
               />
 
               {hasActiveFilters && (
                 <button
                   onClick={clearAll}
-                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/40 hover:text-foreground/70 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/50 hover:text-foreground/80 transition-colors"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   Сбросить
                 </button>
               )}
 
-              <p className="ml-auto text-[12px] font-light text-foreground/35">
+              <p className="ml-auto text-[12px] font-light text-foreground/40">
                 {filteredItems.length} {filteredItems.length === 1 ? 'интерьер' : filteredItems.length < 5 ? 'интерьера' : 'интерьеров'}
               </p>
             </div>
@@ -186,9 +227,9 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Grid — larger images, more breathing room */}
+      {/* Grid — full-width, tight gaps, large images */}
       <section className="pb-20 lg:pb-32">
-        <div className="container-wide">
+        <div className="max-w-[1440px] mx-auto px-3 md:px-4">
           <AnimatePresence mode="wait">
             {filteredItems.length > 0 ? (
               <motion.div
@@ -197,7 +238,7 @@ const Inspiration = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-3"
               >
                 {visibleItems.map((item, i) => (
                   <motion.div
@@ -208,12 +249,12 @@ const Inspiration = () => {
                   >
                     <button
                       onClick={() => setSelectedItem(item)}
-                      className="group block relative w-full overflow-hidden focus:outline-none"
+                      className="group block relative w-full overflow-hidden focus:outline-none aspect-[4/3]"
                     >
                       <img
                         src={item.image}
                         alt={`${item.productName} в интерьере`}
-                        className="w-full h-auto object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                        className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
                       />
                       {/* Hover overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -241,7 +282,7 @@ const Inspiration = () => {
                 <p className="text-[14px] font-light text-foreground/40 mb-6">
                   По выбранным фильтрам ничего не найдено
                 </p>
-                <button onClick={clearAll} className="text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors underline underline-offset-4">
+                <button onClick={clearAll} className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors underline underline-offset-4">
                   Сбросить фильтры
                 </button>
               </motion.div>
@@ -306,7 +347,7 @@ const Inspiration = () => {
                   ))}
                 </div>
                 <div className="border-t border-foreground/8 my-4" />
-                <p className="text-[13px] font-light text-foreground/45 mb-4">
+                <p className="text-[13px] font-light text-foreground/50 mb-4">
                   Понравился этот принт? Посмотрите его детально в каталоге
                 </p>
                 <Link
@@ -319,7 +360,7 @@ const Inspiration = () => {
                 </Link>
                 <button
                   onClick={() => setSelectedItem(null)}
-                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors"
+                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Закрыть
