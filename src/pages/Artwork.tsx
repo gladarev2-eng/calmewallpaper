@@ -102,39 +102,44 @@ const Artwork = () => {
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
         />
-        {/* Gradient overlay at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-        {/* Product info overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 lg:p-16">
-          <nav className="flex items-center gap-2 text-[11px] text-background/70 mb-4">
-            <Link to="/" className="hover:text-background transition-colors">Главная</Link>
-            <span>/</span>
-            <Link to="/catalog" className="hover:text-background transition-colors">Каталог</Link>
-            <span>/</span>
-            <span className="text-background">{product.name}</span>
-          </nav>
-          <p className="text-[10px] uppercase tracking-[0.15em] text-background/60 mb-2">{product.collection}</p>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-background leading-tight tracking-[-0.02em]">
+        {/* Dark overlay for text legibility */}
+        <div className="absolute inset-0 bg-black/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        {/* Product title — large, centered */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/60 mb-4">{product.collection}</p>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-white leading-[1.05] tracking-[-0.025em]">
             {product.name}
           </h1>
         </div>
         {/* Zoom hint */}
-        <div className="absolute top-6 right-6 bg-background/20 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-[0.1em] text-background">
+        <div className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-[0.1em] text-white">
           <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
-        {/* Nav arrows on hero */}
+        {/* Nav arrows */}
         {product.images.length > 1 && (
           <>
-            <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background/40 text-background">
+            <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20 text-white">
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background/40 text-background">
+            <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20 text-white">
               <ChevronRight className="w-5 h-5" />
             </button>
           </>
         )}
       </section>
+
+      {/* Breadcrumbs — below hero */}
+      <div className="container-wide pt-6 pb-4">
+        <nav className="flex items-center gap-2 text-[11px] text-muted-foreground">
+          <Link to="/" className="hover:text-foreground transition-colors">Главная</Link>
+          <span>/</span>
+          <Link to="/catalog" className="hover:text-foreground transition-colors">Каталог</Link>
+          <span>/</span>
+          <span className="text-foreground">{product.name}</span>
+        </nav>
+      </div>
 
       {/* ── Main product section: Gallery + Info ── */}
       <section className="container-wide py-12 lg:py-20">
