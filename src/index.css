@@ -213,43 +213,43 @@
 
   /* Typography — editorial hierarchy */
   .text-display {
-    @apply text-4xl md:text-6xl lg:text-[5.5rem] font-extralight leading-[0.95] tracking-[-0.03em];
+    @apply text-3xl md:text-5xl lg:text-[4.5rem] font-light leading-[1] tracking-[-0.02em];
   }
 
   .text-hero-tagline {
-    @apply text-[10.5px] md:text-[11.5px] font-light uppercase tracking-[0.28em];
+    @apply text-[10px] md:text-[11px] font-light uppercase tracking-[0.25em];
     color: inherit;
   }
 
   .text-title {
-    @apply text-[1.4rem] md:text-[1.75rem] lg:text-[2.1rem] font-extralight leading-[1.15];
-    letter-spacing: -0.02em;
+    @apply text-xl md:text-2xl lg:text-[1.75rem] font-light leading-[1.2];
+    letter-spacing: -0.01em;
   }
 
   .text-subtitle {
-    @apply text-base md:text-lg font-light leading-[1.35];
-    letter-spacing: -0.005em;
+    @apply text-base font-light leading-[1.4];
+    letter-spacing: 0;
   }
 
   .text-body {
-    @apply text-[14px] leading-[1.75] text-muted-foreground;
+    @apply text-[13px] leading-[1.7] text-muted-foreground;
     font-weight: 300;
   }
 
   .text-body-lg {
-    @apply text-[16px] md:text-[17px] leading-[1.75] text-muted-foreground;
+    @apply text-[14px] md:text-[15px] leading-[1.7] text-muted-foreground;
     font-weight: 300;
   }
 
   .text-caption {
     @apply text-[10px] uppercase text-muted-foreground;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     font-weight: 400;
   }
 
   .text-label {
     @apply text-[10px] uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     font-weight: 400;
   }
 
