@@ -4,11 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CALMÉ Design System - Boutique Luxury */
+/* CALMÉ Design System — Art Studio / Gallery Aesthetic */
 
 @layer base {
   :root {
-    /* Core palette — refined warm neutrals */
     --background: 38 14% 93%;
     --foreground: 30 5% 10%;
 
@@ -18,50 +17,41 @@
     --popover: 38 16% 96%;
     --popover-foreground: 30 5% 10%;
 
-    /* Primary — deep warm black */
     --primary: 30 5% 10%;
     --primary-foreground: 38 16% 96%;
 
-    /* Secondary — soft warm */
     --secondary: 36 12% 92%;
     --secondary-foreground: 30 5% 10%;
 
-    /* Muted */
     --muted: 36 10% 87%;
     --muted-foreground: 30 5% 42%;
 
-    /* Accent */
     --accent: 36 12% 92%;
     --accent-foreground: 30 5% 10%;
 
-    /* Destructive */
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Borders — refined */
-    --border: 30 5% 10% / 0.07;
-    --input: 30 5% 10% / 0.09;
-    --ring: 30 5% 10% / 0.12;
+    --border: 30 5% 10% / 0.06;
+    --input: 30 5% 10% / 0.08;
+    --ring: 30 5% 10% / 0.1;
 
     --radius: 0;
 
-    /* Glass effect */
     --glass-bg: 38 16% 96% / 0.88;
-    --glass-border: 30 5% 10% / 0.05;
+    --glass-border: 30 5% 10% / 0.04;
     --overlay: 0 0% 0% / 0.5;
     
-    /* Typography */
     --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 
-    /* Sidebar */
     --sidebar-background: 36 12% 92%;
     --sidebar-foreground: 30 5% 10%;
     --sidebar-primary: 30 5% 10%;
     --sidebar-primary-foreground: 38 16% 96%;
     --sidebar-accent: 36 12% 92%;
     --sidebar-accent-foreground: 30 5% 10%;
-    --sidebar-border: 30 5% 10% / 0.07;
-    --sidebar-ring: 30 5% 10% / 0.12;
+    --sidebar-border: 30 5% 10% / 0.06;
+    --sidebar-ring: 30 5% 10% / 0.1;
   }
 
   .dark {
@@ -89,12 +79,12 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 38 14% 95%;
 
-    --border: 38 14% 95% / 0.07;
-    --input: 38 14% 95% / 0.09;
-    --ring: 38 14% 95% / 0.12;
+    --border: 38 14% 95% / 0.06;
+    --input: 38 14% 95% / 0.08;
+    --ring: 38 14% 95% / 0.1;
 
     --glass-bg: 20 5% 7% / 0.92;
-    --glass-border: 38 14% 95% / 0.05;
+    --glass-border: 38 14% 95% / 0.04;
     --overlay: 0 0% 0% / 0.7;
 
     --sidebar-background: 20 5% 10%;
@@ -103,8 +93,8 @@
     --sidebar-primary-foreground: 20 5% 7%;
     --sidebar-accent: 20 5% 13%;
     --sidebar-accent-foreground: 38 14% 95%;
-    --sidebar-border: 38 14% 95% / 0.07;
-    --sidebar-ring: 38 14% 95% / 0.12;
+    --sidebar-border: 38 14% 95% / 0.06;
+    --sidebar-ring: 38 14% 95% / 0.1;
   }
 }
 
@@ -122,17 +112,17 @@
     font-family: var(--font-sans);
     font-weight: 300;
     font-size: 14px;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
+    letter-spacing: 0.015em;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
-    @apply font-light;
-    letter-spacing: -0.015em;
-    line-height: 1.1;
+    @apply font-extralight;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
   }
 }
 
@@ -145,57 +135,65 @@
     border-bottom: 0.5px solid hsl(var(--glass-border));
   }
 
-  /* Button styles — premium */
+  /* Button styles — quiet, gallery-like */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-foreground text-background px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    min-height: 44px;
+    @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    min-height: 48px;
+    border: 1px solid hsl(var(--foreground) / 0.12);
+    color: hsl(var(--foreground));
+    background: transparent;
   }
 
   .btn-primary:hover {
-    @apply bg-foreground/85;
-    letter-spacing: 0.18em;
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    border-color: hsl(var(--foreground));
+    letter-spacing: 0.2em;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center bg-transparent text-foreground px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    border: 1px solid hsl(var(--foreground) / 0.15);
-    min-height: 44px;
+    @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    border: 1px solid hsl(var(--foreground) / 0.1);
+    color: hsl(var(--foreground) / 0.7);
+    min-height: 48px;
   }
 
   .btn-outline:hover {
-    border-color: hsl(var(--foreground));
-    letter-spacing: 0.18em;
+    border-color: hsl(var(--foreground) / 0.4);
+    color: hsl(var(--foreground));
+    letter-spacing: 0.2em;
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center bg-white/10 text-white px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    min-height: 44px;
+    @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    min-height: 48px;
   }
 
   .btn-light:hover {
-    @apply bg-white text-foreground;
-    letter-spacing: 0.18em;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.2em;
   }
 
-  /* Section spacing — balanced */
+  /* Section spacing — generous, gallery-like (+30%) */
   .section {
-    @apply py-16 md:py-20 lg:py-28;
+    @apply py-24 md:py-28 lg:py-40;
   }
 
   .section-sm {
-    @apply py-10 md:py-14 lg:py-16;
+    @apply py-16 md:py-20 lg:py-24;
   }
 
   .section-lg {
-    @apply py-20 md:py-28 lg:py-36;
+    @apply py-28 md:py-36 lg:py-48;
   }
 
   /* Container variants */
@@ -211,70 +209,73 @@
     @apply max-w-[1440px] mx-auto px-6 sm:px-8 md:px-10 lg:px-14;
   }
 
-  /* Typography — editorial hierarchy */
+  /* Typography — editorial, airy */
   .text-display {
-    @apply text-3xl md:text-5xl lg:text-[4.5rem] font-light leading-[1] tracking-[-0.02em];
+    @apply text-3xl md:text-5xl lg:text-[4.5rem] font-extralight leading-[1] tracking-[-0.03em];
   }
 
   .text-hero-tagline {
-    @apply text-[10px] md:text-[11px] font-light uppercase tracking-[0.25em];
+    @apply text-[10px] md:text-[11px] font-extralight uppercase tracking-[0.3em];
     color: inherit;
   }
 
   .text-title {
-    @apply text-xl md:text-2xl lg:text-[1.75rem] font-light leading-[1.2];
-    letter-spacing: -0.01em;
+    @apply text-xl md:text-2xl lg:text-[1.75rem] font-extralight leading-[1.15];
+    letter-spacing: -0.015em;
   }
 
   .text-subtitle {
-    @apply text-base font-light leading-[1.4];
+    @apply text-base font-extralight leading-[1.5];
     letter-spacing: 0;
   }
 
   .text-body {
-    @apply text-[13px] leading-[1.7] text-muted-foreground;
+    @apply text-[13px] leading-[1.85] text-muted-foreground;
     font-weight: 300;
   }
 
   .text-body-lg {
-    @apply text-[14px] md:text-[15px] leading-[1.7] text-muted-foreground;
+    @apply text-[14px] md:text-[15px] leading-[1.85] text-muted-foreground;
     font-weight: 300;
   }
 
   .text-caption {
-    @apply text-[10px] uppercase text-muted-foreground;
-    letter-spacing: 0.15em;
-    font-weight: 400;
+    @apply text-[10px] uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 300;
+    color: hsl(var(--foreground) / 0.35);
   }
 
   .text-label {
     @apply text-[10px] uppercase;
-    letter-spacing: 0.12em;
-    font-weight: 400;
+    letter-spacing: 0.14em;
+    font-weight: 300;
   }
 
   /* Grid layouts */
   .grid-catalog {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10;
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
   }
 
   /* Hairline divider */
   .divider {
     @apply w-full;
     height: 0.5px;
-    background: hsl(var(--foreground) / 0.06);
+    background: hsl(var(--foreground) / 0.04);
   }
 
   /* Link hover — editorial */
   .link-arrow {
-    @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-400;
-    letter-spacing: 0.14em;
-    font-weight: 400;
+    @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-500;
+    letter-spacing: 0.16em;
+    font-weight: 300;
+    color: hsl(var(--foreground) / 0.5);
   }
 
   .link-arrow:hover {
     gap: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.2em;
+    color: hsl(var(--foreground));
   }
 }
 
@@ -291,12 +292,10 @@
     aspect-ratio: 1 / 1;
   }
 
-  /* Remove all shadows */
   .shadow-none {
     box-shadow: none !important;
   }
 
-  /* Hide scrollbar for horizontal scroll sections */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -307,26 +306,15 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Smooth scrollbar — invisible until hover */
 ::-webkit-scrollbar {
   width: 3px;
 }
@@ -336,25 +324,22 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--foreground) / 0.1);
+  background: hsl(var(--foreground) / 0.08);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground) / 0.2);
+  background: hsl(var(--foreground) / 0.15);
 }
 
-/* Global refinements */
 * {
   box-shadow: none !important;
 }
 
-/* Selection */
 ::selection {
-  background: hsl(var(--foreground) / 0.08);
+  background: hsl(var(--foreground) / 0.06);
   color: hsl(var(--foreground));
 }
 
-/* Smooth image rendering */
 img {
   image-rendering: auto;
 }
