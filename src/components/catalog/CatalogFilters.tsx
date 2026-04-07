@@ -160,10 +160,10 @@ const UnderlineDropdown = ({
                     onChange([]);
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 ${
                     selectedValues.length === 0
-                      ? 'bg-foreground/5'
-                      : 'hover:bg-foreground/5'
+                      ? 'bg-foreground/4 text-foreground/70'
+                      : 'text-foreground/50 hover:bg-foreground/4'
                   }`}
                 >
                   Все
@@ -172,15 +172,15 @@ const UnderlineDropdown = ({
                   <button
                     key={option.id}
                     onClick={() => toggleValue(option.id)}
-                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center justify-between ${
+                    className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 flex items-center justify-between ${
                       selectedValues.includes(option.id)
-                        ? 'bg-foreground/5'
-                        : 'hover:bg-foreground/5'
+                        ? 'bg-foreground/4 text-foreground/70'
+                        : 'text-foreground/50 hover:bg-foreground/4'
                     }`}
                   >
                     {option.label}
                     {selectedValues.includes(option.id) && (
-                      <X className="w-3 h-3 text-muted-foreground" />
+                      <X className="w-3 h-3 text-foreground/25" />
                     )}
                   </button>
                 ))}
