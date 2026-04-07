@@ -191,7 +191,7 @@
   }
 
   .section-sm {
-    @apply py-10 md:py-14 lg:py-18;
+    @apply py-10 md:py-14 lg:py-16;
   }
 
   .section-lg {
