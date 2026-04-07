@@ -1,8 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle } from 'lucide-react';
-import { useState, useEffect, useMemo } from 'react';
-import { getProductById, materials, products, patternTypes, roomTypes, Material, AspectRatio, collections, getColorVariants } from '@/data/products';
+import { useState, useEffect } from 'react';
+import { getProductById, materials, products, patternTypes, roomTypes, Material, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { ColorVariantSelector } from '@/components/artwork/ColorVariantSelector';
 import { useCart } from '@/context/CartContext';
@@ -39,11 +39,10 @@ const Artwork = () => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const isInFavorites = product ? isFavorite(product.id) : false;
 
-  // Calculator state
+  // Calculator state (no margin)
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(260);
   const [selectedMaterial, setSelectedMaterial] = useState<Material>(materials[0]);
-  const [margin, setMargin] = useState(5);
 
   useEffect(() => {
     setSelectedImage(0);
@@ -71,10 +70,9 @@ const Artwork = () => {
 
   const companionWallpapers = products.filter(p => p.type === 'companion' && p.collectionId === product.collectionId);
 
-  // Calculator logic
+  // Calculator logic (no margin)
   const area = (width * height) / 10000;
-  const areaWithMargin = area * (1 + margin / 100);
-  const basePrice = product.pricePerSqm * areaWithMargin;
+  const basePrice = product.pricePerSqm * area;
   const totalPrice = Math.round(basePrice * selectedMaterial.priceCoefficient);
 
   const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU').format(price);
@@ -85,7 +83,7 @@ const Artwork = () => {
       addItem({ product, material: materials.find(m => m.id === 'canvas')!, width: 0, height: 0, area: 0, price: size.price, quantity: 1, panelSize: size.size });
       toast.success('Добавлено в корзину', { description: `${product.name} • ${size.size}` });
     } else {
-      addItem({ product, material: selectedMaterial, width, height, area: areaWithMargin, price: totalPrice, quantity: 1 });
+      addItem({ product, material: selectedMaterial, width, height, area, price: totalPrice, quantity: 1 });
       toast.success('Добавлено в корзину', { description: `${product.name} • ${width}×${height} см` });
     }
   };
@@ -96,68 +94,65 @@ const Artwork = () => {
   const getPatternLabel = () => patternTypes.find(p => p.id === product.patternType)?.label || product.patternType;
 
   return (
-    <div className="bg-background pt-16 sm:pt-20 lg:pt-24">
-      {/* Breadcrumbs */}
-      <div className="container-wide pt-6 pb-4">
-        <nav className="flex items-center gap-2 text-[11px] text-muted-foreground">
-          <Link to="/" className="hover:text-foreground transition-colors">Главная</Link>
-          <span>/</span>
-          <Link to="/catalog" className="hover:text-foreground transition-colors">Каталог</Link>
-          <span>/</span>
-          <span className="text-foreground">{product.name}</span>
-        </nav>
-      </div>
+    <div className="bg-background">
+      {/* ── Full-screen Hero ── */}
+      <section className="relative w-full h-screen overflow-hidden cursor-zoom-in group" onClick={() => setShowFullscreen(true)}>
+        <img
+          src={mainImage}
+          alt={product.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        />
+        {/* Gradient overlay at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+        {/* Product info overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 lg:p-16">
+          <nav className="flex items-center gap-2 text-[11px] text-background/70 mb-4">
+            <Link to="/" className="hover:text-background transition-colors">Главная</Link>
+            <span>/</span>
+            <Link to="/catalog" className="hover:text-background transition-colors">Каталог</Link>
+            <span>/</span>
+            <span className="text-background">{product.name}</span>
+          </nav>
+          <p className="text-[10px] uppercase tracking-[0.15em] text-background/60 mb-2">{product.collection}</p>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-light text-background leading-tight tracking-[-0.02em]">
+            {product.name}
+          </h1>
+        </div>
+        {/* Zoom hint */}
+        <div className="absolute top-6 right-6 bg-background/20 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-[0.1em] text-background">
+          <ZoomIn className="w-3.5 h-3.5" />
+          Увеличить
+        </div>
+        {/* Nav arrows on hero */}
+        {product.images.length > 1 && (
+          <>
+            <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background/40 text-background">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background/40 text-background">
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
+      </section>
 
-      {/* ── Main product section: Gallery left + Info right ── */}
-      <section className="container-wide pb-16 lg:pb-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+      {/* ── Main product section: Gallery + Info ── */}
+      <section className="container-wide py-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
-          {/* LEFT — Stacked gallery (belartestudio style) */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-2">
-            {/* Main image with navigation */}
-            <div className="relative group overflow-hidden cursor-zoom-in" onClick={() => setShowFullscreen(true)}>
-              <img
-                src={mainImage}
-                alt={product.name}
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-              {/* Zoom hint */}
-              <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-[0.1em]">
-                <ZoomIn className="w-3.5 h-3.5" />
-                Увеличить
-              </div>
-              {/* Nav arrows */}
-              {product.images.length > 1 && (
-                <>
-                  <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-background/70 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background">
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-background/70 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-background">
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnails row */}
-            {product.images.length > 1 && (
-              <div className="flex gap-2">
-                {product.images.map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setSelectedImage(i)}
-                    className={`w-16 h-16 overflow-hidden border transition-colors ${selectedImage === i ? 'border-foreground' : 'border-foreground/10 hover:border-foreground/30'}`}
-                  >
-                    <img src={getImageSrc(img)} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Additional images stacked vertically (belartestudio: all images visible on scroll) */}
-            {product.images.length > 1 && product.images.slice(1).map((img, i) => (
-              <div key={i} className="overflow-hidden">
-                <img src={getImageSrc(img)} alt={`${product.name} вид ${i + 2}`} className="w-full h-auto object-cover" />
+          {/* LEFT — Stacked gallery (all images large, scrollable) */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-3">
+            {product.images.map((img, i) => (
+              <div
+                key={i}
+                className="overflow-hidden cursor-zoom-in group/img"
+                onClick={() => { setSelectedImage(i); setShowFullscreen(true); }}
+              >
+                <img
+                  src={getImageSrc(img)}
+                  alt={`${product.name} — вид ${i + 1}`}
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover/img:scale-[1.02]"
+                />
               </div>
             ))}
           </div>
@@ -165,15 +160,10 @@ const Artwork = () => {
           {/* RIGHT — Sticky product info */}
           <div className="lg:col-span-5 xl:col-span-4">
             <div className="lg:sticky lg:top-28 space-y-5">
-              {/* Collection label */}
               <p className="text-caption">{product.collection}</p>
-
-              {/* Name */}
-              <h1 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.01em]">
+              <h2 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.01em]">
                 {product.name}
-              </h1>
-
-              {/* Description */}
+              </h2>
               <p className="text-[13px] text-muted-foreground leading-relaxed">
                 {product.description}
               </p>
@@ -203,7 +193,6 @@ const Artwork = () => {
                 <ColorVariantSelector currentProduct={product} variants={colorVariants} />
               )}
 
-              {/* Divider */}
               <div className="border-t border-foreground/10" />
 
               {/* Price & Calculator / Panel sizes */}
@@ -233,7 +222,6 @@ const Artwork = () => {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {/* Price per sqm */}
                   <div className="flex items-baseline justify-between">
                     <span className="text-[11px] text-muted-foreground uppercase tracking-wider">Цена за м²</span>
                     <span className="text-lg font-light">{formatPrice(product.pricePerSqm)} ₽</span>
@@ -282,24 +270,11 @@ const Artwork = () => {
                     </CollapsibleContent>
                   </Collapsible>
 
-                  {/* Margin */}
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] text-muted-foreground uppercase tracking-wider">Запас:</span>
-                    <div className="flex gap-2 flex-1">
-                      {[5, 10].map((m) => (
-                        <button key={m} onClick={() => setMargin(m)}
-                          className={`flex-1 py-1.5 text-xs border transition-colors ${margin === m ? 'bg-foreground text-background border-foreground' : 'border-foreground/15 hover:border-foreground/30'}`}>
-                          +{m}%
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
                   {/* Summary */}
                   <div className="pt-4 border-t border-foreground/10 space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Площадь</span>
-                      <span>{areaWithMargin.toFixed(2)} м²</span>
+                      <span>{area.toFixed(2)} м²</span>
                     </div>
                     <div className="flex justify-between items-baseline">
                       <span className="text-muted-foreground">Итого</span>
@@ -445,7 +420,7 @@ const Artwork = () => {
               </div>
               <div className="lg:col-span-8 relative overflow-hidden">
                 <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
-                  {companionWallpapers.slice(0, 5).map((wallpaper, i) => (
+                  {companionWallpapers.slice(0, 5).map((wallpaper) => (
                     <div key={wallpaper.id} className="group border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
                       <div className="aspect-[4/3] overflow-hidden bg-muted">
                         <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover" style={{ filter: 'saturate(0.7)' }} />
@@ -532,9 +507,7 @@ const Artwork = () => {
                 <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-muted hover:bg-muted/80 transition-colors"><ChevronRight className="w-5 h-5" /></button>
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
                   {product.images.map((img, i) => (
-                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-12 h-9 overflow-hidden border transition-colors ${selectedImage === i ? 'border-foreground' : 'border-transparent'}`}>
-                      <img src={getImageSrc(img)} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
-                    </button>
+                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-2 h-2 rounded-full transition-colors ${selectedImage === i ? 'bg-foreground' : 'bg-foreground/30'}`} />
                   ))}
                 </div>
               </>
