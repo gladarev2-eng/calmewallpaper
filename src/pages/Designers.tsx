@@ -184,12 +184,12 @@ const Designers = () => {
       {/* Services - Sequential Presentation */}
       <section className="section">
         <div className="container-wide">
-          <div className="text-center mb-20">
+          <div className="mb-20">
             <p className="text-caption mb-4">Что мы предлагаем</p>
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="space-y-16 md:space-y-24 lg:space-y-32">
+          <div className="space-y-20 md:space-y-28 lg:space-y-36">
             {services.map((item, i) => (
               <motion.div
                 key={item.num}
