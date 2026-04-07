@@ -161,7 +161,7 @@ const Contacts = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-[18px] font-extralight tracking-[-0.01em]">{showroom.city}</h3>
+                  <h3 className="text-[18px] font-light tracking-[-0.01em] font-display">{showroom.city}</h3>
                   
                   <div className="space-y-2.5">
                     <p className="flex items-start gap-3 text-[13px] font-light text-foreground/50">
