@@ -134,10 +134,10 @@ const UnderlineDropdown = ({
                     <button
                       key={option.id}
                       onClick={() => toggleValue(option.id)}
-                      className={`w-7 h-7 rounded-full transition-all border ${
+                      className={`w-7 h-7 rounded-full transition-all duration-500 border ${
                         selectedValues.includes(option.id)
-                          ? 'ring-2 ring-foreground ring-offset-2 scale-110'
-                          : 'border-border/30 hover:scale-110'
+                          ? 'ring-2 ring-foreground/50 ring-offset-2 scale-110'
+                          : 'border-foreground/10 hover:scale-110'
                       }`}
                       style={{ backgroundColor: option.hex }}
                       title={option.label}
