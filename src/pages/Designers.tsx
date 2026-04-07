@@ -145,7 +145,7 @@ const Designers = () => {
                 <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 font-light ${tier.highlighted ? 'text-background/60' : 'text-foreground/35'}`}>
                   {tier.level}
                 </p>
-                <p className={`text-4xl md:text-5xl font-extralight mb-2 tracking-[-0.02em] ${tier.highlighted ? '' : 'text-foreground'}`}>
+                <p className={`text-4xl md:text-5xl font-light mb-2 tracking-[-0.02em] font-display ${tier.highlighted ? '' : 'text-foreground'}`}>
                   {tier.discount}
                 </p>
                 <p className={`text-[13px] font-light mb-6 ${tier.highlighted ? 'text-background/70' : 'text-foreground/45'}`}>
