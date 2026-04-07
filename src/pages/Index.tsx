@@ -1,5 +1,6 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
@@ -10,31 +11,47 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 import { collections } from '@/data/products';
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
-};
+const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
 const Index = () => {
   const collectionImages = [mural1, mural2, mural3, mural4];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
 
   return (
     <div>
-      {/* Hero Section - Full screen centered */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center">
-        <div className="absolute inset-0">
-          <img 
-            src={heroMural} 
-            alt="CALMÉ" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-foreground/20" />
-        </div>
+      {/* Hero Section - Full screen with sliding images */}
+      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        {/* Sliding backgrounds */}
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentSlide}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img 
+              src={heroSlides[currentSlide]} 
+              alt="CALMÉ" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/25" />
+          </motion.div>
+        </AnimatePresence>
         
         <div className="relative z-10 text-center text-white">
           <motion.h1 
-            className="text-6xl md:text-8xl lg:text-9xl font-light tracking-tight mb-6"
+            className="text-[3.5rem] md:text-[6.5rem] lg:text-[8.5rem] font-extralight tracking-[-0.04em] leading-[0.9] mb-5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -42,7 +59,7 @@ const Index = () => {
             CALMÉ
           </motion.h1>
           <motion.p 
-            className="text-hero-tagline text-white/90 mb-12"
+            className="text-[11px] md:text-[12px] font-light uppercase tracking-[0.3em] text-white/80 mb-14"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -60,15 +77,20 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-        >
-          <ArrowDown className="w-5 h-5 animate-bounce" />
-        </motion.div>
+        {/* Slide indicators */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+          {heroSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentSlide(i)}
+              className={`transition-all duration-500 ${
+                i === currentSlide 
+                  ? 'w-8 h-[1.5px] bg-white' 
+                  : 'w-4 h-[1.5px] bg-white/40 hover:bg-white/60'
+              }`}
+            />
+          ))}
+        </div>
       </section>
 
       {/* Manifesto Section */}
