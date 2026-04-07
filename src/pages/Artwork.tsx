@@ -105,10 +105,9 @@ const Artwork = () => {
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/25" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        {/* Product title — large, centered */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-white/60 mb-4">{product.collection}</p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-extralight text-white leading-[1.05] tracking-[-0.025em]">
+        {/* Product title — bottom left, bold */}
+        <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.05] tracking-[-0.02em]">
             {product.name}
           </h1>
         </div>
