@@ -11,16 +11,6 @@ import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
-const imageMap: Record<string, string> = {
-  '/hero-mural.jpg': heroMural,
-  '/mural-1.jpg': mural1,
-  '/mural-2.jpg': mural2,
-  '/mural-3.jpg': mural3,
-  '/mural-4.jpg': mural4,
-  '/mural-5.jpg': mural5,
-  '/mural-6.jpg': mural6,
-};
-
 const collectionImages: Record<string, string[]> = {
   'silentia': [mural2, heroMural, mural1],
   'botanica': [mural3, mural5, heroMural],
@@ -36,7 +26,7 @@ const CollectionCard = ({ collection, index }: { collection: typeof collections[
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
+      transition={{ delay: index * 0.1, duration: 0.7 }}
     >
       <Link 
         to={`/collection/${collection.slug}`} 
@@ -57,13 +47,12 @@ const CollectionCard = ({ collection, index }: { collection: typeof collections[
             className="w-full h-full object-cover transition-all duration-500"
           />
           
-          {/* Image indicators */}
-          <div className="absolute bottom-4 left-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute bottom-4 left-4 right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
             {images.map((_, i) => (
               <div
                 key={i}
-                className={`h-0.5 flex-1 transition-colors ${
-                  i === currentImageIndex ? 'bg-background' : 'bg-background/40'
+                className={`h-[1px] flex-1 transition-colors duration-500 ${
+                  i === currentImageIndex ? 'bg-white/80' : 'bg-white/30'
                 }`}
               />
             ))}
@@ -71,17 +60,17 @@ const CollectionCard = ({ collection, index }: { collection: typeof collections[
         </div>
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="font-display text-3xl mb-2">{collection.name}</h2>
-            <p className="text-muted-foreground mb-3">{collection.description}</p>
-            <div className="flex flex-wrap gap-2">
+            <h2 className="text-xl font-extralight mb-2 tracking-[-0.02em]">{collection.name}</h2>
+            <p className="text-body mb-3">{collection.description}</p>
+            <div className="flex flex-wrap gap-3">
               {collection.colors.map((color) => (
-                <span key={color} className="text-xs text-muted-foreground">
+                <span key={color} className="text-[11px] text-foreground/35 font-light">
                   {color}
                 </span>
               ))}
             </div>
           </div>
-          <ArrowRight className="w-6 h-6 mt-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <ArrowRight className="w-5 h-5 mt-1 text-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1.5} />
         </div>
       </Link>
     </motion.div>
@@ -92,15 +81,16 @@ const Collections = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
-      <section className="section-sm bg-card">
+      <section className="section-sm bg-background">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl"
           >
-            <h1 className="text-display mb-4">Коллекции</h1>
-            <p className="text-body-lg">
+            <p className="text-caption mb-6">Коллекции</p>
+            <h1 className="text-display mb-6">Коллекции</h1>
+            <p className="text-body-lg max-w-xl">
               Каждая коллекция — это законченная концепция, объединяющая работы общей идеей и настроением
             </p>
           </motion.div>
@@ -110,7 +100,7 @@ const Collections = () => {
       {/* Collections grid */}
       <section className="section">
         <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {collections.map((collection, i) => (
               <CollectionCard key={collection.id} collection={collection} index={i} />
             ))}

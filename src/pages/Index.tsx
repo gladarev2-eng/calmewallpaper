@@ -15,7 +15,6 @@ import { inspirationRoomTypes } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
-// Room categories for inspiration navigation
 const roomCategories = [
   { id: 'living', label: 'Гостиная', image: mural1 },
   { id: 'bedroom', label: 'Спальня', image: mural3 },
@@ -42,7 +41,7 @@ const Index = () => {
 
   return (
     <div>
-      {/* ── Hero — immersive, visual-first ── */}
+      {/* ── Hero ── */}
       <section className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div
@@ -104,39 +103,60 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Positioning block — image + 3 short theses ── */}
+      {/* ── Positioning block — image + 3 theses with descriptions ── */}
       <section className="relative overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="aspect-[4/3] lg:aspect-auto lg:min-h-[600px] overflow-hidden">
+          <div className="aspect-[4/3] lg:aspect-auto lg:min-h-[700px] overflow-hidden">
             <img
               src={mural2}
               alt="CALMÉ в интерьере"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="flex items-center px-8 md:px-14 lg:px-20 xl:px-28 py-16 lg:py-0 bg-card/30">
+          <div className="flex items-center px-8 md:px-14 lg:px-20 xl:px-28 py-20 lg:py-0 bg-card/30">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="space-y-10"
+              className="space-y-12"
             >
+              <p className="text-caption">Философия</p>
               {[
-                'Архитектурный подход',
-                'Адаптация под интерьер',
-                'Контроль результата',
-              ].map((text, i) => (
-                <p key={i} className="text-[18px] md:text-[20px] font-extralight tracking-[-0.01em] text-foreground/80">
-                  {text}
-                </p>
+                {
+                  title: 'Архитектурный подход',
+                  desc: 'Каждый мурал проектируется как часть пространства — с учётом масштаба стены, освещения и окружающих материалов. Не декор, а визуальная архитектура.',
+                },
+                {
+                  title: 'Адаптация под интерьер',
+                  desc: 'Масштабируем, корректируем цвет и композицию под конкретное помещение. Изображение органично встраивается в ваш проект.',
+                },
+                {
+                  title: 'Контроль результата',
+                  desc: 'Перед печатью вы утверждаете финальный макет с визуализацией в вашем интерьере. Никаких сюрпризов — только точный результат.',
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                >
+                  <h3 className="text-[16px] md:text-[18px] font-light tracking-[-0.01em] text-foreground mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-body max-w-md">
+                    {item.desc}
+                  </p>
+                </motion.div>
               ))}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── Category showcase — Murals / Panels / Wallpapers ── */}
+      {/* ── Category showcase ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
@@ -171,7 +191,7 @@ const Index = () => {
                     />
                   </div>
                   <h3 className="text-[15px] font-light mb-2 group-hover:text-foreground/80 transition-colors">{cat.title}</h3>
-                  <p className="text-[13px] text-muted-foreground">{cat.desc}</p>
+                  <p className="text-body">{cat.desc}</p>
                 </Link>
               </motion.div>
             ))}
@@ -267,7 +287,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Process — how we work ── */}
+      {/* ── Process ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <motion.div
@@ -304,7 +324,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── For designers — B2B signal ── */}
+      {/* ── For designers ── */}
       <section className="section bg-card/50">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -349,7 +369,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Quiet CTA ── */}
+      {/* ── CTA ── */}
       <section className="section-lg bg-background">
         <div className="container-narrow text-center">
           <motion.div

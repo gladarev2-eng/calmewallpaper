@@ -13,7 +13,7 @@ const MaterialsSection = ({ materials, images }: MaterialsSectionProps) => {
   const activeMaterial = materials[activeIndex];
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
       {/* Material Cards Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
         {materials.map((material, i) => (
@@ -24,25 +24,25 @@ const MaterialsSection = ({ materials, images }: MaterialsSectionProps) => {
             viewport={{ once: true }}
             transition={{ delay: i * 0.05 }}
             onClick={() => setActiveIndex(i)}
-            className={`text-left group transition-all duration-300 ${
+            className={`text-left group transition-all duration-500 ${
               activeIndex === i 
-                ? 'ring-1 ring-foreground' 
-                : 'hover:ring-1 hover:ring-border'
+                ? 'ring-1 ring-foreground/30' 
+                : 'hover:ring-1 hover:ring-foreground/10'
             }`}
           >
             <div className="aspect-square overflow-hidden bg-muted">
               <img 
                 src={images[i % images.length]} 
                 alt={material.name}
-                className={`w-full h-full object-cover transition-all duration-500 ${
-                  activeIndex === i ? 'scale-105' : 'group-hover:scale-105'
+                className={`w-full h-full object-cover transition-all duration-700 ${
+                  activeIndex === i ? 'scale-105' : 'group-hover:scale-[1.03]'
                 }`}
               />
             </div>
             <div className="p-3 bg-background">
-              <h4 className="font-display text-sm md:text-base leading-tight">{material.name}</h4>
+              <h4 className="text-[13px] font-light leading-tight text-foreground">{material.name}</h4>
               {material.forHoreca && (
-                <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
+                <span className="text-[10px] text-foreground/35 uppercase tracking-[0.12em] font-light">
                   HoReCa
                 </span>
               )}
@@ -59,7 +59,6 @@ const MaterialsSection = ({ materials, images }: MaterialsSectionProps) => {
         transition={{ duration: 0.3 }}
         className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start"
       >
-        {/* Large Preview Image */}
         <div className="aspect-[4/3] overflow-hidden">
           <img 
             src={images[activeIndex % images.length]} 
@@ -68,50 +67,46 @@ const MaterialsSection = ({ materials, images }: MaterialsSectionProps) => {
           />
         </div>
 
-        {/* Details */}
         <div className="max-w-md">
-          <h3 className="font-display text-2xl md:text-3xl mb-2">{activeMaterial.name}</h3>
+          <h3 className="text-2xl font-extralight mb-2 tracking-[-0.02em]">{activeMaterial.name}</h3>
           {activeMaterial.forHoreca && (
-            <span className="inline-block text-xs px-2 py-1 bg-accent text-accent-foreground mb-4">
+            <span className="inline-block text-[10px] px-3 py-1.5 border border-foreground/10 text-foreground/50 uppercase tracking-[0.12em] mb-5 font-light">
               Подходит для HoReCa
             </span>
           )}
-          <p className="text-muted-foreground mb-6 leading-relaxed">
+          <p className="text-body-lg mb-8">
             {activeMaterial.description}
           </p>
           
           {activeMaterial.texture && (
-            <div className="mb-6">
-              <h4 className="text-sm font-medium mb-2">Текстура</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+            <div className="mb-8">
+              <h4 className="text-[13px] font-light mb-2 text-foreground">Текстура</h4>
+              <p className="text-body">
                 {activeMaterial.texture}
               </p>
             </div>
           )}
 
-          <div className="mb-6">
-            <h4 className="text-sm font-medium mb-3">Характеристики</h4>
-            <ul className="space-y-2">
+          <div className="mb-8">
+            <h4 className="text-[13px] font-light mb-4 text-foreground">Характеристики</h4>
+            <ul className="space-y-3">
               {activeMaterial.features.map((feature, j) => (
-                <li key={j} className="flex items-center gap-3 text-sm">
-                  <span className="w-1 h-1 bg-foreground rounded-full" />
+                <li key={j} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                  <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
                   {feature}
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mb-8">
-            <h4 className="text-sm font-medium mb-2">Уход</h4>
-            <p className="text-sm text-muted-foreground">{activeMaterial.care}</p>
+          <div className="mb-10">
+            <h4 className="text-[13px] font-light mb-2 text-foreground">Уход</h4>
+            <p className="text-body">{activeMaterial.care}</p>
           </div>
 
-          <Link 
-            to="/contacts" 
-            className="inline-flex items-center text-xs uppercase tracking-widest hover:opacity-70 transition-opacity"
-          >
+          <Link to="/contacts" className="link-arrow">
             Заказать образцы бесплатно
-            <span className="ml-2">→</span>
+            <span className="ml-1">→</span>
           </Link>
         </div>
       </motion.div>
