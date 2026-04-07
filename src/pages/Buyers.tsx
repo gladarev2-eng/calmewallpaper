@@ -158,7 +158,7 @@ const Buyers = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-lg bg-card/50">
+      <section className="section-lg bg-card/30">
         <div className="container-narrow text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
