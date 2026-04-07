@@ -24,11 +24,11 @@ export const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide">
-          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-[88px]">
+          <div className="flex items-center justify-between h-20 sm:h-24 lg:h-[96px]">
             {/* Logo */}
             <Link 
               to="/" 
-              className="text-[14px] font-light uppercase tracking-[0.35em] text-foreground"
+              className="text-[15px] font-light uppercase tracking-[0.4em] text-foreground font-display"
             >
               Calmé
             </Link>
@@ -39,7 +39,7 @@ export const Header = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`text-[11px] font-light uppercase tracking-[0.16em] transition-all duration-500 ${
+                  className={`text-[12px] font-normal uppercase tracking-[0.16em] transition-all duration-700 ${
                     location.pathname === item.href 
                       ? 'text-foreground' 
                       : 'text-foreground/50 hover:text-foreground/80'
@@ -56,7 +56,7 @@ export const Header = () => {
               <div className="hidden lg:flex items-center gap-3">
                 <a 
                   href="tel:+74951234567" 
-                  className="text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
+                  className="text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
                   +7 (495) 123-45-67
                 </a>
@@ -64,7 +64,7 @@ export const Header = () => {
                   href="https://wa.me/79001234567"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 text-foreground/40 hover:text-foreground/70 transition-colors duration-500"
+                  className="p-2 text-foreground/40 hover:text-foreground/70 transition-colors duration-700"
                 >
                   <MessageCircle className="w-3.5 h-3.5 stroke-[1.5]" />
                 </a>
@@ -74,7 +74,7 @@ export const Header = () => {
               <div className="flex items-center gap-3">
                 <Link 
                   to="/favorites"
-                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
                   <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
                   {totalFavorites > 0 && (
@@ -86,7 +86,7 @@ export const Header = () => {
                 
                 <Link 
                   to="/cart"
-                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
                   <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
                   {totalItems > 0 && (
@@ -98,7 +98,7 @@ export const Header = () => {
                 
                 <button
                   onClick={() => setIsMenuOpen(true)}
-                  className="lg:hidden p-2 text-foreground/60 transition-colors duration-500"
+                  className="lg:hidden p-2 text-foreground/60 transition-colors duration-700"
                 >
                   <Menu className="w-4 h-4 stroke-[1.5]" />
                 </button>
@@ -128,12 +128,12 @@ export const Header = () => {
                 className="fixed right-0 top-0 bottom-0 w-full max-w-sm bg-background z-50 flex flex-col"
               >
                 <div className="flex justify-between items-center p-6 sm:p-8">
-                  <span className="text-sm font-light uppercase tracking-[0.3em] text-foreground/80">
+                  <span className="text-sm font-light uppercase tracking-[0.3em] text-foreground/80 font-display">
                     Calmé
                   </span>
                   <button
                     onClick={() => setIsMenuOpen(false)}
-                    className="p-2 -mr-2 text-foreground/50 transition-colors duration-500"
+                    className="p-2 -mr-2 text-foreground/50 transition-colors duration-700"
                   >
                     <X className="w-5 h-5 stroke-[1.5]" />
                   </button>
@@ -151,7 +151,7 @@ export const Header = () => {
                         <Link
                           to={item.href}
                           onClick={() => setIsMenuOpen(false)}
-                          className={`block text-lg font-light uppercase tracking-[0.15em] py-2 transition-colors duration-500 ${
+                          className={`block text-lg font-light uppercase tracking-[0.15em] py-2 transition-colors duration-700 ${
                             location.pathname === item.href
                               ? 'text-foreground'
                               : 'text-foreground/50 hover:text-foreground/80'
@@ -167,7 +167,7 @@ export const Header = () => {
                 <div className="p-6 sm:p-8 border-t border-foreground/8 space-y-4">
                   <a 
                     href="tel:+74951234567"
-                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors py-2"
+                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors duration-700 py-2"
                   >
                     <Phone className="w-4 h-4" strokeWidth={1.5} />
                     <span>+7 (495) 123-45-67</span>
@@ -177,7 +177,7 @@ export const Header = () => {
                     href="https://wa.me/79001234567"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors py-2"
+                    className="flex items-center gap-3 text-sm font-light text-foreground/50 hover:text-foreground/80 transition-colors duration-700 py-2"
                   >
                     <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
                     <span>WhatsApp</span>
@@ -187,7 +187,7 @@ export const Header = () => {
                     <Link
                       to="/favorites"
                       onClick={() => setIsMenuOpen(false)}
-                      className="w-full flex items-center justify-center gap-3 py-3.5 border border-foreground/15 text-sm font-light uppercase tracking-[0.1em] hover:border-foreground/30 transition-colors"
+                      className="w-full flex items-center justify-center gap-3 py-3.5 border border-foreground/15 text-sm font-light uppercase tracking-[0.1em] hover:border-foreground/30 transition-colors duration-700"
                     >
                       <Heart className={`w-4 h-4 stroke-[1.5] ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
                       <span>Избранное {totalFavorites > 0 && `(${totalFavorites})`}</span>
