@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle } from 'lucide-react';
+import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getProductById, materials, products, patternTypes, roomTypes, Material, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
@@ -34,6 +34,8 @@ const Artwork = () => {
   const [selectedPanelSize, setSelectedPanelSize] = useState(0);
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [materialOpen, setMaterialOpen] = useState(false);
+  const [activeInfoTab, setActiveInfoTab] = useState<'print' | 'material'>('print');
+  const [selectedInfoMaterial, setSelectedInfoMaterial] = useState<Material>(materials[0]);
   const { addItem } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const isInFavorites = product ? isFavorite(product.id) : false;
@@ -167,15 +169,13 @@ const Artwork = () => {
                 {product.description}
               </p>
 
-              {/* Material & type info block */}
+              {/* Material & type info block — compact */}
               <div className="py-5 border-t border-b border-foreground/8 space-y-3">
-                <p className="text-caption mb-3">Характеристики</p>
                 {[
                   { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
                   { label: 'Сюжет', value: patternLabel },
-                  { label: 'Помещение', value: roomLabels },
-                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
                   { label: 'Коллекция', value: product.collection },
+                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between text-[13px] font-light">
                     <span className="text-foreground/40">{row.label}</span>
@@ -183,28 +183,6 @@ const Artwork = () => {
                   </div>
                 ))}
               </div>
-
-              {/* Materials info */}
-              <div className="py-5 border-b border-foreground/8">
-                <p className="text-caption mb-3">Материалы</p>
-                <p className="text-body mb-4">
-                  Доступно 5 типов покрытий: от матового флизелина для жилых помещений до антивандального винила для коммерческих пространств.
-                </p>
-                <div className="space-y-2">
-                  {materials.filter(m => m.id !== 'canvas').map((mat) => (
-                    <div key={mat.id} className="flex justify-between text-[12px] font-light">
-                      <span className="text-foreground/50">{mat.name}</span>
-                      <span className="text-foreground/35">{mat.priceCoefficient > 1 ? `+${Math.round((mat.priceCoefficient - 1) * 100)}%` : 'базовая'}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Custom-fit statement */}
-              <p className="text-[13px] text-foreground/45 leading-[1.85] font-light italic">
-                Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
-                под размеры вашей стены, сохраняя баланс и глубину сцены.
-              </p>
 
               {/* Action buttons */}
               <div className="flex gap-3">
@@ -326,6 +304,179 @@ const Artwork = () => {
               )}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── About Print / About Material — tabbed section ── */}
+      <section className="section border-t border-foreground/6">
+        <div className="container-wide">
+          {/* Tab headers */}
+          <div className="flex gap-8 mb-12 border-b border-foreground/8">
+            {[
+              { id: 'print' as const, label: 'О принте' },
+              { id: 'material' as const, label: 'О материале' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveInfoTab(tab.id)}
+                className={`pb-4 text-[11px] uppercase tracking-[0.14em] font-light transition-all duration-500 relative ${
+                  activeInfoTab === tab.id
+                    ? 'text-foreground'
+                    : 'text-foreground/40 hover:text-foreground/60'
+                }`}
+              >
+                {tab.label}
+                {activeInfoTab === tab.id && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-foreground" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <AnimatePresence mode="wait">
+            {activeInfoTab === 'print' ? (
+              <motion.div
+                key="print"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16"
+              >
+                {/* Specs table */}
+                <div className="space-y-4">
+                  {[
+                    { label: 'Коллекция', value: product.collection },
+                    { label: 'Пропорция', value: product.aspectRatio || '5:3' },
+                    { label: 'Макс. размер', value: product.maxWidth ? `${product.maxWidth}×${product.maxHeight || 320} см` : '600×320 см' },
+                    { label: 'Разрешение', value: '2400 DPI / 45K px' },
+                    { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
+                    { label: 'Настроение', value: patternLabel },
+                  ].map((row, i) => (
+                    <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[13px] font-light">
+                      <span className="text-foreground/40">{row.label}</span>
+                      <span className="text-foreground/70">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Print quality text + stats */}
+                <div>
+                  <p className="text-body-lg mb-8">
+                    Наши принты сохраняют безупречную чёткость даже на высоте 6 метров. 
+                    Каждая прожилка камня или мазок кисти выглядят так, будто они нанесены вручную.
+                  </p>
+                  <div className="flex gap-10">
+                    <div>
+                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">45K</p>
+                      <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">пикселей</p>
+                    </div>
+                    <div>
+                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">2400</p>
+                      <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">DPI</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recommended rooms */}
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/40 font-light mb-4">
+                    Рекомендуемые помещения
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.roomTypes.map(r => {
+                      const label = roomTypes.find(rt => rt.id === r)?.label;
+                      return label ? (
+                        <span key={r} className="px-4 py-2 border border-foreground/12 text-[12px] font-light text-foreground/60">
+                          {label}
+                        </span>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="material"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Material chips */}
+                <div className="flex flex-wrap gap-2 mb-10">
+                  {materials.filter(m => m.id !== 'canvas').map(mat => (
+                    <button
+                      key={mat.id}
+                      onClick={() => setSelectedInfoMaterial(mat)}
+                      className={`px-4 py-2.5 text-[11px] font-light tracking-[0.02em] transition-all duration-500 ${
+                        selectedInfoMaterial.id === mat.id
+                          ? 'bg-foreground text-background'
+                          : 'border border-foreground/15 text-foreground/60 hover:border-foreground/30'
+                      }`}
+                    >
+                      {mat.name}
+                      {mat.priceCoefficient > 1 && (
+                        <span className={`ml-2 ${selectedInfoMaterial.id === mat.id ? 'text-background/60' : 'text-foreground/30'}`}>
+                          +{Math.round((mat.priceCoefficient - 1) * 100)}%
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+                  {/* Material specs */}
+                  <div>
+                    <p className="text-body-lg mb-8">{selectedInfoMaterial.description}</p>
+                    
+                    <div className="space-y-4 mb-8">
+                      {[
+                        { label: 'Шов', value: `Бесшовный до ${product.maxWidth || 320} см` },
+                        { label: 'Основа', value: selectedInfoMaterial.name.split(' ')[0] },
+                        { label: 'Макс. ширина', value: `${product.maxWidth || 320} см` },
+                        { label: 'Уход', value: selectedInfoMaterial.care },
+                      ].map((row, i) => (
+                        <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[13px] font-light">
+                          <span className="text-foreground/40">{row.label}</span>
+                          <span className="text-foreground/70">{row.value}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8">
+                      {selectedInfoMaterial.features.map((f, i) => (
+                        <span key={i} className="flex items-center gap-2 text-[12px] font-light text-foreground/50">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-foreground/30" strokeWidth={1.5} />
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+
+                    <Link to="/buyers" className="link-arrow">
+                      Подробнее о материалах <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+
+                  {/* Material texture preview */}
+                  <div className="overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      <img
+                        src={mainImage}
+                        alt={`${selectedInfoMaterial.name} — текстура`}
+                        className="w-full h-full object-cover scale-150 blur-[0.5px] saturate-[0.7]"
+                      />
+                      <div className="absolute inset-0 bg-foreground/5" />
+                    </div>
+                    <div className="pt-4">
+                      <p className="text-[14px] font-light text-foreground mb-1">{selectedInfoMaterial.name}</p>
+                      <p className="text-[12px] font-light text-foreground/45">{selectedInfoMaterial.texture}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 
