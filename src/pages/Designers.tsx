@@ -214,22 +214,22 @@ const Designers = () => {
 
                 {/* Content */}
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <span className="text-[11px] tracking-[0.3em] text-muted-foreground/50 block mb-6">
+                  <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
                     {item.num}
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-light mb-3">
+                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em]">
                     {item.title}
                   </h3>
-                  <p className="text-sm uppercase tracking-[0.1em] text-muted-foreground mb-6">
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-foreground/35 mb-6 font-light">
                     {item.subtitle}
                   </p>
-                  <p className="text-base text-muted-foreground leading-relaxed mb-8">
+                  <p className="text-body-lg mb-8">
                     {item.desc}
                   </p>
                   <ul className="space-y-3">
                     {item.details.map((detail, j) => (
-                      <li key={j} className="flex items-start gap-3 text-sm">
-                        <span className="w-1 h-1 rounded-full bg-foreground/40 mt-2 shrink-0" />
+                      <li key={j} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                        <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
                         {detail}
                       </li>
                     ))}
