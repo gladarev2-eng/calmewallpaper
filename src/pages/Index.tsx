@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -21,33 +21,34 @@ const Index = () => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   }, []);
 
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  }, []);
+
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000);
+    const timer = setInterval(nextSlide, 6000);
     return () => clearInterval(timer);
   }, [nextSlide]);
 
   return (
     <div>
-      {/* Hero Section - Full screen with sliding images */}
+      {/* Hero Section - Full screen with calm crossfade */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Sliding backgrounds */}
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={currentSlide}
-            className="absolute inset-0"
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        {/* All slides stacked, opacity-driven crossfade */}
+        {heroSlides.map((slide, i) => (
+          <div
+            key={i}
+            className="absolute inset-0 transition-opacity duration-[1.8s] ease-in-out"
+            style={{ opacity: i === currentSlide ? 1 : 0 }}
           >
             <img 
-              src={heroSlides[currentSlide]} 
+              src={slide} 
               alt="CALMÉ" 
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/25" />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        ))}
         
         <div className="relative z-10 text-center text-white">
           <motion.h1 
@@ -77,13 +78,29 @@ const Index = () => {
           </motion.div>
         </div>
 
+        {/* Navigation arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft className="w-6 h-6" strokeWidth={1} />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
+          aria-label="Next slide"
+        >
+          <ChevronRight className="w-6 h-6" strokeWidth={1} />
+        </button>
+
         {/* Slide indicators */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
           {heroSlides.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentSlide(i)}
-              className={`transition-all duration-500 ${
+              className={`transition-all duration-700 ${
                 i === currentSlide 
                   ? 'w-8 h-[1.5px] bg-white' 
                   : 'w-4 h-[1.5px] bg-white/40 hover:bg-white/60'
