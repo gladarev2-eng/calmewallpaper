@@ -203,7 +203,7 @@ const Designers = () => {
               >
                 {/* Image */}
                 <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/5] overflow-hidden">
                     <img 
                       src={item.image} 
                       alt={item.title}
