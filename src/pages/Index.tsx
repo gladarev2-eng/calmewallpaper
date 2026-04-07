@@ -9,7 +9,7 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
-import { products } from '@/data/products';
+import { products, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { inspirationItems } from '@/data/inspiration';
 
@@ -31,22 +31,27 @@ const Index = () => {
 
   return (
     <div>
-      {/* ── Hero — visual dominates, minimal text ── */}
-      <section className="relative h-screen min-h-[600px] flex items-end overflow-hidden">
+      {/* ── Hero — immersive, visual-first ── */}
+      <section className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div
             key={i}
             className="absolute inset-0 transition-opacity duration-[2s] ease-in-out"
             style={{ opacity: i === currentSlide ? 1 : 0 }}
           >
-            <img src={slide} alt="CALMÉ" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-black/15" />
+            <img
+              src={slide}
+              alt="CALMÉ"
+              className="w-full h-full object-cover"
+              style={{ animation: i === currentSlide ? 'slowZoom 8s ease-out forwards' : 'none' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
           </div>
         ))}
 
-        <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-32">
+        <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
           <motion.h1
-            className="text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em] mb-4"
+            className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-extralight text-white leading-[1] tracking-[-0.03em] mb-5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -54,7 +59,7 @@ const Index = () => {
             Тихая архитектура стены
           </motion.h1>
           <motion.p
-            className="text-[12px] md:text-[13px] font-extralight text-white/60 tracking-[0.04em] mb-10 max-w-md"
+            className="text-[13px] md:text-[15px] font-light text-white/75 tracking-[0.02em] mb-12 max-w-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
@@ -72,7 +77,7 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Slide indicators — minimal */}
+        {/* Slide indicators */}
         <div className="absolute bottom-8 right-6 md:right-10 z-10 flex items-center gap-2">
           {heroSlides.map((_, i) => (
             <button
@@ -80,15 +85,37 @@ const Index = () => {
               onClick={() => setCurrentSlide(i)}
               className={`transition-all duration-700 ${
                 i === currentSlide
-                  ? 'w-6 h-[1px] bg-white/80'
-                  : 'w-3 h-[1px] bg-white/25'
+                  ? 'w-8 h-[1.5px] bg-white/90'
+                  : 'w-3 h-[1px] bg-white/30'
               }`}
             />
           ))}
         </div>
       </section>
 
-      {/* ── Three positioning blocks — text + air, no icons ── */}
+      {/* ── WOW block — immersive interior scenes, no text ── */}
+      <section className="bg-background">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
+          {[mural4, mural2, mural5, mural3].map((img, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.8 }}
+              className={`overflow-hidden ${i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'}`}
+            >
+              <img
+                src={img}
+                alt="CALMÉ в интерьере"
+                className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.5s]"
+              />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Three positioning blocks ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
@@ -111,14 +138,57 @@ const Index = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.8 }}
+                transition={{ delay: i * 0.12, duration: 0.8 }}
               >
-                <h3 className="text-[15px] font-extralight mb-5 tracking-[-0.01em]">
+                <h3 className="text-[16px] font-light mb-5 tracking-[-0.01em] text-foreground">
                   {block.title}
                 </h3>
                 <p className="text-body leading-[1.9]">
                   {block.text}
                 </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Category showcase — Murals / Panels / Wallpapers ── */}
+      <section className="section bg-background">
+        <div className="container-wide">
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-caption mb-4">Направления</p>
+            <h2 className="text-title">Три формата для вашего пространства</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              { title: 'Муралы', desc: 'Полноформатные настенные полотна до 6 метров', image: mural1, link: '/catalog?type=mural' },
+              { title: 'Панно', desc: 'Готовые композиции на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
+              { title: 'Фоновые обои', desc: 'Текстуры и паттерны для соседних стен', image: mural4, link: '/catalog?type=companion' },
+            ].map((cat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.7 }}
+              >
+                <Link to={cat.link} className="group block">
+                  <div className="aspect-[3/4] overflow-hidden mb-5">
+                    <img
+                      src={cat.image}
+                      alt={cat.title}
+                      className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <h3 className="text-[15px] font-light mb-2 group-hover:text-foreground/80 transition-colors">{cat.title}</h3>
+                  <p className="text-[13px] text-muted-foreground">{cat.desc}</p>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -146,14 +216,14 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             {featuredProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
           </div>
 
           <motion.div
-            className="mt-16 text-center"
+            className="mt-20 text-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -179,7 +249,7 @@ const Index = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
             {inspirationItems.slice(0, 6).map((item, i) => (
               <motion.div
                 key={item.id}
@@ -193,7 +263,7 @@ const Index = () => {
                     <img
                       src={item.image}
                       alt={item.productName}
-                      className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.03]"
+                      className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
                     />
                   </div>
                 </Link>
@@ -237,8 +307,8 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <span className="text-[10px] tracking-[0.2em] text-foreground/20 block mb-5">{item.step}</span>
-                <h3 className="text-[14px] font-extralight mb-3 tracking-[-0.01em]">{item.title}</h3>
+                <span className="text-[11px] tracking-[0.2em] text-foreground/30 block mb-5 font-light">{item.step}</span>
+                <h3 className="text-[15px] font-light mb-3 tracking-[-0.01em]">{item.title}</h3>
                 <p className="text-body">{item.desc}</p>
               </motion.div>
             ))}
@@ -249,7 +319,7 @@ const Index = () => {
       {/* ── For designers — B2B signal ── */}
       <section className="section bg-card/50">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -265,7 +335,7 @@ const Index = () => {
                   { title: 'Капсульные подборки', text: 'Персональная селекция работ под концепцию проекта' },
                 ].map((item, i) => (
                   <div key={i}>
-                    <h4 className="text-[13px] font-extralight mb-2">{item.title}</h4>
+                    <h4 className="text-[14px] font-light mb-2 text-foreground">{item.title}</h4>
                     <p className="text-body">{item.text}</p>
                   </div>
                 ))}

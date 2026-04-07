@@ -8,10 +8,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 lg:gap-16">
           {/* Brand */}
           <div>
-            <Link to="/" className="text-[12px] font-extralight uppercase tracking-[0.35em] block mb-5 text-foreground/60">
+            <Link to="/" className="text-[13px] font-light uppercase tracking-[0.35em] block mb-5 text-foreground/70">
               Calmé
             </Link>
-            <p className="text-[12px] font-extralight text-foreground/25 leading-[1.9] max-w-xs tracking-[0.01em]">
+            <p className="text-[13px] font-light text-foreground/35 leading-[1.9] max-w-xs tracking-[0.01em]">
               Индивидуальное производство настенных муралов для современных интерьеров
             </p>
           </div>
@@ -30,7 +30,7 @@ export const Footer = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="text-[11px] font-extralight text-foreground/25 hover:text-foreground/50 transition-colors duration-500 tracking-[0.04em]"
+                  className="text-[12px] font-light text-foreground/35 hover:text-foreground/60 transition-colors duration-500 tracking-[0.04em]"
                 >
                   {item.label}
                 </Link>
@@ -41,10 +41,10 @@ export const Footer = () => {
           {/* Contact */}
           <div>
             <div className="flex flex-col gap-4">
-              <a href="tel:+79001234567" className="text-[11px] font-extralight text-foreground/25 hover:text-foreground/50 transition-colors duration-500 tracking-[0.04em]">
+              <a href="tel:+79001234567" className="text-[12px] font-light text-foreground/35 hover:text-foreground/60 transition-colors duration-500 tracking-[0.04em]">
                 +7 (900) 123-45-67
               </a>
-              <a href="mailto:hello@calme.studio" className="text-[11px] font-extralight text-foreground/25 hover:text-foreground/50 transition-colors duration-500 tracking-[0.04em]">
+              <a href="mailto:hello@calme.studio" className="text-[12px] font-light text-foreground/35 hover:text-foreground/60 transition-colors duration-500 tracking-[0.04em]">
                 hello@calme.studio
               </a>
             </div>
@@ -53,7 +53,7 @@ export const Footer = () => {
 
         <div className="divider mt-16 lg:mt-20 mb-8" />
         
-        <p className="text-[9px] font-extralight text-foreground/15 uppercase tracking-[0.18em]">
+        <p className="text-[9px] font-light text-foreground/25 uppercase tracking-[0.18em]">
           © 2024 Calmé
         </p>
       </div>

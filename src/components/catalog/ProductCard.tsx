@@ -26,6 +26,7 @@ interface ProductCardProps {
   product: Product;
   index?: number;
   large?: boolean;
+  showPrice?: boolean;
 }
 
 const getSubline = (product: Product): string => {
@@ -34,7 +35,9 @@ const getSubline = (product: Product): string => {
   return product.collection.toLowerCase();
 };
 
-export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
+const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU').format(price);
+
+export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCardProps) => {
   const [imageIndex, setImageIndex] = useState(0);
   const { isFavorite, toggleFavorite } = useFavorites();
   const isInFavorites = isFavorite(product.id);
@@ -54,25 +57,25 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
       transition={{ duration: 0.7, delay: index * 0.04 }}
     >
       <Link to={`/artwork/${product.slug}`} className="group block">
-        {/* Image — clean, no badges */}
+        {/* Image — dominant element */}
         <div className="overflow-hidden bg-muted relative aspect-[4/5]">
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.02]"
+            className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
           />
 
-          {/* Favorite — subtle */}
+          {/* Favorite */}
           <button
             onClick={handleFavoriteClick}
             className={`absolute top-3 right-3 p-2 transition-all duration-500 ${
-              isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'
+              isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-70'
             }`}
           >
-            <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-white stroke-white' : 'stroke-white/80'}`} />
+            <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-white stroke-white' : 'stroke-white/90'}`} />
           </button>
 
-          {/* Image hover slideshow — very subtle indicator */}
+          {/* Image slideshow indicator */}
           {product.images.length > 1 && (
             <div
               className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -89,8 +92,8 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
                 {product.images.map((_, i) => (
                   <div
                     key={i}
-                    className={`h-[0.5px] flex-1 transition-colors duration-500 ${
-                      i === imageIndex ? 'bg-white/70' : 'bg-white/20'
+                    className={`h-[1px] flex-1 transition-colors duration-500 ${
+                      i === imageIndex ? 'bg-white/80' : 'bg-white/25'
                     }`}
                   />
                 ))}
@@ -99,14 +102,21 @@ export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
           )}
         </div>
 
-        {/* Info — name + subtle subline only, no price */}
+        {/* Info — name, subline, price */}
         <div className="pt-4 pb-2">
-          <h3 className="text-[12px] font-extralight tracking-[0.02em] leading-snug">
+          <h3 className="text-[13px] font-light tracking-[0.01em] leading-snug text-foreground">
             {product.name}
           </h3>
-          <p className="text-[11px] text-foreground/25 mt-1.5 font-extralight tracking-[0.02em]">
-            {getSubline(product)}
-          </p>
+          <div className="flex items-baseline justify-between mt-1.5">
+            <p className="text-[11px] text-foreground/35 font-extralight tracking-[0.02em]">
+              {getSubline(product)}
+            </p>
+            {showPrice && (
+              <p className="text-[11px] text-foreground/30 font-extralight">
+                от {formatPrice(product.pricePerSqm)} ₽/м²
+              </p>
+            )}
+          </div>
         </div>
       </Link>
     </motion.div>

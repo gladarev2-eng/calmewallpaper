@@ -4,97 +4,97 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CALMÉ Design System — Art Studio / Gallery Aesthetic */
+/* CALMÉ Design System — Boutique Art Studio */
 
 @layer base {
   :root {
     --background: 38 14% 93%;
-    --foreground: 30 5% 10%;
+    --foreground: 25 8% 12%;
 
     --card: 36 12% 90%;
-    --card-foreground: 30 5% 10%;
+    --card-foreground: 25 8% 12%;
 
     --popover: 38 16% 96%;
-    --popover-foreground: 30 5% 10%;
+    --popover-foreground: 25 8% 12%;
 
-    --primary: 30 5% 10%;
+    --primary: 25 8% 12%;
     --primary-foreground: 38 16% 96%;
 
     --secondary: 36 12% 92%;
-    --secondary-foreground: 30 5% 10%;
+    --secondary-foreground: 25 8% 12%;
 
     --muted: 36 10% 87%;
-    --muted-foreground: 30 5% 42%;
+    --muted-foreground: 25 6% 38%;
 
     --accent: 36 12% 92%;
-    --accent-foreground: 30 5% 10%;
+    --accent-foreground: 25 8% 12%;
 
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 5% 10% / 0.06;
-    --input: 30 5% 10% / 0.08;
-    --ring: 30 5% 10% / 0.1;
+    --border: 25 8% 12% / 0.08;
+    --input: 25 8% 12% / 0.10;
+    --ring: 25 8% 12% / 0.12;
 
     --radius: 0;
 
     --glass-bg: 38 16% 96% / 0.88;
-    --glass-border: 30 5% 10% / 0.04;
+    --glass-border: 25 8% 12% / 0.06;
     --overlay: 0 0% 0% / 0.5;
     
     --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --sidebar-background: 36 12% 92%;
-    --sidebar-foreground: 30 5% 10%;
-    --sidebar-primary: 30 5% 10%;
+    --sidebar-foreground: 25 8% 12%;
+    --sidebar-primary: 25 8% 12%;
     --sidebar-primary-foreground: 38 16% 96%;
     --sidebar-accent: 36 12% 92%;
-    --sidebar-accent-foreground: 30 5% 10%;
-    --sidebar-border: 30 5% 10% / 0.06;
-    --sidebar-ring: 30 5% 10% / 0.1;
+    --sidebar-accent-foreground: 25 8% 12%;
+    --sidebar-border: 25 8% 12% / 0.08;
+    --sidebar-ring: 25 8% 12% / 0.12;
   }
 
   .dark {
     --background: 20 5% 7%;
-    --foreground: 38 14% 95%;
+    --foreground: 38 14% 92%;
 
     --card: 20 5% 10%;
-    --card-foreground: 38 14% 95%;
+    --card-foreground: 38 14% 92%;
 
     --popover: 20 5% 7%;
-    --popover-foreground: 38 14% 95%;
+    --popover-foreground: 38 14% 92%;
 
-    --primary: 38 14% 95%;
+    --primary: 38 14% 92%;
     --primary-foreground: 20 5% 7%;
 
     --secondary: 20 5% 13%;
-    --secondary-foreground: 38 14% 95%;
+    --secondary-foreground: 38 14% 92%;
 
     --muted: 20 5% 15%;
-    --muted-foreground: 38 8% 52%;
+    --muted-foreground: 38 8% 55%;
 
     --accent: 20 5% 13%;
-    --accent-foreground: 38 14% 95%;
+    --accent-foreground: 38 14% 92%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 38 14% 95%;
+    --destructive-foreground: 38 14% 92%;
 
-    --border: 38 14% 95% / 0.06;
-    --input: 38 14% 95% / 0.08;
-    --ring: 38 14% 95% / 0.1;
+    --border: 38 14% 92% / 0.08;
+    --input: 38 14% 92% / 0.10;
+    --ring: 38 14% 92% / 0.12;
 
     --glass-bg: 20 5% 7% / 0.92;
-    --glass-border: 38 14% 95% / 0.04;
+    --glass-border: 38 14% 92% / 0.06;
     --overlay: 0 0% 0% / 0.7;
 
     --sidebar-background: 20 5% 10%;
-    --sidebar-foreground: 38 14% 95%;
-    --sidebar-primary: 38 14% 95%;
+    --sidebar-foreground: 38 14% 92%;
+    --sidebar-primary: 38 14% 92%;
     --sidebar-primary-foreground: 20 5% 7%;
     --sidebar-accent: 20 5% 13%;
-    --sidebar-accent-foreground: 38 14% 95%;
-    --sidebar-border: 38 14% 95% / 0.06;
-    --sidebar-ring: 38 14% 95% / 0.1;
+    --sidebar-accent-foreground: 38 14% 92%;
+    --sidebar-border: 38 14% 92% / 0.08;
+    --sidebar-ring: 38 14% 92% / 0.12;
   }
 }
 
@@ -113,7 +113,7 @@
     font-weight: 300;
     font-size: 14px;
     letter-spacing: 0.015em;
-    line-height: 1.8;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -127,7 +127,6 @@
 }
 
 @layer components {
-  /* Glass effect for navigation */
   .glass {
     background: hsl(var(--glass-bg));
     backdrop-filter: blur(24px) saturate(1.2);
@@ -135,65 +134,64 @@
     border-bottom: 0.5px solid hsl(var(--glass-border));
   }
 
-  /* Button styles — quiet, gallery-like */
+  /* Buttons — stronger, more readable */
   .btn-primary {
     @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.16em;
     min-height: 48px;
-    border: 1px solid hsl(var(--foreground) / 0.12);
-    color: hsl(var(--foreground));
-    background: transparent;
+    border: 1.5px solid hsl(var(--foreground));
+    color: hsl(var(--background));
+    background: hsl(var(--foreground));
   }
 
   .btn-primary:hover {
-    background: hsl(var(--foreground));
-    color: hsl(var(--background));
-    border-color: hsl(var(--foreground));
+    background: transparent;
+    color: hsl(var(--foreground));
     letter-spacing: 0.2em;
   }
 
   .btn-outline {
     @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.16em;
-    border: 1px solid hsl(var(--foreground) / 0.1);
-    color: hsl(var(--foreground) / 0.7);
+    border: 1.5px solid hsl(var(--foreground) / 0.25);
+    color: hsl(var(--foreground) / 0.8);
     min-height: 48px;
   }
 
   .btn-outline:hover {
-    border-color: hsl(var(--foreground) / 0.4);
+    border-color: hsl(var(--foreground) / 0.6);
     color: hsl(var(--foreground));
     letter-spacing: 0.2em;
   }
 
   .btn-light {
     @apply inline-flex items-center justify-center px-10 py-4 text-[10px] uppercase transition-all duration-500;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.16em;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.95);
     min-height: 48px;
   }
 
   .btn-light:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.7);
     letter-spacing: 0.2em;
   }
 
-  /* Section spacing — generous, gallery-like (+30%) */
+  /* Section spacing — generous */
   .section {
-    @apply py-24 md:py-28 lg:py-40;
+    @apply py-24 md:py-32 lg:py-44;
   }
 
   .section-sm {
-    @apply py-16 md:py-20 lg:py-24;
+    @apply py-16 md:py-24 lg:py-28;
   }
 
   .section-lg {
-    @apply py-28 md:py-36 lg:py-48;
+    @apply py-28 md:py-40 lg:py-52;
   }
 
   /* Container variants */
@@ -209,23 +207,23 @@
     @apply max-w-[1440px] mx-auto px-6 sm:px-8 md:px-10 lg:px-14;
   }
 
-  /* Typography — editorial, airy */
+  /* Typography — stronger contrast and hierarchy */
   .text-display {
     @apply text-3xl md:text-5xl lg:text-[4.5rem] font-extralight leading-[1] tracking-[-0.03em];
   }
 
   .text-hero-tagline {
-    @apply text-[10px] md:text-[11px] font-extralight uppercase tracking-[0.3em];
+    @apply text-[10px] md:text-[11px] font-light uppercase tracking-[0.3em];
     color: inherit;
   }
 
   .text-title {
-    @apply text-xl md:text-2xl lg:text-[1.75rem] font-extralight leading-[1.15];
-    letter-spacing: -0.015em;
+    @apply text-xl md:text-2xl lg:text-[2rem] font-extralight leading-[1.15];
+    letter-spacing: -0.02em;
   }
 
   .text-subtitle {
-    @apply text-base font-extralight leading-[1.5];
+    @apply text-base font-light leading-[1.5];
     letter-spacing: 0;
   }
 
@@ -235,15 +233,15 @@
   }
 
   .text-body-lg {
-    @apply text-[14px] md:text-[15px] leading-[1.85] text-muted-foreground;
+    @apply text-[15px] md:text-[16px] leading-[1.85] text-muted-foreground;
     font-weight: 300;
   }
 
   .text-caption {
     @apply text-[10px] uppercase;
     letter-spacing: 0.18em;
-    font-weight: 300;
-    color: hsl(var(--foreground) / 0.35);
+    font-weight: 400;
+    color: hsl(var(--foreground) / 0.45);
   }
 
   .text-label {
@@ -261,15 +259,15 @@
   .divider {
     @apply w-full;
     height: 0.5px;
-    background: hsl(var(--foreground) / 0.04);
+    background: hsl(var(--foreground) / 0.06);
   }
 
-  /* Link hover — editorial */
+  /* Link hover */
   .link-arrow {
     @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-500;
     letter-spacing: 0.16em;
-    font-weight: 300;
-    color: hsl(var(--foreground) / 0.5);
+    font-weight: 400;
+    color: hsl(var(--foreground) / 0.6);
   }
 
   .link-arrow:hover {
@@ -315,6 +313,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
 ::-webkit-scrollbar {
   width: 3px;
 }
@@ -324,11 +327,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--foreground) / 0.08);
+  background: hsl(var(--foreground) / 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground) / 0.15);
+  background: hsl(var(--foreground) / 0.2);
 }
 
 * {
@@ -336,7 +339,7 @@
 }
 
 ::selection {
-  background: hsl(var(--foreground) / 0.06);
+  background: hsl(var(--foreground) / 0.08);
   color: hsl(var(--foreground));
 }
 

@@ -88,23 +88,21 @@ const Artwork = () => {
   const nextImage = () => setSelectedImage((prev) => (prev + 1) % product.images.length);
   const prevImage = () => setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
 
-  const getPatternLabel = () => patternTypes.find(p => p.id === product.patternType)?.label || product.patternType;
-
   return (
     <div className="bg-background">
-      {/* ── Full-screen Hero — minimal overlay ── */}
+      {/* ── Full-screen Hero with slow zoom ── */}
       <section className="relative w-full h-screen overflow-hidden cursor-zoom-in group" onClick={() => setShowFullscreen(true)}>
         <img
           src={mainImage}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.01]"
+          className="w-full h-full object-cover"
+          style={{ animation: 'slowZoom 10s ease-out forwards' }}
         />
-        <div className="absolute inset-0 bg-black/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
 
-        {/* Product title — bottom left, extralight */}
-        <div className="absolute bottom-10 left-6 md:bottom-14 md:left-12 lg:bottom-20 lg:left-16">
-          <p className="text-[10px] font-extralight uppercase tracking-[0.2em] text-white/40 mb-3">
+        {/* Product title */}
+        <div className="absolute bottom-10 left-6 md:bottom-16 md:left-12 lg:bottom-20 lg:left-16">
+          <p className="text-[10px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
             {product.collection}
           </p>
           <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.02em]">
@@ -113,13 +111,13 @@ const Artwork = () => {
         </div>
 
         {/* Zoom hint */}
-        <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-60 transition-opacity duration-500 text-[9px] uppercase tracking-[0.12em] text-white/60">
-          <ZoomIn className="w-3 h-3" />
+        <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-70 transition-opacity duration-500 text-[9px] uppercase tracking-[0.12em] text-white/70">
+          <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
 
-        {/* Scroll down hint */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 animate-bounce">
+        {/* Scroll down */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 animate-bounce">
           <span className="text-[9px] uppercase tracking-[0.15em]">Листайте вниз</span>
           <ChevronDown className="w-3.5 h-3.5" />
         </div>
@@ -127,16 +125,16 @@ const Artwork = () => {
 
       {/* Breadcrumbs */}
       <div className="container-wide pt-8 pb-4">
-        <nav className="flex items-center gap-2 text-[10px] text-foreground/25 font-extralight">
-          <Link to="/" className="hover:text-foreground/50 transition-colors duration-500">Главная</Link>
-          <span className="text-foreground/15">/</span>
-          <Link to="/catalog" className="hover:text-foreground/50 transition-colors duration-500">Каталог</Link>
-          <span className="text-foreground/15">/</span>
-          <span className="text-foreground/40">{product.name}</span>
+        <nav className="flex items-center gap-2 text-[10px] text-foreground/35 font-light">
+          <Link to="/" className="hover:text-foreground/60 transition-colors duration-500">Главная</Link>
+          <span className="text-foreground/20">/</span>
+          <Link to="/catalog" className="hover:text-foreground/60 transition-colors duration-500">Каталог</Link>
+          <span className="text-foreground/20">/</span>
+          <span className="text-foreground/50">{product.name}</span>
         </nav>
       </div>
 
-      {/* ── Main: Gallery + Info — art presentation ── */}
+      {/* ── Main: Gallery + Info ── */}
       <section className="container-wide py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
@@ -151,39 +149,39 @@ const Artwork = () => {
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} — вид ${i + 1}`}
-                  className="w-full h-auto object-cover transition-transform duration-[1s] group-hover/img:scale-[1.01]"
+                  className="w-full h-auto object-cover transition-transform duration-[1.2s] group-hover/img:scale-[1.02]"
                 />
               </div>
             ))}
           </div>
 
-          {/* RIGHT — Sticky info panel */}
+          {/* RIGHT — Sticky info */}
           <div className="lg:col-span-5 xl:col-span-4">
             <div className="lg:sticky lg:top-28 space-y-6">
               <p className="text-caption">{product.collection}</p>
-              <h2 className="text-2xl md:text-3xl font-extralight leading-tight tracking-[-0.02em]">
+              <h2 className="text-2xl md:text-3xl font-extralight leading-tight tracking-[-0.02em] text-foreground">
                 {product.name}
               </h2>
 
               {/* Artistic description */}
-              <p className="text-[13px] text-foreground/40 leading-[1.9] font-extralight">
+              <p className="text-[14px] text-foreground/50 leading-[1.85] font-light">
                 {product.description}
               </p>
 
               {/* Custom-fit statement */}
-              <div className="py-5 border-t border-foreground/5">
-                <p className="text-[12px] text-foreground/30 leading-[1.85] font-extralight italic">
+              <div className="py-5 border-t border-foreground/8">
+                <p className="text-[13px] text-foreground/40 leading-[1.85] font-light italic">
                   Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
                   под размеры вашей стены, сохраняя баланс и глубину сцены.
                 </p>
               </div>
 
-              {/* Action buttons — quiet */}
+              {/* Action buttons */}
               <div className="flex gap-3">
                 <button
                   onClick={() => { toggleFavorite(product.id); toast.success(isInFavorites ? 'Удалено из избранного' : 'Добавлено в избранное'); }}
-                  className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.12em] font-extralight transition-all duration-500 ${
-                    isInFavorites ? 'border-foreground/30 text-foreground/70' : 'border-foreground/8 text-foreground/35 hover:border-foreground/20'
+                  className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.12em] font-light transition-all duration-500 ${
+                    isInFavorites ? 'border-foreground/40 text-foreground/80' : 'border-foreground/12 text-foreground/45 hover:border-foreground/30'
                   }`}
                 >
                   <Heart className={`w-3.5 h-3.5 ${isInFavorites ? 'fill-foreground/50' : ''}`} />
@@ -191,7 +189,7 @@ const Artwork = () => {
                 </button>
                 <button
                   onClick={() => toast.info('Свяжитесь через страницу контактов')}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/8 text-[10px] uppercase tracking-[0.12em] font-extralight text-foreground/35 hover:border-foreground/20 transition-all duration-500"
+                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/12 text-[10px] uppercase tracking-[0.12em] font-light text-foreground/45 hover:border-foreground/30 transition-all duration-500"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   Задать вопрос
@@ -203,29 +201,29 @@ const Artwork = () => {
                 <ColorVariantSelector currentProduct={product} variants={colorVariants} />
               )}
 
-              <div className="border-t border-foreground/5" />
+              <div className="border-t border-foreground/8" />
 
-              {/* ── Настройка под интерьер ── */}
+              {/* ── Configuration ── */}
               <p className="text-caption">Настройка под интерьер</p>
 
               {product.type === 'panel' && product.panelSizes ? (
                 <div className="space-y-3">
-                  <p className="text-[11px] text-foreground/30 font-extralight">Выберите размер</p>
+                  <p className="text-[12px] text-foreground/40 font-light">Выберите размер</p>
                   {product.panelSizes.map((size, i) => (
                     <label
                       key={i}
                       onClick={() => setSelectedPanelSize(i)}
-                      className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-[12px] font-extralight transition-all duration-500 ${
-                        selectedPanelSize === i ? 'border-foreground/20' : 'border-foreground/5 hover:border-foreground/12'
+                      className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-[12px] font-light transition-all duration-500 ${
+                        selectedPanelSize === i ? 'border-foreground/30' : 'border-foreground/8 hover:border-foreground/18'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center transition-colors duration-500 ${selectedPanelSize === i ? 'border-foreground/40 bg-foreground/30' : 'border-foreground/15'}`}>
+                        <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center transition-colors duration-500 ${selectedPanelSize === i ? 'border-foreground/50 bg-foreground/40' : 'border-foreground/20'}`}>
                           {selectedPanelSize === i && <Check className="w-1.5 h-1.5 text-background" />}
                         </div>
-                        <span className="text-foreground/50">{size.size}</span>
+                        <span className="text-foreground/60">{size.size}</span>
                       </div>
-                      <span className="text-foreground/30">{formatPrice(size.price)} ₽</span>
+                      <span className="text-foreground/40">{formatPrice(size.price)} ₽</span>
                     </label>
                   ))}
                   <button onClick={handleAddToCart} className="btn-primary w-full mt-4">
@@ -234,43 +232,42 @@ const Artwork = () => {
                 </div>
               ) : (
                 <div className="space-y-5">
-                  {/* Dimensions — framed as "wall size" */}
-                  <p className="text-[11px] text-foreground/30 font-extralight">Укажите размеры вашей стены</p>
+                  <p className="text-[12px] text-foreground/40 font-light">Укажите размеры вашей стены</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[9px] text-foreground/20 uppercase tracking-[0.1em] block mb-1.5 font-extralight">Ширина, см</span>
+                      <span className="text-[9px] text-foreground/30 uppercase tracking-[0.1em] block mb-1.5 font-light">Ширина, см</span>
                       <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
-                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/8 text-[13px] font-extralight focus:outline-none focus:border-foreground/20 transition-colors duration-500" />
+                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
                     </div>
                     <div>
-                      <span className="text-[9px] text-foreground/20 uppercase tracking-[0.1em] block mb-1.5 font-extralight">Высота, см</span>
+                      <span className="text-[9px] text-foreground/30 uppercase tracking-[0.1em] block mb-1.5 font-light">Высота, см</span>
                       <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
-                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/8 text-[13px] font-extralight focus:outline-none focus:border-foreground/20 transition-colors duration-500" />
+                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
                     </div>
                   </div>
 
                   {/* Material */}
                   <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
-                    <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/8 text-[12px] font-extralight hover:border-foreground/15 transition-colors duration-500">
-                      <span className="text-foreground/30">Материал</span>
-                      <div className="flex items-center gap-2 text-foreground/50">
+                    <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/12 text-[12px] font-light hover:border-foreground/22 transition-colors duration-500">
+                      <span className="text-foreground/40">Материал</span>
+                      <div className="flex items-center gap-2 text-foreground/60">
                         <span>{selectedMaterial.name}</span>
                         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-500 ${materialOpen ? 'rotate-180' : ''}`} />
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <div className="border-x border-b border-foreground/8">
+                      <div className="border-x border-b border-foreground/12">
                         {materials.filter(m => m.id !== 'canvas').map((material) => (
                           <button
                             key={material.id}
                             onClick={() => { setSelectedMaterial(material); setMaterialOpen(false); }}
-                            className={`w-full flex items-center justify-between p-3 text-[12px] font-extralight text-left hover:bg-foreground/3 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/3' : ''}`}
+                            className={`w-full flex items-center justify-between p-3 text-[12px] font-light text-left hover:bg-foreground/4 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/4' : ''}`}
                           >
                             <div className="flex items-center gap-2">
-                              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/40' : 'border border-foreground/15'}`} />
-                              <span className="text-foreground/50">{material.name}</span>
+                              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/50' : 'border border-foreground/20'}`} />
+                              <span className="text-foreground/60">{material.name}</span>
                             </div>
-                            {material.priceCoefficient > 1 && <span className="text-foreground/20">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
+                            {material.priceCoefficient > 1 && <span className="text-foreground/30">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
                           </button>
                         ))}
                       </div>
@@ -278,21 +275,21 @@ const Artwork = () => {
                   </Collapsible>
 
                   {/* Summary */}
-                  <div className="pt-4 border-t border-foreground/5 space-y-2">
-                    <div className="flex justify-between text-[12px] font-extralight">
-                      <span className="text-foreground/25">Площадь</span>
-                      <span className="text-foreground/40">{area.toFixed(2)} м²</span>
+                  <div className="pt-4 border-t border-foreground/8 space-y-2">
+                    <div className="flex justify-between text-[12px] font-light">
+                      <span className="text-foreground/35">Площадь</span>
+                      <span className="text-foreground/50">{area.toFixed(2)} м²</span>
                     </div>
                     <div className="flex justify-between items-baseline">
-                      <span className="text-foreground/25 text-[12px] font-extralight">Стоимость</span>
-                      <span className="text-xl font-extralight text-foreground/60">{formatPrice(totalPrice)} ₽</span>
+                      <span className="text-foreground/35 text-[12px] font-light">Стоимость</span>
+                      <span className="text-xl font-light text-foreground/70">{formatPrice(totalPrice)} ₽</span>
                     </div>
                   </div>
 
                   <button onClick={handleAddToCart} className="btn-primary w-full">
                     В корзину
                   </button>
-                  <p className="text-[10px] text-foreground/20 text-center font-extralight">
+                  <p className="text-[10px] text-foreground/30 text-center font-light">
                     Финальная стоимость уточняется после согласования макета
                   </p>
                 </div>
@@ -302,8 +299,8 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── How it works — 4 steps, vertical ── */}
-      <section className="section-lg border-t border-foreground/4">
+      {/* ── How it works ── */}
+      <section className="section-lg border-t border-foreground/6">
         <div className="container-wide">
           <motion.div
             className="mb-20"
@@ -330,9 +327,9 @@ const Artwork = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
               >
-                <span className="text-[10px] tracking-[0.2em] text-foreground/15 pt-1 shrink-0">{item.step}</span>
+                <span className="text-[11px] tracking-[0.2em] text-foreground/25 pt-1 shrink-0 font-light">{item.step}</span>
                 <div>
-                  <h3 className="text-[14px] font-extralight mb-2">{item.title}</h3>
+                  <h3 className="text-[15px] font-light mb-2 text-foreground">{item.title}</h3>
                   <p className="text-body">{item.desc}</p>
                 </div>
               </motion.div>
@@ -341,8 +338,8 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── In Interior — 2-3 curated scenes ── */}
-      <section className="section border-t border-foreground/4">
+      {/* ── In Interior — curated scenes ── */}
+      <section className="section border-t border-foreground/6">
         <div className="container-wide">
           <motion.div
             className="mb-16"
@@ -367,7 +364,7 @@ const Artwork = () => {
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} в интерьере`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
                 />
               </motion.div>
             ))}
@@ -377,7 +374,7 @@ const Artwork = () => {
 
       {/* ── Companion Wallpapers ── */}
       {companionWallpapers.length > 0 && (
-        <section className="section border-t border-foreground/4">
+        <section className="section border-t border-foreground/6">
           <div className="container-wide">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-4">
@@ -393,9 +390,9 @@ const Artwork = () => {
                   {companionWallpapers.slice(0, 5).map((wallpaper) => (
                     <Link key={wallpaper.id} to={`/artwork/${wallpaper.slug}`} className="group flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
                       <div className="aspect-[4/3] overflow-hidden bg-muted mb-3">
-                        <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.02]" />
+                        <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                       </div>
-                      <p className="text-[11px] font-extralight text-foreground/40">{wallpaper.name}</p>
+                      <p className="text-[12px] font-light text-foreground/50">{wallpaper.name}</p>
                     </Link>
                   ))}
                 </div>
@@ -407,13 +404,13 @@ const Artwork = () => {
 
       {/* ── Related products ── */}
       {relatedProducts.length > 0 && (
-        <section className="section border-t border-foreground/4">
+        <section className="section border-t border-foreground/6">
           <div className="container-wide">
             <div className="mb-12">
               <p className="text-caption mb-3">Из этой коллекции</p>
               <h2 className="text-title">{product.collection}</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
               {relatedProducts.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}
@@ -426,19 +423,19 @@ const Artwork = () => {
       <AnimatePresence>
         {showFullscreen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-background flex items-center justify-center">
-            <button className="absolute top-6 right-6 p-3 text-foreground/30 hover:text-foreground/60 transition-colors duration-500 z-10" onClick={() => setShowFullscreen(false)}>
-              <X className="w-5 h-5 stroke-[1.2]" />
+            <button className="absolute top-6 right-6 p-3 text-foreground/40 hover:text-foreground/70 transition-colors duration-500 z-10" onClick={() => setShowFullscreen(false)}>
+              <X className="w-5 h-5 stroke-[1.5]" />
             </button>
             <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
               <img src={mainImage} alt={product.name} className="max-w-full max-h-full object-contain" />
             </div>
             {product.images.length > 1 && (
               <>
-                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-foreground/20 hover:text-foreground/50 transition-colors duration-500"><ChevronLeft className="w-5 h-5 stroke-[1.2]" /></button>
-                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-foreground/20 hover:text-foreground/50 transition-colors duration-500"><ChevronRight className="w-5 h-5 stroke-[1.2]" /></button>
+                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-foreground/30 hover:text-foreground/60 transition-colors duration-500"><ChevronLeft className="w-5 h-5 stroke-[1.5]" /></button>
+                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-foreground/30 hover:text-foreground/60 transition-colors duration-500"><ChevronRight className="w-5 h-5 stroke-[1.5]" /></button>
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
                   {product.images.map((_, i) => (
-                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-6 h-[0.5px] transition-colors duration-500 ${selectedImage === i ? 'bg-foreground/50' : 'bg-foreground/15'}`} />
+                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-6 h-[1px] transition-colors duration-500 ${selectedImage === i ? 'bg-foreground/60' : 'bg-foreground/20'}`} />
                   ))}
                 </div>
               </>
