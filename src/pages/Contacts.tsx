@@ -152,7 +152,7 @@ const Contacts = () => {
                 transition={{ delay: i * 0.08, duration: 0.6 }}
                 className="group"
               >
-                <div className="aspect-[4/3] overflow-hidden mb-6">
+                <div className="aspect-[4/5] overflow-hidden mb-6">
                   <img 
                     src={showroom.image} 
                     alt={`Шоурум ${showroom.city}`}

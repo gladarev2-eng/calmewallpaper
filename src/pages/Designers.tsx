@@ -314,7 +314,7 @@ const Designers = () => {
                     }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="aspect-[2/1] lg:aspect-[21/9] overflow-hidden">
+                    <div className="aspect-[4/5] lg:aspect-[21/9] overflow-hidden">
                       <img 
                         src={image} 
                         alt={`HoReCa проект ${i + 1}`}
