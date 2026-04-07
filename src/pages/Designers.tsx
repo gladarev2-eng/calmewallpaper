@@ -214,10 +214,10 @@ const Designers = () => {
 
                 {/* Content */}
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
+                  <span className="text-step-num">
                     {item.num}
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-light mb-3 tracking-[-0.02em] font-display">
+                  <h3 className="text-h3 mb-3">
                     {item.title}
                   </h3>
                   <p className="text-[11px] uppercase tracking-[0.12em] text-foreground/35 mb-6 font-light">
