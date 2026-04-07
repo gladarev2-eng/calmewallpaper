@@ -107,31 +107,11 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
         </div>
       </div>
 
-      {/* Margin */}
-      <div>
-        <label className="text-caption block mb-3">Запас на подрезку</label>
-        <div className="flex gap-3">
-          {[5, 10].map((m) => (
-            <button
-              key={m}
-              onClick={() => setMargin(m)}
-              className={`flex-1 py-2 text-sm border transition-colors ${
-                margin === m
-                  ? 'bg-foreground text-background border-foreground'
-                  : 'border-border hover:border-foreground'
-              }`}
-            >
-              +{m}%
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Summary */}
       <div className="border-t border-border pt-6 space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Площадь</span>
-          <span>{areaWithMargin.toFixed(2)} м²</span>
+          <span>{area.toFixed(2)} м²</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Материал</span>
