@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
-import { Product } from '@/data/products';
+import { Product, collections, patternTypes } from '@/data/products';
 import { useFavorites } from '@/context/FavoritesContext';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
@@ -28,18 +28,18 @@ interface ProductCardProps {
   large?: boolean;
 }
 
-export const ProductCard = ({ product, index = 0, large = false }: ProductCardProps) => {
+const getSubline = (product: Product): string => {
+  const pattern = patternTypes.find(p => p.id === product.patternType);
+  if (pattern) return pattern.label.toLowerCase();
+  return product.collection.toLowerCase();
+};
+
+export const ProductCard = ({ product, index = 0 }: ProductCardProps) => {
   const [imageIndex, setImageIndex] = useState(0);
   const { isFavorite, toggleFavorite } = useFavorites();
   const isInFavorites = isFavorite(product.id);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('ru-RU').format(price);
-  };
-
-  const getImageSrc = (imagePath: string) => {
-    return imageMap[imagePath] || imagePath;
-  };
+  const getImageSrc = (imagePath: string) => imageMap[imagePath] || imagePath;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,50 +49,33 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.04 }}
+      transition={{ duration: 0.7, delay: index * 0.04 }}
     >
-      <Link
-        to={`/artwork/${product.slug}`}
-        className="group block"
-      >
-        {/* Image */}
+      <Link to={`/artwork/${product.slug}`} className="group block">
+        {/* Image — clean, no badges */}
         <div className="overflow-hidden bg-muted relative aspect-[4/5]">
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.02]"
           />
 
-          {/* Favorite button */}
+          {/* Favorite — subtle */}
           <button
             onClick={handleFavoriteClick}
-            className={`absolute top-3 right-3 p-2 bg-background/80 backdrop-blur-sm transition-all hover:bg-background ${
-              isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            className={`absolute top-3 right-3 p-2 transition-all duration-500 ${
+              isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-60'
             }`}
           >
-            <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-foreground stroke-foreground' : 'stroke-foreground'}`} />
+            <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-white stroke-white' : 'stroke-white/80'}`} />
           </button>
 
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex gap-1.5">
-            {product.isNew && (
-              <span className="px-2.5 py-1 bg-background/90 backdrop-blur-sm text-[9px] uppercase tracking-[0.14em]">
-                Новинка
-              </span>
-            )}
-            {product.isBestseller && (
-              <span className="px-2.5 py-1 bg-foreground text-background text-[9px] uppercase tracking-[0.14em]">
-                Бестселлер
-              </span>
-            )}
-          </div>
-
-          {/* Image hover slideshow */}
+          {/* Image hover slideshow — very subtle indicator */}
           {product.images.length > 1 && (
             <div
-              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -102,12 +85,12 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
               }}
               onMouseLeave={() => setImageIndex(0)}
             >
-              <div className="absolute bottom-3 left-3 right-3 flex gap-1">
+              <div className="absolute bottom-3 left-4 right-4 flex gap-1">
                 {product.images.map((_, i) => (
                   <div
                     key={i}
-                    className={`h-[1px] flex-1 transition-colors duration-300 ${
-                      i === imageIndex ? 'bg-foreground' : 'bg-foreground/25'
+                    className={`h-[0.5px] flex-1 transition-colors duration-500 ${
+                      i === imageIndex ? 'bg-white/70' : 'bg-white/20'
                     }`}
                   />
                 ))}
@@ -116,17 +99,13 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
           )}
         </div>
 
-        {/* Info — belarte style: name + price left, compact */}
-        <div className="pt-3 pb-1">
-          <h3 className="text-[13px] font-normal leading-snug tracking-[0.01em]">
+        {/* Info — name + subtle subline only, no price */}
+        <div className="pt-4 pb-2">
+          <h3 className="text-[12px] font-extralight tracking-[0.02em] leading-snug">
             {product.name}
           </h3>
-          <p className="text-[12px] text-muted-foreground mt-1">
-            {product.type === 'panel' && product.panelSizes ? (
-              <>от {formatPrice(product.panelSizes[0].price)} ₽</>
-            ) : (
-              <>{formatPrice(product.pricePerSqm)} ₽ / м²</>
-            )}
+          <p className="text-[11px] text-foreground/25 mt-1.5 font-extralight tracking-[0.02em]">
+            {getSubline(product)}
           </p>
         </div>
       </Link>

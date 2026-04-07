@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -9,20 +9,17 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
+import { products } from '@/data/products';
+import { ProductCard } from '@/components/catalog/ProductCard';
 import { inspirationItems } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
 const Index = () => {
-  
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   }, []);
 
   useEffect(() => {
@@ -30,539 +27,290 @@ const Index = () => {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
+  const featuredProducts = products.filter(p => p.type !== 'companion').slice(0, 6);
+
   return (
     <div>
-      {/* Hero Section - Full screen with calm crossfade */}
-      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* All slides stacked, opacity-driven crossfade */}
+      {/* ── Hero — visual dominates, minimal text ── */}
+      <section className="relative h-screen min-h-[600px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div
             key={i}
-            className="absolute inset-0 transition-opacity duration-[1.8s] ease-in-out"
+            className="absolute inset-0 transition-opacity duration-[2s] ease-in-out"
             style={{ opacity: i === currentSlide ? 1 : 0 }}
           >
-            <img 
-              src={slide} 
-              alt="CALMÉ" 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/25" />
+            <img src={slide} alt="CALMÉ" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black/15" />
           </div>
         ))}
-        
-        <div className="relative z-10 text-center text-white">
-          <motion.h1 
-            className="text-[3.5rem] md:text-[6.5rem] lg:text-[8.5rem] font-extralight tracking-[-0.04em] leading-[0.9] mb-5"
+
+        <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-32">
+          <motion.h1
+            className="text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em] mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 1, delay: 0.3 }}
           >
-            CALMÉ
+            Тихая архитектура стены
           </motion.h1>
-          <motion.p 
-            className="text-[11px] md:text-[12px] font-light uppercase tracking-[0.3em] text-white/80 mb-14"
+          <motion.p
+            className="text-[12px] md:text-[13px] font-extralight text-white/60 tracking-[0.04em] mb-10 max-w-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 1, delay: 0.6 }}
           >
-            Архитектура тишины
+            Авторские настенные муралы, созданные под ваш интерьер
           </motion.p>
           <motion.div
+            className="flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
           >
-            <Link to="/catalog" className="btn-light">
-              Смотреть каталог
-            </Link>
+            <Link to="/catalog" className="btn-light">Смотреть коллекции</Link>
+            <Link to="/contacts" className="btn-light">Заказать образец</Link>
           </motion.div>
         </div>
 
-        {/* Navigation arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-6 md:left-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-6 h-6" strokeWidth={1} />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center text-white/50 hover:text-white transition-colors duration-300"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-6 h-6" strokeWidth={1} />
-        </button>
-
-        {/* Slide indicators */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3">
+        {/* Slide indicators — minimal */}
+        <div className="absolute bottom-8 right-6 md:right-10 z-10 flex items-center gap-2">
           {heroSlides.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentSlide(i)}
               className={`transition-all duration-700 ${
-                i === currentSlide 
-                  ? 'w-8 h-[1.5px] bg-white' 
-                  : 'w-4 h-[1.5px] bg-white/40 hover:bg-white/60'
+                i === currentSlide
+                  ? 'w-6 h-[1px] bg-white/80'
+                  : 'w-3 h-[1px] bg-white/25'
               }`}
             />
           ))}
         </div>
       </section>
 
-      {/* Manifesto Section */}
-      <section className="section bg-background">
+      {/* ── Three positioning blocks — text + air, no icons ── */}
+      <section className="section-lg bg-background">
         <div className="container-wide">
-          <motion.div 
-            className="max-w-4xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="text-caption mb-8">Манифест</p>
-            <h2 className="text-title mb-8">
-              Мы не продаём узоры.<br />
-              Мы создаём атмосферу.
-            </h2>
-            <p className="text-body-lg max-w-2xl">
-              CALMÉ — это стратегия «визуальной паузы». Мы рассматриваем стену как холст, 
-              где встречаются передовые технологии печати и фундаментальные принципы классического искусства.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Inspiration Section */}
-      <section className="section-sm bg-background">
-        <div className="container-wide">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-title">Вдохновение</h2>
-            <Link to="/inspiration" className="link-arrow hidden md:flex">
-              Смотреть все <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-            {inspirationItems.slice(0, 6).map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.7 }}
-              >
-                <Link to="/inspiration" className="group block relative">
-                  <div className={`overflow-hidden ${i === 0 || i === 5 ? 'aspect-[3/4]' : 'aspect-square'}`}>
-                    <img 
-                      src={item.image} 
-                      alt={item.productName}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center md:hidden">
-            <Link to="/inspiration" className="link-arrow">
-              Смотреть все <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Scale in Details Section */}
-      <section className="section bg-card">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            {/* Left - Text content with numbered list */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-title mb-12">Масштаб в деталях</h2>
-              
-              <div className="space-y-10">
-                <div className="flex gap-6">
-                  <span className="text-caption text-muted-foreground/50 pt-1">01</span>
-                  <div>
-                    <h4 className="text-base font-medium mb-2">Разрешение</h4>
-                    <p className="text-body">
-                      До 45 000 пикселей для безупречной четкости на стенах до 6 метров.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-6">
-                  <span className="text-caption text-muted-foreground/50 pt-1">02</span>
-                  <div>
-                    <h4 className="text-base font-medium mb-2">Бесшовность</h4>
-                    <p className="text-body">
-                      Печать единым полотном исключает стыки и искажения рисунка.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6">
-                  <span className="text-caption text-muted-foreground/50 pt-1">03</span>
-                  <div>
-                    <h4 className="text-base font-medium mb-2">Адаптация</h4>
-                    <p className="text-body">
-                      Индивидуальная подгонка масштаба и цвета под ваше пространство.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-12">
-                <Link to="/studio" className="link-arrow">
-                  О технологии <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Right - Image */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src={mural5} 
-                  alt="Macro detail" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why CALMÉ - Magazine style presentation */}
-      <section className="section bg-background">
-        <div className="container-wide">
-          <motion.div 
-            className="mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-caption mb-4">Почему CALMÉ</p>
-            <h2 className="text-title">Не декор. Атмосфера.</h2>
-          </motion.div>
-
-          {/* Magazine layout grid */}
-          <div className="grid grid-cols-12 gap-4 md:gap-6">
-            {/* Large feature image */}
-            <motion.div 
-              className="col-span-12 md:col-span-7"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-            >
-              <div className="aspect-[4/3] overflow-hidden relative group">
-                <img 
-                  src={mural3} 
-                  alt="Масштаб до 6 метров"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-                  <h3 className="text-lg md:text-xl font-light mb-2">Масштаб до 6 метров</h3>
-                  <p className="text-sm text-white/70">Полотна для любых пространств</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Two stacked images */}
-            <div className="col-span-12 md:col-span-5 space-y-4 md:space-y-6">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                <div className="aspect-[16/10] overflow-hidden relative group">
-                  <img 
-                    src={mural2} 
-                    alt="Сверхдетализация"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <h3 className="text-base font-light mb-1">Сверхдетализация</h3>
-                    <p className="text-xs text-white/70">Раскрывается вблизи</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-              >
-                <div className="aspect-[16/10] overflow-hidden relative group">
-                  <img 
-                    src={mural4} 
-                    alt="Индивидуальная адаптация"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                    <h3 className="text-base font-light mb-1">Индивидуальная адаптация</h3>
-                    <p className="text-xs text-white/70">Цвета и пропорции под интерьер</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Bottom row - two equal images */}
-            <motion.div 
-              className="col-span-6 md:col-span-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-            >
-              <div className="aspect-[16/10] overflow-hidden relative group">
-                <img 
-                  src={mural6} 
-                  alt="Премиальные материалы"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <h3 className="text-sm md:text-base font-light mb-1">Премиальные материалы</h3>
-                  <p className="text-xs text-white/70 hidden md:block">5 типов покрытий</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="col-span-6 md:col-span-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-            >
-              <div className="aspect-[16/10] overflow-hidden relative group">
-                <img 
-                  src={mural1} 
-                  alt="Сервис для дизайнеров"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  <h3 className="text-sm md:text-base font-light mb-1">Сервис для дизайнеров</h3>
-                  <p className="text-xs text-white/70 hidden md:block">Партнёрская программа</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div 
-            className="mt-12 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            <Link to="/catalog" className="btn-primary">
-              Смотреть каталог
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Product Types */}
-      <section className="section bg-card">
-        <div className="container-wide">
-          <motion.div 
-            className="mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-caption mb-4">Форматы</p>
-            <h2 className="text-title">Три типа продуктов</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-20">
             {[
-              { 
-                title: 'Муралы', 
-                desc: 'Обои с изображением по площади',
-                image: mural2,
-                link: '/catalog?type=mural'
+              {
+                title: 'Архитектурный подход',
+                text: 'Каждый мурал воспринимается как часть пространства, а не декор. Мы проектируем визуальную среду, в которой стена становится продолжением архитектурной идеи.',
               },
-              { 
-                title: 'Панно', 
-                desc: 'Готовые арт-объекты на холсте',
-                image: mural4,
-                link: '/catalog?type=panel'
+              {
+                title: 'Адаптация под интерьер',
+                text: 'Масштаб, композиция и цвет настраиваются под конкретную стену. Мы работаем с пропорциями вашего пространства, чтобы изображение стало его органичной частью.',
               },
-              { 
-                title: 'Фоновые обои', 
-                desc: 'Обои-компаньоны в тон',
-                image: mural6,
-                link: '/catalog?type=companion'
+              {
+                title: 'Контроль результата',
+                text: 'Клиент утверждает финальный макет перед печатью. Визуализация в интерьере, согласование цветов и масштаба — всё до начала производства.',
               },
-            ].map((item, i) => (
+            ].map((block, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.7 }}
+                transition={{ delay: i * 0.1, duration: 0.8 }}
               >
-                <Link to={item.link} className="group block">
-                  <div className="aspect-[3/4] overflow-hidden mb-5">
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <h3 className="text-subtitle mb-2">{item.title}</h3>
-                  <p className="text-body text-sm mb-4">{item.desc}</p>
-                  <span className="link-arrow">
-                    Смотреть <ArrowRight className="w-4 h-4" />
-                  </span>
-                </Link>
+                <h3 className="text-[15px] font-extralight mb-5 tracking-[-0.01em]">
+                  {block.title}
+                </h3>
+                <p className="text-body leading-[1.9]">
+                  {block.text}
+                </p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* HoReCa Section */}
+      {/* ── Collections intro + catalog preview ── */}
       <section className="section bg-background">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="order-2 lg:order-1"
-            >
-              <p className="text-caption mb-4">Для бизнеса</p>
-              <h2 className="text-title mb-8">HoReCa проекты</h2>
-              <p className="text-body-lg mb-10">
-                Отели, рестораны, общественные пространства. Специальные материалы для высокой проходимости, большие масштабы, работа с архитекторами.
-              </p>
-              <ul className="space-y-4 mb-10">
-                {[
-                  'Материалы повышенной износостойкости',
-                  'Адаптация под брендбук',
-                  'Сопровождение проекта',
-                  'Монтаж под ключ',
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4 text-body">
-                    <span className="w-5 h-px bg-foreground/30 mt-3 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link to="/designers" className="btn-primary">
-                Подробнее
-              </Link>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="order-1 lg:order-2"
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src={mural5} 
-                  alt="HoReCa" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
+          <motion.div
+            className="max-w-3xl mb-20 md:mb-28"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-caption mb-6">Коллекции</p>
+            <h2 className="text-title mb-8">
+              Каждая серия — самостоятельная художественная история
+            </h2>
+            <p className="text-body-lg max-w-xl">
+              Настенное изображение становится частью архитектуры пространства.
+              Мы создаём не узоры, а визуальные среды — на пересечении дизайна интерьера
+              и цифрового искусства.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {featuredProducts.map((product, i) => (
+              <ProductCard key={product.id} product={product} index={i} />
+            ))}
+          </div>
+
+          <motion.div
+            className="mt-16 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+          >
+            <Link to="/catalog" className="btn-outline">
+              Все работы
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── Inspiration — curated selection ── */}
+      <section className="section bg-background">
+        <div className="container-wide">
+          <div className="flex items-end justify-between mb-16">
+            <div>
+              <p className="text-caption mb-4">Вдохновение</p>
+              <h2 className="text-title">В интерьере</h2>
+            </div>
+            <Link to="/inspiration" className="link-arrow hidden md:flex">
+              Все проекты <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+            {inspirationItems.slice(0, 6).map((item, i) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.7 }}
+              >
+                <Link to="/inspiration" className="group block">
+                  <div className={`overflow-hidden ${i === 0 || i === 5 ? 'aspect-[3/4]' : 'aspect-square'}`}>
+                    <img
+                      src={item.image}
+                      alt={item.productName}
+                      className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.03]"
+                    />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-10 text-center md:hidden">
+            <Link to="/inspiration" className="link-arrow">
+              Все проекты <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
-      <section className="section bg-card">
+      {/* ── Process — how we work ── */}
+      <section className="section-lg bg-background">
         <div className="container-wide">
-          <motion.div 
-            className="mb-16"
+          <motion.div
+            className="mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
             <p className="text-caption mb-4">Процесс</p>
-            <h2 className="text-title">Как мы работаем</h2>
+            <h2 className="text-title">Как это работает</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 md:gap-12">
             {[
-              { step: '01', title: 'Выбор', desc: 'Изображение из каталога или индивидуальный заказ' },
-              { step: '02', title: 'Расчёт', desc: 'Размеры стены, материал, итоговая стоимость' },
-              { step: '03', title: 'Адаптация', desc: 'Подгонка под ваши размеры и цветовую гамму' },
-              { step: '04', title: 'Доставка', desc: 'Производство 5-7 дней, доставка по всей России' },
+              { step: '01', title: 'Выбор дизайна', desc: 'Изображение из каталога или индивидуальная разработка по вашему проекту' },
+              { step: '02', title: 'Адаптация под стену', desc: 'Масштабирование, цветокоррекция и композиция под размеры вашего пространства' },
+              { step: '03', title: 'Утверждение макета', desc: 'Визуализация в интерьере и согласование финального варианта перед печатью' },
+              { step: '04', title: 'Печать и доставка', desc: 'Производство 5–7 дней на премиальных материалах, доставка по всей России' },
             ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.7 }}
-                className="relative"
+                transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <span className="text-caption text-muted-foreground/40 mb-4 block">{item.step}</span>
-                <h3 className="text-base font-medium mb-3">{item.title}</h3>
-                <p className="text-body text-sm">{item.desc}</p>
+                <span className="text-[10px] tracking-[0.2em] text-foreground/20 block mb-5">{item.step}</span>
+                <h3 className="text-[14px] font-extralight mb-3 tracking-[-0.01em]">{item.title}</h3>
+                <p className="text-body">{item.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section bg-foreground text-background">
-        <div className="container-wide text-center">
+      {/* ── For designers — B2B signal ── */}
+      <section className="section bg-card/50">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <p className="text-caption mb-6">Для дизайнеров и партнёров</p>
+              <h2 className="text-title mb-8">Инструменты для профессионалов</h2>
+              <div className="space-y-8">
+                {[
+                  { title: 'Адаптация цвета', text: 'Коррекция палитры под конкретный проект и освещение' },
+                  { title: 'Масштабирование', text: 'Работа с нестандартными размерами и сложными формами стен' },
+                  { title: 'Капсульные подборки', text: 'Персональная селекция работ под концепцию проекта' },
+                ].map((item, i) => (
+                  <div key={i}>
+                    <h4 className="text-[13px] font-extralight mb-2">{item.title}</h4>
+                    <p className="text-body">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-12">
+                <Link to="/designers" className="btn-outline">
+                  Партнёрская программа
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+            >
+              <div className="aspect-[4/5] overflow-hidden">
+                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Quiet CTA ── */}
+      <section className="section-lg bg-background">
+        <div className="container-narrow text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl md:text-4xl font-light mb-6">
-              Готовы начать?
+            <h2 className="text-title mb-6">
+              Расскажите о вашем пространстве
             </h2>
-            <p className="text-lg text-background/70 font-light mb-10">
-              Свяжитесь с нами для консультации или закажите образцы материалов
+            <p className="text-body-lg mb-12 max-w-lg mx-auto">
+              Мы подберём решение и подготовим визуализацию в вашем интерьере
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                to="/buyers" 
-                className="btn-light"
-              >
-                Заказать консультацию
+              <Link to="/contacts" className="btn-primary">
+                Связаться с нами
               </Link>
-              <Link 
-                to="/catalog" 
-                className="inline-flex items-center justify-center px-8 py-3.5 text-[11px] tracking-[0.12em] uppercase text-background/80 hover:text-background transition-colors"
-              >
+              <Link to="/catalog" className="btn-outline">
                 Смотреть каталог
               </Link>
             </div>
