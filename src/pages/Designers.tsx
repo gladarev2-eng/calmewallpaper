@@ -113,19 +113,19 @@ const Designers = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero + Loyalty Program Combined */}
-      <section className="section-lg bg-card">
+      <section className="section-lg bg-background">
         <div className="container-wide">
           {/* Hero Header */}
-          <div className="max-w-3xl mb-12 lg:mb-20">
+          <div className="max-w-3xl mb-16 lg:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <p className="text-caption mb-6">Партнёрская программа</p>
-              <h1 className="text-display mb-6">
+              <h1 className="text-display mb-8">
                 Среда для<br />профессионалов
               </h1>
-              <p className="text-body-lg">
+              <p className="text-body-lg max-w-xl">
                 Чем больше проектов — тем выгоднее условия. Четыре уровня партнёрства с растущими привилегиями.
               </p>
             </motion.div>
