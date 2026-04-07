@@ -267,14 +267,14 @@
 
   /* Link hover — editorial */
   .link-arrow {
-    @apply inline-flex items-center gap-2 text-[10.5px] uppercase transition-all duration-500;
-    letter-spacing: 0.16em;
+    @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-400;
+    letter-spacing: 0.14em;
     font-weight: 400;
   }
 
   .link-arrow:hover {
-    gap: 12px;
-    letter-spacing: 0.2em;
+    gap: 10px;
+    letter-spacing: 0.18em;
   }
 }
 
