@@ -58,7 +58,7 @@ const Studio = () => {
             className="text-center"
           >
             <p className="text-caption mb-10">Манифест</p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extralight leading-[1.2] tracking-[-0.02em] mb-10 text-foreground">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-light leading-[1.2] tracking-[-0.02em] mb-10 text-foreground font-display">
               Мы создаём не декоративное покрытие,<br />
               а визуальную среду
             </h2>
