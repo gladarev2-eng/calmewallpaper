@@ -9,7 +9,7 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
-import { collections } from '@/data/products';
+import { inspirationItems } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
