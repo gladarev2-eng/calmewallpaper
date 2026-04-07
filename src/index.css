@@ -315,9 +315,9 @@
   }
 }
 
-/* Smooth scrollbar - minimal */
+/* Smooth scrollbar — invisible until hover */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -325,14 +325,25 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--foreground) / 0.15);
+  background: hsl(var(--foreground) / 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground) / 0.25);
+  background: hsl(var(--foreground) / 0.2);
 }
 
-/* Global shadow removal */
+/* Global refinements */
 * {
   box-shadow: none !important;
+}
+
+/* Selection */
+::selection {
+  background: hsl(var(--foreground) / 0.08);
+  color: hsl(var(--foreground));
+}
+
+/* Smooth image rendering */
+img {
+  image-rendering: auto;
 }
