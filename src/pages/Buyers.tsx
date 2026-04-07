@@ -98,7 +98,7 @@ const Buyers = () => {
             className="max-w-3xl"
           >
             <p className="text-caption mb-6">Покупателям</p>
-            <h1 className="text-display mb-6">Как это работает</h1>
+            <h1 className="text-display mb-8">Как это работает</h1>
             <p className="text-body-lg max-w-xl">
               Сопровождаем на каждом этапе — от выбора изображения до установки в вашем пространстве
             </p>
