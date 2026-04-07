@@ -12,12 +12,16 @@ import mural6 from '@/assets/mural-6.jpg';
 const Studio = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero — Full Screen, minimal overlay */}
+      {/* Hero */}
       <section className="relative h-screen flex items-end">
         <div className="absolute inset-0">
-          <img src={heroMural} alt="CALMÉ Studio" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/15" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+          <img
+            src={heroMural}
+            alt="CALMÉ Studio"
+            className="w-full h-full object-cover"
+            style={{ animation: 'slowZoom 10s ease-out forwards' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
         </div>
 
         <div className="relative z-10 container-wide pb-20 md:pb-28">
@@ -26,8 +30,8 @@ const Studio = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-            <p className="text-[10px] font-extralight uppercase tracking-[0.25em] text-white/40 mb-4">О студии</p>
-            <h1 className="text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em]">
+            <p className="text-[10px] font-light uppercase tracking-[0.25em] text-white/50 mb-4">О студии</p>
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em]">
               На пересечении дизайна<br />интерьера и цифрового искусства
             </h1>
           </motion.div>
@@ -37,7 +41,7 @@ const Studio = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/25"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/30"
         >
           <ChevronDown className="w-5 h-5 animate-bounce" />
         </motion.div>
@@ -54,7 +58,7 @@ const Studio = () => {
             className="text-center"
           >
             <p className="text-caption mb-10">Манифест</p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extralight leading-[1.2] tracking-[-0.02em] mb-10">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extralight leading-[1.2] tracking-[-0.02em] mb-10 text-foreground">
               Мы создаём не декоративное покрытие,<br />
               а визуальную среду
             </h2>
@@ -102,8 +106,8 @@ const Studio = () => {
                     'Визуализация в вашем пространстве',
                     'Контроль качества каждого заказа',
                   ].map((item, i) => (
-                    <p key={i} className="text-[13px] font-extralight text-foreground/35 flex items-center gap-4">
-                      <span className="w-6 h-[0.5px] bg-foreground/15 shrink-0" />
+                    <p key={i} className="text-[13px] font-light text-foreground/45 flex items-center gap-4">
+                      <span className="w-6 h-[0.5px] bg-foreground/20 shrink-0" />
                       {item}
                     </p>
                   ))}
@@ -119,7 +123,7 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Values — three text blocks with images, no pills/tags */}
+      {/* Values — large visuals with text */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <motion.div
@@ -163,12 +167,12 @@ const Studio = () => {
               >
                 <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                   <div className="aspect-[4/5] overflow-hidden">
-                    <img src={value.image} alt={value.title} className="w-full h-full object-cover" />
+                    <img src={value.image} alt={value.title} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]" />
                   </div>
                 </div>
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em]">{value.title}</h3>
-                  <p className="text-[12px] uppercase tracking-[0.1em] text-foreground/25 mb-8 font-extralight">{value.subtitle}</p>
+                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em] text-foreground">{value.title}</h3>
+                  <p className="text-[12px] uppercase tracking-[0.1em] text-foreground/35 mb-8 font-light">{value.subtitle}</p>
                   <p className="text-body-lg">{value.desc}</p>
                 </div>
               </motion.div>
@@ -177,7 +181,7 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Materials */}
+      {/* Materials — larger images */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
@@ -205,9 +209,9 @@ const Studio = () => {
                 className="group"
               >
                 <div className="aspect-[3/4] overflow-hidden mb-5">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.02]" />
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                 </div>
-                <h3 className="text-[14px] font-extralight mb-2">{item.name}</h3>
+                <h3 className="text-[15px] font-light mb-2 text-foreground">{item.name}</h3>
                 <p className="text-body">{item.desc}</p>
               </motion.div>
             ))}
@@ -221,7 +225,7 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* CTA — quiet, no heavy background */}
+      {/* CTA */}
       <section className="section-lg bg-card/50">
         <div className="container-narrow text-center">
           <motion.div
