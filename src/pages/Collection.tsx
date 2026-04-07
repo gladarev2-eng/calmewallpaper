@@ -47,7 +47,7 @@ const Collection = () => {
             src={images[0]}
             alt={collection.name}
             className="w-full h-full object-cover"
-            style={{ animation: 'slowZoom 10s ease-out forwards' }}
+            style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
         </div>
