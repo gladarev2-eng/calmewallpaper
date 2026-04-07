@@ -49,51 +49,50 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.05 }}
+      transition={{ duration: 0.6, delay: index * 0.04 }}
     >
-      <Link 
+      <Link
         to={`/artwork/${product.slug}`}
         className="group block"
       >
         {/* Image */}
-        <div className={`overflow-hidden bg-muted mb-6 relative ${large ? 'aspect-[4/5]' : 'aspect-artwork'}`}>
+        <div className="overflow-hidden bg-muted relative aspect-[4/5]">
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-            style={{ filter: 'saturate(0.85) contrast(0.95)' }}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
-          
+
           {/* Favorite button */}
           <button
             onClick={handleFavoriteClick}
-            className={`absolute top-4 right-4 p-2 bg-background/80 backdrop-blur-sm transition-all hover:bg-background ${
+            className={`absolute top-3 right-3 p-2 bg-background/80 backdrop-blur-sm transition-all hover:bg-background ${
               isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
             }`}
           >
             <Heart className={`w-4 h-4 transition-colors ${isInFavorites ? 'fill-foreground stroke-foreground' : 'stroke-foreground'}`} />
           </button>
-          
+
           {/* Badges */}
-          <div className="absolute top-4 left-4 flex gap-2">
+          <div className="absolute top-3 left-3 flex gap-1.5">
             {product.isNew && (
-              <span className="px-3 py-1.5 bg-background/90 backdrop-blur-sm text-[10px] font-extralight uppercase tracking-[0.15em]">
+              <span className="px-2.5 py-1 bg-background/90 backdrop-blur-sm text-[9px] uppercase tracking-[0.14em]">
                 Новинка
               </span>
             )}
             {product.isBestseller && (
-              <span className="px-3 py-1.5 bg-foreground text-background text-[10px] font-extralight uppercase tracking-[0.15em]">
+              <span className="px-2.5 py-1 bg-foreground text-background text-[9px] uppercase tracking-[0.14em]">
                 Бестселлер
               </span>
             )}
           </div>
 
-          {/* Image dots for hover slideshow */}
+          {/* Image hover slideshow */}
           {product.images.length > 1 && (
-            <div 
-              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+            <div
+              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -103,13 +102,12 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
               }}
               onMouseLeave={() => setImageIndex(0)}
             >
-              {/* Progress bar */}
-              <div className="absolute bottom-4 left-4 right-4 flex gap-1">
+              <div className="absolute bottom-3 left-3 right-3 flex gap-1">
                 {product.images.map((_, i) => (
                   <div
                     key={i}
-                    className={`h-px flex-1 transition-colors duration-400 ${
-                      i === imageIndex ? 'bg-foreground' : 'bg-foreground/30'
+                    className={`h-[1px] flex-1 transition-colors duration-300 ${
+                      i === imageIndex ? 'bg-foreground' : 'bg-foreground/25'
                     }`}
                   />
                 ))}
@@ -118,18 +116,16 @@ export const ProductCard = ({ product, index = 0, large = false }: ProductCardPr
           )}
         </div>
 
-        {/* Info */}
-        <div className="space-y-3">
-          <p className="text-caption">{product.collection}</p>
-          <h3 className={`font-thin uppercase tracking-[0.15em] ${large ? 'text-xl' : 'text-base'}`}>{product.name}</h3>
-          <p className="text-xs font-extralight text-muted-foreground line-clamp-2 tracking-wide">
-            {product.shortDescription}
-          </p>
-          <p className="text-xs font-extralight uppercase tracking-[0.1em]">
+        {/* Info — belarte style: name + price left, compact */}
+        <div className="pt-3 pb-1">
+          <h3 className="text-[13px] font-normal leading-snug tracking-[0.01em]">
+            {product.name}
+          </h3>
+          <p className="text-[12px] text-muted-foreground mt-1">
             {product.type === 'panel' && product.panelSizes ? (
               <>от {formatPrice(product.panelSizes[0].price)} ₽</>
             ) : (
-              <>от {formatPrice(product.pricePerSqm)} ₽/м²</>
+              <>{formatPrice(product.pricePerSqm)} ₽ / м²</>
             )}
           </p>
         </div>
