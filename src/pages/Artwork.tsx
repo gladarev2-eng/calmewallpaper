@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle } from 'lucide-react';
+import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getProductById, materials, products, patternTypes, roomTypes, Material, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
