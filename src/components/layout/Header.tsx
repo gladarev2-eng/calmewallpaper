@@ -7,7 +7,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 
 const navItems = [
   { label: 'Каталог', href: '/catalog' },
-  { label: 'Коллекции', href: '/collections' },
+  { label: 'Вдохновение', href: '/inspiration' },
   { label: 'Дизайнерам', href: '/designers' },
   { label: 'Покупателям', href: '/buyers' },
   { label: 'О студии', href: '/studio' },
