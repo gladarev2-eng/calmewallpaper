@@ -109,7 +109,7 @@ const Artwork = () => {
           <p className="text-[10px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
             {product.collection}
           </p>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.02em]">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.05] tracking-[-0.02em] font-display">
             {product.name}
           </h1>
         </div>
