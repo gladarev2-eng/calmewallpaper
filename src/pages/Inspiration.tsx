@@ -13,7 +13,6 @@ import {
 
 const ITEMS_PER_PAGE = 12;
 
-/* ── Dropdown (reused from catalog style) ── */
 interface DropdownProps {
   label: string;
   options: { id: string; label: string }[];
@@ -51,11 +50,11 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-sm hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors"
       >
-        <span className="text-muted-foreground">{label}:</span>
-        <span>{displayValue}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-muted-foreground transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-foreground/40">{label}:</span>
+        <span className="text-foreground/70">{displayValue}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-foreground/30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -64,11 +63,11 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-3 bg-background border border-border/50 z-50 min-w-[200px] max-h-[320px] overflow-y-auto"
+            className="absolute top-full left-0 mt-3 bg-background border border-foreground/10 z-50 min-w-[200px] max-h-[320px] overflow-y-auto"
           >
             <button
               onClick={() => { onChange([]); setIsOpen(false); }}
-              className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${selectedValues.length === 0 ? 'bg-foreground/5' : 'hover:bg-foreground/5'}`}
+              className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors ${selectedValues.length === 0 ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
             >
               Все
             </button>
@@ -76,10 +75,10 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
               <button
                 key={opt.id}
                 onClick={() => toggle(opt.id)}
-                className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5' : 'hover:bg-foreground/5'}`}
+                className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
               >
                 {opt.label}
-                {selectedValues.includes(opt.id) && <X className="w-3 h-3 text-muted-foreground" />}
+                {selectedValues.includes(opt.id) && <X className="w-3 h-3 text-foreground/30" />}
               </button>
             ))}
           </motion.div>
@@ -89,7 +88,6 @@ const FilterDropdown = ({ label, options, selectedValues, onChange }: DropdownPr
   );
 };
 
-/* ── Main Page ── */
 const Inspiration = () => {
   const [selectedMoods, setSelectedMoods] = useState<MoodType[]>([]);
   const [selectedRooms, setSelectedRooms] = useState<InspirationRoomType[]>([]);
@@ -134,13 +132,28 @@ const Inspiration = () => {
 
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
-      {/* Sticky filter bar — catalog style */}
-      <div ref={filterRef} className="pt-24" />
+      {/* Header */}
+      <div className="container-wide pt-20 pb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <p className="text-caption mb-4">Вдохновение</p>
+          <h1 className="text-title mb-4">Муралы в интерьере</h1>
+          <p className="text-body-lg max-w-xl">
+            Кураторская подборка интерьерных решений. Найдите своё пространство по помещению, цвету и настроению.
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Sticky filter bar */}
+      <div ref={filterRef} />
       <div className={`sticky top-24 z-40 transition-all duration-300 ${
-        isSticky ? 'bg-background/95 backdrop-blur-md' : 'bg-background'
+        isSticky ? 'bg-background/95 backdrop-blur-md border-b border-foreground/5' : 'bg-background'
       }`}>
         <div className="container-wide">
-          <div className={`transition-all duration-300 ${isSticky ? 'py-4' : 'pt-4 pb-6'}`}>
+          <div className={`transition-all duration-300 ${isSticky ? 'py-4' : 'pt-2 pb-6'}`}>
             <div className="flex flex-wrap items-center gap-6 lg:gap-8">
               <FilterDropdown
                 label="Помещение"
@@ -158,14 +171,14 @@ const Inspiration = () => {
               {hasActiveFilters && (
                 <button
                   onClick={clearAll}
-                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/40 hover:text-foreground/70 transition-colors"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   Сбросить
                 </button>
               )}
 
-              <p className="ml-auto text-sm text-muted-foreground">
+              <p className="ml-auto text-[12px] font-light text-foreground/35">
                 {filteredItems.length} {filteredItems.length === 1 ? 'интерьер' : filteredItems.length < 5 ? 'интерьера' : 'интерьеров'}
               </p>
             </div>
@@ -173,8 +186,8 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Grid — 3 columns, equal gaps, natural height */}
-      <section className="pb-16 lg:pb-24">
+      {/* Grid — larger images, more breathing room */}
+      <section className="pb-20 lg:pb-32">
         <div className="container-wide">
           <AnimatePresence mode="wait">
             {filteredItems.length > 0 ? (
@@ -184,7 +197,7 @@ const Inspiration = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
               >
                 {visibleItems.map((item, i) => (
                   <motion.div
@@ -200,15 +213,15 @@ const Inspiration = () => {
                       <img
                         src={item.image}
                         alt={`${item.productName} в интерьере`}
-                        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        className="w-full h-auto object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
                       />
                       {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         <div className="absolute bottom-0 left-0 right-0 p-5">
-                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/70 mb-1">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/70 mb-1 font-light">
                             {getRoomLabel(item.room)}
                           </p>
-                          <h3 className="text-white font-light text-sm">
+                          <h3 className="text-white font-light text-[14px]">
                             {item.productName}
                           </h3>
                         </div>
@@ -225,10 +238,10 @@ const Inspiration = () => {
                 exit={{ opacity: 0 }}
                 className="text-center py-32"
               >
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-[14px] font-light text-foreground/40 mb-6">
                   По выбранным фильтрам ничего не найдено
                 </p>
-                <button onClick={clearAll} className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4">
+                <button onClick={clearAll} className="text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors underline underline-offset-4">
                   Сбросить фильтры
                 </button>
               </motion.div>
@@ -236,7 +249,7 @@ const Inspiration = () => {
           </AnimatePresence>
 
           {hasMore && (
-            <div className="text-center mt-12">
+            <div className="text-center mt-16">
               <button onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)} className="btn-outline">
                 Показать ещё
               </button>
@@ -272,7 +285,7 @@ const Inspiration = () => {
                 />
               </div>
               <div className="lg:w-80 flex-shrink-0 bg-card p-6 flex flex-col">
-                <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-muted-foreground mb-4">
+                <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-foreground/40 mb-4 font-light">
                   <span>{getRoomLabel(selectedItem.room)}</span>
                   {selectedItem.location && (
                     <>
@@ -284,16 +297,16 @@ const Inspiration = () => {
                     </>
                   )}
                 </div>
-                <h2 className="text-xl font-light mb-4">{selectedItem.productName}</h2>
+                <h2 className="text-xl font-light mb-4 text-foreground">{selectedItem.productName}</h2>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {getMoodLabels(selectedItem.mood).map(mood => (
-                    <span key={mood} className="px-2 py-1 text-[10px] uppercase tracking-[0.1em] border border-foreground/20 text-muted-foreground">
+                    <span key={mood} className="px-2 py-1 text-[10px] uppercase tracking-[0.1em] border border-foreground/15 text-foreground/40 font-light">
                       {mood}
                     </span>
                   ))}
                 </div>
-                <div className="border-t border-foreground/10 my-4" />
-                <p className="text-sm text-muted-foreground mb-4">
+                <div className="border-t border-foreground/8 my-4" />
+                <p className="text-[13px] font-light text-foreground/45 mb-4">
                   Понравился этот принт? Посмотрите его детально в каталоге
                 </p>
                 <Link
@@ -306,7 +319,7 @@ const Inspiration = () => {
                 </Link>
                 <button
                   onClick={() => setSelectedItem(null)}
-                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors"
                 >
                   <X className="w-4 h-4" />
                   Закрыть
