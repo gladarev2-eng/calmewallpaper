@@ -314,7 +314,7 @@ const Contacts = () => {
               <Link 
                 key={item.href}
                 to={item.href}
-                className="group p-6 sm:p-8 border border-foreground/8 hover:border-foreground/20 transition-colors duration-500"
+                className="group p-6 sm:p-8 border border-foreground/8 hover:border-foreground/20 transition-colors duration-700"
               >
                 <p className="text-caption mb-4">{item.caption}</p>
                 <h3 className="text-[16px] font-light mb-3 group-hover:text-foreground/70 transition-colors duration-500">
