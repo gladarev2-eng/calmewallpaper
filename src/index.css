@@ -185,17 +185,17 @@
     letter-spacing: 0.2em;
   }
 
-  /* Section spacing — generous, architectural */
+  /* Section spacing — balanced */
   .section {
-    @apply py-20 md:py-28 lg:py-36;
+    @apply py-16 md:py-20 lg:py-28;
   }
 
   .section-sm {
-    @apply py-14 md:py-20 lg:py-24;
+    @apply py-10 md:py-14 lg:py-18;
   }
 
   .section-lg {
-    @apply py-24 md:py-32 lg:py-40;
+    @apply py-20 md:py-28 lg:py-36;
   }
 
   /* Container variants */
