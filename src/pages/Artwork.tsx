@@ -169,15 +169,13 @@ const Artwork = () => {
                 {product.description}
               </p>
 
-              {/* Material & type info block */}
+              {/* Material & type info block — compact */}
               <div className="py-5 border-t border-b border-foreground/8 space-y-3">
-                <p className="text-caption mb-3">Характеристики</p>
                 {[
                   { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
                   { label: 'Сюжет', value: patternLabel },
-                  { label: 'Помещение', value: roomLabels },
-                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
                   { label: 'Коллекция', value: product.collection },
+                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between text-[13px] font-light">
                     <span className="text-foreground/40">{row.label}</span>
@@ -185,28 +183,6 @@ const Artwork = () => {
                   </div>
                 ))}
               </div>
-
-              {/* Materials info */}
-              <div className="py-5 border-b border-foreground/8">
-                <p className="text-caption mb-3">Материалы</p>
-                <p className="text-body mb-4">
-                  Доступно 5 типов покрытий: от матового флизелина для жилых помещений до антивандального винила для коммерческих пространств.
-                </p>
-                <div className="space-y-2">
-                  {materials.filter(m => m.id !== 'canvas').map((mat) => (
-                    <div key={mat.id} className="flex justify-between text-[12px] font-light">
-                      <span className="text-foreground/50">{mat.name}</span>
-                      <span className="text-foreground/35">{mat.priceCoefficient > 1 ? `+${Math.round((mat.priceCoefficient - 1) * 100)}%` : 'базовая'}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Custom-fit statement */}
-              <p className="text-[13px] text-foreground/45 leading-[1.85] font-light italic">
-                Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
-                под размеры вашей стены, сохраняя баланс и глубину сцены.
-              </p>
 
               {/* Action buttons */}
               <div className="flex gap-3">
