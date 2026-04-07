@@ -8,8 +8,8 @@ import { FavoritesProvider } from "@/context/FavoritesContext";
 import { Layout } from "@/components/layout/Layout";
 import Index from "./pages/Index";
 import Catalog from "./pages/Catalog";
-import Collections from "./pages/Collections";
-import Collection from "./pages/Collection";
+
+
 import Artwork from "./pages/Artwork";
 import Inspiration from "./pages/Inspiration";
 import Designers from "./pages/Designers";
