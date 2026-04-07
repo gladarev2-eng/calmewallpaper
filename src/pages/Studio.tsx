@@ -19,7 +19,7 @@ const Studio = () => {
             src={heroMural}
             alt="CALMÉ Studio"
             className="w-full h-full object-cover"
-            style={{ animation: 'slowZoom 10s ease-out forwards' }}
+            style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
         </div>
