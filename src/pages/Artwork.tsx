@@ -33,13 +33,11 @@ const Artwork = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedPanelSize, setSelectedPanelSize] = useState(0);
   const [showFullscreen, setShowFullscreen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'print' | 'material'>('print');
   const [materialOpen, setMaterialOpen] = useState(false);
   const { addItem } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const isInFavorites = product ? isFavorite(product.id) : false;
 
-  // Calculator state (no margin)
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(260);
   const [selectedMaterial, setSelectedMaterial] = useState<Material>(materials[0]);
@@ -53,8 +51,8 @@ const Artwork = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="text-2xl mb-4">Товар не найден</h1>
-          <Link to="/catalog" className="btn-primary">Вернуться в каталог</Link>
+          <h1 className="text-2xl font-extralight mb-4">Работа не найдена</h1>
+          <Link to="/catalog" className="btn-outline">Вернуться в каталог</Link>
         </div>
       </div>
     );
@@ -70,7 +68,6 @@ const Artwork = () => {
 
   const companionWallpapers = products.filter(p => p.type === 'companion' && p.collectionId === product.collectionId);
 
-  // Calculator logic (no margin)
   const area = (width * height) / 10000;
   const basePrice = product.pricePerSqm * area;
   const totalPrice = Math.round(basePrice * selectedMaterial.priceCoefficient);
@@ -95,51 +92,56 @@ const Artwork = () => {
 
   return (
     <div className="bg-background">
-      {/* ── Full-screen Hero ── */}
+      {/* ── Full-screen Hero — minimal overlay ── */}
       <section className="relative w-full h-screen overflow-hidden cursor-zoom-in group" onClick={() => setShowFullscreen(true)}>
         <img
           src={mainImage}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.01]"
         />
-        {/* Dark overlay for text legibility */}
-        <div className="absolute inset-0 bg-black/25" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        {/* Product title — bottom left, bold */}
-        <div className="absolute bottom-8 left-6 md:bottom-12 md:left-12 lg:bottom-16 lg:left-16">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white leading-[1.05] tracking-[-0.02em]">
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+
+        {/* Product title — bottom left, extralight */}
+        <div className="absolute bottom-10 left-6 md:bottom-14 md:left-12 lg:bottom-20 lg:left-16">
+          <p className="text-[10px] font-extralight uppercase tracking-[0.2em] text-white/40 mb-3">
+            {product.collection}
+          </p>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.02em]">
             {product.name}
           </h1>
         </div>
+
         {/* Zoom hint */}
-        <div className="absolute top-6 right-6 bg-white/10 backdrop-blur-sm px-3 py-1.5 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity text-[10px] uppercase tracking-[0.1em] text-white">
-          <ZoomIn className="w-3.5 h-3.5" />
+        <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-60 transition-opacity duration-500 text-[9px] uppercase tracking-[0.12em] text-white/60">
+          <ZoomIn className="w-3 h-3" />
           Увеличить
         </div>
-      </section>
-        {/* Scroll down hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 animate-bounce">
-          <span className="text-[10px] uppercase tracking-[0.15em]">Листайте вниз</span>
-          <ChevronDown className="w-4 h-4" />
-        </div>
 
-      {/* Breadcrumbs — below hero */}
-      <div className="container-wide pt-6 pb-4">
-        <nav className="flex items-center gap-2 text-[11px] text-muted-foreground">
-          <Link to="/" className="hover:text-foreground transition-colors">Главная</Link>
-          <span>/</span>
-          <Link to="/catalog" className="hover:text-foreground transition-colors">Каталог</Link>
-          <span>/</span>
-          <span className="text-foreground">{product.name}</span>
+        {/* Scroll down hint */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 animate-bounce">
+          <span className="text-[9px] uppercase tracking-[0.15em]">Листайте вниз</span>
+          <ChevronDown className="w-3.5 h-3.5" />
+        </div>
+      </section>
+
+      {/* Breadcrumbs */}
+      <div className="container-wide pt-8 pb-4">
+        <nav className="flex items-center gap-2 text-[10px] text-foreground/25 font-extralight">
+          <Link to="/" className="hover:text-foreground/50 transition-colors duration-500">Главная</Link>
+          <span className="text-foreground/15">/</span>
+          <Link to="/catalog" className="hover:text-foreground/50 transition-colors duration-500">Каталог</Link>
+          <span className="text-foreground/15">/</span>
+          <span className="text-foreground/40">{product.name}</span>
         </nav>
       </div>
 
-      {/* ── Main product section: Gallery + Info ── */}
-      <section className="container-wide py-12 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+      {/* ── Main: Gallery + Info — art presentation ── */}
+      <section className="container-wide py-16 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
-          {/* LEFT — Stacked gallery (all images large, scrollable) */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-3">
+          {/* LEFT — Stacked gallery */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-4">
             {product.images.map((img, i) => (
               <div
                 key={i}
@@ -149,37 +151,47 @@ const Artwork = () => {
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} — вид ${i + 1}`}
-                  className="w-full h-auto object-cover transition-transform duration-500 group-hover/img:scale-[1.02]"
+                  className="w-full h-auto object-cover transition-transform duration-[1s] group-hover/img:scale-[1.01]"
                 />
               </div>
             ))}
           </div>
 
-          {/* RIGHT — Sticky product info */}
+          {/* RIGHT — Sticky info panel */}
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="lg:sticky lg:top-28 space-y-5">
+            <div className="lg:sticky lg:top-28 space-y-6">
               <p className="text-caption">{product.collection}</p>
-              <h2 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.01em]">
+              <h2 className="text-2xl md:text-3xl font-extralight leading-tight tracking-[-0.02em]">
                 {product.name}
               </h2>
-              <p className="text-[13px] text-muted-foreground leading-relaxed">
+
+              {/* Artistic description */}
+              <p className="text-[13px] text-foreground/40 leading-[1.9] font-extralight">
                 {product.description}
               </p>
 
-              {/* Action buttons */}
-              <div className="flex gap-2">
+              {/* Custom-fit statement */}
+              <div className="py-5 border-t border-foreground/5">
+                <p className="text-[12px] text-foreground/30 leading-[1.85] font-extralight italic">
+                  Это изображение не имеет фиксированного масштаба. Мы адаптируем композицию
+                  под размеры вашей стены, сохраняя баланс и глубину сцены.
+                </p>
+              </div>
+
+              {/* Action buttons — quiet */}
+              <div className="flex gap-3">
                 <button
                   onClick={() => { toggleFavorite(product.id); toast.success(isInFavorites ? 'Удалено из избранного' : 'Добавлено в избранное'); }}
-                  className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.1em] transition-colors ${
-                    isInFavorites ? 'border-foreground bg-foreground text-background' : 'border-foreground/15 hover:border-foreground/40'
+                  className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.12em] font-extralight transition-all duration-500 ${
+                    isInFavorites ? 'border-foreground/30 text-foreground/70' : 'border-foreground/8 text-foreground/35 hover:border-foreground/20'
                   }`}
                 >
-                  <Heart className={`w-3.5 h-3.5 ${isInFavorites ? 'fill-background' : ''}`} />
+                  <Heart className={`w-3.5 h-3.5 ${isInFavorites ? 'fill-foreground/50' : ''}`} />
                   {isInFavorites ? 'В избранном' : 'Избранное'}
                 </button>
                 <button
-                  onClick={() => toast.info('Функция в разработке', { description: 'Свяжитесь с нами через страницу контактов' })}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/15 text-[10px] uppercase tracking-[0.1em] hover:border-foreground/40 transition-colors"
+                  onClick={() => toast.info('Свяжитесь через страницу контактов')}
+                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/8 text-[10px] uppercase tracking-[0.12em] font-extralight text-foreground/35 hover:border-foreground/20 transition-all duration-500"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   Задать вопрос
@@ -191,77 +203,74 @@ const Artwork = () => {
                 <ColorVariantSelector currentProduct={product} variants={colorVariants} />
               )}
 
-              <div className="border-t border-foreground/10" />
+              <div className="border-t border-foreground/5" />
 
-              {/* Price & Calculator / Panel sizes */}
+              {/* ── Настройка под интерьер ── */}
+              <p className="text-caption">Настройка под интерьер</p>
+
               {product.type === 'panel' && product.panelSizes ? (
                 <div className="space-y-3">
-                  <p className="text-caption">Размер</p>
+                  <p className="text-[11px] text-foreground/30 font-extralight">Выберите размер</p>
                   {product.panelSizes.map((size, i) => (
                     <label
                       key={i}
                       onClick={() => setSelectedPanelSize(i)}
-                      className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-sm transition-all ${
-                        selectedPanelSize === i ? 'border-foreground' : 'border-foreground/10 hover:border-foreground/30'
+                      className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-[12px] font-extralight transition-all duration-500 ${
+                        selectedPanelSize === i ? 'border-foreground/20' : 'border-foreground/5 hover:border-foreground/12'
                       }`}
                     >
                       <div className="flex items-center gap-2">
-                        <div className={`w-3 h-3 rounded-full border flex items-center justify-center transition-colors ${selectedPanelSize === i ? 'border-foreground bg-foreground' : 'border-foreground/30'}`}>
-                          {selectedPanelSize === i && <Check className="w-2 h-2 text-background" />}
+                        <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center transition-colors duration-500 ${selectedPanelSize === i ? 'border-foreground/40 bg-foreground/30' : 'border-foreground/15'}`}>
+                          {selectedPanelSize === i && <Check className="w-1.5 h-1.5 text-background" />}
                         </div>
-                        <span>{size.size}</span>
+                        <span className="text-foreground/50">{size.size}</span>
                       </div>
-                      <span className="font-medium">{formatPrice(size.price)} ₽</span>
+                      <span className="text-foreground/30">{formatPrice(size.price)} ₽</span>
                     </label>
                   ))}
-                  <button onClick={handleAddToCart} className="btn-primary w-full">
-                    Добавить в корзину
+                  <button onClick={handleAddToCart} className="btn-primary w-full mt-4">
+                    В корзину
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-[11px] text-muted-foreground uppercase tracking-wider">Цена за м²</span>
-                    <span className="text-lg font-light">{formatPrice(product.pricePerSqm)} ₽</span>
-                  </div>
-
-                  {/* Dimensions */}
+                <div className="space-y-5">
+                  {/* Dimensions — framed as "wall size" */}
+                  <p className="text-[11px] text-foreground/30 font-extralight">Укажите размеры вашей стены</p>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider block mb-1">Ширина, см</span>
+                      <span className="text-[9px] text-foreground/20 uppercase tracking-[0.1em] block mb-1.5 font-extralight">Ширина, см</span>
                       <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
-                        className="w-full px-3 py-2 bg-transparent border border-foreground/15 text-sm focus:outline-none focus:border-foreground transition-colors" />
+                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/8 text-[13px] font-extralight focus:outline-none focus:border-foreground/20 transition-colors duration-500" />
                     </div>
                     <div>
-                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider block mb-1">Высота, см</span>
+                      <span className="text-[9px] text-foreground/20 uppercase tracking-[0.1em] block mb-1.5 font-extralight">Высота, см</span>
                       <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
-                        className="w-full px-3 py-2 bg-transparent border border-foreground/15 text-sm focus:outline-none focus:border-foreground transition-colors" />
+                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/8 text-[13px] font-extralight focus:outline-none focus:border-foreground/20 transition-colors duration-500" />
                     </div>
                   </div>
 
                   {/* Material */}
                   <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
-                    <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/15 text-sm hover:border-foreground/30 transition-colors">
-                      <span className="text-muted-foreground">Материал:</span>
-                      <div className="flex items-center gap-2">
+                    <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/8 text-[12px] font-extralight hover:border-foreground/15 transition-colors duration-500">
+                      <span className="text-foreground/30">Материал</span>
+                      <div className="flex items-center gap-2 text-foreground/50">
                         <span>{selectedMaterial.name}</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform ${materialOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-500 ${materialOpen ? 'rotate-180' : ''}`} />
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <div className="border-x border-b border-foreground/15 divide-y divide-foreground/10">
+                      <div className="border-x border-b border-foreground/8">
                         {materials.filter(m => m.id !== 'canvas').map((material) => (
                           <button
                             key={material.id}
                             onClick={() => { setSelectedMaterial(material); setMaterialOpen(false); }}
-                            className={`w-full flex items-center justify-between p-3 text-sm text-left hover:bg-muted/50 transition-colors ${selectedMaterial.id === material.id ? 'bg-muted/50' : ''}`}
+                            className={`w-full flex items-center justify-between p-3 text-[12px] font-extralight text-left hover:bg-foreground/3 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/3' : ''}`}
                           >
                             <div className="flex items-center gap-2">
-                              <div className={`w-2.5 h-2.5 rounded-full ${selectedMaterial.id === material.id ? 'bg-foreground' : 'border border-foreground/30'}`} />
-                              <span>{material.name}</span>
-                              {material.forHoreca && <span className="text-[9px] uppercase tracking-wider text-muted-foreground">HoReCa</span>}
+                              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/40' : 'border border-foreground/15'}`} />
+                              <span className="text-foreground/50">{material.name}</span>
                             </div>
-                            {material.priceCoefficient > 1 && <span className="text-xs text-muted-foreground">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
+                            {material.priceCoefficient > 1 && <span className="text-foreground/20">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
                           </button>
                         ))}
                       </div>
@@ -269,22 +278,22 @@ const Artwork = () => {
                   </Collapsible>
 
                   {/* Summary */}
-                  <div className="pt-4 border-t border-foreground/10 space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Площадь</span>
-                      <span>{area.toFixed(2)} м²</span>
+                  <div className="pt-4 border-t border-foreground/5 space-y-2">
+                    <div className="flex justify-between text-[12px] font-extralight">
+                      <span className="text-foreground/25">Площадь</span>
+                      <span className="text-foreground/40">{area.toFixed(2)} м²</span>
                     </div>
                     <div className="flex justify-between items-baseline">
-                      <span className="text-muted-foreground">Итого</span>
-                      <span className="text-2xl font-light">{formatPrice(totalPrice)} ₽</span>
+                      <span className="text-foreground/25 text-[12px] font-extralight">Стоимость</span>
+                      <span className="text-xl font-extralight text-foreground/60">{formatPrice(totalPrice)} ₽</span>
                     </div>
                   </div>
 
                   <button onClick={handleAddToCart} className="btn-primary w-full">
-                    Добавить в корзину
+                    В корзину
                   </button>
-                  <p className="text-[10px] text-muted-foreground text-center">
-                    Финальная стоимость уточняется после согласования
+                  <p className="text-[10px] text-foreground/20 text-center font-extralight">
+                    Финальная стоимость уточняется после согласования макета
                   </p>
                 </div>
               )}
@@ -293,196 +302,120 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── Technical Info — Tabs ── */}
-      <section className="py-12 md:py-16 border-t border-foreground/10">
+      {/* ── How it works — 4 steps, vertical ── */}
+      <section className="section-lg border-t border-foreground/4">
         <div className="container-wide">
-          <div className="flex gap-6 mb-8 border-b border-foreground/10">
-            {(['print', 'material'] as const).map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`pb-3 text-[10px] uppercase tracking-[0.15em] transition-colors relative ${activeTab === tab ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+          <motion.div
+            className="mb-20"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-caption mb-4">Процесс</p>
+            <h2 className="text-title">Как это работает</h2>
+          </motion.div>
+
+          <div className="max-w-2xl space-y-14">
+            {[
+              { step: '01', title: 'Выбор дизайна', desc: 'Выберите изображение из каталога или обсудите индивидуальную разработку' },
+              { step: '02', title: 'Адаптация под стену', desc: 'Масштабирование, цветокоррекция и композиция под размеры вашего пространства' },
+              { step: '03', title: 'Утверждение макета', desc: 'Визуализация в интерьере и финальное согласование перед печатью' },
+              { step: '04', title: 'Печать и доставка', desc: 'Производство на премиальных материалах, доставка по всей России' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="flex gap-8"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
               >
-                {tab === 'print' ? 'О принте' : 'О материале'}
-                {activeTab === tab && <motion.div layoutId="tab-indicator" className="absolute bottom-0 left-0 right-0 h-px bg-foreground" />}
-              </button>
+                <span className="text-[10px] tracking-[0.2em] text-foreground/15 pt-1 shrink-0">{item.step}</span>
+                <div>
+                  <h3 className="text-[14px] font-extralight mb-2">{item.title}</h3>
+                  <p className="text-body">{item.desc}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <AnimatePresence mode="wait">
-            {activeTab === 'print' ? (
-              <motion.div key="print" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="space-y-0">
-                  {[
-                    { label: 'Коллекция', value: product.collection },
-                    { label: 'Пропорция', value: product.aspectRatio || '5:3' },
-                    { label: 'Макс. размер', value: `${product.maxWidth || 600}×${product.maxHeight || 320} см` },
-                    { label: 'Разрешение', value: '2400 DPI / 45K px' },
-                    { label: 'Настроение', value: getPatternLabel() },
-                  ].map((item, i) => (
-                    <div key={i} className="flex justify-between items-baseline py-2.5 border-b border-foreground/8">
-                      <span className="text-xs text-muted-foreground">{item.label}</span>
-                      <span className="text-xs">{item.value}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="space-y-4">
-                  <p className="text-[13px] text-muted-foreground leading-relaxed">
-                    Наши принты сохраняют безупречную четкость даже на высоте 6 метров. Каждая прожилка камня или мазок кисти выглядят так, будто они нанесены вручную.
-                  </p>
-                  <div className="flex gap-8">
-                    <div>
-                      <p className="text-2xl font-light">45K</p>
-                      <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Пикселей</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-light">2400</p>
-                      <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">DPI</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Рекомендуемые помещения</p>
-                  <div className="flex flex-wrap gap-2">
-                    {product.roomTypes.map(r => {
-                      const room = roomTypes.find(rt => rt.id === r);
-                      return room ? <span key={r} className="text-xs px-2.5 py-1 border border-foreground/15">{room.label}</span> : null;
-                    })}
-                  </div>
-                </div>
+      {/* ── In Interior — 2-3 curated scenes ── */}
+      <section className="section border-t border-foreground/4">
+        <div className="container-wide">
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-caption mb-4">В интерьере</p>
+            <h2 className="text-title">Как это выглядит в пространстве</h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {product.images.slice(0, 3).map((img, i) => (
+              <motion.div
+                key={i}
+                className={`overflow-hidden ${i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'}`}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+              >
+                <img
+                  src={getImageSrc(img)}
+                  alt={`${product.name} в интерьере`}
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
-            ) : (
-              <motion.div key="material" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-5">
-                  <div className="flex flex-wrap gap-1.5">
-                    {materials.filter(m => product.type === 'panel' ? m.id === 'canvas' : m.id !== 'canvas').map((material) => (
-                      <button key={material.id} onClick={() => setSelectedMaterial(material)}
-                        className={`px-3 py-1.5 text-[11px] border transition-all ${selectedMaterial.id === material.id ? 'border-foreground bg-foreground text-background' : 'border-foreground/15 hover:border-foreground/40'}`}>
-                        {material.name}
-                        {material.priceCoefficient > 1 && <span className="ml-1 opacity-60">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-[13px] text-muted-foreground leading-relaxed">{selectedMaterial.description}</p>
-                  <div className="space-y-0">
-                    {[
-                      { label: 'Шов', value: selectedMaterial.id === 'fleece-premium' || selectedMaterial.id === 'fleece-commercial' ? 'Бесшовный до 320 см' : 'Шовный' },
-                      { label: 'Основа', value: selectedMaterial.id.includes('fleece') ? 'Флизелин' : selectedMaterial.id === 'vinyl' ? 'Винил на флизелине' : selectedMaterial.id === 'textile' ? 'Текстиль' : 'Холст' },
-                      { label: 'Плотность', value: selectedMaterial.id === 'vinyl' ? '350 г/м²' : selectedMaterial.id === 'textile' ? '280 г/м²' : '220 г/м²' },
-                      { label: 'Макс. ширина', value: selectedMaterial.id === 'canvas' ? '150 см' : '320 см' },
-                      { label: 'Уход', value: selectedMaterial.care },
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between items-baseline py-2 border-b border-foreground/8">
-                        <span className="text-xs text-muted-foreground">{item.label}</span>
-                        <span className="text-xs">{item.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1">
-                    {selectedMaterial.features.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                        <Check className="w-3 h-3" /><span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <Link to="/buyers" className="link-arrow">
-                    Подробнее о материалах <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-                <div className="aspect-[4/3] bg-muted/30 border border-foreground/8 overflow-hidden relative">
-                  <img src={mainImage} alt="Текстура материала" className="w-full h-full object-cover scale-[2] origin-center" style={{ filter: 'saturate(0.4) contrast(0.95)' }} />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <p className="text-sm font-medium">{selectedMaterial.name}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{selectedMaterial.texture || 'Превью текстуры на изображении принта'}</p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── Companion Wallpapers ── */}
       {companionWallpapers.length > 0 && (
-        <section className="py-12 md:py-20">
+        <section className="section border-t border-foreground/4">
           <div className="container-wide">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-4">
                 <p className="text-caption mb-3">Обои-компаньоны</p>
-                <h2 className="text-title mb-4">Фоновые обои к этому принту</h2>
-                <p className="text-body mb-6">Подобрали обои в тон для оформления соседних стен.</p>
+                <h2 className="text-title mb-4">Фоновые покрытия</h2>
+                <p className="text-body mb-6">Подобрали обои в тон для соседних стен.</p>
                 <Link to="/catalog?type=companion" className="link-arrow">
                   Все фоновые обои <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
               <div className="lg:col-span-8 relative overflow-hidden">
-                <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
+                <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
                   {companionWallpapers.slice(0, 5).map((wallpaper) => (
-                    <div key={wallpaper.id} className="group border border-foreground/10 hover:border-foreground/30 transition-colors flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
-                      <div className="aspect-[4/3] overflow-hidden bg-muted">
-                        <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover" style={{ filter: 'saturate(0.7)' }} />
+                    <Link key={wallpaper.id} to={`/artwork/${wallpaper.slug}`} className="group flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
+                      <div className="aspect-[4/3] overflow-hidden bg-muted mb-3">
+                        <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1s] group-hover:scale-[1.02]" />
                       </div>
-                      <div className="p-4">
-                        <p className="text-caption mb-1">{wallpaper.collection}</p>
-                        <h3 className="text-sm mb-1">{wallpaper.name}</h3>
-                        <div className="flex items-center justify-between mt-2">
-                          <span className="text-[10px] text-muted-foreground">{formatPrice(wallpaper.pricePerSqm)} ₽/м²</span>
-                        </div>
-                        <Link to={`/artwork/${wallpaper.slug}`} className="mt-3 flex items-center justify-center gap-2 w-full py-2 border border-foreground/15 text-[10px] uppercase tracking-[0.1em] hover:border-foreground hover:bg-foreground hover:text-background transition-colors">
-                          <ArrowRight className="w-3 h-3" /> Смотреть
-                        </Link>
-                      </div>
-                    </div>
+                      <p className="text-[11px] font-extralight text-foreground/40">{wallpaper.name}</p>
+                    </Link>
                   ))}
                 </div>
-                <div className="absolute right-0 top-0 bottom-2 w-16 bg-gradient-to-l from-background via-background/80 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* ── Service section ── */}
-      <section className="py-12 md:py-20 bg-card">
-        <div className="container-wide">
-          <div className="text-center mb-10">
-            <p className="text-caption mb-3">Сервис</p>
-            <h2 className="text-title">Начать работу над проектом</h2>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-foreground/10">
-            {[
-              { num: '01', title: 'Визуализация', desc: 'Покажем принт на вашей стене' },
-              { num: '02', title: 'Адаптация', desc: 'Подстроим под размеры' },
-              { num: '03', title: 'Образцы', desc: 'Пришлём бесплатно' },
-              { num: '04', title: 'Подбор краски', desc: 'Найдём идеальный тон' },
-            ].map((item, i) => (
-              <div key={i} className="bg-card p-6 md:p-8">
-                <span className="text-caption text-muted-foreground/40 block mb-4">{item.num}</span>
-                <h3 className="text-sm font-medium mb-2">{item.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link to="/designers" className="btn-primary">Связаться с нами</Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── Related products ── */}
       {relatedProducts.length > 0 && (
-        <section className="py-12 md:py-20">
+        <section className="section border-t border-foreground/4">
           <div className="container-wide">
-            <div className="flex justify-between items-end mb-8">
-              <div>
-                <p className="text-caption mb-2">Из этой коллекции</p>
-                <h2 className="text-title">{product.collection}</h2>
-              </div>
+            <div className="mb-12">
+              <p className="text-caption mb-3">Из этой коллекции</p>
+              <h2 className="text-title">{product.collection}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {relatedProducts.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} large />
+                <ProductCard key={p.id} product={p} index={i} />
               ))}
             </div>
           </div>
@@ -493,19 +426,19 @@ const Artwork = () => {
       <AnimatePresence>
         {showFullscreen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-background flex items-center justify-center">
-            <button className="absolute top-6 right-6 p-3 hover:bg-muted transition-colors z-10" onClick={() => setShowFullscreen(false)}>
-              <X className="w-5 h-5" />
+            <button className="absolute top-6 right-6 p-3 text-foreground/30 hover:text-foreground/60 transition-colors duration-500 z-10" onClick={() => setShowFullscreen(false)}>
+              <X className="w-5 h-5 stroke-[1.2]" />
             </button>
             <div className="w-full h-full flex items-center justify-center p-4 md:p-8">
               <img src={mainImage} alt={product.name} className="max-w-full max-h-full object-contain" />
             </div>
             {product.images.length > 1 && (
               <>
-                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-muted hover:bg-muted/80 transition-colors"><ChevronLeft className="w-5 h-5" /></button>
-                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-muted hover:bg-muted/80 transition-colors"><ChevronRight className="w-5 h-5" /></button>
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                  {product.images.map((img, i) => (
-                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-2 h-2 rounded-full transition-colors ${selectedImage === i ? 'bg-foreground' : 'bg-foreground/30'}`} />
+                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-foreground/20 hover:text-foreground/50 transition-colors duration-500"><ChevronLeft className="w-5 h-5 stroke-[1.2]" /></button>
+                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-foreground/20 hover:text-foreground/50 transition-colors duration-500"><ChevronRight className="w-5 h-5 stroke-[1.2]" /></button>
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+                  {product.images.map((_, i) => (
+                    <button key={i} onClick={() => setSelectedImage(i)} className={`w-6 h-[0.5px] transition-colors duration-500 ${selectedImage === i ? 'bg-foreground/50' : 'bg-foreground/15'}`} />
                   ))}
                 </div>
               </>
