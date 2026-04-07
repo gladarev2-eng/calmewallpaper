@@ -24,7 +24,7 @@ export const Header = () => {
     <>
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide">
-          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
+          <div className="flex items-center justify-between h-16 sm:h-20 lg:h-[88px]">
             {/* Logo */}
             <Link 
               to="/" 
