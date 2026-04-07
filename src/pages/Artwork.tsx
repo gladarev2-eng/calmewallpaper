@@ -116,18 +116,12 @@ const Artwork = () => {
           <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
-        {/* Nav arrows */}
-        {product.images.length > 1 && (
-          <>
-            <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20 text-white">
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white/20 text-white">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </>
-        )}
       </section>
+        {/* Scroll down hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 animate-bounce">
+          <span className="text-[10px] uppercase tracking-[0.15em]">Листайте вниз</span>
+          <ChevronDown className="w-4 h-4" />
+        </div>
 
       {/* Breadcrumbs — below hero */}
       <div className="container-wide pt-6 pb-4">
