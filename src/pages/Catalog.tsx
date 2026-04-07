@@ -19,61 +19,24 @@ const Catalog = () => {
 
   const filteredProducts = useMemo(() => {
     let result = products.filter(product => {
-      // Type filter
-      if (selectedTypes.length > 0 && !selectedTypes.includes(product.type)) {
-        return false;
-      }
-
-      // Collection filter
-      if (selectedCollections.length > 0 && !selectedCollections.includes(product.collectionId)) {
-        return false;
-      }
-
-      // Color filter
-      if (selectedColors.length > 0 && !product.colors.some(c => selectedColors.includes(c))) {
-        return false;
-      }
-
-      // Pattern filter
-      if (selectedPatterns.length > 0 && !selectedPatterns.includes(product.patternType)) {
-        return false;
-      }
-
-      // Room filter
-      if (selectedRooms.length > 0 && !product.roomTypes.some(r => selectedRooms.includes(r))) {
-        return false;
-      }
-
-      // Search
+      if (selectedTypes.length > 0 && !selectedTypes.includes(product.type)) return false;
+      if (selectedCollections.length > 0 && !selectedCollections.includes(product.collectionId)) return false;
+      if (selectedColors.length > 0 && !product.colors.some(c => selectedColors.includes(c))) return false;
+      if (selectedPatterns.length > 0 && !selectedPatterns.includes(product.patternType)) return false;
+      if (selectedRooms.length > 0 && !product.roomTypes.some(r => selectedRooms.includes(r))) return false;
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
-        return (
-          product.name.toLowerCase().includes(query) ||
-          product.collection.toLowerCase().includes(query) ||
-          product.tags.some(t => t.toLowerCase().includes(query))
-        );
+        return product.name.toLowerCase().includes(query) || product.collection.toLowerCase().includes(query) || product.tags.some(t => t.toLowerCase().includes(query));
       }
-
       return true;
     });
 
-    // Sort
     switch (sortBy) {
-      case 'newest':
-        result = result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
-        break;
-      case 'price-asc':
-        result = result.sort((a, b) => a.pricePerSqm - b.pricePerSqm);
-        break;
-      case 'price-desc':
-        result = result.sort((a, b) => b.pricePerSqm - a.pricePerSqm);
-        break;
-      case 'popularity':
-      default:
-        result = result.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
-        break;
+      case 'newest': result = result.sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)); break;
+      case 'price-asc': result = result.sort((a, b) => a.pricePerSqm - b.pricePerSqm); break;
+      case 'price-desc': result = result.sort((a, b) => b.pricePerSqm - a.pricePerSqm); break;
+      default: result = result.sort((a, b) => (b.popularity || 0) - (a.popularity || 0)); break;
     }
-
     return result;
   }, [selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms, searchQuery, sortBy]);
 
@@ -89,35 +52,17 @@ const Catalog = () => {
   };
 
   const filterProps = {
-    selectedTypes,
-    selectedCollections,
-    selectedColors,
-    selectedPatterns,
-    selectedRooms,
-    selectedSizes,
-    selectedWidths,
-    searchQuery,
-    sortBy,
-    onTypesChange: setSelectedTypes,
-    onCollectionsChange: setSelectedCollections,
-    onColorsChange: setSelectedColors,
-    onPatternsChange: setSelectedPatterns,
-    onRoomsChange: setSelectedRooms,
-    onSizesChange: setSelectedSizes,
-    onWidthsChange: setSelectedWidths,
-    onSearchChange: setSearchQuery,
-    onSortChange: setSortBy,
-    onClearAll: clearAllFilters,
-    totalCount: filteredProducts.length,
+    selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms,
+    selectedSizes, selectedWidths, searchQuery, sortBy,
+    onTypesChange: setSelectedTypes, onCollectionsChange: setSelectedCollections,
+    onColorsChange: setSelectedColors, onPatternsChange: setSelectedPatterns,
+    onRoomsChange: setSelectedRooms, onSizesChange: setSelectedSizes,
+    onWidthsChange: setSelectedWidths, onSearchChange: setSearchQuery,
+    onSortChange: setSortBy, onClearAll: clearAllFilters, totalCount: filteredProducts.length,
   };
 
   const currentType = selectedTypes[0] || 'all';
-  const typeLabels: Record<string, string> = {
-    all: 'Все',
-    mural: 'Муралы',
-    panel: 'Панно',
-    companion: 'Фоновые обои',
-  };
+  const typeLabels: Record<string, string> = { all: 'Все', mural: 'Муралы', panel: 'Панно', companion: 'Фоновые обои' };
 
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
@@ -129,46 +74,35 @@ const Catalog = () => {
       {/* Mobile Header */}
       <div className="lg:hidden">
         <div className="container-wide pt-16 pb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {['all', 'mural', 'panel', 'companion'].map(type => (
-                <button
-                  key={type}
-                  onClick={() => {
-                    setSelectedTypes(type === 'all' ? [] : [type]);
-                    setSelectedSizes([]);
-                    setSelectedWidths([]);
-                  }}
-                  className={`text-xs uppercase tracking-[0.1em] pb-1 transition-all ${
-                    currentType === type
-                      ? 'text-foreground border-b border-foreground'
-                      : 'text-muted-foreground'
-                  }`}
-                >
-                  {typeLabels[type]}
-                </button>
-              ))}
-            </div>
+          <div className="flex items-center gap-5">
+            {['all', 'mural', 'panel', 'companion'].map(type => (
+              <button
+                key={type}
+                onClick={() => { setSelectedTypes(type === 'all' ? [] : [type]); setSelectedSizes([]); setSelectedWidths([]); }}
+                className={`text-[10px] uppercase tracking-[0.14em] font-extralight pb-1 transition-all duration-500 ${
+                  currentType === type ? 'text-foreground/60 border-b border-foreground/20' : 'text-foreground/25'
+                }`}
+              >
+                {typeLabels[type]}
+              </button>
+            ))}
           </div>
         </div>
         <div className="container-wide pb-6">
           <div className="flex items-center justify-between">
-            <button
-              onClick={() => setShowMobileFilters(true)}
-              className="flex items-center gap-2 text-sm text-muted-foreground"
-            >
-              <SlidersHorizontal className="w-4 h-4" />
+            <button onClick={() => setShowMobileFilters(true)} className="flex items-center gap-2 text-[11px] font-extralight text-foreground/30">
+              <SlidersHorizontal className="w-3.5 h-3.5" />
               Фильтры
             </button>
-            <p className="text-sm text-muted-foreground">
-              {filteredProducts.length} объектов
+            <p className="text-[11px] font-extralight text-foreground/20">
+              {filteredProducts.length} работ
             </p>
           </div>
         </div>
       </div>
 
-      {/* Product Grid */}
-      <section className="pb-16 lg:pb-24">
+      {/* Product Grid — increased spacing */}
+      <section className="pb-24 lg:pb-32">
         <div className="container-wide">
           <AnimatePresence mode="wait">
             {filteredProducts.length > 0 ? (
@@ -177,11 +111,11 @@ const Catalog = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
+                transition={{ duration: 0.4 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
               >
                 {filteredProducts.map((product, i) => (
-                  <ProductCard key={product.id} product={product} index={i} large />
+                  <ProductCard key={product.id} product={product} index={i} />
                 ))}
               </motion.div>
             ) : (
@@ -190,14 +124,14 @@ const Catalog = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center py-32"
+                className="text-center py-40"
               >
-                <p className="text-sm text-muted-foreground mb-6">
+                <p className="text-[13px] font-extralight text-foreground/25 mb-8">
                   По вашему запросу ничего не найдено
                 </p>
                 <button
                   onClick={clearAllFilters}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+                  className="text-[11px] font-extralight text-foreground/30 hover:text-foreground/50 transition-colors duration-500 underline underline-offset-4 decoration-foreground/10"
                 >
                   Сбросить фильтры
                 </button>
@@ -210,11 +144,7 @@ const Catalog = () => {
       {/* Mobile Filters Drawer */}
       <AnimatePresence>
         {showMobileFilters && (
-          <MobileFilters
-            {...filterProps}
-            isOpen={showMobileFilters}
-            onClose={() => setShowMobileFilters(false)}
-          />
+          <MobileFilters {...filterProps} isOpen={showMobileFilters} onClose={() => setShowMobileFilters(false)} />
         )}
       </AnimatePresence>
     </div>

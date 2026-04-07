@@ -16,24 +16,24 @@ import ServiceGuarantees from '@/components/buyers/ServiceGuarantees';
 
 const faqs = [
   {
-    q: 'Как выбрать размер мурала?',
-    a: 'Измерьте ширину и высоту стены в сантиметрах. При расчёте мы добавляем 5-10% запаса на подрезку. Калькулятор на странице товара автоматически рассчитает нужную площадь и стоимость.',
+    q: 'Как выбрать размер?',
+    a: 'Измерьте ширину и высоту стены в сантиметрах. Мы добавим необходимый запас на подрезку и рассчитаем точную стоимость с учётом материала.',
   },
   {
-    q: 'Можно ли изменить цвета изображения?',
-    a: 'Да, мы бесплатно адаптируем цветовую гамму под ваш интерьер. Отправьте нам фото комнаты через форму на сайте или в WhatsApp, и мы подготовим визуализацию.',
+    q: 'Можно ли адаптировать цвета под интерьер?',
+    a: 'Да, мы бесплатно скорректируем цветовую гамму под ваше пространство. Отправьте фото комнаты — мы подготовим визуализацию.',
   },
   {
-    q: 'Какой материал выбрать для ванной?',
-    a: 'Для влажных помещений рекомендуем винил на флизелине — он влагостойкий, легко моется и устойчив к перепадам температур.',
+    q: 'Какой материал подойдёт для влажных помещений?',
+    a: 'Для ванных и зон с повышенной влажностью рекомендуем винил на флизелине — он устойчив к воде и перепадам температур.',
   },
   {
-    q: 'Сколько времени занимает производство?',
-    a: 'Стандартный срок производства — 5-7 рабочих дней. Для дизайнеров-партнёров программы лояльности — 3-5 дней.',
+    q: 'Сколько занимает производство?',
+    a: 'Стандартный срок — 5–7 рабочих дней. Для партнёров программы лояльности — 3–5 дней.',
   },
   {
-    q: 'Можно ли вернуть товар?',
-    a: 'Так как каждый заказ изготавливается индивидуально под размеры вашей стены, возврат возможен только при обнаружении производственного брака.',
+    q: 'Возможен ли возврат?',
+    a: 'Каждый заказ изготавливается индивидуально, поэтому возврат возможен только при обнаружении производственного дефекта.',
   },
 ];
 
@@ -41,11 +41,11 @@ const steps = [
   {
     step: '01',
     title: 'Выберите изображение',
-    desc: 'Найдите мурал или панно в нашем каталоге. Мы можем адаптировать цветовую гамму под ваш интерьер — это бесплатно.',
+    desc: 'Найдите работу в каталоге или обсудите с нами индивидуальный вариант. Мы бесплатно адаптируем цвета под ваш интерьер.',
     bullets: [
-      'Более 100 изображений в каталоге',
-      'Фильтры по стилю, цвету и помещению',
-      'Бесплатная адаптация цветов',
+      'Более 100 работ в каталоге',
+      'Фильтрация по стилю и помещению',
+      'Бесплатная адаптация палитры',
     ],
     image: mural2,
     cta: { label: 'Перейти в каталог', href: '/catalog' },
@@ -53,22 +53,22 @@ const steps = [
   {
     step: '02',
     title: 'Укажите размеры стены',
-    desc: 'Измерьте ширину и высоту стены в сантиметрах. Калькулятор на странице товара рассчитает точную стоимость с учётом материала.',
+    desc: 'Измерьте ширину и высоту в сантиметрах. Мы рассчитаем точную стоимость и подготовим макет под ваши пропорции.',
     bullets: [
       'Автоматический расчёт площади',
-      'Запас на подрезку 5-10%',
-      'Учёт проёмов и ниш',
+      'Учёт запаса на подрезку',
+      'Работа с нестандартными формами',
     ],
     image: mural3,
   },
   {
     step: '03',
     title: 'Выберите материал',
-    desc: 'У нас 5 типов материалов для разных задач. Рекомендуем заказать бесплатные образцы, чтобы оценить текстуру.',
+    desc: 'Пять типов покрытий для разных задач. Рекомендуем заказать бесплатные образцы, чтобы оценить текстуру и тактильные ощущения.',
     bullets: [
       'Флизелин — для жилых помещений',
-      'Винил — для влажных зон и HoReCa',
-      'Текстиль и холст — для премиум-интерьеров',
+      'Винил — для влажных зон',
+      'Текстиль и холст — для особых пространств',
     ],
     image: mural5,
     cta: { label: 'Заказать образцы', href: '/contacts' },
@@ -76,9 +76,9 @@ const steps = [
   {
     step: '04',
     title: 'Оформите заказ',
-    desc: 'Добавьте товар в корзину, оплатите 50% и ожидайте изготовление. Мы свяжемся для подтверждения деталей.',
+    desc: 'Утвердите финальный макет, оплатите 50% и ожидайте изготовление. Мы свяжемся для подтверждения всех деталей.',
     bullets: [
-      'Производство 5-7 рабочих дней',
+      'Производство 5–7 рабочих дней',
       'Доставка по всей России',
       'Инструкция по монтажу в комплекте',
     ],
@@ -90,25 +90,26 @@ const Buyers = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero */}
-      <section className="section-sm bg-card">
+      <section className="section-sm bg-background">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
+            className="max-w-3xl"
           >
-            <h1 className="text-display mb-4">Покупателям</h1>
-            <p className="text-body-lg">
-              От выбора изображения до установки — сопровождаем на каждом этапе
+            <p className="text-caption mb-6">Покупателям</p>
+            <h1 className="text-display mb-6">Как это работает</h1>
+            <p className="text-body-lg max-w-xl">
+              Сопровождаем на каждом этапе — от выбора изображения до установки в вашем пространстве
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Service & Guarantees */}
-      <section className="section">
+      <section className="section bg-background">
         <div className="container-wide">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="mb-16">
             <p className="text-caption mb-4">Сервис</p>
             <h2 className="text-title">Что мы гарантируем</h2>
           </div>
@@ -116,61 +117,61 @@ const Buyers = () => {
         </div>
       </section>
 
-      {/* Process Steps - Sequential Vertical Presentation */}
-      <section className="section bg-card">
+      {/* Process Steps */}
+      <section className="section bg-card/50">
         <div className="container-wide">
-          <div className="text-center mb-12 md:mb-20">
+          <div className="mb-20">
             <p className="text-caption mb-4">Процесс</p>
-            <h2 className="text-title">Как заказать</h2>
+            <h2 className="text-title">Четыре шага к результату</h2>
           </div>
           <ProcessSteps steps={steps} />
         </div>
       </section>
 
-      {/* Materials - Image + Structured List */}
-      <section className="section">
+      {/* Materials */}
+      <section className="section bg-background">
         <div className="container-wide">
-          <div className="text-center mb-12 md:mb-16">
+          <div className="mb-16">
             <p className="text-caption mb-4">Материалы</p>
-            <h2 className="text-title">Выберите подходящий</h2>
+            <h2 className="text-title">Глубокая детализация и тактильные ощущения</h2>
           </div>
           <MaterialsSection materials={materials} images={[mural4, mural6, mural1, mural5, heroMural]} />
         </div>
       </section>
 
-      {/* Delivery & Payment - Image + Structured Text */}
-      <section className="section bg-card">
+      {/* Delivery & Payment */}
+      <section className="section bg-card/50">
         <div className="container-wide">
           <DeliveryPayment image={mural1} />
         </div>
       </section>
 
-      {/* FAQ - Open by Default */}
-      <section className="section">
+      {/* FAQ */}
+      <section className="section bg-background">
         <div className="container-narrow">
-          <div className="text-center mb-12">
-            <p className="text-caption mb-4">FAQ</p>
+          <div className="mb-16">
+            <p className="text-caption mb-4">Вопросы</p>
             <h2 className="text-title">Частые вопросы</h2>
           </div>
           <FAQAccordion faqs={faqs} />
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="section bg-card">
+      {/* CTA */}
+      <section className="section-lg bg-card/50">
         <div className="container-narrow text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-title mb-4">Готовы начать?</h2>
-            <p className="text-body-lg mb-8 max-w-lg mx-auto">
-              Выберите изображение из каталога или свяжитесь с нами для консультации
+            <h2 className="text-title mb-6">Расскажите о вашем проекте</h2>
+            <p className="text-body-lg mb-12 max-w-md mx-auto">
+              Мы подберём решение и подготовим визуализацию
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link to="/catalog" className="btn-primary">
-                Перейти в каталог
+                Смотреть каталог
               </Link>
               <Link to="/contacts" className="btn-outline">
                 Связаться с нами
