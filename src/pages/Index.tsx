@@ -9,12 +9,12 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
-import { collections } from '@/data/products';
+import { inspirationItems } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
 const Index = () => {
-  const collectionImages = [mural1, mural2, mural3, mural4];
+  
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = useCallback(() => {
@@ -133,37 +133,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Collections Section */}
+      {/* Inspiration Section */}
       <section className="section-sm bg-background">
         <div className="container-wide">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="text-title">Коллекции</h2>
-            <Link to="/collections" className="link-arrow hidden md:flex">
-              Все коллекции <ArrowRight className="w-4 h-4" />
+            <h2 className="text-title">Вдохновение</h2>
+            <Link to="/inspiration" className="link-arrow hidden md:flex">
+              Смотреть все <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {collections.slice(0, 2).map((collection, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+            {inspirationItems.slice(0, 6).map((item, i) => (
               <motion.div
-                key={collection.id}
+                key={item.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.7 }}
+                transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <Link to={`/collection/${collection.slug}`} className="group block relative">
-                  <div className="aspect-[16/10] overflow-hidden">
+                <Link to="/inspiration" className="group block relative">
+                  <div className={`overflow-hidden ${i === 0 || i === 5 ? 'aspect-[3/4]' : 'aspect-square'}`}>
                     <img 
-                      src={collectionImages[i]} 
-                      alt={collection.name}
+                      src={item.image} 
+                      alt={item.productName}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-foreground/30 group-hover:bg-foreground/20 transition-colors duration-500" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-                    <h3 className="text-lg md:text-xl font-light mb-1">{collection.name}</h3>
-                    <p className="text-sm text-white/70 font-light">{collection.description}</p>
+                    <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-500" />
                   </div>
                 </Link>
               </motion.div>
@@ -171,8 +167,8 @@ const Index = () => {
           </div>
 
           <div className="mt-8 text-center md:hidden">
-            <Link to="/collections" className="link-arrow">
-              Все коллекции <ArrowRight className="w-4 h-4" />
+            <Link to="/inspiration" className="link-arrow">
+              Смотреть все <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

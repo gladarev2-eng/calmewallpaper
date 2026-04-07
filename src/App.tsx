@@ -8,8 +8,8 @@ import { FavoritesProvider } from "@/context/FavoritesContext";
 import { Layout } from "@/components/layout/Layout";
 import Index from "./pages/Index";
 import Catalog from "./pages/Catalog";
-import Collections from "./pages/Collections";
-import Collection from "./pages/Collection";
+
+
 import Artwork from "./pages/Artwork";
 import Inspiration from "./pages/Inspiration";
 import Designers from "./pages/Designers";
@@ -39,8 +39,8 @@ const App = () => (
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/collections" element={<Collections />} />
-                    <Route path="/collection/:id" element={<Collection />} />
+
+
                     <Route path="/artwork/:id" element={<Artwork />} />
                     <Route path="/inspiration" element={<Inspiration />} />
                     <Route path="/designers" element={<Designers />} />
