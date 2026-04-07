@@ -33,6 +33,7 @@ const Artwork = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedPanelSize, setSelectedPanelSize] = useState(0);
   const [showFullscreen, setShowFullscreen] = useState(false);
+  const [materialOpen, setMaterialOpen] = useState(false);
   const [activeInfoTab, setActiveInfoTab] = useState<'print' | 'material'>('print');
   const [selectedInfoMaterial, setSelectedInfoMaterial] = useState<Material>(materials[0]);
   const { addItem } = useCart();
