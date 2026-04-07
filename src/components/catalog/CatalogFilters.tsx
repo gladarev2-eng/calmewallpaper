@@ -147,7 +147,7 @@ const UnderlineDropdown = ({
                 {selectedValues.length > 0 && (
                   <button
                     onClick={() => onChange([])}
-                    className="mt-3 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    className="mt-3 text-[11px] text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-light"
                   >
                     Сбросить
                   </button>
