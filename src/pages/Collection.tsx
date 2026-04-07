@@ -47,7 +47,7 @@ const Collection = () => {
             src={images[0]}
             alt={collection.name}
             className="w-full h-full object-cover"
-            style={{ animation: 'slowZoom 10s ease-out forwards' }}
+            style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
         </div>
@@ -65,7 +65,7 @@ const Collection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em] mb-4">{collection.name}</h1>
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] mb-4 font-display">{collection.name}</h1>
             <p className="text-[14px] md:text-[16px] font-light text-white/70 max-w-2xl">{collection.description}</p>
           </motion.div>
         </div>
@@ -95,7 +95,7 @@ const Collection = () => {
                 <img
                   src={images[1]}
                   alt={`${collection.name} в интерьере`}
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
                 />
               </div>
               <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере гостиной</p>
@@ -111,7 +111,7 @@ const Collection = () => {
                 <img
                   src={images[2]}
                   alt={`${collection.name} крупный план`}
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
                 />
               </div>
               <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Детализация изображения</p>
@@ -127,7 +127,7 @@ const Collection = () => {
                 <img
                   src={images[3]}
                   alt={`${collection.name} в интерьере`}
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
                 />
               </div>
               <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере спальни</p>

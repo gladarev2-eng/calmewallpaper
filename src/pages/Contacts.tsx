@@ -156,12 +156,12 @@ const Contacts = () => {
                   <img 
                     src={showroom.image} 
                     alt={`Шоурум ${showroom.city}`}
-                    className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
                   />
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="text-[18px] font-extralight tracking-[-0.01em]">{showroom.city}</h3>
+                  <h3 className="text-[18px] font-light tracking-[-0.01em] font-display">{showroom.city}</h3>
                   
                   <div className="space-y-2.5">
                     <p className="flex items-start gap-3 text-[13px] font-light text-foreground/50">
@@ -252,7 +252,7 @@ const Contacts = () => {
                 { num: '∞', label: 'возможностей адаптации' },
               ].map((stat, i) => (
                 <div key={i} className="bg-background p-8 text-center">
-                  <p className="text-3xl lg:text-4xl font-extralight mb-2 tracking-[-0.02em]">{stat.num}</p>
+                  <p className="text-3xl lg:text-4xl font-light mb-2 tracking-[-0.02em] font-display">{stat.num}</p>
                   <p className="text-[10px] text-foreground/35 uppercase tracking-[0.15em] font-light">{stat.label}</p>
                 </div>
               ))}
@@ -272,7 +272,7 @@ const Contacts = () => {
             <p className="text-[10px] uppercase tracking-[0.3em] text-background/50 mb-6 font-light">
               Начните сейчас
             </p>
-            <h2 className="text-2xl lg:text-3xl font-extralight mb-6 tracking-[-0.02em]">
+            <h2 className="text-2xl lg:text-3xl font-light mb-6 tracking-[-0.02em] font-display">
               Запишитесь на консультацию
             </h2>
             <p className="text-[14px] font-light text-background/60 mb-10 max-w-lg mx-auto leading-[1.8]">
@@ -314,10 +314,10 @@ const Contacts = () => {
               <Link 
                 key={item.href}
                 to={item.href}
-                className="group p-6 sm:p-8 border border-foreground/8 hover:border-foreground/20 transition-colors duration-500"
+                className="group p-6 sm:p-8 border border-foreground/8 hover:border-foreground/20 transition-colors duration-700"
               >
                 <p className="text-caption mb-4">{item.caption}</p>
-                <h3 className="text-[16px] font-light mb-3 group-hover:text-foreground/70 transition-colors duration-500">
+                <h3 className="text-[16px] font-light mb-3 group-hover:text-foreground/70 transition-colors duration-700">
                   {item.title}
                 </h3>
                 <ArrowRight className="w-4 h-4 text-foreground/25" strokeWidth={1.5} />

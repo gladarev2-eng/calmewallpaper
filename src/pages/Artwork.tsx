@@ -101,7 +101,7 @@ const Artwork = () => {
           src={mainImage}
           alt={product.name}
           className="w-full h-full object-cover"
-          style={{ animation: 'slowZoom 10s ease-out forwards' }}
+          style={{ animation: 'slowZoom 12s ease-out forwards' }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
 
@@ -109,7 +109,7 @@ const Artwork = () => {
           <p className="text-[10px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
             {product.collection}
           </p>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.02em]">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.05] tracking-[-0.02em] font-display">
             {product.name}
           </h1>
         </div>
@@ -151,7 +151,7 @@ const Artwork = () => {
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} — вид ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover/img:scale-[1.02]"
+                  className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover/img:scale-[1.03]"
                 />
               </div>
             ))}
@@ -161,7 +161,7 @@ const Artwork = () => {
           <div className="lg:col-span-5 xl:col-span-4">
             <div className="lg:sticky lg:top-28 space-y-6">
               <p className="text-caption">{product.collection}</p>
-              <h2 className="text-2xl md:text-3xl font-extralight leading-tight tracking-[-0.02em] text-foreground">
+              <h2 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.02em] text-foreground font-display">
                 {product.name}
               </h2>
 
@@ -319,7 +319,7 @@ const Artwork = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveInfoTab(tab.id)}
-                className={`pb-4 text-[11px] uppercase tracking-[0.14em] font-light transition-all duration-500 relative ${
+                className={`pb-4 text-[12px] uppercase tracking-[0.14em] font-light transition-all duration-700 relative ${
                   activeInfoTab === tab.id
                     ? 'text-foreground'
                     : 'text-foreground/40 hover:text-foreground/60'

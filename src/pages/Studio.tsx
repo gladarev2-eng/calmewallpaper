@@ -19,7 +19,7 @@ const Studio = () => {
             src={heroMural}
             alt="CALMÉ Studio"
             className="w-full h-full object-cover"
-            style={{ animation: 'slowZoom 10s ease-out forwards' }}
+            style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
         </div>
@@ -31,7 +31,7 @@ const Studio = () => {
             transition={{ duration: 1 }}
           >
             <p className="text-[10px] font-light uppercase tracking-[0.25em] text-white/50 mb-4">О студии</p>
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em]">
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
               На пересечении дизайна<br />интерьера и цифрового искусства
             </h1>
           </motion.div>
@@ -58,7 +58,7 @@ const Studio = () => {
             className="text-center"
           >
             <p className="text-caption mb-10">Манифест</p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extralight leading-[1.2] tracking-[-0.02em] mb-10 text-foreground">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-light leading-[1.2] tracking-[-0.02em] mb-10 text-foreground font-display">
               Мы создаём не декоративное покрытие,<br />
               а визуальную среду
             </h2>
@@ -167,11 +167,11 @@ const Studio = () => {
               >
                 <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                   <div className="aspect-[4/5] overflow-hidden">
-                    <img src={value.image} alt={value.title} className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]" />
+                    <img src={value.image} alt={value.title} className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]" />
                   </div>
                 </div>
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em] text-foreground">{value.title}</h3>
+                  <h3 className="text-2xl lg:text-3xl font-light mb-3 tracking-[-0.02em] text-foreground font-display">{value.title}</h3>
                   <p className="text-[12px] uppercase tracking-[0.1em] text-foreground/35 mb-8 font-light">{value.subtitle}</p>
                   <p className="text-body-lg">{value.desc}</p>
                 </div>
@@ -209,7 +209,7 @@ const Studio = () => {
                 className="group"
               >
                 <div className="aspect-[4/5] overflow-hidden mb-5">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]" />
                 </div>
                 <h3 className="text-[15px] font-light mb-2 text-foreground">{item.name}</h3>
                 <p className="text-body">{item.desc}</p>

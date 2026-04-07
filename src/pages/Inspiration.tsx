@@ -212,7 +212,7 @@ const Inspiration = () => {
           transition={{ duration: 0.8 }}
         >
           <p className="text-caption mb-4">Вдохновение</p>
-          <h1 className="text-title mb-4">Муралы в интерьере</h1>
+          <h1 className="text-title mb-4 font-display">Муралы в интерьере</h1>
           <p className="text-body-lg max-w-xl">
             Кураторская подборка интерьерных решений. Найдите своё пространство по помещению и цвету.
           </p>
@@ -288,7 +288,7 @@ const Inspiration = () => {
                           <img
                             src={item.image}
                             alt={`${item.productName} в интерьере`}
-                            className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                             <div className="absolute bottom-0 left-0 right-0 p-5">

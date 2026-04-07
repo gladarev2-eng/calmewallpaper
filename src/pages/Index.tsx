@@ -53,7 +53,7 @@ const Index = () => {
               src={slide}
               alt="CALMÉ"
               className="w-full h-full object-cover"
-              style={{ animation: i === currentSlide ? 'slowZoom 8s ease-out forwards' : 'none' }}
+              style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
           </div>
@@ -61,7 +61,7 @@ const Index = () => {
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
           <motion.h1
-            className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-extralight text-white leading-[1] tracking-[-0.03em] mb-5"
+            className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-5 font-display"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -118,7 +118,7 @@ const Index = () => {
                 <img
                   src={mural2}
                   alt="CALMÉ в интерьере"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover animate-image-load"
                 />
               </div>
             </motion.div>
@@ -153,6 +153,7 @@ const Index = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
+                    className="border-l-2 border-foreground/15 pl-6"
                   >
                     <h3 className="text-[16px] md:text-[18px] font-light tracking-[-0.01em] text-foreground mb-3">
                       {item.title}
@@ -195,14 +196,15 @@ const Index = () => {
                 transition={{ delay: i * 0.1, duration: 0.7 }}
               >
                 <Link to={cat.link} className="group block">
-                  <div className="aspect-[4/5] overflow-hidden mb-5">
+                  <div className="aspect-[4/5] overflow-hidden mb-5 relative">
                     <img
                       src={cat.image}
                       alt={cat.title}
-                      className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                      className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   </div>
-                  <h3 className="text-[15px] font-light mb-2 group-hover:text-foreground/80 transition-colors">{cat.title}</h3>
+                  <h3 className="text-[15px] font-light mb-2 group-hover:text-foreground/80 transition-colors duration-700">{cat.title}</h3>
                   <p className="text-body">{cat.desc}</p>
                 </Link>
               </motion.div>
@@ -278,7 +280,7 @@ const Index = () => {
                   <img
                     src={room.image}
                     alt={room.label}
-                    className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-5">
@@ -327,7 +329,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.7 }}
               >
-                <span className="text-[11px] tracking-[0.2em] text-foreground/30 block mb-5 font-light">{item.step}</span>
+                <span className="text-[11px] tracking-[0.2em] text-foreground/20 block mb-5 font-light">{item.step}</span>
                 <h3 className="text-[15px] font-light mb-3 tracking-[-0.01em]">{item.title}</h3>
                 <p className="text-body">{item.desc}</p>
               </motion.div>
@@ -374,7 +376,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <div className="aspect-[4/5] overflow-hidden">
-                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover" />
+                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover animate-image-load" />
               </div>
             </motion.div>
           </div>

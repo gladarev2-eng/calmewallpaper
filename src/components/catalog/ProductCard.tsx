@@ -62,13 +62,13 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04] animate-image-load"
           />
 
           {/* Favorite */}
           <button
             onClick={handleFavoriteClick}
-            className={`absolute top-3 right-3 p-2 transition-all duration-500 ${
+            className={`absolute top-3 right-3 p-2 transition-all duration-700 ${
               isInFavorites ? 'opacity-100' : 'opacity-0 group-hover:opacity-70'
             }`}
           >
@@ -78,7 +78,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
           {/* Image slideshow indicator */}
           {product.images.length > 1 && (
             <div
-              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute inset-x-0 bottom-0 h-20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -92,7 +92,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
                 {product.images.map((_, i) => (
                   <div
                     key={i}
-                    className={`h-[1px] flex-1 transition-colors duration-500 ${
+                    className={`h-[1px] flex-1 transition-colors duration-700 ${
                       i === imageIndex ? 'bg-white/80' : 'bg-white/25'
                     }`}
                   />
@@ -104,7 +104,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
 
         {/* Info — name, subline, price */}
         <div className="pt-4 pb-2">
-          <h3 className="text-[14px] font-light tracking-[0.01em] leading-snug text-foreground">
+          <h3 className="text-[15px] font-light tracking-[0.01em] leading-snug text-foreground">
             {product.name}
           </h3>
           <div className="flex items-baseline justify-between mt-1.5">
@@ -112,7 +112,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
               {getSubline(product)}
             </p>
             {showPrice && (
-              <p className="text-[12px] text-foreground/60 font-light">
+              <p className="text-[13px] text-foreground/50 font-light">
                 от {formatPrice(product.pricePerSqm)} ₽/м²
               </p>
             )}

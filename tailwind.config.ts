@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Outfit', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
         body: ['Outfit', 'sans-serif'],
+        sans: ['Outfit', 'sans-serif'],
       },
       fontWeight: {
         thin: '100',
@@ -33,6 +34,7 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        "accent-warm": "hsl(var(--accent-warm))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -98,6 +100,18 @@ export default {
           from: { opacity: "0", transform: "translateX(-10px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        "reveal-up": {
+          from: { opacity: "0", transform: "translateY(40px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "reveal-scale": {
+          from: { opacity: "0", transform: "scale(0.97)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        "image-load": {
+          from: { opacity: "0.7", transform: "scale(1.03)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -105,10 +119,14 @@ export default {
         "fade-in": "fade-in 0.8s ease-out forwards",
         "fade-up": "fade-up 0.8s ease-out forwards",
         "slide-in": "slide-in 0.4s ease-out forwards",
+        "reveal-up": "reveal-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "reveal-scale": "reveal-scale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "image-load": "image-load 1.2s ease-out forwards",
       },
       transitionDuration: {
         '400': '400ms',
         '600': '600ms',
+        '700': '700ms',
         '800': '800ms',
       },
     },
