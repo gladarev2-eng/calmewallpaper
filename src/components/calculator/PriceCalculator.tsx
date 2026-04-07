@@ -11,12 +11,10 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
   const [width, setWidth] = useState(300);
   const [height, setHeight] = useState(260);
   const [selectedMaterial, setSelectedMaterial] = useState<Material>(materials[0]);
-  const [margin, setMargin] = useState(5);
   const { addItem } = useCart();
 
   const area = (width * height) / 10000; // Convert to m²
-  const areaWithMargin = area * (1 + margin / 100);
-  const basePrice = product.pricePerSqm * areaWithMargin;
+  const basePrice = product.pricePerSqm * area;
   const totalPrice = Math.round(basePrice * selectedMaterial.priceCoefficient);
 
   const formatPrice = (price: number) => {
