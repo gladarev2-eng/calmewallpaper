@@ -89,7 +89,7 @@ const Studio = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 bg-card/50"
+              className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 bg-card/30"
             >
               <div>
                 <p className="text-caption mb-5">Философия</p>

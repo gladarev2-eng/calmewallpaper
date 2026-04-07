@@ -140,7 +140,7 @@ const Designers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/50'}`}
+                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/30'}`}
               >
                 <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 font-light ${tier.highlighted ? 'text-background/60' : 'text-foreground/35'}`}>
                   {tier.level}

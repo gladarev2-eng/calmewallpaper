@@ -30,7 +30,7 @@ const Checkout = () => {
     return (
       <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl mb-4">Корзина пуста</h1>
+          <h1 className="text-title mb-4">Корзина пуста</h1>
           <Link to="/catalog" className="btn-primary">
             Перейти в каталог
           </Link>
@@ -42,13 +42,13 @@ const Checkout = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
-      <section className="section-sm bg-card">
+      <section className="section-sm bg-background">
         <div className="container-wide">
           <Link 
             to="/cart" 
-            className="inline-flex items-center gap-2 text-sm mb-6 hover:gap-4 transition-all"
+            className="link-arrow mb-6"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             Вернуться в корзину
           </Link>
           <motion.div
@@ -61,24 +61,24 @@ const Checkout = () => {
       </section>
 
       {/* Steps */}
-      <section className="border-b border-border">
+      <section className="border-b border-foreground/8">
         <div className="container-wide py-6">
           <div className="flex items-center justify-center gap-4 md:gap-8">
             {['Контакты', 'Подтверждение', 'Готово'].map((s, i) => (
               <div key={i} className="flex items-center gap-2 md:gap-4">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${
+                <div className={`w-7 h-7 flex items-center justify-center text-[11px] font-light transition-colors duration-500 ${
                   step > i + 1 
                     ? 'bg-foreground text-background' 
                     : step === i + 1 
-                      ? 'bg-foreground text-background' 
-                      : 'bg-muted text-muted-foreground'
+                      ? 'border border-foreground text-foreground' 
+                      : 'border border-foreground/15 text-foreground/30'
                 }`}>
-                  {step > i + 1 ? <Check className="w-4 h-4" /> : i + 1}
+                  {step > i + 1 ? <Check className="w-3.5 h-3.5" /> : i + 1}
                 </div>
-                <span className={`hidden md:block text-sm ${step === i + 1 ? '' : 'text-muted-foreground'}`}>
+                <span className={`hidden md:block text-[12px] font-light ${step === i + 1 ? 'text-foreground/70' : 'text-foreground/30'}`}>
                   {s}
                 </span>
-                {i < 2 && <div className="w-8 md:w-16 h-px bg-border" />}
+                {i < 2 && <div className="w-8 md:w-16 h-[0.5px] bg-foreground/10" />}
               </div>
             ))}
           </div>
@@ -105,7 +105,7 @@ const Checkout = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="input-field"
                   />
                 </div>
                 <div>
@@ -115,7 +115,7 @@ const Checkout = () => {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="input-field"
                   />
                 </div>
               </div>
@@ -127,7 +127,7 @@ const Checkout = () => {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="input-field"
                 />
               </div>
 
@@ -138,7 +138,7 @@ const Checkout = () => {
                   required
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="input-field"
                 />
               </div>
 
@@ -148,16 +148,16 @@ const Checkout = () => {
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="input-field"
                   placeholder="Уточним при подтверждении заказа"
                 />
               </div>
 
               <div>
                 <label className="text-caption block mb-2">Фото стены (опционально)</label>
-                <div className="border border-dashed border-border p-8 text-center cursor-pointer hover:border-foreground transition-colors">
-                  <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
+                <div className="border border-dashed border-foreground/12 p-8 text-center cursor-pointer hover:border-foreground/25 transition-colors duration-500">
+                  <Upload className="w-6 h-6 mx-auto mb-2 text-foreground/25" />
+                  <p className="text-[13px] font-light text-foreground/40">
                     Загрузите фото стены для визуализации
                   </p>
                 </div>
@@ -169,7 +169,7 @@ const Checkout = () => {
                   rows={3}
                   value={formData.comment}
                   onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                  className="w-full px-4 py-3 bg-card border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                  className="input-field resize-none"
                   placeholder="Особые пожелания к заказу"
                 />
               </div>
@@ -187,9 +187,9 @@ const Checkout = () => {
             >
               <h2 className="text-subtitle mb-8">Подтверждение заказа</h2>
               
-              <div className="bg-card p-6 mb-6">
-                <h3 className="font-medium mb-4">Контактные данные</h3>
-                <div className="space-y-2 text-sm">
+              <div className="border border-foreground/8 p-6 mb-6">
+                <h3 className="text-[13px] font-light text-foreground/45 uppercase tracking-[0.1em] mb-4">Контактные данные</h3>
+                <div className="space-y-2 text-[13px] font-light">
                   <p>{formData.name}</p>
                   <p>{formData.phone}</p>
                   <p>{formData.email}</p>
@@ -198,20 +198,20 @@ const Checkout = () => {
                 </div>
                 <button
                   onClick={() => setStep(1)}
-                  className="text-sm underline mt-4"
+                  className="text-[12px] font-light text-foreground/40 hover:text-foreground/60 transition-colors duration-500 mt-4"
                 >
                   Изменить
                 </button>
               </div>
 
-              <div className="bg-card p-6 mb-6">
-                <h3 className="font-medium mb-4">Товары ({items.length})</h3>
+              <div className="border border-foreground/8 p-6 mb-6">
+                <h3 className="text-[13px] font-light text-foreground/45 uppercase tracking-[0.1em] mb-4">Товары ({items.length})</h3>
                 <div className="space-y-4">
                   {items.map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
+                    <div key={item.id} className="flex justify-between text-[13px] font-light">
                       <div>
                         <p>{item.product.name}</p>
-                        <p className="text-muted-foreground">
+                        <p className="text-foreground/40">
                           {item.panelSize || `${item.width}×${item.height} см`} • {item.material.name}
                         </p>
                       </div>
@@ -221,12 +221,12 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="bg-card p-6 mb-8">
+              <div className="border border-foreground/8 p-6 mb-8">
                 <div className="flex justify-between items-baseline">
-                  <span className="text-lg">Итого к оплате</span>
+                  <span className="text-[15px] font-light">Итого к оплате</span>
                   <span className="font-display text-3xl">{formatPrice(totalPrice)} ₽</span>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-[11px] font-light text-foreground/35 mt-2">
                   Финальная стоимость уточняется после согласования макета
                 </p>
               </div>
@@ -245,8 +245,8 @@ const Checkout = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-12"
             >
-              <div className="w-20 h-20 mx-auto mb-8 bg-foreground text-background rounded-full flex items-center justify-center">
-                <Check className="w-10 h-10" />
+              <div className="w-16 h-16 mx-auto mb-8 bg-foreground text-background flex items-center justify-center">
+                <Check className="w-8 h-8" />
               </div>
               <h2 className="text-title mb-4">Заказ оформлен!</h2>
               <p className="text-body-lg mb-8 max-w-md mx-auto">

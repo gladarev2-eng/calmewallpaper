@@ -340,7 +340,7 @@ const Index = () => {
       </section>
 
       {/* ── For designers ── */}
-      <section className="section bg-card/50">
+      <section className="section bg-card/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <motion.div

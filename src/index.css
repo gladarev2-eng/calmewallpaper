@@ -251,13 +251,13 @@
   .text-body {
     @apply text-[13px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.55);
+    color: hsl(var(--foreground) / 0.50);
   }
 
   .text-body-lg {
     @apply text-[15px] md:text-[17px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.55);
+    color: hsl(var(--foreground) / 0.50);
   }
 
   .text-caption {

@@ -89,7 +89,7 @@ const Collections = () => {
             className="max-w-3xl"
           >
             <p className="text-caption mb-6">Коллекции</p>
-            <h1 className="text-display mb-6">Коллекции</h1>
+            <h1 className="text-display mb-8">Коллекции</h1>
             <p className="text-body-lg max-w-xl">
               Каждая коллекция — это законченная концепция, объединяющая работы общей идеей и настроением
             </p>

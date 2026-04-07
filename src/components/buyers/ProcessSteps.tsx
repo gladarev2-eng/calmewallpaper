@@ -42,10 +42,10 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
           {/* Content */}
           <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
             <div className="max-w-md">
-              <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
+              <span className="text-step-num">
                 {item.step}
               </span>
-              <h3 className="text-2xl lg:text-3xl font-extralight mb-4 tracking-[-0.02em]">{item.title}</h3>
+              <h3 className="text-h3 mb-4">{item.title}</h3>
               <p className="text-body-lg mb-8">{item.desc}</p>
               
               <ul className="space-y-3 mb-8">
