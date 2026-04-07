@@ -145,44 +145,44 @@
     border-bottom: 0.5px solid hsl(var(--glass-border));
   }
 
-  /* Button styles — premium, refined */
+  /* Button styles — premium */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-foreground text-background px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-foreground text-background px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
     font-weight: 400;
-    letter-spacing: 0.16em;
-    min-height: 48px;
+    letter-spacing: 0.14em;
+    min-height: 44px;
   }
 
   .btn-primary:hover {
     @apply bg-foreground/85;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center bg-transparent text-foreground px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-transparent text-foreground px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
     font-weight: 400;
-    letter-spacing: 0.16em;
-    border: 0.5px solid hsl(var(--foreground) / 0.2);
-    min-height: 48px;
+    letter-spacing: 0.14em;
+    border: 1px solid hsl(var(--foreground) / 0.15);
+    min-height: 44px;
   }
 
   .btn-outline:hover {
     border-color: hsl(var(--foreground));
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center bg-white/10 text-white px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-white/10 text-white px-8 sm:px-10 py-3 sm:py-3.5 text-[10px] uppercase transition-all duration-400;
     font-weight: 400;
-    letter-spacing: 0.16em;
-    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.14em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px);
-    min-height: 48px;
+    min-height: 44px;
   }
 
   .btn-light:hover {
     @apply bg-white text-foreground;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
   }
 
   /* Section spacing — balanced */
