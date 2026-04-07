@@ -172,8 +172,9 @@
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center bg-white/10 text-white px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] tracking-[0.18em] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-white/10 text-white px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
     font-weight: 400;
+    letter-spacing: 0.16em;
     border: 0.5px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px);
     min-height: 48px;
@@ -181,7 +182,7 @@
 
   .btn-light:hover {
     @apply bg-white text-foreground;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   /* Section spacing — generous, architectural */
