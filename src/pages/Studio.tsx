@@ -80,7 +80,7 @@ const Studio = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="aspect-square lg:aspect-auto lg:min-h-[600px]"
+              className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px]"
             >
               <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
             </motion.div>
