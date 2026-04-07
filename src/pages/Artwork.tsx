@@ -161,7 +161,7 @@ const Artwork = () => {
           <div className="lg:col-span-5 xl:col-span-4">
             <div className="lg:sticky lg:top-28 space-y-6">
               <p className="text-caption">{product.collection}</p>
-              <h2 className="text-2xl md:text-3xl font-extralight leading-tight tracking-[-0.02em] text-foreground">
+              <h2 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.02em] text-foreground font-display">
                 {product.name}
               </h2>
 
