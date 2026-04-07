@@ -384,59 +384,60 @@ const Designers = () => {
       </section>
 
       {/* Contact form */}
-      <section id="contact-form" className="section bg-card">
+      <section id="contact-form" className="section bg-card/30">
         <div className="container-narrow">
-          <div className="text-center mb-12">
+          <div className="mb-16">
+            <p className="text-caption mb-4">Заявка</p>
             <h2 className="text-title mb-4">Стать партнёром</h2>
-            <p className="text-muted-foreground">
+            <p className="text-body-lg max-w-md">
               Заполните форму, и мы свяжемся с вами в течение дня
             </p>
           </div>
 
-          <form className="space-y-6 max-w-xl mx-auto">
+          <form className="space-y-6 max-w-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-caption block mb-2">Имя</label>
+                <label className="text-caption block mb-3">Имя</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                   placeholder="Ваше имя"
                 />
               </div>
               <div>
-                <label className="text-caption block mb-2">Компания</label>
+                <label className="text-caption block mb-3">Компания</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                   placeholder="Название студии"
                 />
               </div>
             </div>
             <div>
-              <label className="text-caption block mb-2">Email</label>
+              <label className="text-caption block mb-3">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                 placeholder="email@example.com"
               />
             </div>
             <div>
-              <label className="text-caption block mb-2">Телефон</label>
+              <label className="text-caption block mb-3">Телефон</label>
               <input
                 type="tel"
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                 placeholder="+7 (___) ___-__-__"
               />
             </div>
             <div>
-              <label className="text-caption block mb-2">Сообщение</label>
+              <label className="text-caption block mb-3">Сообщение</label>
               <textarea
                 rows={4}
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500 resize-none"
                 placeholder="Расскажите о вашей студии и проектах"
               />
             </div>
-            <button type="submit" className="btn-primary w-full">
+            <button type="submit" className="btn-primary">
               Отправить заявку
             </button>
           </form>
