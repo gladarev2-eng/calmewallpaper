@@ -111,11 +111,11 @@ const UnderlineDropdown = ({
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-sm hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors duration-500"
       >
-        <span className="text-muted-foreground">{label}:</span>
-        <span>{displayValue}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-muted-foreground transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-foreground/40">{label}:</span>
+        <span className="text-foreground/70">{displayValue}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-foreground/30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       <AnimatePresence>
@@ -125,7 +125,7 @@ const UnderlineDropdown = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-3 bg-background border border-border/50 z-50 min-w-[200px] max-h-[320px] overflow-y-auto shadow-lg"
+            className="absolute top-full left-0 mt-3 bg-background border border-foreground/8 z-50 min-w-[200px] max-h-[320px] overflow-y-auto"
           >
             {isColorPicker ? (
               <div className="p-4">
