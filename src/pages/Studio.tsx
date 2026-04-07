@@ -80,7 +80,7 @@ const Studio = () => {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="aspect-square lg:aspect-auto lg:min-h-[600px]"
+              className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px]"
             >
               <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
             </motion.div>
@@ -208,7 +208,7 @@ const Studio = () => {
                 transition={{ delay: i * 0.1 }}
                 className="group"
               >
-                <div className="aspect-[3/4] overflow-hidden mb-5">
+                <div className="aspect-[4/5] overflow-hidden mb-5">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                 </div>
                 <h3 className="text-[15px] font-light mb-2 text-foreground">{item.name}</h3>

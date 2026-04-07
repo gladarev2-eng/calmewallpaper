@@ -88,7 +88,6 @@ const Artwork = () => {
   const nextImage = () => setSelectedImage((prev) => (prev + 1) % product.images.length);
   const prevImage = () => setSelectedImage((prev) => (prev - 1 + product.images.length) % product.images.length);
 
-  // Get pattern and room labels for info block
   const patternLabel = patternTypes.find(p => p.id === product.patternType)?.label || '';
   const roomLabels = product.roomTypes.map(r => roomTypes.find(rt => rt.id === r)?.label).filter(Boolean).join(', ');
 
@@ -104,7 +103,6 @@ const Artwork = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
 
-        {/* Product title */}
         <div className="absolute bottom-10 left-6 md:bottom-16 md:left-12 lg:bottom-20 lg:left-16">
           <p className="text-[10px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
             {product.collection}
@@ -114,13 +112,11 @@ const Artwork = () => {
           </h1>
         </div>
 
-        {/* Zoom hint */}
         <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-70 transition-opacity duration-500 text-[9px] uppercase tracking-[0.12em] text-white/70">
           <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
 
-        {/* Scroll down */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 animate-bounce">
           <span className="text-[9px] uppercase tracking-[0.15em]">Листайте вниз</span>
           <ChevronDown className="w-3.5 h-3.5" />
@@ -140,20 +136,20 @@ const Artwork = () => {
 
       {/* ── Main: Gallery + Info ── */}
       <section className="container-wide py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
 
           {/* LEFT — Stacked gallery */}
           <div className="lg:col-span-7 xl:col-span-8 space-y-4">
             {product.images.map((img, i) => (
               <div
                 key={i}
-                className="overflow-hidden cursor-zoom-in group/img"
+                className="overflow-hidden cursor-zoom-in group/img aspect-[4/5]"
                 onClick={() => { setSelectedImage(i); setShowFullscreen(true); }}
               >
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} — вид ${i + 1}`}
-                  className="w-full h-auto object-cover transition-transform duration-[1.2s] group-hover/img:scale-[1.02]"
+                  className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover/img:scale-[1.02]"
                 />
               </div>
             ))}
@@ -167,36 +163,40 @@ const Artwork = () => {
                 {product.name}
               </h2>
 
-              {/* Artistic description */}
-              <p className="text-[14px] text-foreground/60 leading-[1.85] font-light">
+              <p className="text-body-lg">
                 {product.description}
               </p>
 
               {/* Material & type info block */}
-              <div className="py-4 border-t border-b border-foreground/8 space-y-2">
-                <div className="flex justify-between text-[12px] font-light">
-                  <span className="text-foreground/40">Тип</span>
-                  <span className="text-foreground/60">
-                    {product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои'}
-                  </span>
-                </div>
-                <div className="flex justify-between text-[12px] font-light">
-                  <span className="text-foreground/40">Сюжет</span>
-                  <span className="text-foreground/60">{patternLabel}</span>
-                </div>
-                <div className="flex justify-between text-[12px] font-light">
-                  <span className="text-foreground/40">Помещение</span>
-                  <span className="text-foreground/60">{roomLabels}</span>
-                </div>
-                {product.maxWidth && (
-                  <div className="flex justify-between text-[12px] font-light">
-                    <span className="text-foreground/40">Макс. ширина</span>
-                    <span className="text-foreground/60">до {product.maxWidth} см</span>
+              <div className="py-5 border-t border-b border-foreground/8 space-y-3">
+                <p className="text-caption mb-3">Характеристики</p>
+                {[
+                  { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
+                  { label: 'Сюжет', value: patternLabel },
+                  { label: 'Помещение', value: roomLabels },
+                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
+                  { label: 'Коллекция', value: product.collection },
+                ].map((row, i) => (
+                  <div key={i} className="flex justify-between text-[13px] font-light">
+                    <span className="text-foreground/40">{row.label}</span>
+                    <span className="text-foreground/70">{row.value}</span>
                   </div>
-                )}
-                <div className="flex justify-between text-[12px] font-light">
-                  <span className="text-foreground/40">Коллекция</span>
-                  <span className="text-foreground/60">{product.collection}</span>
+                ))}
+              </div>
+
+              {/* Materials info */}
+              <div className="py-5 border-b border-foreground/8">
+                <p className="text-caption mb-3">Материалы</p>
+                <p className="text-body mb-4">
+                  Доступно 5 типов покрытий: от матового флизелина для жилых помещений до антивандального винила для коммерческих пространств.
+                </p>
+                <div className="space-y-2">
+                  {materials.filter(m => m.id !== 'canvas').map((mat) => (
+                    <div key={mat.id} className="flex justify-between text-[12px] font-light">
+                      <span className="text-foreground/50">{mat.name}</span>
+                      <span className="text-foreground/35">{mat.priceCoefficient > 1 ? `+${Math.round((mat.priceCoefficient - 1) * 100)}%` : 'базовая'}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -368,45 +368,11 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── In Interior — curated scenes ── */}
-      <section className="section border-t border-foreground/6">
-        <div className="container-wide">
-          <motion.div
-            className="mb-16"
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-caption mb-4">В интерьере</p>
-            <h2 className="text-title">Как это выглядит в пространстве</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {product.images.slice(0, 3).map((img, i) => (
-              <motion.div
-                key={i}
-                className={`overflow-hidden ${i === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-[4/3]'}`}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <img
-                  src={getImageSrc(img)}
-                  alt={`${product.name} в интерьере`}
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Companion Wallpapers ── */}
       {companionWallpapers.length > 0 && (
         <section className="section border-t border-foreground/6">
           <div className="container-wide">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
               <div className="lg:col-span-4">
                 <p className="text-caption mb-3">Обои-компаньоны</p>
                 <h2 className="text-title mb-4">Фоновые покрытия</h2>
@@ -419,7 +385,7 @@ const Artwork = () => {
                 <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
                   {companionWallpapers.slice(0, 5).map((wallpaper) => (
                     <Link key={wallpaper.id} to={`/artwork/${wallpaper.slug}`} className="group flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
-                      <div className="aspect-[4/3] overflow-hidden bg-muted mb-3">
+                      <div className="aspect-[4/5] overflow-hidden bg-muted mb-3">
                         <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                       </div>
                       <p className="text-[12px] font-light text-foreground/60">{wallpaper.name}</p>
@@ -440,7 +406,7 @@ const Artwork = () => {
               <p className="text-caption mb-3">Из этой коллекции</p>
               <h2 className="text-title">{product.collection}</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
               {relatedProducts.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}

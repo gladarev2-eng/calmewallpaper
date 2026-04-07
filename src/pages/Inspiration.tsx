@@ -14,7 +14,6 @@ import { colorOptions } from '@/data/products';
 
 const ITEMS_PER_PAGE = 12;
 
-// Color filter options
 const colorFilterOptions = colorOptions.map(c => ({ id: c.name, label: c.name, hex: c.hex }));
 
 interface DropdownProps {
@@ -123,6 +122,38 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
   );
 };
 
+// Masonry helper: distribute items into columns
+const distributeToColumns = (items: InspirationItem[], numCols: number) => {
+  const columns: InspirationItem[][] = Array.from({ length: numCols }, () => []);
+  const heights = new Array(numCols).fill(0);
+
+  const getAspectHeight = (aspect: string) => {
+    switch (aspect) {
+      case 'tall': return 5 / 4;
+      case 'wide': return 3 / 4;
+      case 'square': return 1;
+      default: return 1;
+    }
+  };
+
+  items.forEach(item => {
+    const shortestCol = heights.indexOf(Math.min(...heights));
+    columns[shortestCol].push(item);
+    heights[shortestCol] += getAspectHeight(item.aspect);
+  });
+
+  return columns;
+};
+
+const getAspectClass = (aspect: string) => {
+  switch (aspect) {
+    case 'tall': return 'aspect-[4/5]';
+    case 'wide': return 'aspect-[4/3]';
+    case 'square': return 'aspect-[1/1]';
+    default: return 'aspect-[4/5]';
+  }
+};
+
 const Inspiration = () => {
   const [searchParams] = useSearchParams();
   const initialRoom = searchParams.get('room');
@@ -149,7 +180,6 @@ const Inspiration = () => {
   const filteredItems = useMemo(() => {
     return inspirationItems.filter(item => {
       if (selectedRooms.length > 0 && !selectedRooms.includes(item.room)) return false;
-      // Color filter: no color data on inspiration items, so skip for now
       return true;
     });
   }, [selectedRooms, selectedColors]);
@@ -157,6 +187,8 @@ const Inspiration = () => {
   const visibleItems = filteredItems.slice(0, visibleCount);
   const hasMore = visibleCount < filteredItems.length;
   const hasActiveFilters = selectedRooms.length > 0 || selectedColors.length > 0;
+
+  const columns = distributeToColumns(visibleItems, 3);
 
   const clearAll = () => {
     setSelectedRooms([]);
@@ -227,9 +259,9 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Grid — full-width, tight gaps, large images */}
+      {/* Masonry Grid — 3 columns, varied proportions */}
       <section className="pb-20 lg:pb-32">
-        <div className="max-w-[1440px] mx-auto px-3 md:px-4">
+        <div className="container-wide">
           <AnimatePresence mode="wait">
             {filteredItems.length > 0 ? (
               <motion.div
@@ -238,37 +270,40 @@ const Inspiration = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-3"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
               >
-                {visibleItems.map((item, i) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.03, duration: 0.5 }}
-                  >
-                    <button
-                      onClick={() => setSelectedItem(item)}
-                      className="group block relative w-full overflow-hidden focus:outline-none aspect-[4/3]"
-                    >
-                      <img
-                        src={item.image}
-                        alt={`${item.productName} в интерьере`}
-                        className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
-                      />
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="absolute bottom-0 left-0 right-0 p-5">
-                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/70 mb-1 font-light">
-                            {getRoomLabel(item.room)}
-                          </p>
-                          <h3 className="text-white font-light text-[14px]">
-                            {item.productName}
-                          </h3>
-                        </div>
-                      </div>
-                    </button>
-                  </motion.div>
+                {columns.map((col, colIdx) => (
+                  <div key={colIdx} className="flex flex-col gap-3">
+                    {col.map((item, i) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: (colIdx * col.length + i) * 0.03, duration: 0.5 }}
+                      >
+                        <button
+                          onClick={() => setSelectedItem(item)}
+                          className={`group block relative w-full overflow-hidden focus:outline-none ${getAspectClass(item.aspect)}`}
+                        >
+                          <img
+                            src={item.image}
+                            alt={`${item.productName} в интерьере`}
+                            className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className="absolute bottom-0 left-0 right-0 p-5">
+                              <p className="text-[10px] uppercase tracking-[0.15em] text-white/70 mb-1 font-light">
+                                {getRoomLabel(item.room)}
+                              </p>
+                              <h3 className="text-white font-light text-[14px]">
+                                {item.productName}
+                              </h3>
+                            </div>
+                          </div>
+                        </button>
+                      </motion.div>
+                    ))}
+                  </div>
                 ))}
               </motion.div>
             ) : (

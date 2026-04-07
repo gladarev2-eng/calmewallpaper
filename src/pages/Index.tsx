@@ -103,54 +103,66 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Positioning block — image + 3 theses with descriptions ── */}
-      <section className="relative overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="aspect-[4/3] lg:aspect-auto lg:min-h-[700px] overflow-hidden">
-            <img
-              src={mural2}
-              alt="CALMÉ в интерьере"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex items-center px-8 md:px-14 lg:px-20 xl:px-28 py-20 lg:py-0 bg-card/30">
+      {/* ── Positioning block — image + 3 theses ── */}
+      <section className="section bg-background">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            {/* Image 4:5 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="space-y-12"
             >
-              <p className="text-caption">Философия</p>
-              {[
-                {
-                  title: 'Архитектурный подход',
-                  desc: 'Каждый мурал проектируется как часть пространства — с учётом масштаба стены, освещения и окружающих материалов. Не декор, а визуальная архитектура.',
-                },
-                {
-                  title: 'Адаптация под интерьер',
-                  desc: 'Масштабируем, корректируем цвет и композицию под конкретное помещение. Изображение органично встраивается в ваш проект.',
-                },
-                {
-                  title: 'Контроль результата',
-                  desc: 'Перед печатью вы утверждаете финальный макет с визуализацией в вашем интерьере. Никаких сюрпризов — только точный результат.',
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
-                >
-                  <h3 className="text-[16px] md:text-[18px] font-light tracking-[-0.01em] text-foreground mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-body max-w-md">
-                    {item.desc}
-                  </p>
-                </motion.div>
-              ))}
+              <div className="aspect-[4/5] overflow-hidden">
+                <img
+                  src={mural2}
+                  alt="CALMÉ в интерьере"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+
+            {/* Theses */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="lg:pt-8"
+            >
+              <p className="text-caption mb-10">Философия</p>
+              <div className="space-y-10">
+                {[
+                  {
+                    title: 'Архитектурный подход',
+                    desc: 'Каждый мурал проектируется как часть пространства — с учётом масштаба стены, освещения и окружающих материалов. Не декор, а визуальная архитектура.',
+                  },
+                  {
+                    title: 'Адаптация под интерьер',
+                    desc: 'Масштабируем, корректируем цвет и композицию под конкретное помещение. Изображение органично встраивается в ваш проект.',
+                  },
+                  {
+                    title: 'Контроль результата',
+                    desc: 'Перед печатью вы утверждаете финальный макет с визуализацией в вашем интерьере. Никаких сюрпризов — только точный результат.',
+                  },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
+                  >
+                    <h3 className="text-[16px] md:text-[18px] font-light tracking-[-0.01em] text-foreground mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-body max-w-md">
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
@@ -183,7 +195,7 @@ const Index = () => {
                 transition={{ delay: i * 0.1, duration: 0.7 }}
               >
                 <Link to={cat.link} className="group block">
-                  <div className="aspect-[3/4] overflow-hidden mb-5">
+                  <div className="aspect-[4/5] overflow-hidden mb-5">
                     <img
                       src={cat.image}
                       alt={cat.title}
@@ -220,7 +232,7 @@ const Index = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {featuredProducts.map((product, i) => (
               <ProductCard key={product.id} product={product} index={i} />
             ))}
@@ -262,7 +274,7 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.7 }}
               >
-                <Link to={`/inspiration?room=${room.id}`} className="group block relative overflow-hidden aspect-[4/3]">
+                <Link to={`/inspiration?room=${room.id}`} className="group block relative overflow-hidden aspect-[4/5]">
                   <img
                     src={room.image}
                     alt={room.label}
@@ -327,7 +339,7 @@ const Index = () => {
       {/* ── For designers ── */}
       <section className="section bg-card/50">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -384,12 +396,12 @@ const Index = () => {
             <p className="text-body-lg mb-12 max-w-lg mx-auto">
               Мы подберём решение и подготовим визуализацию в вашем интерьере
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contacts" className="btn-primary">
-                Связаться с нами
-              </Link>
-              <Link to="/catalog" className="btn-outline">
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/catalog" className="btn-primary">
                 Смотреть каталог
+              </Link>
+              <Link to="/contacts" className="btn-outline">
+                Связаться с нами
               </Link>
             </div>
           </motion.div>
