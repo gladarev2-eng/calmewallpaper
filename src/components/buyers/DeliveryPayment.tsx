@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 interface DeliveryPaymentProps {
@@ -11,57 +10,48 @@ const DeliveryPayment = ({ image }: DeliveryPaymentProps) => {
       {/* Content */}
       <div className="lg:order-1">
         <div className="max-w-md">
-          <h3 className="font-display text-2xl md:text-3xl mb-6">Доставка и оплата</h3>
+          <p className="text-caption mb-4">Логистика</p>
+          <h3 className="text-2xl lg:text-3xl font-extralight mb-8 tracking-[-0.02em]">Доставка и оплата</h3>
           
-          <div className="space-y-8">
+          <div className="space-y-10">
             <div>
-              <h4 className="font-medium mb-3">Доставка</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Москва — 1-2 рабочих дня
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Санкт-Петербург — 2-3 рабочих дня
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Регионы России — 3-10 рабочих дней
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Упаковка в защитный тубус
-                </li>
+              <h4 className="text-[14px] font-light mb-4 text-foreground">Доставка</h4>
+              <ul className="space-y-3">
+                {[
+                  'Москва — 1–2 рабочих дня',
+                  'Санкт-Петербург — 2–3 рабочих дня',
+                  'Регионы России — 3–10 рабочих дней',
+                  'Упаковка в защитный тубус',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                    <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h4 className="font-medium mb-3">Оплата</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Банковские карты, СБП, перевод
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Предоплата 50% при заказе
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1 h-1 bg-foreground rounded-full mt-2" />
-                  Для юрлиц — работаем по счёту с НДС
-                </li>
+              <h4 className="text-[14px] font-light mb-4 text-foreground">Оплата</h4>
+              <ul className="space-y-3">
+                {[
+                  'Банковские карты, СБП, перевод',
+                  'Предоплата 50% при заказе',
+                  'Для юрлиц — работаем по счёту с НДС',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                    <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <div className="mt-8">
-            <Link 
-              to="/contacts" 
-              className="inline-flex items-center text-xs uppercase tracking-widest hover:opacity-70 transition-opacity"
-            >
+          <div className="mt-10">
+            <Link to="/contacts" className="link-arrow">
               Задать вопрос
-              <span className="ml-2">→</span>
+              <span className="ml-1">→</span>
             </Link>
           </div>
         </div>

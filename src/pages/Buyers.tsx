@@ -98,7 +98,7 @@ const Buyers = () => {
             className="max-w-3xl"
           >
             <p className="text-caption mb-6">Покупателям</p>
-            <h1 className="text-display mb-6">Как это работает</h1>
+            <h1 className="text-display mb-8">Как это работает</h1>
             <p className="text-body-lg max-w-xl">
               Сопровождаем на каждом этапе — от выбора изображения до установки в вашем пространстве
             </p>
@@ -109,7 +109,7 @@ const Buyers = () => {
       {/* Service & Guarantees */}
       <section className="section bg-background">
         <div className="container-wide">
-          <div className="mb-16">
+          <div className="mb-20">
             <p className="text-caption mb-4">Сервис</p>
             <h2 className="text-title">Что мы гарантируем</h2>
           </div>
@@ -131,7 +131,7 @@ const Buyers = () => {
       {/* Materials */}
       <section className="section bg-background">
         <div className="container-wide">
-          <div className="mb-16">
+          <div className="mb-20">
             <p className="text-caption mb-4">Материалы</p>
             <h2 className="text-title">Глубокая детализация и тактильные ощущения</h2>
           </div>
@@ -149,7 +149,7 @@ const Buyers = () => {
       {/* FAQ */}
       <section className="section bg-background">
         <div className="container-narrow">
-          <div className="mb-16">
+          <div className="mb-20">
             <p className="text-caption mb-4">Вопросы</p>
             <h2 className="text-title">Частые вопросы</h2>
           </div>
@@ -158,7 +158,7 @@ const Buyers = () => {
       </section>
 
       {/* CTA */}
-      <section className="section-lg bg-card/50">
+      <section className="section-lg bg-card/30">
         <div className="container-narrow text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

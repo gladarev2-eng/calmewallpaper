@@ -16,7 +16,7 @@ interface ProcessStepsProps {
 
 const ProcessSteps = ({ steps }: ProcessStepsProps) => {
   return (
-    <div className="space-y-16 md:space-y-24">
+    <div className="space-y-20 md:space-y-28">
       {steps.map((item, i) => (
         <motion.div
           key={i}
@@ -25,11 +25,11 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
-            i % 2 === 1 ? 'lg:direction-rtl' : ''
+            i % 2 === 1 ? 'lg:grid-flow-dense' : ''
           }`}
         >
           {/* Image */}
-          <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
+          <div className={`${i % 2 === 1 ? 'lg:col-start-2' : ''}`}>
             <div className="aspect-[4/3] overflow-hidden">
               <img 
                 src={item.image} 
@@ -40,18 +40,18 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
           </div>
 
           {/* Content */}
-          <div className={`${i % 2 === 1 ? 'lg:order-1' : ''}`}>
+          <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
             <div className="max-w-md">
-              <span className="font-display text-4xl md:text-5xl text-muted-foreground/30 block mb-4">
+              <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
                 {item.step}
               </span>
-              <h3 className="font-display text-2xl md:text-3xl mb-4">{item.title}</h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed">{item.desc}</p>
+              <h3 className="text-2xl lg:text-3xl font-extralight mb-4 tracking-[-0.02em]">{item.title}</h3>
+              <p className="text-body-lg mb-8">{item.desc}</p>
               
               <ul className="space-y-3 mb-8">
                 {item.bullets.map((bullet, j) => (
-                  <li key={j} className="flex items-start gap-3 text-sm">
-                    <span className="w-1 h-1 bg-foreground rounded-full mt-2 flex-shrink-0" />
+                  <li key={j} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                    <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
                     <span>{bullet}</span>
                   </li>
                 ))}
@@ -60,10 +60,10 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
               {item.cta && (
                 <Link 
                   to={item.cta.href} 
-                  className="inline-flex items-center text-xs uppercase tracking-widest hover:opacity-70 transition-opacity"
+                  className="link-arrow"
                 >
                   {item.cta.label}
-                  <span className="ml-2">→</span>
+                  <span className="ml-1">→</span>
                 </Link>
               )}
             </div>

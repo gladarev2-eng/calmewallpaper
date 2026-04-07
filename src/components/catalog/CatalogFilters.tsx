@@ -111,11 +111,11 @@ const UnderlineDropdown = ({
     <div ref={dropdownRef} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-sm hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors duration-500"
       >
-        <span className="text-muted-foreground">{label}:</span>
-        <span>{displayValue}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-muted-foreground transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <span className="text-foreground/40">{label}:</span>
+        <span className="text-foreground/70">{displayValue}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-foreground/30 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       
       <AnimatePresence>
@@ -125,7 +125,7 @@ const UnderlineDropdown = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-3 bg-background border border-border/50 z-50 min-w-[200px] max-h-[320px] overflow-y-auto shadow-lg"
+            className="absolute top-full left-0 mt-3 bg-background border border-foreground/8 z-50 min-w-[200px] max-h-[320px] overflow-y-auto"
           >
             {isColorPicker ? (
               <div className="p-4">
@@ -134,10 +134,10 @@ const UnderlineDropdown = ({
                     <button
                       key={option.id}
                       onClick={() => toggleValue(option.id)}
-                      className={`w-7 h-7 rounded-full transition-all border ${
+                      className={`w-7 h-7 rounded-full transition-all duration-500 border ${
                         selectedValues.includes(option.id)
-                          ? 'ring-2 ring-foreground ring-offset-2 scale-110'
-                          : 'border-border/30 hover:scale-110'
+                          ? 'ring-2 ring-foreground/50 ring-offset-2 scale-110'
+                          : 'border-foreground/10 hover:scale-110'
                       }`}
                       style={{ backgroundColor: option.hex }}
                       title={option.label}
@@ -147,7 +147,7 @@ const UnderlineDropdown = ({
                 {selectedValues.length > 0 && (
                   <button
                     onClick={() => onChange([])}
-                    className="mt-3 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    className="mt-3 text-[11px] text-foreground/35 hover:text-foreground/60 transition-colors duration-500 font-light"
                   >
                     Сбросить
                   </button>
@@ -160,10 +160,10 @@ const UnderlineDropdown = ({
                     onChange([]);
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 ${
                     selectedValues.length === 0
-                      ? 'bg-foreground/5'
-                      : 'hover:bg-foreground/5'
+                      ? 'bg-foreground/4 text-foreground/70'
+                      : 'text-foreground/50 hover:bg-foreground/4'
                   }`}
                 >
                   Все
@@ -172,15 +172,15 @@ const UnderlineDropdown = ({
                   <button
                     key={option.id}
                     onClick={() => toggleValue(option.id)}
-                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center justify-between ${
+                    className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 flex items-center justify-between ${
                       selectedValues.includes(option.id)
-                        ? 'bg-foreground/5'
-                        : 'hover:bg-foreground/5'
+                        ? 'bg-foreground/4 text-foreground/70'
+                        : 'text-foreground/50 hover:bg-foreground/4'
                     }`}
                   >
                     {option.label}
                     {selectedValues.includes(option.id) && (
-                      <X className="w-3 h-3 text-muted-foreground" />
+                      <X className="w-3 h-3 text-foreground/25" />
                     )}
                   </button>
                 ))}
@@ -394,21 +394,20 @@ export const CatalogFilters = ({
                     key={type.id}
                     onClick={() => {
                       onTypesChange(type.id === 'all' ? [] : [type.id]);
-                      // Clear type-specific filters when changing type
                       onSizesChange([]);
                       onWidthsChange([]);
                     }}
-                    className={`text-sm uppercase tracking-[0.15em] pb-1 transition-all ${
+                    className={`text-[11px] uppercase tracking-[0.14em] font-light pb-1 transition-all duration-500 ${
                       currentType === type.id
-                        ? 'text-foreground border-b border-foreground'
-                        : 'text-muted-foreground hover:text-foreground'
+                        ? 'text-foreground border-b border-foreground/30'
+                        : 'text-foreground/40 hover:text-foreground/70'
                     }`}
                   >
                     {type.label}
                   </button>
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-[12px] font-light text-foreground/35">
                 {totalCount} {totalCount === 1 ? 'объект' : totalCount < 5 ? 'объекта' : 'объектов'}
               </p>
             </div>
@@ -433,7 +432,7 @@ export const CatalogFilters = ({
               {hasActiveFilters && (
                 <button
                   onClick={onClearAll}
-                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/40 hover:text-foreground/70 transition-colors duration-500"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   Сбросить

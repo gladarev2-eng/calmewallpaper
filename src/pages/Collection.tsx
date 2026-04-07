@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { getCollectionById, getProductsByCollection } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import heroMural from '@/assets/hero-mural.jpg';
@@ -27,8 +27,8 @@ const Collection = () => {
     return (
       <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl mb-4">Коллекция не найдена</h1>
-          <Link to="/collections" className="btn-primary">
+          <h1 className="text-2xl font-extralight mb-4">Коллекция не найдена</h1>
+          <Link to="/collections" className="btn-outline">
             Все коллекции
           </Link>
         </div>
@@ -47,16 +47,17 @@ const Collection = () => {
             src={images[0]}
             alt={collection.name}
             className="w-full h-full object-cover"
+            style={{ animation: 'slowZoom 10s ease-out forwards' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
         </div>
         
         <div className="container-wide relative z-10 pb-16">
           <Link 
             to="/collections" 
-            className="inline-flex items-center gap-2 text-sm mb-8 hover:gap-4 transition-all"
+            className="inline-flex items-center gap-2 text-[11px] font-light uppercase tracking-[0.14em] text-white/60 hover:text-white/90 mb-8 transition-colors duration-500"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} />
             Все коллекции
           </Link>
           
@@ -64,28 +65,26 @@ const Collection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-display mb-4">{collection.name}</h1>
-            <p className="text-body-lg max-w-2xl">{collection.description}</p>
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-extralight text-white leading-[1.05] tracking-[-0.03em] mb-4">{collection.name}</h1>
+            <p className="text-[14px] md:text-[16px] font-light text-white/70 max-w-2xl">{collection.description}</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Presentation Gallery */}
+      {/* Presentation */}
       <section className="section">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="max-w-3xl mb-20"
           >
-            <h2 className="text-title mb-6">Идея коллекции</h2>
-            <p className="text-body-lg max-w-3xl mx-auto">{collection.longDescription}</p>
+            <p className="text-caption mb-6">Идея коллекции</p>
+            <p className="text-body-lg">{collection.longDescription}</p>
           </motion.div>
 
-          {/* Grid presentation with images */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {/* Large image */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -96,13 +95,12 @@ const Collection = () => {
                 <img
                   src={images[1]}
                   alt={`${collection.name} в интерьере`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
                 />
               </div>
-              <p className="text-sm text-muted-foreground mt-3">В интерьере гостиной</p>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере гостиной</p>
             </motion.div>
             
-            {/* Two smaller images */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -113,10 +111,10 @@ const Collection = () => {
                 <img
                   src={images[2]}
                   alt={`${collection.name} крупный план`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
                 />
               </div>
-              <p className="text-sm text-muted-foreground mt-3">Детализация изображения</p>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Детализация изображения</p>
             </motion.div>
             
             <motion.div
@@ -129,26 +127,26 @@ const Collection = () => {
                 <img
                   src={images[3]}
                   alt={`${collection.name} в интерьере`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
                 />
               </div>
-              <p className="text-sm text-muted-foreground mt-3">В интерьере спальни</p>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере спальни</p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Colors */}
-      <section className="section-sm bg-card">
+      <section className="py-16 bg-card/30">
         <div className="container-wide">
-          <div className="text-center mb-8">
+          <div className="mb-8">
             <p className="text-caption">Цветовая палитра</p>
           </div>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap gap-3">
             {collection.colors.map((color) => (
               <span 
                 key={color}
-                className="px-6 py-2 border border-border text-sm"
+                className="px-5 py-2 border border-foreground/10 text-[12px] font-light text-foreground/60"
               >
                 {color}
               </span>
@@ -160,16 +158,19 @@ const Collection = () => {
       {/* Products */}
       <section className="section">
         <div className="container-wide">
-          <h2 className="text-title mb-12 text-center">Работы коллекции</h2>
+          <div className="mb-16">
+            <p className="text-caption mb-4">Каталог</p>
+            <h2 className="text-title">Работы коллекции</h2>
+          </div>
           
           {collectionProducts.length > 0 ? (
-            <div className="grid-catalog">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {collectionProducts.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} />
               ))}
             </div>
           ) : (
-            <p className="text-center text-muted-foreground">
+            <p className="text-body text-center py-20">
               В этой коллекции пока нет работ
             </p>
           )}
@@ -177,15 +178,21 @@ const Collection = () => {
       </section>
 
       {/* CTA */}
-      <section className="section bg-card">
+      <section className="section-lg bg-card/30">
         <div className="container-narrow text-center">
-          <h2 className="text-title mb-6">Не нашли подходящую работу?</h2>
-          <p className="text-body-lg mb-8">
-            Мы можем создать изображение по вашему референсу или адаптировать существующее
-          </p>
-          <Link to="/designers" className="btn-primary">
-            Обсудить проект
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-title mb-6">Не нашли подходящую работу?</h2>
+            <p className="text-body-lg mb-12 max-w-md mx-auto">
+              Мы можем создать изображение по вашему референсу или адаптировать существующее
+            </p>
+            <Link to="/designers" className="btn-outline">
+              Обсудить проект
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>

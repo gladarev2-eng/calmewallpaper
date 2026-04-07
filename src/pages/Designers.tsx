@@ -113,48 +113,48 @@ const Designers = () => {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 lg:pt-24">
       {/* Hero + Loyalty Program Combined */}
-      <section className="section-lg bg-card">
+      <section className="section-lg bg-background">
         <div className="container-wide">
           {/* Hero Header */}
-          <div className="max-w-3xl mb-12 lg:mb-20">
+          <div className="max-w-3xl mb-16 lg:mb-24">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
               <p className="text-caption mb-6">Партнёрская программа</p>
-              <h1 className="text-display mb-6">
+              <h1 className="text-display mb-8">
                 Среда для<br />профессионалов
               </h1>
-              <p className="text-body-lg">
+              <p className="text-body-lg max-w-xl">
                 Чем больше проектов — тем выгоднее условия. Четыре уровня партнёрства с растущими привилегиями.
               </p>
             </motion.div>
           </div>
 
           {/* Loyalty Tiers Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/6">
             {loyaltyTiers.map((tier, i) => (
               <motion.div
                 key={tier.level}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-background'}`}
+                transition={{ delay: i * 0.08, duration: 0.6 }}
+                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/50'}`}
               >
-                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 ${tier.highlighted ? 'text-background/70' : 'text-muted-foreground'}`}>
+                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 font-light ${tier.highlighted ? 'text-background/60' : 'text-foreground/35'}`}>
                   {tier.level}
                 </p>
-                <p className="font-display text-5xl md:text-6xl font-light mb-2">
+                <p className={`text-4xl md:text-5xl font-extralight mb-2 tracking-[-0.02em] ${tier.highlighted ? '' : 'text-foreground'}`}>
                   {tier.discount}
                 </p>
-                <p className={`text-sm mb-6 ${tier.highlighted ? 'text-background/80' : 'text-muted-foreground'}`}>
+                <p className={`text-[13px] font-light mb-6 ${tier.highlighted ? 'text-background/70' : 'text-foreground/45'}`}>
                   {tier.condition}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {tier.benefits.map((benefit, j) => (
-                    <li key={j} className={`text-sm flex items-start gap-2 ${tier.highlighted ? 'text-background' : 'text-foreground'}`}>
-                      <span className={tier.highlighted ? 'text-background/50' : 'text-muted-foreground'}>•</span>
+                    <li key={j} className={`text-[13px] font-light flex items-start gap-3 ${tier.highlighted ? 'text-background/90' : 'text-foreground/60'}`}>
+                      <span className={`w-4 h-[0.5px] mt-2.5 shrink-0 ${tier.highlighted ? 'bg-background/30' : 'bg-foreground/15'}`} />
                       {benefit}
                     </li>
                   ))}
@@ -184,12 +184,12 @@ const Designers = () => {
       {/* Services - Sequential Presentation */}
       <section className="section">
         <div className="container-wide">
-          <div className="text-center mb-20">
+          <div className="mb-20">
             <p className="text-caption mb-4">Что мы предлагаем</p>
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="space-y-16 md:space-y-24 lg:space-y-32">
+          <div className="space-y-20 md:space-y-28 lg:space-y-36">
             {services.map((item, i) => (
               <motion.div
                 key={item.num}
@@ -214,22 +214,22 @@ const Designers = () => {
 
                 {/* Content */}
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <span className="text-[11px] tracking-[0.3em] text-muted-foreground/50 block mb-6">
+                  <span className="text-[11px] tracking-[0.2em] text-foreground/25 block mb-5 font-light">
                     {item.num}
                   </span>
-                  <h3 className="text-2xl lg:text-3xl font-light mb-3">
+                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em]">
                     {item.title}
                   </h3>
-                  <p className="text-sm uppercase tracking-[0.1em] text-muted-foreground mb-6">
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-foreground/35 mb-6 font-light">
                     {item.subtitle}
                   </p>
-                  <p className="text-base text-muted-foreground leading-relaxed mb-8">
+                  <p className="text-body-lg mb-8">
                     {item.desc}
                   </p>
                   <ul className="space-y-3">
                     {item.details.map((detail, j) => (
-                      <li key={j} className="flex items-start gap-3 text-sm">
-                        <span className="w-1 h-1 rounded-full bg-foreground/40 mt-2 shrink-0" />
+                      <li key={j} className="flex items-start gap-3 text-[13px] font-light text-foreground/60">
+                        <span className="w-4 h-[0.5px] bg-foreground/20 mt-2.5 shrink-0" />
                         {detail}
                       </li>
                     ))}
@@ -342,62 +342,26 @@ const Designers = () => {
               </p>
             </motion.div>
 
-            {/* Features Grid - 2x2 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Материалы для высоких нагрузок</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Винил на флизелине класса А. Антивандальное покрытие, устойчивость 
-                  к UV и влаге. Сертификаты КМ1-КМ2 для общественных пространств.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.05 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Масштабные панорамы</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Полотна до 6 метров без швов. Многометровые панорамы для лобби 
-                  отелей и ресторанных залов. Расчёт раскладки для сложных форм.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Адаптация под бренд</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Корректируем палитру под брендбук заведения. Создаём уникальные 
-                  решения, отражающие концепцию и философию пространства.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.15 }}
-                className="border-t border-foreground/10 pt-6"
-              >
-                <h4 className="text-base mb-4">Монтаж и сопровождение</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Профессиональный монтаж в Москве и Петербурге. Координация 
-                  подрядчиков в регионах. Гарантия на работы — 2 года.
-                </p>
-              </motion.div>
+             {/* Features Grid - 2x2 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+              {[
+                { title: 'Материалы для высоких нагрузок', desc: 'Винил на флизелине класса А. Антивандальное покрытие, устойчивость к UV и влаге. Сертификаты КМ1-КМ2 для общественных пространств.' },
+                { title: 'Масштабные панорамы', desc: 'Полотна до 6 метров без швов. Многометровые панорамы для лобби отелей и ресторанных залов. Расчёт раскладки для сложных форм.' },
+                { title: 'Адаптация под бренд', desc: 'Корректируем палитру под брендбук заведения. Создаём уникальные решения, отражающие концепцию и философию пространства.' },
+                { title: 'Монтаж и сопровождение', desc: 'Профессиональный монтаж в Москве и Петербурге. Координация подрядчиков в регионах. Гарантия на работы — 2 года.' },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06, duration: 0.6 }}
+                  className="border-t border-foreground/8 pt-6"
+                >
+                  <h4 className="text-[15px] font-light mb-3 text-foreground">{item.title}</h4>
+                  <p className="text-body">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
             
             {/* CTA for HoReCa */}
@@ -420,59 +384,60 @@ const Designers = () => {
       </section>
 
       {/* Contact form */}
-      <section id="contact-form" className="section bg-card">
+      <section id="contact-form" className="section bg-card/30">
         <div className="container-narrow">
-          <div className="text-center mb-12">
+          <div className="mb-16">
+            <p className="text-caption mb-4">Заявка</p>
             <h2 className="text-title mb-4">Стать партнёром</h2>
-            <p className="text-muted-foreground">
+            <p className="text-body-lg max-w-md">
               Заполните форму, и мы свяжемся с вами в течение дня
             </p>
           </div>
 
-          <form className="space-y-6 max-w-xl mx-auto">
+          <form className="space-y-6 max-w-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-caption block mb-2">Имя</label>
+                <label className="text-caption block mb-3">Имя</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                   placeholder="Ваше имя"
                 />
               </div>
               <div>
-                <label className="text-caption block mb-2">Компания</label>
+                <label className="text-caption block mb-3">Компания</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                   placeholder="Название студии"
                 />
               </div>
             </div>
             <div>
-              <label className="text-caption block mb-2">Email</label>
+              <label className="text-caption block mb-3">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                 placeholder="email@example.com"
               />
             </div>
             <div>
-              <label className="text-caption block mb-2">Телефон</label>
+              <label className="text-caption block mb-3">Телефон</label>
               <input
                 type="tel"
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
                 placeholder="+7 (___) ___-__-__"
               />
             </div>
             <div>
-              <label className="text-caption block mb-2">Сообщение</label>
+              <label className="text-caption block mb-3">Сообщение</label>
               <textarea
                 rows={4}
-                className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500 resize-none"
                 placeholder="Расскажите о вашей студии и проектах"
               />
             </div>
-            <button type="submit" className="btn-primary w-full">
+            <button type="submit" className="btn-primary">
               Отправить заявку
             </button>
           </form>
