@@ -432,7 +432,7 @@ export const CatalogFilters = ({
               {hasActiveFilters && (
                 <button
                   onClick={onClearAll}
-                  className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/40 hover:text-foreground/70 transition-colors duration-500"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   Сбросить
