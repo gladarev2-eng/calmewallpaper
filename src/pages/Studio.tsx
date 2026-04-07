@@ -31,7 +31,7 @@ const Studio = () => {
             transition={{ duration: 1 }}
           >
             <p className="text-[10px] font-light uppercase tracking-[0.25em] text-white/50 mb-4">О студии</p>
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
               На пересечении дизайна<br />интерьера и цифрового искусства
             </h1>
           </motion.div>
