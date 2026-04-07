@@ -252,7 +252,7 @@ const Contacts = () => {
                 { num: '∞', label: 'возможностей адаптации' },
               ].map((stat, i) => (
                 <div key={i} className="bg-background p-8 text-center">
-                  <p className="text-3xl lg:text-4xl font-extralight mb-2 tracking-[-0.02em]">{stat.num}</p>
+                  <p className="text-3xl lg:text-4xl font-light mb-2 tracking-[-0.02em] font-display">{stat.num}</p>
                   <p className="text-[10px] text-foreground/35 uppercase tracking-[0.15em] font-light">{stat.label}</p>
                 </div>
               ))}
