@@ -23,8 +23,8 @@ export const Footer = () => {
               <Link to="/catalog" className="text-xs font-extralight text-muted-foreground hover:text-foreground transition-colors duration-400 tracking-wide">
                 Все работы
               </Link>
-              <Link to="/collections" className="text-xs font-extralight text-muted-foreground hover:text-foreground transition-colors duration-400 tracking-wide">
-                Коллекции
+              <Link to="/inspiration" className="text-xs font-extralight text-muted-foreground hover:text-foreground transition-colors duration-400 tracking-wide">
+                Вдохновение
               </Link>
               <Link to="/catalog?type=mural" className="text-xs font-extralight text-muted-foreground hover:text-foreground transition-colors duration-400 tracking-wide">
                 Муралы
