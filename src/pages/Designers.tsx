@@ -132,29 +132,29 @@ const Designers = () => {
           </div>
 
           {/* Loyalty Tiers Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-foreground/6">
             {loyaltyTiers.map((tier, i) => (
               <motion.div
                 key={tier.level}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-background'}`}
+                transition={{ delay: i * 0.08, duration: 0.6 }}
+                className={`p-6 md:p-8 ${tier.highlighted ? 'bg-foreground text-background' : 'bg-card/50'}`}
               >
-                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 ${tier.highlighted ? 'text-background/70' : 'text-muted-foreground'}`}>
+                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 font-light ${tier.highlighted ? 'text-background/60' : 'text-foreground/35'}`}>
                   {tier.level}
                 </p>
-                <p className="font-display text-5xl md:text-6xl font-light mb-2">
+                <p className={`text-4xl md:text-5xl font-extralight mb-2 tracking-[-0.02em] ${tier.highlighted ? '' : 'text-foreground'}`}>
                   {tier.discount}
                 </p>
-                <p className={`text-sm mb-6 ${tier.highlighted ? 'text-background/80' : 'text-muted-foreground'}`}>
+                <p className={`text-[13px] font-light mb-6 ${tier.highlighted ? 'text-background/70' : 'text-foreground/45'}`}>
                   {tier.condition}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {tier.benefits.map((benefit, j) => (
-                    <li key={j} className={`text-sm flex items-start gap-2 ${tier.highlighted ? 'text-background' : 'text-foreground'}`}>
-                      <span className={tier.highlighted ? 'text-background/50' : 'text-muted-foreground'}>•</span>
+                    <li key={j} className={`text-[13px] font-light flex items-start gap-3 ${tier.highlighted ? 'text-background/90' : 'text-foreground/60'}`}>
+                      <span className={`w-4 h-[0.5px] mt-2.5 shrink-0 ${tier.highlighted ? 'bg-background/30' : 'bg-foreground/15'}`} />
                       {benefit}
                     </li>
                   ))}
