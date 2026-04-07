@@ -28,7 +28,7 @@ export const Header = () => {
             {/* Logo */}
             <Link 
               to="/" 
-              className="text-sm font-thin uppercase tracking-[0.3em]"
+              className="text-[13px] font-extralight uppercase tracking-[0.35em]"
             >
               Calmé
             </Link>
