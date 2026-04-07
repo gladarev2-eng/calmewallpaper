@@ -171,7 +171,7 @@ const Studio = () => {
                   </div>
                 </div>
                 <div className={`${i % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <h3 className="text-2xl lg:text-3xl font-extralight mb-3 tracking-[-0.02em] text-foreground">{value.title}</h3>
+                  <h3 className="text-2xl lg:text-3xl font-light mb-3 tracking-[-0.02em] text-foreground font-display">{value.title}</h3>
                   <p className="text-[12px] uppercase tracking-[0.1em] text-foreground/35 mb-8 font-light">{value.subtitle}</p>
                   <p className="text-body-lg">{value.desc}</p>
                 </div>
