@@ -62,6 +62,7 @@ const Index = () => {
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
           <motion.h1
             className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-5 font-display"
+            style={{ textShadow: '0 2px 40px rgba(0,0,0,0.3)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
