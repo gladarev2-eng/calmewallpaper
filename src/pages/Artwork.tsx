@@ -319,7 +319,7 @@ const Artwork = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveInfoTab(tab.id)}
-                className={`pb-4 text-[11px] uppercase tracking-[0.14em] font-light transition-all duration-500 relative ${
+                className={`pb-4 text-[12px] uppercase tracking-[0.14em] font-light transition-all duration-700 relative ${
                   activeInfoTab === tab.id
                     ? 'text-foreground'
                     : 'text-foreground/40 hover:text-foreground/60'
