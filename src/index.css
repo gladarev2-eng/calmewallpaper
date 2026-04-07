@@ -147,15 +147,15 @@
 
   /* Button styles — premium, refined */
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-foreground text-background px-8 sm:px-10 py-3.5 sm:py-4 text-[10px] tracking-[0.18em] uppercase transition-all duration-500;
+    @apply inline-flex items-center justify-center bg-foreground text-background px-9 sm:px-11 py-3.5 sm:py-4 text-[10.5px] uppercase transition-all duration-500;
     font-weight: 400;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     min-height: 48px;
   }
 
   .btn-primary:hover {
     @apply bg-foreground/85;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   .btn-outline {
