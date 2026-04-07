@@ -209,7 +209,7 @@ const Studio = () => {
                 className="group"
               >
                 <div className="aspect-[4/5] overflow-hidden mb-5">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
+                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]" />
                 </div>
                 <h3 className="text-[15px] font-light mb-2 text-foreground">{item.name}</h3>
                 <p className="text-body">{item.desc}</p>

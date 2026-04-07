@@ -127,7 +127,7 @@ const Collection = () => {
                 <img
                   src={images[3]}
                   alt={`${collection.name} в интерьере`}
-                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[1.2s]"
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
                 />
               </div>
               <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере спальни</p>

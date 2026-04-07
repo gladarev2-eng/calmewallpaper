@@ -212,7 +212,7 @@ const Inspiration = () => {
           transition={{ duration: 0.8 }}
         >
           <p className="text-caption mb-4">Вдохновение</p>
-          <h1 className="text-title mb-4">Муралы в интерьере</h1>
+          <h1 className="text-title mb-4 font-display">Муралы в интерьере</h1>
           <p className="text-body-lg max-w-xl">
             Кураторская подборка интерьерных решений. Найдите своё пространство по помещению и цвету.
           </p>
