@@ -290,9 +290,9 @@
 
   /* Step number — unified across pages */
   .text-step-num {
-    @apply text-[10px] block mb-5 font-light;
+    @apply text-[11px] block mb-5 font-light;
     letter-spacing: 0.2em;
-    color: hsl(var(--foreground) / 0.20);
+    color: hsl(var(--foreground) / 0.25);
   }
 
   /* Standard input field — ultra-minimalist bottom-border only */
