@@ -169,7 +169,7 @@ const Index = () => {
                           {series.poem}
                         </p>
                         <span className="link-arrow">
-                          Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
+                          Смотреть коллекцию <ArrowRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
                     </div>
