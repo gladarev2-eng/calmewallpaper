@@ -83,22 +83,22 @@ const Studio = () => {
       {/* Storytelling — Split Screen Sticky */}
       <section className="bg-background">
         <div className="container-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+          <div className="flex flex-col lg:flex-row items-start gap-0 lg:gap-16">
             {/* Sticky Image */}
-            <div className="lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-6rem)] flex items-center">
+            <div className="w-full lg:w-1/2 lg:sticky lg:top-[120px]" style={{ height: 'fit-content', alignSelf: 'start' }}>
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="aspect-[4/5] w-full overflow-hidden"
+                className="w-full overflow-hidden"
               >
-                <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
+                <img src={mural1} alt="Философия CALMÉ" className="w-full object-cover rounded-[4px]" style={{ aspectRatio: '4 / 5' }} />
               </motion.div>
             </div>
 
             {/* Scrolling Text Blocks */}
-            <div className="flex flex-col">
+            <div className="w-full lg:w-1/2 flex flex-col gap-12">
               {/* Block 1 — Philosophy */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
