@@ -104,7 +104,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
 
         {/* Info — name, subline, price */}
         <div className="pt-4 pb-2">
-          <h3 className="text-[15px] font-light tracking-[0.01em] leading-snug text-foreground">
+          <h3 className="text-[15px] font-light tracking-[0.01em] leading-snug text-foreground font-display">
             {product.name}
           </h3>
           <div className="flex items-baseline justify-between mt-1.5">
