@@ -70,7 +70,7 @@ const Catalog = () => {
       <div className="hidden lg:block">
         <div className="container-wide section-sm pb-0">
           <h1 className="text-display mb-4">Каталог</h1>
-          <p className="text-body-lg max-w-xl">Авторские муралы, панно и фоновые обои для вашего пространства</p>
+          <p className="text-body-lg max-w-xl">Архитектурная композиция для вашего пространства — муралы, панно и фоновые текстуры</p>
         </div>
         <CatalogFilters {...filterProps} />
       </div>
@@ -105,7 +105,7 @@ const Catalog = () => {
         </div>
       </div>
 
-      {/* Product Grid */}
+      {/* Product Grid — editorial mixed layout */}
       <section className="pb-24 lg:pb-32">
         <div className="container-wide">
           <AnimatePresence mode="wait">
@@ -116,11 +116,20 @@ const Catalog = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
+                className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
               >
-                {filteredProducts.map((product, i) => (
-                  <ProductCard key={product.id} product={product} index={i} />
-                ))}
+                {filteredProducts.map((product, i) => {
+                  // Every 7th item spans 2 columns for editorial rhythm
+                  const isWide = i % 7 === 0 && i > 0;
+                  return (
+                    <div
+                      key={product.id}
+                      className={isWide ? 'col-span-2 lg:col-span-2' : ''}
+                    >
+                      <ProductCard product={product} index={i} />
+                    </div>
+                  );
+                })}
               </motion.div>
             ) : (
               <motion.div
@@ -130,7 +139,7 @@ const Catalog = () => {
                 exit={{ opacity: 0 }}
                 className="text-center py-40"
               >
-                <p className="text-[14px] font-light text-foreground/40 mb-8">
+                <p className="text-body-lg mb-8">
                   По вашему запросу ничего не найдено
                 </p>
                 <button
