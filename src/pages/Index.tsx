@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
@@ -9,10 +9,21 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
+import social1 from '@/assets/social-1.jpg';
+import social2 from '@/assets/social-2.jpg';
+import social3 from '@/assets/social-3.jpg';
+import social4 from '@/assets/social-4.jpg';
+import social5 from '@/assets/social-5.jpg';
+import social6 from '@/assets/social-6.jpg';
+import social7 from '@/assets/social-7.jpg';
+import social8 from '@/assets/social-8.jpg';
+import social9 from '@/assets/social-9.jpg';
+import social10 from '@/assets/social-10.jpg';
 import { products, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
+const socialImages = [social1, social2, social3, social4, social5, social6, social7, social8, social9, social10];
 
 const quietWorldsSeries = [
   {
