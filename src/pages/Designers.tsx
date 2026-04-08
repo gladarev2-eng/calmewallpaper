@@ -189,7 +189,7 @@ const Designers = () => {
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="space-y-20 md:space-y-28 lg:space-y-36">
+          <div className="space-y-0 divide-y divide-foreground/8">
             {services.map((item, i) => (
               <motion.div
                 key={item.num}
@@ -197,7 +197,7 @@ const Designers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center ${
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center py-20 md:py-28 lg:py-36 ${
                   i % 2 === 1 ? 'lg:grid-flow-dense' : ''
                 }`}
               >
@@ -394,13 +394,13 @@ const Designers = () => {
             </p>
           </div>
 
-          <form className="space-y-6 max-w-xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form className="space-y-8 max-w-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <label className="text-caption block mb-3">Имя</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
+                  className="input-field-minimal"
                   placeholder="Ваше имя"
                 />
               </div>
@@ -408,7 +408,7 @@ const Designers = () => {
                 <label className="text-caption block mb-3">Компания</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
+                  className="input-field-minimal"
                   placeholder="Название студии"
                 />
               </div>
@@ -417,7 +417,7 @@ const Designers = () => {
               <label className="text-caption block mb-3">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
+                className="input-field-minimal"
                 placeholder="email@example.com"
               />
             </div>
@@ -425,7 +425,7 @@ const Designers = () => {
               <label className="text-caption block mb-3">Телефон</label>
               <input
                 type="tel"
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
+                className="input-field-minimal"
                 placeholder="+7 (___) ___-__-__"
               />
             </div>
@@ -433,7 +433,7 @@ const Designers = () => {
               <label className="text-caption block mb-3">Сообщение</label>
               <textarea
                 rows={4}
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500 resize-none"
+                className="input-field-minimal resize-none"
                 placeholder="Расскажите о вашей студии и проектах"
               />
             </div>

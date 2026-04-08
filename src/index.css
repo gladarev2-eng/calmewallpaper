@@ -311,6 +311,22 @@
     color: hsl(var(--foreground) / 0.30);
   }
 
+  /* Minimal input — bottom border only */
+  .input-field-minimal {
+    @apply w-full px-0 py-4 bg-transparent text-[13px] font-light transition-colors duration-500;
+    border: none;
+    border-bottom: 1px solid hsl(var(--foreground) / 0.12);
+  }
+
+  .input-field-minimal:focus {
+    outline: none;
+    border-bottom-color: hsl(var(--foreground) / 0.40);
+  }
+
+  .input-field-minimal::placeholder {
+    color: hsl(var(--foreground) / 0.25);
+  }
+
   /* Grid layouts */
   .grid-catalog {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
