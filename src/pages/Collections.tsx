@@ -97,13 +97,55 @@ const Collections = () => {
         </div>
       </section>
 
-      {/* Collections grid */}
+      {/* Collections — editorial asymmetrical grid */}
       <section className="section">
         <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
-            {collections.map((collection, i) => (
-              <CollectionCard key={collection.id} collection={collection} index={i} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8">
+            {collections.map((collection, i) => {
+              const patterns = [
+                'md:col-span-7',
+                'md:col-span-5',
+                'md:col-span-5',
+                'md:col-span-7',
+              ];
+              const aspectPatterns = [
+                'aspect-[16/10]',
+                'aspect-[4/5]',
+                'aspect-[4/5]',
+                'aspect-[16/10]',
+              ];
+              const colClass = patterns[i % 4];
+              const aspectClass = aspectPatterns[i % 4];
+              const images = collectionImages[collection.id] || [mural2, mural3, mural4];
+              return (
+                <motion.div
+                  key={collection.id}
+                  className={colClass}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.7 }}
+                >
+                  <Link to={`/collection/${collection.slug}`} className="group block">
+                    <div className={`${aspectClass} overflow-hidden mb-6`}>
+                      <img
+                        src={images[0]}
+                        alt={collection.name}
+                        className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-light mb-2 tracking-[-0.02em] font-display">{collection.name}</h2>
+                      <p className="text-body mb-3">{collection.description}</p>
+                      <div className="flex flex-wrap gap-3">
+                        {collection.colors.map((color) => (
+                          <span key={color} className="text-[11px] text-foreground/35 font-light">{color}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

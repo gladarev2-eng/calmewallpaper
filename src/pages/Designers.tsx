@@ -394,48 +394,28 @@ const Designers = () => {
             </p>
           </div>
 
-          <form className="space-y-6 max-w-xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form className="space-y-8 max-w-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <label className="text-caption block mb-3">Имя</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
-                  placeholder="Ваше имя"
-                />
+                <input type="text" className="input-field" placeholder="Ваше имя" />
               </div>
               <div>
                 <label className="text-caption block mb-3">Компания</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
-                  placeholder="Название студии"
-                />
+                <input type="text" className="input-field" placeholder="Название студии" />
               </div>
             </div>
             <div>
               <label className="text-caption block mb-3">Email</label>
-              <input
-                type="email"
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
-                placeholder="email@example.com"
-              />
+              <input type="email" className="input-field" placeholder="email@example.com" />
             </div>
             <div>
               <label className="text-caption block mb-3">Телефон</label>
-              <input
-                type="tel"
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500"
-                placeholder="+7 (___) ___-__-__"
-              />
+              <input type="tel" className="input-field" placeholder="+7 (___) ___-__-__" />
             </div>
             <div>
               <label className="text-caption block mb-3">Сообщение</label>
-              <textarea
-                rows={4}
-                className="w-full px-4 py-3 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500 resize-none"
-                placeholder="Расскажите о вашей студии и проектах"
-              />
+              <textarea rows={4} className="input-field resize-none" placeholder="Расскажите о вашей студии и проектах" />
             </div>
             <button type="submit" className="btn-primary">
               Отправить заявку

@@ -285,6 +285,39 @@ const Artwork = () => {
         </div>
       </section>
 
+      {/* ── Macro Detail Gallery ── */}
+      <section className="section border-t border-foreground/6">
+        <div className="container-wide">
+          <div className="mb-16">
+            <p className="text-caption mb-4">Детализация</p>
+            <h2 className="text-title">Макро-текстуры</h2>
+            <p className="text-body-lg mt-4 max-w-xl">
+              Беспрецедентная проработка деталей. Каждый фрагмент — самостоятельная композиция, 
+              раскрывающая глубину и сложность оригинала.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+            {product.images.map((img, i) => {
+              const isWide = i === 0 || i === 3;
+              return (
+                <div
+                  key={`macro-${i}`}
+                  className={`overflow-hidden group/macro cursor-zoom-in ${isWide ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'}`}
+                  onClick={() => { setSelectedImage(i % product.images.length); setShowFullscreen(true); }}
+                >
+                  <img
+                    src={getImageSrc(img)}
+                    alt={`${product.name} — макро-деталь ${i + 1}`}
+                    className="w-full h-full object-cover scale-[1.5] transition-transform duration-[2s] group-hover/macro:scale-[1.55]"
+                    style={{ objectPosition: `${30 + i * 15}% ${20 + i * 10}%` }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* ── About Print / About Material — tabbed section ── */}
       <section className="section border-t border-foreground/6">
         <div className="container-wide">
