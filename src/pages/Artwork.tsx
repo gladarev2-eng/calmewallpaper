@@ -151,7 +151,7 @@ const Artwork = () => {
                 <img
                   src={getImageSrc(img)}
                   alt={`${product.name} — вид ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover/img:scale-[1.03]"
+                  className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover/img:scale-[1.05]"
                 />
               </div>
             ))}
