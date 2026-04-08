@@ -195,19 +195,19 @@
 
   /* Section spacing — generous with breathing room */
   .section {
-    @apply py-28 md:py-36 lg:py-48;
+    @apply py-24 md:py-32 lg:py-44;
   }
 
   .section-sm {
-    @apply py-20 md:py-28 lg:py-32;
+    @apply py-16 md:py-24 lg:py-28;
   }
 
   .section-lg {
-    @apply py-32 md:py-44 lg:py-60;
+    @apply py-28 md:py-40 lg:py-56;
   }
 
   .section-hero {
-    @apply py-36 md:py-48 lg:py-64;
+    @apply py-32 md:py-44 lg:py-60;
   }
 
   /* Section divider — editorial lookbook style */
@@ -311,22 +311,6 @@
     color: hsl(var(--foreground) / 0.30);
   }
 
-  /* Minimal input — bottom border only */
-  .input-field-minimal {
-    @apply w-full px-0 py-4 bg-transparent text-[13px] font-light transition-colors duration-500;
-    border: none;
-    border-bottom: 1px solid hsl(var(--foreground) / 0.12);
-  }
-
-  .input-field-minimal:focus {
-    outline: none;
-    border-bottom-color: hsl(var(--foreground) / 0.40);
-  }
-
-  .input-field-minimal::placeholder {
-    color: hsl(var(--foreground) / 0.25);
-  }
-
   /* Grid layouts */
   .grid-catalog {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
@@ -339,22 +323,18 @@
     background: hsl(var(--foreground) / 0.06);
   }
 
-  /* Link hover — underline expand style */
+  /* Link hover */
   .link-arrow {
     @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-700;
     letter-spacing: 0.16em;
     font-weight: 400;
     color: hsl(var(--foreground) / 0.6);
-    text-decoration: none;
-    border-bottom: 1px solid hsl(var(--foreground) / 0.15);
-    padding-bottom: 2px;
   }
 
   .link-arrow:hover {
     gap: 10px;
     letter-spacing: 0.2em;
     color: hsl(var(--foreground));
-    border-bottom-color: hsl(var(--foreground) / 0.5);
   }
 }
 

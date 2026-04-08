@@ -78,10 +78,7 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
-            {/* Bottom gradient for hero text */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
-            {/* Top gradient for navigation readability */}
-            <div className="absolute inset-x-0 top-0 h-[25%] bg-gradient-to-b from-black/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
           </div>
         ))}
 
@@ -96,7 +93,7 @@ const Index = () => {
           </motion.p>
           <motion.h1
             className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-6 font-display"
-            style={{ textShadow: '0 2px 40px rgba(0,0,0,0.5), 0 8px 80px rgba(0,0,0,0.3)' }}
+            style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4 }}
@@ -518,7 +515,7 @@ const Index = () => {
       </section>
 
       {/* ── For designers ── */}
-      <section className="section-lg bg-card/30">
+      <section className="section bg-card/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <motion.div
@@ -529,14 +526,13 @@ const Index = () => {
             >
               <p className="text-caption mb-6">Для дизайнеров и партнёров</p>
               <h2 className="text-title mb-8">Инструменты для профессионалов</h2>
-              <div className="space-y-0 divide-y divide-foreground/8">
+              <div className="space-y-8">
                 {[
                   { title: 'Адаптация цвета', text: 'Коррекция палитры под конкретный проект и освещение' },
                   { title: 'Масштабирование', text: 'Работа с нестандартными размерами и сложными формами стен' },
                   { title: 'Капсульные подборки', text: 'Персональная селекция работ под концепцию проекта' },
-                  { title: 'Бесплатные визуализации', text: 'Монтаж принтов на фото интерьера для презентации клиенту' },
                 ].map((item, i) => (
-                  <div key={i} className="py-5 first:pt-0">
+                  <div key={i}>
                     <h4 className="text-[14px] font-light mb-2 text-foreground">{item.title}</h4>
                     <p className="text-body">{item.text}</p>
                   </div>
@@ -556,7 +552,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <div className="aspect-[4/5] overflow-hidden">
-                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover" />
+                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover animate-image-load" />
               </div>
             </motion.div>
           </div>

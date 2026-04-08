@@ -12,10 +12,10 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
 const collectionImages: Record<string, string[]> = {
-  'silentia': [mural2, heroMural, mural1, mural6, mural3, mural5],
-  'botanica': [mural3, mural5, heroMural, mural1, mural4, mural6],
-  'forma': [mural4, mural1, mural6, mural2, mural5, mural3],
-  'materia': [mural6, mural2, mural4, mural3, mural1, heroMural],
+  'silentia': [mural2, heroMural, mural1, mural6],
+  'botanica': [mural3, mural5, heroMural, mural1],
+  'forma': [mural4, mural1, mural6, mural2],
+  'materia': [mural6, mural2, mural4, mural3],
 };
 
 const Collection = () => {
@@ -36,7 +36,7 @@ const Collection = () => {
     );
   }
 
-  const images = collectionImages[collection.id] || [mural2, mural3, mural4, mural5, mural1, mural6];
+  const images = collectionImages[collection.id] || [mural2, mural3, mural4, mural5];
 
   return (
     <div>
@@ -49,7 +49,7 @@ const Collection = () => {
             className="w-full h-full object-cover"
             style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
         </div>
         
         <div className="container-wide relative z-10 pb-16">
@@ -65,142 +65,92 @@ const Collection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 
-              className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] mb-4 font-display"
-              style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
-            >
-              {collection.name}
-            </h1>
+            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-white leading-[1.05] tracking-[-0.03em] mb-4 font-display">{collection.name}</h1>
             <p className="text-[14px] md:text-[16px] font-light text-white/70 max-w-2xl">{collection.description}</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Split-screen: Sticky info + Scrollable gallery */}
-      <section className="section-lg">
+      {/* Presentation */}
+      <section className="section">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            {/* Left — Sticky info panel */}
-            <div className="lg:col-span-4">
-              <div className="lg:sticky lg:top-32">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  <p className="text-caption mb-6">Идея коллекции</p>
-                  <h2 className="text-title mb-8">{collection.name}</h2>
-                  <p className="text-body-lg mb-10">{collection.longDescription}</p>
-                  
-                  {/* Color palette */}
-                  <div className="mb-10">
-                    <p className="text-caption mb-4">Цветовая палитра</p>
-                    <div className="flex flex-wrap gap-2">
-                      {collection.colors.map((color) => (
-                        <span 
-                          key={color}
-                          className="px-4 py-1.5 border border-foreground/10 text-[11px] font-light text-foreground/55"
-                        >
-                          {color}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mb-20"
+          >
+            <p className="text-caption mb-6">Идея коллекции</p>
+            <p className="text-body-lg">{collection.longDescription}</p>
+          </motion.div>
 
-                  <Link to="/catalog" className="btn-outline">
-                    Смотреть каталог
-                  </Link>
-                </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="md:row-span-2"
+            >
+              <div className="aspect-[3/4] overflow-hidden">
+                <img
+                  src={images[1]}
+                  alt={`${collection.name} в интерьере`}
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
+                />
               </div>
-            </div>
-
-            {/* Right — Scrollable gallery */}
-            <div className="lg:col-span-8">
-              <div className="space-y-6">
-                {/* Large landscape */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={images[1]}
-                      alt={`${collection.name} в интерьере`}
-                      className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
-                    />
-                  </div>
-                  <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере гостиной</p>
-                </motion.div>
-
-                {/* Two-column row */}
-                <div className="grid grid-cols-2 gap-5">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                  >
-                    <div className="aspect-[3/4] overflow-hidden">
-                      <img
-                        src={images[2]}
-                        alt={`${collection.name} крупный план`}
-                        className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
-                      />
-                    </div>
-                    <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Детализация текстуры</p>
-                  </motion.div>
-                  
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <div className="aspect-[3/4] overflow-hidden">
-                      <img
-                        src={images[3]}
-                        alt={`${collection.name} фрагмент`}
-                        className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
-                      />
-                    </div>
-                    <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Фрагмент композиции</p>
-                  </motion.div>
-                </div>
-
-                {/* Another landscape */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="aspect-[16/10] overflow-hidden">
-                    <img
-                      src={images[4]}
-                      alt={`${collection.name} в интерьере`}
-                      className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
-                    />
-                  </div>
-                  <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере спальни</p>
-                </motion.div>
-
-                {/* Macro detail */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="aspect-[4/5] overflow-hidden">
-                    <img
-                      src={images[5]}
-                      alt={`${collection.name} макро`}
-                      className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
-                    />
-                  </div>
-                  <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Масштаб 1:1 — детали текстуры</p>
-                </motion.div>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере гостиной</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={images[2]}
+                  alt={`${collection.name} крупный план`}
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
+                />
               </div>
-            </div>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">Детализация изображения</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="aspect-[16/10] overflow-hidden">
+                <img
+                  src={images[3]}
+                  alt={`${collection.name} в интерьере`}
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
+                />
+              </div>
+              <p className="text-[11px] text-foreground/35 mt-3 font-light tracking-[0.02em]">В интерьере спальни</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Colors */}
+      <section className="py-16 bg-card/30">
+        <div className="container-wide">
+          <div className="mb-8">
+            <p className="text-caption">Цветовая палитра</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {collection.colors.map((color) => (
+              <span 
+                key={color}
+                className="px-5 py-2 border border-foreground/10 text-[12px] font-light text-foreground/60"
+              >
+                {color}
+              </span>
+            ))}
           </div>
         </div>
       </section>

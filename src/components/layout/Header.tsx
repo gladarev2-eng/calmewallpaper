@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ShoppingBag, Heart, Phone, MessageCircle } from 'lucide-react';
@@ -16,53 +16,19 @@ const navItems = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { totalItems } = useCart();
   const { totalFavorites } = useFavorites();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Pages with dark hero backgrounds where header text should be white initially
-  const darkHeroPages = ['/', '/collection', '/inspiration'];
-  const isDarkHero = darkHeroPages.some(p => 
-    p === '/' ? location.pathname === '/' : location.pathname.startsWith(p)
-  );
-
-  // When NOT on a dark hero page and NOT scrolled, use charcoal text for readability
-  const useCharcoalText = !isDarkHero && !isScrolled;
-
   return (
     <>
-      <header 
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out"
-        style={{
-          background: isScrolled 
-            ? 'hsl(38 16% 94% / 0.92)' 
-            : 'transparent',
-          backdropFilter: isScrolled ? 'blur(24px) saturate(1.2)' : 'none',
-          WebkitBackdropFilter: isScrolled ? 'blur(24px) saturate(1.2)' : 'none',
-          borderBottom: isScrolled 
-            ? '0.5px solid hsl(25 10% 8% / 0.06)' 
-            : '0.5px solid transparent',
-        }}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide">
           <div className="flex items-center justify-between h-20 sm:h-24 lg:h-[96px]">
             {/* Logo */}
             <Link 
               to="/" 
-              className={`text-[15px] font-light uppercase tracking-[0.4em] font-display transition-colors duration-700 ${
-                isScrolled ? 'text-foreground' 
-                : isDarkHero ? 'text-white' 
-                : 'text-foreground'
-              }`}
+              className="text-[15px] font-light uppercase tracking-[0.4em] text-foreground font-display"
             >
               Calmé
             </Link>
@@ -74,13 +40,9 @@ export const Header = () => {
                   key={item.href}
                   to={item.href}
                   className={`text-[12px] font-normal uppercase tracking-[0.16em] transition-all duration-700 ${
-                    !isScrolled && isDarkHero
-                      ? location.pathname === item.href 
-                        ? 'text-white' 
-                        : 'text-white/50 hover:text-white/80'
-                      : location.pathname === item.href 
-                        ? 'text-foreground' 
-                        : 'text-foreground/50 hover:text-foreground/80'
+                    location.pathname === item.href 
+                      ? 'text-foreground' 
+                      : 'text-foreground/50 hover:text-foreground/80'
                   }`}
                 >
                   {item.label}
@@ -94,11 +56,7 @@ export const Header = () => {
               <div className="hidden lg:flex items-center gap-3">
                 <a 
                   href="tel:+74951234567" 
-                  className={`text-[11px] font-light tracking-[0.06em] transition-colors duration-700 ${
-                    !isScrolled && isDarkHero 
-                      ? 'text-white/50 hover:text-white/80' 
-                      : 'text-foreground/50 hover:text-foreground/80'
-                  }`}
+                  className="text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
                   +7 (495) 123-45-67
                 </a>
@@ -106,11 +64,7 @@ export const Header = () => {
                   href="https://wa.me/79001234567"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-2 transition-colors duration-700 ${
-                    !isScrolled && isDarkHero 
-                      ? 'text-white/40 hover:text-white/70' 
-                      : 'text-foreground/40 hover:text-foreground/70'
-                  }`}
+                  className="p-2 text-foreground/40 hover:text-foreground/70 transition-colors duration-700"
                 >
                   <MessageCircle className="w-3.5 h-3.5 stroke-[1.5]" />
                 </a>
@@ -120,19 +74,11 @@ export const Header = () => {
               <div className="flex items-center gap-3">
                 <Link 
                   to="/favorites"
-                  className={`relative p-2 transition-colors duration-700 ${
-                    !isScrolled && isDarkHero 
-                      ? 'text-white/50 hover:text-white/80' 
-                      : 'text-foreground/50 hover:text-foreground/80'
-                  }`}
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
-                  <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? (!isScrolled && isDarkHero ? 'fill-white/50' : 'fill-foreground/50') : ''}`} />
+                  <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
                   {totalFavorites > 0 && (
-                    <span className={`absolute -top-1 -right-1 w-4 h-4 text-[8px] font-light flex items-center justify-center ${
-                      !isScrolled && isDarkHero 
-                        ? 'bg-white text-black' 
-                        : 'bg-foreground text-background'
-                    }`}>
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
                       {totalFavorites}
                     </span>
                   )}
@@ -140,19 +86,11 @@ export const Header = () => {
                 
                 <Link 
                   to="/cart"
-                  className={`relative p-2 transition-colors duration-700 ${
-                    !isScrolled && isDarkHero 
-                      ? 'text-white/50 hover:text-white/80' 
-                      : 'text-foreground/50 hover:text-foreground/80'
-                  }`}
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
                 >
                   <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
                   {totalItems > 0 && (
-                    <span className={`absolute -top-1 -right-1 w-4 h-4 text-[8px] font-light flex items-center justify-center ${
-                      !isScrolled && isDarkHero 
-                        ? 'bg-white text-black' 
-                        : 'bg-foreground text-background'
-                    }`}>
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
                       {totalItems}
                     </span>
                   )}
@@ -160,11 +98,7 @@ export const Header = () => {
                 
                 <button
                   onClick={() => setIsMenuOpen(true)}
-                  className={`lg:hidden p-2 transition-colors duration-700 ${
-                    !isScrolled && isDarkHero 
-                      ? 'text-white/60' 
-                      : 'text-foreground/60'
-                  }`}
+                  className="lg:hidden p-2 text-foreground/60 transition-colors duration-700"
                 >
                   <Menu className="w-4 h-4 stroke-[1.5]" />
                 </button>
