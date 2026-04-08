@@ -202,9 +202,61 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ── 2. Беспрецедентная детализация ── */}
+      <section className="section-lg bg-background">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9 }}
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img src={mural2} alt="Детализация" className="w-full h-full object-cover" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.15 }}
+              className="space-y-8"
+            >
+              <div>
+                <p className="text-caption mb-4">Беспрецедентная детализация</p>
+                <h2 className="text-title mb-6">Сложность, которую невозможно повторить</h2>
+                <p className="text-body-lg max-w-md">
+                  Наши муралы создаются через сложный процесс цифрового синтеза и художественной доработки. 
+                  Результат — изображения с глубиной и детализацией, недоступной стандартным фотообоям и печатным паттернам.
+                </p>
+              </div>
+
+              <div className="space-y-6 pt-4">
+                <div className="flex items-baseline gap-6">
+                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">45 000 px</span>
+                  <span className="text-body">Разрешение по длинной стороне</span>
+                </div>
+                <div className="divider" />
+                <div className="flex items-baseline gap-6">
+                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">2 400 DPI</span>
+                  <span className="text-body">Плотность печати</span>
+                </div>
+                <div className="divider" />
+                <div className="flex items-baseline gap-6">
+                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">до 6 м</span>
+                  <span className="text-body">Ширина без единого шва</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       <div className="container-wide"><div className="divider" /></div>
 
-      {/* ── 2. Directions ── */}
+      {/* ── 3. Directions ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
