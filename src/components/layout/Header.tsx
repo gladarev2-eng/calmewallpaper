@@ -50,60 +50,60 @@ export const Header = () => {
               ))}
             </nav>
 
-            {/* Utility Actions — all grouped together */}
-            <div className="flex items-center gap-4">
-              {/* Phone & Messenger — desktop only */}
-              <a 
-                href="tel:+74951234567" 
-                className="hidden lg:block text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
-              >
-                +7 (495) 123-45-67
-              </a>
-              <a 
-                href="https://wa.me/79001234567"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden lg:flex p-1.5 text-foreground/40 hover:text-foreground/70 transition-colors duration-700"
-              >
-                <MessageCircle className="w-3.5 h-3.5 stroke-[1.5]" />
-              </a>
+            {/* Utility Actions — single right-aligned flex container */}
+            <div className="flex items-center justify-end gap-6">
+              {/* Contact block — phone + messenger */}
+              <div className="hidden lg:flex items-center gap-4 pr-5 border-r border-foreground/10">
+                <a 
+                  href="tel:+74951234567" 
+                  className="text-[11px] font-light tracking-[0.06em] text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
+                >
+                  +7 (495) 123-45-67
+                </a>
+                <a 
+                  href="https://wa.me/79001234567"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex p-1.5 text-foreground/40 hover:text-foreground/70 transition-colors duration-700"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 stroke-[1.5]" />
+                </a>
+              </div>
 
-              {/* Divider — desktop only */}
-              <div className="hidden lg:block w-[1px] h-4 bg-foreground/10" />
+              {/* Icons block — favorites + cart */}
+              <div className="flex items-center gap-3">
+                <Link 
+                  to="/favorites"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
+                >
+                  <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
+                  {totalFavorites > 0 && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
+                      {totalFavorites}
+                    </span>
+                  )}
+                </Link>
+                
+                <Link 
+                  to="/cart"
+                  className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
+                >
+                  <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
+                      {totalItems}
+                    </span>
+                  )}
+                </Link>
 
-              {/* Favorites */}
-              <Link 
-                to="/favorites"
-                className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
-              >
-                <Heart className={`w-4 h-4 stroke-[1.5] transition-colors ${totalFavorites > 0 ? 'fill-foreground/50' : ''}`} />
-                {totalFavorites > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
-                    {totalFavorites}
-                  </span>
-                )}
-              </Link>
-              
-              {/* Cart */}
-              <Link 
-                to="/cart"
-                className="relative p-2 text-foreground/50 hover:text-foreground/80 transition-colors duration-700"
-              >
-                <ShoppingBag className="w-4 h-4 stroke-[1.5]" />
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 bg-foreground text-background text-[8px] font-light flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </Link>
-              
-              {/* Mobile menu toggle */}
-              <button
-                onClick={() => setIsMenuOpen(true)}
-                className="lg:hidden p-2 text-foreground/60 transition-colors duration-700"
-              >
-                <Menu className="w-4 h-4 stroke-[1.5]" />
-              </button>
+                {/* Mobile menu toggle */}
+                <button
+                  onClick={() => setIsMenuOpen(true)}
+                  className="lg:hidden p-2 text-foreground/60 transition-colors duration-700"
+                >
+                  <Menu className="w-4 h-4 stroke-[1.5]" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

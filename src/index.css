@@ -419,9 +419,7 @@
   background: hsl(var(--foreground) / 0.2);
 }
 
-* {
-  box-shadow: none !important;
-}
+/* Allow box-shadow on color swatches */
 
 ::selection {
   background: hsl(var(--foreground) / 0.08);

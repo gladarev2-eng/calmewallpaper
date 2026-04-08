@@ -72,24 +72,26 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
             {isColor ? (
               <div className="p-4">
                 <div className="flex flex-wrap gap-2.5">
-                  {options.map(opt => (
-                    <button
-                      key={opt.id}
-                      onClick={() => toggle(opt.id)}
-                      className="relative w-8 h-8 flex items-center justify-center"
-                      title={opt.label}
-                    >
-                      {selectedValues.includes(opt.id) && (
-                        <span className="absolute inset-0 rounded-full border border-foreground/60" />
-                      )}
-                      <span
-                        className={`w-5 h-5 rounded-full transition-all duration-500 ${
-                          !selectedValues.includes(opt.id) ? 'border border-foreground/15 hover:scale-110' : ''
-                        }`}
-                        style={{ backgroundColor: opt.hex }}
-                      />
-                    </button>
-                  ))}
+                    {options.map(opt => (
+                      <button
+                        key={opt.id}
+                        onClick={() => toggle(opt.id)}
+                        className="relative w-8 h-8 flex items-center justify-center"
+                        title={opt.label}
+                      >
+                        <span
+                          className={`w-5 h-5 rounded-full transition-all duration-500 ${
+                            !selectedValues.includes(opt.id) ? 'border border-foreground/15 hover:scale-110' : ''
+                          }`}
+                          style={{ 
+                            backgroundColor: opt.hex,
+                            boxShadow: selectedValues.includes(opt.id) 
+                              ? `0 0 0 2px hsl(var(--background)), 0 0 0 3.5px hsl(var(--foreground) / 0.7)` 
+                              : 'none'
+                          }}
+                        />
+                      </button>
+                    ))}
                 </div>
                 {selectedValues.length > 0 && (
                   <button
@@ -242,6 +244,7 @@ const Inspiration = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
                 className="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4"
+                style={{ columnFill: 'balance' as any }}
               >
                 {visibleItems.map((item, i) => (
                   <motion.div

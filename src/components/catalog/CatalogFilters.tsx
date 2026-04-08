@@ -137,14 +137,16 @@ const UnderlineDropdown = ({
                       className="relative w-8 h-8 flex items-center justify-center"
                       title={option.label}
                     >
-                      {selectedValues.includes(option.id) && (
-                        <span className="absolute inset-0 rounded-full border border-foreground/60" />
-                      )}
                       <span
                         className={`w-5 h-5 rounded-full transition-all duration-500 ${
                           !selectedValues.includes(option.id) ? 'border border-foreground/10 hover:scale-110' : ''
                         }`}
-                        style={{ backgroundColor: option.hex }}
+                        style={{ 
+                          backgroundColor: option.hex,
+                          boxShadow: selectedValues.includes(option.id) 
+                            ? `0 0 0 2px hsl(var(--background)), 0 0 0 3.5px hsl(var(--foreground) / 0.7)` 
+                            : 'none'
+                        }}
                       />
                     </button>
                   ))}
