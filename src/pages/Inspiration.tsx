@@ -242,6 +242,7 @@ const Inspiration = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
                 className="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4"
+                style={{ columnFill: 'balance' as any }}
               >
                 {visibleItems.map((item, i) => (
                   <motion.div
