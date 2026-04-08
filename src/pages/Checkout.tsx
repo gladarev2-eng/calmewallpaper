@@ -155,9 +155,9 @@ const Checkout = () => {
 
               <div>
                 <label className="text-caption block mb-2">Фото стены (опционально)</label>
-                <div className="border border-dashed border-foreground/12 p-8 text-center cursor-pointer hover:border-foreground/25 transition-colors duration-500">
-                  <Upload className="w-6 h-6 mx-auto mb-2 text-foreground/25" />
-                  <p className="text-[13px] font-light text-foreground/40">
+                <div className="border-b border-dashed border-foreground/12 pb-8 cursor-pointer hover:border-foreground/25 transition-colors duration-500">
+                  <Upload className="w-5 h-5 mx-auto mb-2 text-foreground/20" />
+                  <p className="text-[13px] font-light text-foreground/35 text-center">
                     Загрузите фото стены для визуализации
                   </p>
                 </div>

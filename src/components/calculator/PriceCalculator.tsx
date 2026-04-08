@@ -37,18 +37,18 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
   };
 
   return (
-    <div className="bg-card p-6 md:p-8 space-y-6">
-      <h3 className="font-display text-2xl">Калькулятор стоимости</h3>
+    <div className="p-6 md:p-8 space-y-6">
+      <h3 className="font-display text-2xl">Индивидуальный расчёт</h3>
 
       {/* Dimensions */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         <div>
           <label className="text-caption block mb-2">Ширина, см</label>
           <input
             type="number"
             value={width}
             onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
-            className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="input-field"
           />
         </div>
         <div>
@@ -57,7 +57,7 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
             type="number"
             value={height}
             onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
-            className="w-full px-4 py-3 bg-background border border-border text-sm focus:outline-none focus:ring-1 focus:ring-ring"
+            className="input-field"
           />
         </div>
       </div>
@@ -65,61 +65,46 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
       {/* Material */}
       <div>
         <label className="text-caption block mb-3">Материал</label>
-        <div className="space-y-2">
+        <div className="space-y-0">
           {materials.filter(m => m.id !== 'canvas').map((material) => (
             <label
               key={material.id}
-              className={`flex items-start gap-3 p-4 cursor-pointer border transition-colors ${
+              onClick={() => setSelectedMaterial(material)}
+              className={`flex items-center justify-between py-3 cursor-pointer border-b border-foreground/8 transition-colors duration-500 ${
                 selectedMaterial.id === material.id
-                  ? 'border-foreground bg-muted/50'
-                  : 'border-border hover:border-foreground/50'
+                  ? 'text-foreground'
+                  : 'text-foreground/50 hover:text-foreground/70'
               }`}
             >
-              <div className="mt-0.5">
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                  selectedMaterial.id === material.id
-                    ? 'border-foreground'
-                    : 'border-muted-foreground'
-                }`}>
-                  {selectedMaterial.id === material.id && (
-                    <div className="w-2 h-2 rounded-full bg-foreground" />
-                  )}
-                </div>
+              <div className="flex items-center gap-3">
+                <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${
+                  selectedMaterial.id === material.id ? 'bg-foreground/60' : 'bg-foreground/15'
+                }`} />
+                <span className="text-[13px] font-light">{material.name}</span>
               </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">{material.name}</span>
-                  {material.priceCoefficient > 1 && (
-                    <span className="text-xs text-muted-foreground">
-                      +{Math.round((material.priceCoefficient - 1) * 100)}%
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">{material.description}</p>
-                {material.forHoreca && (
-                  <span className="inline-block mt-2 px-2 py-0.5 bg-accent text-accent-foreground text-xs">
-                    Для HoReCa
-                  </span>
-                )}
-              </div>
+              {material.priceCoefficient > 1 && (
+                <span className="text-[11px] text-foreground/30 font-light">
+                  +{Math.round((material.priceCoefficient - 1) * 100)}%
+                </span>
+              )}
             </label>
           ))}
         </div>
       </div>
 
       {/* Summary */}
-      <div className="border-t border-border pt-6 space-y-3">
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Площадь</span>
-          <span>{area.toFixed(2)} м²</span>
+      <div className="pt-5 space-y-2">
+        <div className="flex justify-between text-[13px] font-light">
+          <span className="text-foreground/40">Площадь</span>
+          <span className="text-foreground/60">{area.toFixed(2)} м²</span>
         </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Материал</span>
-          <span>{selectedMaterial.name}</span>
+        <div className="flex justify-between text-[13px] font-light">
+          <span className="text-foreground/40">Материал</span>
+          <span className="text-foreground/60">{selectedMaterial.name}</span>
         </div>
         <div className="flex justify-between items-baseline">
-          <span className="text-muted-foreground">Итого</span>
-          <span className="font-display text-3xl">{formatPrice(totalPrice)} ₽</span>
+          <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
+          <span className="font-display text-2xl">{formatPrice(totalPrice)} ₽</span>
         </div>
       </div>
 
@@ -128,11 +113,11 @@ export const PriceCalculator = ({ product }: PriceCalculatorProps) => {
         onClick={handleAddToCart}
         className="btn-primary w-full"
       >
-        Добавить в корзину
+        Запросить расчёт
       </button>
 
-      <p className="text-xs text-muted-foreground text-center">
-        Финальная стоимость уточняется после согласования макета
+      <p className="text-[10px] text-foreground/30 text-center font-light leading-relaxed">
+        Мы подготовим визуализацию и точный расчёт стоимости
       </p>
     </div>
   );

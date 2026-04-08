@@ -193,21 +193,21 @@
     letter-spacing: 0.22em;
   }
 
-  /* Section spacing — generous with breathing room */
+  /* Section spacing — generous with breathing room (+20% air) */
   .section {
-    @apply py-24 md:py-32 lg:py-44;
+    @apply py-28 md:py-40 lg:py-52;
   }
 
   .section-sm {
-    @apply py-16 md:py-24 lg:py-28;
+    @apply py-20 md:py-28 lg:py-36;
   }
 
   .section-lg {
-    @apply py-28 md:py-40 lg:py-56;
+    @apply py-36 md:py-48 lg:py-64;
   }
 
   .section-hero {
-    @apply py-32 md:py-44 lg:py-60;
+    @apply py-40 md:py-52 lg:py-72;
   }
 
   /* Section divider — editorial lookbook style */
@@ -296,19 +296,21 @@
     color: hsl(var(--foreground) / 0.20);
   }
 
-  /* Standard input field */
+  /* Standard input field — ultra-minimalist bottom-border only */
   .input-field {
-    @apply w-full px-4 py-3 bg-transparent text-[13px] font-light transition-colors duration-500;
-    border: 1px solid hsl(var(--foreground) / 0.12);
+    @apply w-full px-0 py-3 bg-transparent text-[13px] font-light transition-colors duration-500;
+    border: none;
+    border-bottom: 1px solid hsl(var(--foreground) / 0.12);
+    border-radius: 0;
   }
 
   .input-field:focus {
     outline: none;
-    border-color: hsl(var(--foreground) / 0.30);
+    border-bottom-color: hsl(var(--foreground) / 0.40);
   }
 
   .input-field::placeholder {
-    color: hsl(var(--foreground) / 0.30);
+    color: hsl(var(--foreground) / 0.25);
   }
 
   /* Grid layouts */
