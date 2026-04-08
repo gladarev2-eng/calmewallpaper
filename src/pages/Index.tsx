@@ -127,7 +127,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 1. Series Showcases ── */}
+      {/* ── 1. Коллекции ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <div className="space-y-28 md:space-y-40">
@@ -169,7 +169,7 @@ const Index = () => {
                           {series.poem}
                         </p>
                         <span className="link-arrow">
-                          Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
+                          Смотреть коллекцию <ArrowRight className="w-3.5 h-3.5" />
                         </span>
                       </div>
                     </div>
@@ -178,6 +178,19 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* CTA — Explore all collections */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center pt-20 md:pt-28 pb-4"
+          >
+            <Link to="/catalog" className="link-arrow text-[11px]">
+              Смотреть все коллекции <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </motion.div>
         </div>
       </section>
 

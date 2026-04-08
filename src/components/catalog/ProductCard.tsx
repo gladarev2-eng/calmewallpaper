@@ -62,7 +62,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04] animate-image-load"
+            className="w-full h-full object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02]"
           />
 
           {/* Favorite */}
@@ -104,7 +104,7 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
 
         {/* Info — name, subline, price */}
         <div className="pt-4 pb-2">
-          <h3 className="text-[15px] font-light tracking-[0.01em] leading-snug text-foreground">
+          <h3 className="text-[15px] font-light tracking-[0.01em] leading-snug text-foreground font-display">
             {product.name}
           </h3>
           <div className="flex items-baseline justify-between mt-1.5">

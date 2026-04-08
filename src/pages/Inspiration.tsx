@@ -232,9 +232,9 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Dense Masonry Grid optimized for 4:5 images */}
+      {/* Dense Masonry Grid — full-width, 4 columns */}
       <section className="pb-20 lg:pb-32">
-        <div className="container-wide">
+        <div style={{ width: '100%', maxWidth: 'none', padding: '0 2vw' }}>
           <AnimatePresence mode="wait">
             {filteredItems.length > 0 ? (
               <motion.div
@@ -243,8 +243,8 @@ const Inspiration = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4"
-                style={{ columnFill: 'balance' as any }}
+                style={{ columnCount: 4, columnGap: '24px' }}
+                className="[column-count:1] md:[column-count:3] lg:[column-count:4]"
               >
                 {visibleItems.map((item, i) => (
                   <motion.div
@@ -253,7 +253,8 @@ const Inspiration = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.7, delay: (i % 3) * 0.05 }}
-                    className="mb-3 md:mb-4 break-inside-avoid"
+                    style={{ breakInside: 'avoid', marginBottom: '24px' }}
+                    className="w-full block"
                   >
                     <button
                       onClick={() => setSelectedItem(item)}
@@ -263,7 +264,8 @@ const Inspiration = () => {
                         <img
                           src={item.image}
                           alt={`${item.productName} в интерьере`}
-                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                         className="w-full h-full object-cover transition-transform duration-[2s] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.02]"
+                         style={{ borderRadius: '2px' }}
                         />
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
