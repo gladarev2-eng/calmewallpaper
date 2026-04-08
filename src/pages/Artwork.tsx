@@ -211,97 +211,75 @@ const Artwork = () => {
 
               <div className="border-t border-foreground/8" />
 
-              {/* ── Configuration ── */}
-              <p className="text-caption">Настройка под интерьер</p>
+              {/* ── Bespoke Inquiry ── */}
+              <p className="text-caption">Индивидуальный расчёт</p>
 
-              {product.type === 'panel' && product.panelSizes ? (
-                <div className="space-y-3">
-                  <p className="text-[12px] text-foreground/50 font-light">Выберите размер</p>
-                  {product.panelSizes.map((size, i) => (
-                    <label
-                      key={i}
-                      onClick={() => setSelectedPanelSize(i)}
-                      className={`flex items-center justify-between py-2.5 px-3 cursor-pointer border text-[12px] font-light transition-all duration-500 ${
-                        selectedPanelSize === i ? 'border-foreground/30' : 'border-foreground/10 hover:border-foreground/20'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2.5 h-2.5 rounded-full border flex items-center justify-center transition-colors duration-500 ${selectedPanelSize === i ? 'border-foreground/50 bg-foreground/40' : 'border-foreground/20'}`}>
-                          {selectedPanelSize === i && <Check className="w-1.5 h-1.5 text-background" />}
-                        </div>
-                        <span className="text-foreground/70">{size.size}</span>
-                      </div>
-                      <span className="text-foreground/50">{formatPrice(size.price)} ₽</span>
-                    </label>
-                  ))}
-                  <button onClick={handleAddToCart} className="btn-primary w-full mt-4">
-                    В корзину
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-5">
-                  <p className="text-[12px] text-foreground/50 font-light">Укажите размеры вашей стены</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-1.5 font-light">Ширина, см</span>
-                      <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
-                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
-                    </div>
-                    <div>
-                      <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-1.5 font-light">Высота, см</span>
-                      <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
-                        className="w-full px-3 py-2.5 bg-transparent border border-foreground/12 text-[13px] font-light focus:outline-none focus:border-foreground/30 transition-colors duration-500" />
-                    </div>
+              <div className="space-y-5">
+                <p className="text-body">
+                  Каждый мурал адаптируется индивидуально под ваше пространство. 
+                  Укажите параметры стены для предварительной оценки.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Ширина, см</span>
+                    <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
+                      className="input-field" />
                   </div>
-
-                  {/* Material */}
-                  <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
-                    <CollapsibleTrigger className="w-full flex items-center justify-between py-2.5 px-3 border border-foreground/12 text-[12px] font-light hover:border-foreground/22 transition-colors duration-500">
-                      <span className="text-foreground/50">Материал</span>
-                      <div className="flex items-center gap-2 text-foreground/70">
-                        <span>{selectedMaterial.name}</span>
-                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-500 ${materialOpen ? 'rotate-180' : ''}`} />
-                      </div>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent>
-                      <div className="border-x border-b border-foreground/12">
-                        {materials.filter(m => m.id !== 'canvas').map((material) => (
-                          <button
-                            key={material.id}
-                            onClick={() => { setSelectedMaterial(material); setMaterialOpen(false); }}
-                            className={`w-full flex items-center justify-between p-3 text-[12px] font-light text-left hover:bg-foreground/4 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/4' : ''}`}
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className={`w-2 h-2 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/50' : 'border border-foreground/20'}`} />
-                              <span className="text-foreground/70">{material.name}</span>
-                            </div>
-                            {material.priceCoefficient > 1 && <span className="text-foreground/35">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
-                          </button>
-                        ))}
-                      </div>
-                    </CollapsibleContent>
-                  </Collapsible>
-
-                  {/* Summary */}
-                  <div className="pt-4 border-t border-foreground/8 space-y-2">
-                    <div className="flex justify-between text-[12px] font-light">
-                      <span className="text-foreground/40">Площадь</span>
-                      <span className="text-foreground/60">{area.toFixed(2)} м²</span>
-                    </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-foreground/40 text-[12px] font-light">Стоимость</span>
-                      <span className="text-xl font-light text-foreground/80">{formatPrice(totalPrice)} ₽</span>
-                    </div>
+                  <div>
+                    <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Высота, см</span>
+                    <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
+                      className="input-field" />
                   </div>
-
-                  <button onClick={handleAddToCart} className="btn-primary w-full">
-                    В корзину
-                  </button>
-                  <p className="text-[10px] text-foreground/35 text-center font-light">
-                    Финальная стоимость уточняется после согласования макета
-                  </p>
                 </div>
-              )}
+
+                {/* Material */}
+                <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
+                  <CollapsibleTrigger className="w-full flex items-center justify-between py-3 border-b border-foreground/12 text-[12px] font-light hover:border-foreground/25 transition-colors duration-500">
+                    <span className="text-foreground/50">Материал</span>
+                    <div className="flex items-center gap-2 text-foreground/70">
+                      <span>{selectedMaterial.name}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-500 ${materialOpen ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="border-b border-foreground/8">
+                      {materials.filter(m => m.id !== 'canvas').map((material) => (
+                        <button
+                          key={material.id}
+                          onClick={() => { setSelectedMaterial(material); setMaterialOpen(false); }}
+                          className={`w-full flex items-center justify-between py-3 text-[12px] font-light text-left hover:bg-foreground/3 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'text-foreground' : 'text-foreground/60'}`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/60' : 'bg-foreground/15'}`} />
+                            <span>{material.name}</span>
+                          </div>
+                          {material.priceCoefficient > 1 && <span className="text-foreground/30">+{Math.round((material.priceCoefficient - 1) * 100)}%</span>}
+                        </button>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Estimate */}
+                <div className="pt-5 space-y-2">
+                  <div className="flex justify-between text-[12px] font-light">
+                    <span className="text-foreground/40">Площадь</span>
+                    <span className="text-foreground/60">{area.toFixed(2)} м²</span>
+                  </div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
+                    <span className="text-xl font-light text-foreground/80 font-display">{formatPrice(totalPrice)} ₽</span>
+                  </div>
+                </div>
+
+                <button onClick={handleAddToCart} className="btn-primary w-full">
+                  Запросить расчёт
+                </button>
+                <p className="text-[10px] text-foreground/30 text-center font-light leading-relaxed">
+                  Мы подготовим визуализацию в вашем интерьере и точный расчёт стоимости
+                </p>
+              </div>
             </div>
           </div>
         </div>
