@@ -78,7 +78,10 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
+            {/* Bottom gradient for hero text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            {/* Top gradient for navigation readability */}
+            <div className="absolute inset-x-0 top-0 h-[25%] bg-gradient-to-b from-black/45 to-transparent" />
           </div>
         ))}
 
@@ -93,7 +96,7 @@ const Index = () => {
           </motion.p>
           <motion.h1
             className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-6 font-display"
-            style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
+            style={{ textShadow: '0 2px 40px rgba(0,0,0,0.5), 0 8px 80px rgba(0,0,0,0.3)' }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4 }}

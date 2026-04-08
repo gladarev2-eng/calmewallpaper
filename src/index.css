@@ -195,19 +195,19 @@
 
   /* Section spacing — generous with breathing room */
   .section {
-    @apply py-24 md:py-32 lg:py-44;
+    @apply py-28 md:py-36 lg:py-48;
   }
 
   .section-sm {
-    @apply py-16 md:py-24 lg:py-28;
+    @apply py-20 md:py-28 lg:py-32;
   }
 
   .section-lg {
-    @apply py-28 md:py-40 lg:py-56;
+    @apply py-32 md:py-44 lg:py-60;
   }
 
   .section-hero {
-    @apply py-32 md:py-44 lg:py-60;
+    @apply py-36 md:py-48 lg:py-64;
   }
 
   /* Section divider — editorial lookbook style */
@@ -339,18 +339,22 @@
     background: hsl(var(--foreground) / 0.06);
   }
 
-  /* Link hover */
+  /* Link hover — underline expand style */
   .link-arrow {
     @apply inline-flex items-center gap-2 text-[10px] uppercase transition-all duration-700;
     letter-spacing: 0.16em;
     font-weight: 400;
     color: hsl(var(--foreground) / 0.6);
+    text-decoration: none;
+    border-bottom: 1px solid hsl(var(--foreground) / 0.15);
+    padding-bottom: 2px;
   }
 
   .link-arrow:hover {
     gap: 10px;
     letter-spacing: 0.2em;
     color: hsl(var(--foreground));
+    border-bottom-color: hsl(var(--foreground) / 0.5);
   }
 }
 

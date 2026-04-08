@@ -30,10 +30,13 @@ export const Header = () => {
   }, []);
 
   // Pages with dark hero backgrounds where header text should be white initially
-  const darkHeroPages = ['/', '/collection'];
+  const darkHeroPages = ['/', '/collection', '/inspiration'];
   const isDarkHero = darkHeroPages.some(p => 
     p === '/' ? location.pathname === '/' : location.pathname.startsWith(p)
   );
+
+  // When NOT on a dark hero page and NOT scrolled, use charcoal text for readability
+  const useCharcoalText = !isDarkHero && !isScrolled;
 
   return (
     <>
@@ -56,7 +59,9 @@ export const Header = () => {
             <Link 
               to="/" 
               className={`text-[15px] font-light uppercase tracking-[0.4em] font-display transition-colors duration-700 ${
-                !isScrolled && isDarkHero ? 'text-white' : 'text-foreground'
+                isScrolled ? 'text-foreground' 
+                : isDarkHero ? 'text-white' 
+                : 'text-foreground'
               }`}
             >
               Calmé
