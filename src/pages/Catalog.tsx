@@ -4,6 +4,9 @@ import { SlidersHorizontal } from 'lucide-react';
 import { products } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 import { CatalogFilters, MobileFilters } from '@/components/catalog/CatalogFilters';
+import heroMural from '@/assets/hero-mural.jpg';
+
+const ITEMS_PER_PAGE = 12;
 
 const Catalog = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -16,6 +19,7 @@ const Catalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('popularity');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const filteredProducts = useMemo(() => {
     let result = products.filter(product => {
@@ -40,6 +44,9 @@ const Catalog = () => {
     return result;
   }, [selectedTypes, selectedCollections, selectedColors, selectedPatterns, selectedRooms, searchQuery, sortBy]);
 
+  const visibleProducts = filteredProducts.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredProducts.length;
+
   const clearAllFilters = () => {
     setSelectedTypes([]);
     setSelectedCollections([]);
@@ -49,6 +56,7 @@ const Catalog = () => {
     setSelectedSizes([]);
     setSelectedWidths([]);
     setSearchQuery('');
+    setVisibleCount(ITEMS_PER_PAGE);
   };
 
   const filterProps = {
@@ -65,24 +73,46 @@ const Catalog = () => {
   const typeLabels: Record<string, string> = { all: 'Все', mural: 'Муралы', panel: 'Панно', companion: 'Фоновые обои' };
 
   return (
-    <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
-      {/* Desktop Header + Filters */}
+    <div className="min-h-screen bg-background">
+      {/* Desktop Hero Banner */}
       <div className="hidden lg:block">
-        <div className="container-wide section-sm pb-0">
-          <h1 className="text-display mb-4">Каталог</h1>
-          <p className="text-body-lg max-w-xl">Архитектурная композиция для вашего пространства — муралы, панно и фоновые текстуры</p>
+        <div className="relative h-[35vh] min-h-[280px] overflow-hidden">
+          <img
+            src={heroMural}
+            alt="Каталог CALMÉ"
+            className="w-full h-full object-cover"
+            style={{ animation: 'slowZoom 12s ease-out forwards' }}
+          />
+          <div className="absolute inset-0 bg-black/45" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
+            >
+              <h1 className="text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] font-light text-white leading-[1] tracking-[-0.03em] font-display mb-4"
+                style={{ textShadow: '0 4px 40px rgba(0,0,0,0.3)' }}
+              >
+                Каталог
+              </h1>
+              <p className="text-[13px] font-light text-white/60 tracking-[0.05em] max-w-md mx-auto">
+                Архитектурная композиция для вашего пространства
+              </p>
+            </motion.div>
+          </div>
         </div>
         <CatalogFilters {...filterProps} />
       </div>
 
       {/* Mobile Header */}
       <div className="lg:hidden">
-        <div className="container-wide pt-16 pb-6">
+        <div className="container-wide pt-28 pb-6">
           <div className="flex items-center gap-5">
             {['all', 'mural', 'panel', 'companion'].map(type => (
               <button
                 key={type}
-                onClick={() => { setSelectedTypes(type === 'all' ? [] : [type]); setSelectedSizes([]); setSelectedWidths([]); }}
+                onClick={() => { setSelectedTypes(type === 'all' ? [] : [type]); setSelectedSizes([]); setSelectedWidths([]); setVisibleCount(ITEMS_PER_PAGE); }}
                 className={`text-[11px] uppercase tracking-[0.14em] font-light pb-1 transition-all duration-500 ${
                   currentType === type ? 'text-foreground border-b border-foreground/30' : 'text-foreground/40'
                 }`}
@@ -118,8 +148,7 @@ const Catalog = () => {
                 transition={{ duration: 0.4 }}
                 className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5"
               >
-                {filteredProducts.map((product, i) => {
-                  // Every 7th item spans 2 columns for editorial rhythm
+                {visibleProducts.map((product, i) => {
                   const isWide = i % 7 === 0 && i > 0;
                   return (
                     <div
@@ -151,6 +180,22 @@ const Catalog = () => {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* Load More */}
+          {hasMore && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center mt-20"
+            >
+              <button
+                onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
+                className="btn-outline"
+              >
+                Смотреть ещё
+              </button>
+            </motion.div>
+          )}
         </div>
       </section>
 

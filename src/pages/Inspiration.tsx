@@ -54,7 +54,7 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors"
+        className="flex items-center gap-2 text-[12px] font-light hover:text-foreground transition-colors duration-500"
       >
         <span className="text-foreground/50">{label}:</span>
         <span className="text-foreground/80">{displayValue}</span>
@@ -89,7 +89,7 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
                 {selectedValues.length > 0 && (
                   <button
                     onClick={() => onChange([])}
-                    className="mt-3 text-[11px] text-foreground/40 hover:text-foreground/60 transition-colors"
+                    className="mt-3 text-[11px] text-foreground/40 hover:text-foreground/60 transition-colors duration-500"
                   >
                     Сбросить
                   </button>
@@ -99,7 +99,7 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
               <>
                 <button
                   onClick={() => { onChange([]); setIsOpen(false); }}
-                  className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors ${selectedValues.length === 0 ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
+                  className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 ${selectedValues.length === 0 ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
                 >
                   Все
                 </button>
@@ -107,7 +107,7 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
                   <button
                     key={opt.id}
                     onClick={() => toggle(opt.id)}
-                    className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
+                    className={`w-full text-left px-4 py-2.5 text-[12px] font-light transition-colors duration-500 flex items-center justify-between ${selectedValues.includes(opt.id) ? 'bg-foreground/5 text-foreground/70' : 'text-foreground/50 hover:bg-foreground/5'}`}
                   >
                     {opt.label}
                     {selectedValues.includes(opt.id) && <X className="w-3 h-3 text-foreground/30" />}
@@ -120,38 +120,6 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
       </AnimatePresence>
     </div>
   );
-};
-
-// Masonry helper: distribute items into columns
-const distributeToColumns = (items: InspirationItem[], numCols: number) => {
-  const columns: InspirationItem[][] = Array.from({ length: numCols }, () => []);
-  const heights = new Array(numCols).fill(0);
-
-  const getAspectHeight = (aspect: string) => {
-    switch (aspect) {
-      case 'tall': return 5 / 4;
-      case 'wide': return 3 / 4;
-      case 'square': return 1;
-      default: return 1;
-    }
-  };
-
-  items.forEach(item => {
-    const shortestCol = heights.indexOf(Math.min(...heights));
-    columns[shortestCol].push(item);
-    heights[shortestCol] += getAspectHeight(item.aspect);
-  });
-
-  return columns;
-};
-
-const getAspectClass = (aspect: string) => {
-  switch (aspect) {
-    case 'tall': return 'aspect-[4/5]';
-    case 'wide': return 'aspect-[4/3]';
-    case 'square': return 'aspect-[1/1]';
-    default: return 'aspect-[4/5]';
-  }
 };
 
 const Inspiration = () => {
@@ -188,8 +156,6 @@ const Inspiration = () => {
   const hasMore = visibleCount < filteredItems.length;
   const hasActiveFilters = selectedRooms.length > 0 || selectedColors.length > 0;
 
-  const columns = distributeToColumns(visibleItems, 3);
-
   const clearAll = () => {
     setSelectedRooms([]);
     setSelectedColors([]);
@@ -201,6 +167,30 @@ const Inspiration = () => {
 
   const getMoodLabels = (moods: MoodType[]) =>
     moods.map(m => moodTypes.find(mt => mt.id === m)?.label || m);
+
+  // Build immersive editorial layout: full-bleed, 50/50 splits, singles
+  const buildEditorialLayout = (items: InspirationItem[]) => {
+    const rows: { type: 'full' | 'split' | 'single'; items: InspirationItem[] }[] = [];
+    let idx = 0;
+    while (idx < items.length) {
+      const pattern = rows.length % 3;
+      if (pattern === 0 && idx < items.length) {
+        // Full-bleed landscape
+        rows.push({ type: 'full', items: [items[idx]] });
+        idx++;
+      } else if (pattern === 1 && idx + 1 < items.length) {
+        // 50/50 split
+        rows.push({ type: 'split', items: [items[idx], items[idx + 1]] });
+        idx += 2;
+      } else {
+        rows.push({ type: 'single', items: [items[idx]] });
+        idx++;
+      }
+    }
+    return rows;
+  };
+
+  const editorialRows = buildEditorialLayout(visibleItems);
 
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
@@ -214,7 +204,7 @@ const Inspiration = () => {
           <p className="text-caption mb-4">Вдохновение</p>
           <h1 className="text-display mb-4">Муралы в интерьере</h1>
           <p className="text-body-lg max-w-xl">
-            Кураторская подборка интерьерных решений. Найдите своё пространство по помещению и цвету.
+            Погрузитесь в мир архитектурных композиций. Каждый интерьер — отдельная визуальная история.
           </p>
         </motion.div>
       </div>
@@ -244,7 +234,7 @@ const Inspiration = () => {
               {hasActiveFilters && (
                 <button
                   onClick={clearAll}
-                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/50 hover:text-foreground/80 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] font-light text-foreground/50 hover:text-foreground/80 transition-colors duration-500"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   Сбросить
@@ -259,79 +249,150 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Masonry Grid — 3 columns, varied proportions */}
+      {/* Immersive Editorial Lookbook Grid */}
       <section className="pb-20 lg:pb-32">
-        <div className="container-wide">
-          <AnimatePresence mode="wait">
-            {filteredItems.length > 0 ? (
-              <motion.div
-                key="gallery"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
-              >
-                {columns.map((col, colIdx) => (
-                  <div key={colIdx} className="flex flex-col gap-3">
-                    {col.map((item, i) => (
-                      <motion.div
-                        key={item.id}
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: (colIdx * col.length + i) * 0.03, duration: 0.5 }}
+        <AnimatePresence mode="wait">
+          {filteredItems.length > 0 ? (
+            <motion.div
+              key="gallery"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-2"
+            >
+              {editorialRows.map((row, rowIdx) => {
+                if (row.type === 'full') {
+                  const item = row.items[0];
+                  return (
+                    <motion.div
+                      key={`row-${rowIdx}`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ duration: 0.8 }}
+                    >
+                      <button
+                        onClick={() => setSelectedItem(item)}
+                        className="group block relative w-full overflow-hidden aspect-[21/9] focus:outline-none"
                       >
-                        <button
-                          onClick={() => setSelectedItem(item)}
-                          className={`group block relative w-full overflow-hidden focus:outline-none ${getAspectClass(item.aspect)}`}
-                        >
-                          <img
-                            src={item.image}
-                            alt={`${item.productName} в интерьере`}
-                            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                            <div className="absolute bottom-0 left-0 right-0 p-5">
-                              <p className="text-[10px] uppercase tracking-[0.15em] text-white/70 mb-1 font-light">
-                                {getRoomLabel(item.room)}
-                              </p>
-                              <h3 className="text-white font-light text-[14px]">
-                                {item.productName}
-                              </h3>
-                            </div>
+                        <img
+                          src={item.image}
+                          alt={`${item.productName} в интерьере`}
+                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                            <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
+                              {getRoomLabel(item.room)}
+                            </p>
+                            <h3 className="text-white font-display font-light text-xl md:text-2xl">
+                              {item.productName}
+                            </h3>
                           </div>
-                        </button>
-                      </motion.div>
-                    ))}
-                  </div>
-                ))}
-              </motion.div>
-            ) : (
-              <motion.div
-                key="empty"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="text-center py-32"
-              >
-                <p className="text-[14px] font-light text-foreground/40 mb-6">
-                  По выбранным фильтрам ничего не найдено
-                </p>
-                <button onClick={clearAll} className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors underline underline-offset-4">
-                  Сбросить фильтры
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                        </div>
+                      </button>
+                    </motion.div>
+                  );
+                }
 
-          {hasMore && (
-            <div className="text-center mt-16">
-              <button onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)} className="btn-outline">
-                Показать ещё
+                if (row.type === 'split') {
+                  return (
+                    <div key={`row-${rowIdx}`} className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {row.items.map((item, i) => (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: '-50px' }}
+                          transition={{ duration: 0.8, delay: i * 0.1 }}
+                        >
+                          <button
+                            onClick={() => setSelectedItem(item)}
+                            className="group block relative w-full overflow-hidden aspect-[4/5] focus:outline-none"
+                          >
+                            <img
+                              src={item.image}
+                              alt={`${item.productName} в интерьере`}
+                              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                                <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
+                                  {getRoomLabel(item.room)}
+                                </p>
+                                <h3 className="text-white font-display font-light text-lg">
+                                  {item.productName}
+                                </h3>
+                              </div>
+                            </div>
+                          </button>
+                        </motion.div>
+                      ))}
+                    </div>
+                  );
+                }
+
+                // single
+                const item = row.items[0];
+                return (
+                  <motion.div
+                    key={`row-${rowIdx}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.8 }}
+                    className="max-w-5xl mx-auto px-6"
+                  >
+                    <button
+                      onClick={() => setSelectedItem(item)}
+                      className="group block relative w-full overflow-hidden aspect-[16/10] focus:outline-none"
+                    >
+                      <img
+                        src={item.image}
+                        alt={`${item.productName} в интерьере`}
+                        className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
+                            {getRoomLabel(item.room)}
+                          </p>
+                          <h3 className="text-white font-display font-light text-lg">
+                            {item.productName}
+                          </h3>
+                        </div>
+                      </div>
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-32"
+            >
+              <p className="text-body-lg mb-6">
+                По выбранным фильтрам ничего не найдено
+              </p>
+              <button onClick={clearAll} className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500 underline underline-offset-4">
+                Сбросить фильтры
               </button>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </AnimatePresence>
+
+        {hasMore && (
+          <div className="text-center mt-20">
+            <button onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)} className="btn-outline">
+              Смотреть ещё
+            </button>
+          </div>
+        )}
       </section>
 
       {/* Lightbox */}
@@ -382,7 +443,7 @@ const Inspiration = () => {
                   ))}
                 </div>
                 <div className="border-t border-foreground/8 my-4" />
-                <p className="text-[13px] font-light text-foreground/50 mb-4">
+                <p className="text-body mb-4">
                   Понравился этот принт? Посмотрите его детально в каталоге
                 </p>
                 <Link
@@ -395,7 +456,7 @@ const Inspiration = () => {
                 </Link>
                 <button
                   onClick={() => setSelectedItem(null)}
-                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors"
+                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500"
                 >
                   <X className="w-4 h-4" />
                   Закрыть
@@ -404,7 +465,7 @@ const Inspiration = () => {
             </motion.div>
             <button
               onClick={() => setSelectedItem(null)}
-              className="lg:hidden fixed top-4 right-4 z-20 w-10 h-10 bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors"
+              className="lg:hidden fixed top-4 right-4 z-20 w-10 h-10 bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors duration-500"
             >
               <X className="w-5 h-5 text-white" />
             </button>

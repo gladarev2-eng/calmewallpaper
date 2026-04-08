@@ -21,7 +21,7 @@ const Studio = () => {
             className="w-full h-full object-cover"
             style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/5 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
         </div>
 
         <div className="relative z-10 container-wide pb-20 md:pb-28">
@@ -31,7 +31,9 @@ const Studio = () => {
             transition={{ duration: 1 }}
           >
             <p className="text-[10px] font-light uppercase tracking-[0.25em] text-white/50 mb-4">О студии</p>
-            <h1 className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1.05] tracking-[-0.03em] font-display">
+            <h1 className="text-display text-white"
+              style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
+            >
               На пересечении дизайна<br />интерьера и цифрового искусства
             </h1>
           </motion.div>
@@ -47,7 +49,7 @@ const Studio = () => {
         </motion.div>
       </section>
 
-      {/* Manifesto */}
+      {/* Manifesto — Large Editorial Blockquote */}
       <section className="section-lg bg-background">
         <div className="container-narrow">
           <motion.div
@@ -58,10 +60,17 @@ const Studio = () => {
             className="text-center"
           >
             <p className="text-caption mb-10">Манифест</p>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-light leading-[1.2] tracking-[-0.02em] mb-10 text-foreground font-display">
+            <h2 className="text-title mb-12 text-foreground">
               Мы создаём не декоративное покрытие,<br />
               а визуальную среду
             </h2>
+            <div className="blockquote-editorial max-w-2xl mx-auto text-left mb-12">
+              <p className="text-[18px] md:text-[22px] leading-[1.6] text-foreground/70">
+                «Каждый мурал — это архитектурная композиция, рождённая на стыке передовых нейросетей 
+                и сложного арт-дирекшна. Результат — беспрецедентная детализация и глубокая прорисовка, 
+                которую невозможно достичь стандартными методами обработки в Photoshop.»
+              </p>
+            </div>
             <p className="text-body-lg max-w-xl mx-auto">
               CALMÉ — это архитектурная композиция на стене. Изображения с глубокой 
               детализацией и мягкой передачей цвета, приближенной к живописи, которые 
@@ -71,59 +80,122 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Philosophy — Image + Text */}
+      {/* Storytelling — Split Screen Sticky */}
       <section className="bg-background">
         <div className="container-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px]"
-            >
-              <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 bg-card/30"
-            >
-              <div>
-                <p className="text-caption mb-5">Философия</p>
-                <h2 className="text-title mb-8">Бутик, а не конвейер</h2>
-                <p className="text-body-lg mb-10">
-                  Каждый заказ — индивидуальная работа. От адаптации изображения 
-                  под конкретное пространство до контроля качества печати. 
-                  Мы не производим обои тысячами рулонов.
-                </p>
-                <div className="space-y-5">
-                  {[
-                    'Персональные консультации по выбору',
-                    'Адаптация цветов под освещение интерьера',
-                    'Визуализация в вашем пространстве',
-                    'Контроль качества каждого заказа',
-                  ].map((item, i) => (
-                    <p key={i} className="text-[13px] font-light text-foreground/45 flex items-center gap-4">
-                      <span className="w-6 h-[0.5px] bg-foreground/20 shrink-0" />
-                      {item}
-                    </p>
-                  ))}
+            {/* Sticky Image */}
+            <div className="lg:sticky lg:top-24 lg:self-start">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="aspect-[4/5] lg:aspect-auto lg:h-screen"
+              >
+                <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
+              </motion.div>
+            </div>
+
+            {/* Scrolling Text Blocks */}
+            <div className="flex flex-col">
+              {/* Block 1 — Philosophy */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 min-h-[50vh] lg:min-h-screen bg-card/30"
+              >
+                <div>
+                  <p className="text-caption mb-5">Философия</p>
+                  <h2 className="text-title mb-8">Бутик, а не конвейер</h2>
+                  <p className="text-body-lg mb-10">
+                    Каждый заказ — индивидуальная работа. От адаптации изображения 
+                    под конкретное пространство до контроля качества печати. 
+                    Мы не производим обои тысячами рулонов.
+                  </p>
+                  <div className="space-y-5">
+                    {[
+                      'Персональные консультации по выбору',
+                      'Адаптация цветов под освещение интерьера',
+                      'Визуализация в вашем пространстве',
+                      'Контроль качества каждого заказа',
+                    ].map((item, i) => (
+                      <p key={i} className="text-[13px] font-light text-foreground/45 flex items-center gap-4">
+                        <span className="w-6 h-[0.5px] bg-foreground/20 shrink-0" />
+                        {item}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-                <div className="mt-12">
-                  <Link to="/contacts" className="btn-outline">
-                    Связаться с нами
-                  </Link>
+              </motion.div>
+
+              {/* Block 2 — Process */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 min-h-[50vh] lg:min-h-screen bg-background"
+              >
+                <div>
+                  <p className="text-caption mb-5">Процесс</p>
+                  <h2 className="text-title mb-8">Нейросети × арт-дирекшн</h2>
+                  <p className="text-body-lg mb-8">
+                    Наши муралы рождаются в процессе сложного цифрового синтеза. 
+                    Передовые нейросети генерируют основу с беспрецедентной глубиной текстур, 
+                    а затем художественный директор выстраивает композицию, выверяет колористику 
+                    и добавляет финальные слои детализации.
+                  </p>
+                  <p className="text-body-lg">
+                    Результат — изображения, в которых каждый сантиметр насыщен деталями, 
+                    невозможными при традиционной обработке в Photoshop. Это не фильтр 
+                    поверх стоковой фотографии — это новый тип визуального произведения.
+                  </p>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+
+              {/* Block 3 — Quality */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 min-h-[50vh] lg:min-h-screen bg-card/30"
+              >
+                <div>
+                  <p className="text-caption mb-5">Качество</p>
+                  <h2 className="text-title mb-8">Галерейный стандарт печати</h2>
+                  <p className="text-body-lg mb-10">
+                    Печатаем на премиальных материалах с разрешением до 2400 DPI. 
+                    Файлы подготавливаются в разрешении до 45 000 пикселей — 
+                    каждая текстура видна с расстояния 30 см.
+                  </p>
+                  <div className="grid grid-cols-3 gap-8">
+                    {[
+                      { metric: '45K', label: 'пикселей' },
+                      { metric: '2400', label: 'DPI' },
+                      { metric: '6 м', label: 'без швов' },
+                    ].map((item, i) => (
+                      <div key={i}>
+                        <span className="text-[28px] font-display font-light tracking-[-0.02em] text-foreground block mb-1">
+                          {item.metric}
+                        </span>
+                        <span className="text-[11px] font-light text-foreground/35 uppercase tracking-[0.1em]">
+                          {item.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Values — large visuals with text */}
+      {/* Values — large alternating image/text blocks */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <motion.div
@@ -181,7 +253,7 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Materials — larger images */}
+      {/* Materials */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
