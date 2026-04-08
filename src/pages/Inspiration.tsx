@@ -353,7 +353,7 @@ const Inspiration = () => {
                     </p>
                   )}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {getMoodLabels([selectedItem.mood]).map(mood => (
+                    {getMoodLabels(selectedItem.mood).map(mood => (
                       <span key={mood} className="text-[10px] uppercase tracking-[0.1em] text-white/30 border border-white/10 px-2.5 py-1">
                         {mood}
                       </span>
