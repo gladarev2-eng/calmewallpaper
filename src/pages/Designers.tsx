@@ -189,7 +189,7 @@ const Designers = () => {
             <h2 className="text-title">Сервис для дизайнеров</h2>
           </div>
 
-          <div className="space-y-20 md:space-y-28 lg:space-y-36">
+          <div className="space-y-0 divide-y divide-foreground/8">
             {services.map((item, i) => (
               <motion.div
                 key={item.num}
