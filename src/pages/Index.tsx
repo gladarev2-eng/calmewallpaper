@@ -127,7 +127,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 1. Series Showcases ── */}
+      {/* ── 1. Коллекции ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <div className="space-y-28 md:space-y-40">
