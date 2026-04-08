@@ -70,10 +70,17 @@ const Index = () => {
 
   const featuredProducts = products.filter(p => p.type !== 'companion').slice(0, 6);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroY = useTransform(heroProgress, [0, 1], ['0%', '25%']);
+
   return (
     <div>
-      {/* ── Hero ── */}
-      <section className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
+      {/* ── Hero with Parallax ── */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
           <div
             key={i}
