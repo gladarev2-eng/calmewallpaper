@@ -34,7 +34,7 @@ const Artwork = () => {
   const [selectedPanelSize, setSelectedPanelSize] = useState(0);
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [materialOpen, setMaterialOpen] = useState(false);
-  const [activeInfoTab, setActiveInfoTab] = useState<'print' | 'material'>('print');
+  const [activeInfoTab, setActiveInfoTab] = useState<'material' | 'print'>('material');
   const [selectedInfoMaterial, setSelectedInfoMaterial] = useState<Material>(materials[0]);
   const { addItem } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -106,7 +106,7 @@ const Artwork = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent" />
 
         <div className="absolute bottom-10 left-6 md:bottom-16 md:left-12 lg:bottom-20 lg:left-16">
-          <p className="text-[10px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
+          <p className="text-[11px] font-light uppercase tracking-[0.2em] text-white/50 mb-3">
             {product.collection}
           </p>
           <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.05] tracking-[-0.02em] font-display">
@@ -114,20 +114,20 @@ const Artwork = () => {
           </h1>
         </div>
 
-        <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-70 transition-opacity duration-500 text-[9px] uppercase tracking-[0.12em] text-white/70">
+        <div className="absolute top-6 right-6 flex items-center gap-1.5 opacity-0 group-hover:opacity-70 transition-opacity duration-500 text-[10px] uppercase tracking-[0.12em] text-white/70">
           <ZoomIn className="w-3.5 h-3.5" />
           Увеличить
         </div>
 
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 animate-bounce">
-          <span className="text-[9px] uppercase tracking-[0.15em]">Листайте вниз</span>
+          <span className="text-[10px] uppercase tracking-[0.15em]">Листайте вниз</span>
           <ChevronDown className="w-3.5 h-3.5" />
         </div>
       </section>
 
       {/* Breadcrumbs */}
       <div className="container-wide pt-8 pb-4">
-        <nav className="flex items-center gap-2 text-[10px] text-foreground/40 font-light">
+        <nav className="flex items-center gap-2 text-[11px] text-foreground/40 font-light">
           <Link to="/" className="hover:text-foreground/70 transition-colors duration-500">Главная</Link>
           <span className="text-foreground/20">/</span>
           <Link to="/catalog" className="hover:text-foreground/70 transition-colors duration-500">Каталог</Link>
@@ -137,7 +137,7 @@ const Artwork = () => {
       </div>
 
       {/* ── Main: Gallery + Info ── */}
-      <section className="container-wide py-16 lg:py-24">
+      <section className="container-wide py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
 
           {/* LEFT — Stacked gallery */}
@@ -159,7 +159,7 @@ const Artwork = () => {
 
           {/* RIGHT — Sticky info */}
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="lg:sticky lg:top-28 space-y-6">
+            <div className="lg:sticky lg:top-28 space-y-5">
               <p className="text-caption">{product.collection}</p>
               <h2 className="text-2xl md:text-3xl font-light leading-tight tracking-[-0.02em] text-foreground font-display">
                 {product.name}
@@ -169,26 +169,11 @@ const Artwork = () => {
                 {product.description}
               </p>
 
-              {/* Material & type info block — compact */}
-              <div className="py-5 border-t border-b border-foreground/8 space-y-3">
-                {[
-                  { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
-                  { label: 'Сюжет', value: patternLabel },
-                  { label: 'Коллекция', value: product.collection },
-                  ...(product.maxWidth ? [{ label: 'Макс. ширина', value: `до ${product.maxWidth} см` }] : []),
-                ].map((row, i) => (
-                  <div key={i} className="flex justify-between text-[13px] font-light">
-                    <span className="text-foreground/40">{row.label}</span>
-                    <span className="text-foreground/70">{row.value}</span>
-                  </div>
-                ))}
-              </div>
-
               {/* Action buttons */}
               <div className="flex gap-3">
                 <button
                   onClick={() => { toggleFavorite(product.id); toast.success(isInFavorites ? 'Удалено из избранного' : 'Добавлено в избранное'); }}
-                  className={`flex items-center gap-2 px-4 py-2.5 border text-[10px] uppercase tracking-[0.12em] font-light transition-all duration-500 ${
+                  className={`flex items-center gap-2 px-4 py-2.5 border text-[11px] uppercase tracking-[0.12em] font-light transition-all duration-500 ${
                     isInFavorites ? 'border-foreground/40 text-foreground/80' : 'border-foreground/15 text-foreground/50 hover:border-foreground/30'
                   }`}
                 >
@@ -197,7 +182,7 @@ const Artwork = () => {
                 </button>
                 <button
                   onClick={() => toast.info('Свяжитесь через страницу контактов')}
-                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/15 text-[10px] uppercase tracking-[0.12em] font-light text-foreground/50 hover:border-foreground/30 transition-all duration-500"
+                  className="flex items-center gap-2 px-4 py-2.5 border border-foreground/15 text-[11px] uppercase tracking-[0.12em] font-light text-foreground/50 hover:border-foreground/30 transition-all duration-500"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
                   Задать вопрос
@@ -216,18 +201,18 @@ const Artwork = () => {
 
               <div className="space-y-5">
                 <p className="text-body">
-                  Каждый мурал адаптируется индивидуально под ваше пространство. 
+                  Каждый мурал адаптируется индивидуально под ваше пространство.
                   Укажите параметры стены для предварительной оценки.
                 </p>
 
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Ширина, см</span>
+                    <span className="text-[10px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Ширина, см</span>
                     <input type="number" value={width} onChange={(e) => setWidth(Math.max(50, Math.min(600, Number(e.target.value))))}
                       className="input-field" />
                   </div>
                   <div>
-                    <span className="text-[9px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Высота, см</span>
+                    <span className="text-[10px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Высота, см</span>
                     <input type="number" value={height} onChange={(e) => setHeight(Math.max(50, Math.min(400, Number(e.target.value))))}
                       className="input-field" />
                   </div>
@@ -235,7 +220,7 @@ const Artwork = () => {
 
                 {/* Material */}
                 <Collapsible open={materialOpen} onOpenChange={setMaterialOpen}>
-                  <CollapsibleTrigger className="w-full flex items-center justify-between py-3 border-b border-foreground/12 text-[12px] font-light hover:border-foreground/25 transition-colors duration-500">
+                  <CollapsibleTrigger className="w-full flex items-center justify-between py-3 border-b border-foreground/12 text-[13px] font-light hover:border-foreground/25 transition-colors duration-500">
                     <span className="text-foreground/50">Материал</span>
                     <div className="flex items-center gap-2 text-foreground/70">
                       <span>{selectedMaterial.name}</span>
@@ -248,7 +233,7 @@ const Artwork = () => {
                         <button
                           key={material.id}
                           onClick={() => { setSelectedMaterial(material); setMaterialOpen(false); }}
-                          className={`w-full flex items-center justify-between py-3 text-[12px] font-light text-left hover:bg-foreground/3 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'text-foreground' : 'text-foreground/60'}`}
+                          className={`w-full flex items-center justify-between py-3 text-[13px] font-light text-left hover:bg-foreground/3 transition-colors duration-500 ${selectedMaterial.id === material.id ? 'text-foreground' : 'text-foreground/60'}`}
                         >
                           <div className="flex items-center gap-2">
                             <div className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${selectedMaterial.id === material.id ? 'bg-foreground/60' : 'bg-foreground/15'}`} />
@@ -262,13 +247,13 @@ const Artwork = () => {
                 </Collapsible>
 
                 {/* Estimate */}
-                <div className="pt-5 space-y-2">
-                  <div className="flex justify-between text-[12px] font-light">
+                <div className="pt-4 space-y-2">
+                  <div className="flex justify-between text-[13px] font-light">
                     <span className="text-foreground/40">Площадь</span>
                     <span className="text-foreground/60">{area.toFixed(2)} м²</span>
                   </div>
                   <div className="flex justify-between items-baseline">
-                    <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
+                    <span className="text-foreground/40 text-[13px] font-light">Ориентировочно</span>
                     <span className="text-xl font-light text-foreground/80 font-display">{formatPrice(totalPrice)} ₽</span>
                   </div>
                 </div>
@@ -276,7 +261,7 @@ const Artwork = () => {
                 <button onClick={handleAddToCart} className="btn-primary w-full">
                   Запросить расчёт
                 </button>
-                <p className="text-[10px] text-foreground/30 text-center font-light leading-relaxed">
+                <p className="text-[11px] text-foreground/30 text-center font-light leading-relaxed">
                   Мы подготовим визуализацию в вашем интерьере и точный расчёт стоимости
                 </p>
               </div>
@@ -285,52 +270,19 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── Macro Detail Gallery ── */}
-      <section className="section border-t border-foreground/6">
-        <div className="container-wide">
-          <div className="mb-16">
-            <p className="text-caption mb-4">Детализация</p>
-            <h2 className="text-title">Макро-текстуры</h2>
-            <p className="text-body-lg mt-4 max-w-xl">
-              Беспрецедентная проработка деталей. Каждый фрагмент — самостоятельная композиция, 
-              раскрывающая глубину и сложность оригинала.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
-            {product.images.map((img, i) => {
-              const isWide = i === 0 || i === 3;
-              return (
-                <div
-                  key={`macro-${i}`}
-                  className={`overflow-hidden group/macro cursor-zoom-in ${isWide ? 'col-span-2 aspect-[16/9]' : 'aspect-[3/4]'}`}
-                  onClick={() => { setSelectedImage(i % product.images.length); setShowFullscreen(true); }}
-                >
-                  <img
-                    src={getImageSrc(img)}
-                    alt={`${product.name} — макро-деталь ${i + 1}`}
-                    className="w-full h-full object-cover scale-[1.5] transition-transform duration-[2s] group-hover/macro:scale-[1.55]"
-                    style={{ objectPosition: `${30 + i * 15}% ${20 + i * 10}%` }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── About Print / About Material — tabbed section ── */}
-      <section className="section border-t border-foreground/6">
+      {/* ── About Material / About Print — tabbed section (material first) ── */}
+      <section className="py-20 md:py-28 border-t border-foreground/6">
         <div className="container-wide">
           {/* Tab headers */}
           <div className="flex gap-8 mb-12 border-b border-foreground/8">
             {[
-              { id: 'print' as const, label: 'О принте' },
               { id: 'material' as const, label: 'О материале' },
+              { id: 'print' as const, label: 'О принте' },
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveInfoTab(tab.id)}
-                className={`pb-4 text-[12px] uppercase tracking-[0.14em] font-light transition-all duration-700 relative ${
+                className={`pb-4 text-[13px] uppercase tracking-[0.14em] font-light transition-all duration-700 relative ${
                   activeInfoTab === tab.id
                     ? 'text-foreground'
                     : 'text-foreground/40 hover:text-foreground/60'
@@ -345,68 +297,7 @@ const Artwork = () => {
           </div>
 
           <AnimatePresence mode="wait">
-            {activeInfoTab === 'print' ? (
-              <motion.div
-                key="print"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16"
-              >
-                {/* Specs table */}
-                <div className="space-y-4">
-                  {[
-                    { label: 'Коллекция', value: product.collection },
-                    { label: 'Пропорция', value: product.aspectRatio || '5:3' },
-                    { label: 'Макс. размер', value: product.maxWidth ? `${product.maxWidth}×${product.maxHeight || 320} см` : '600×320 см' },
-                    { label: 'Разрешение', value: '2400 DPI / 45K px' },
-                    { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
-                    { label: 'Настроение', value: patternLabel },
-                  ].map((row, i) => (
-                    <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[13px] font-light">
-                      <span className="text-foreground/40">{row.label}</span>
-                      <span className="text-foreground/70">{row.value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Print quality text + stats */}
-                <div>
-                  <p className="text-body-lg mb-8">
-                    Наши принты сохраняют безупречную чёткость даже на высоте 6 метров. 
-                    Каждая прожилка камня или мазок кисти выглядят так, будто они нанесены вручную.
-                  </p>
-                  <div className="flex gap-10">
-                    <div>
-                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">45K</p>
-                      <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">пикселей</p>
-                    </div>
-                    <div>
-                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">2400</p>
-                      <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">DPI</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Recommended rooms */}
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.15em] text-foreground/40 font-light mb-4">
-                    Рекомендуемые помещения
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {product.roomTypes.map(r => {
-                      const label = roomTypes.find(rt => rt.id === r)?.label;
-                      return label ? (
-                        <span key={r} className="px-4 py-2 border border-foreground/12 text-[12px] font-light text-foreground/60">
-                          {label}
-                        </span>
-                      ) : null;
-                    })}
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
+            {activeInfoTab === 'material' ? (
               <motion.div
                 key="material"
                 initial={{ opacity: 0, y: 10 }}
@@ -420,7 +311,7 @@ const Artwork = () => {
                     <button
                       key={mat.id}
                       onClick={() => setSelectedInfoMaterial(mat)}
-                      className={`px-4 py-2.5 text-[11px] font-light tracking-[0.02em] transition-all duration-500 ${
+                      className={`px-4 py-2.5 text-[12px] font-light tracking-[0.02em] transition-all duration-500 ${
                         selectedInfoMaterial.id === mat.id
                           ? 'bg-foreground text-background'
                           : 'border border-foreground/15 text-foreground/60 hover:border-foreground/30'
@@ -440,7 +331,7 @@ const Artwork = () => {
                   {/* Material specs */}
                   <div>
                     <p className="text-body-lg mb-8">{selectedInfoMaterial.description}</p>
-                    
+
                     <div className="space-y-4 mb-8">
                       {[
                         { label: 'Шов', value: `Бесшовный до ${product.maxWidth || 320} см` },
@@ -448,7 +339,7 @@ const Artwork = () => {
                         { label: 'Макс. ширина', value: `${product.maxWidth || 320} см` },
                         { label: 'Уход', value: selectedInfoMaterial.care },
                       ].map((row, i) => (
-                        <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[13px] font-light">
+                        <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[14px] font-light">
                           <span className="text-foreground/40">{row.label}</span>
                           <span className="text-foreground/70">{row.value}</span>
                         </div>
@@ -457,7 +348,7 @@ const Artwork = () => {
 
                     <div className="flex flex-wrap gap-x-6 gap-y-2 mb-8">
                       {selectedInfoMaterial.features.map((f, i) => (
-                        <span key={i} className="flex items-center gap-2 text-[12px] font-light text-foreground/50">
+                        <span key={i} className="flex items-center gap-2 text-[13px] font-light text-foreground/50">
                           <CheckCircle2 className="w-3.5 h-3.5 text-foreground/30" strokeWidth={1.5} />
                           {f}
                         </span>
@@ -480,9 +371,66 @@ const Artwork = () => {
                       <div className="absolute inset-0 bg-foreground/5" />
                     </div>
                     <div className="pt-4">
-                      <p className="text-[14px] font-light text-foreground mb-1">{selectedInfoMaterial.name}</p>
-                      <p className="text-[12px] font-light text-foreground/45">{selectedInfoMaterial.texture}</p>
+                      <p className="text-[15px] font-light text-foreground mb-1">{selectedInfoMaterial.name}</p>
+                      <p className="text-[13px] font-light text-foreground/45">{selectedInfoMaterial.texture}</p>
                     </div>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="print"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16"
+              >
+                {/* Print quality text + stats */}
+                <div>
+                  <p className="text-body-lg mb-8">
+                    Наши принты сохраняют безупречную чёткость даже на высоте 6 метров.
+                    Каждая прожилка камня или мазок кисти выглядят так, будто они нанесены вручную.
+                  </p>
+                  <div className="flex gap-10 mb-8">
+                    <div>
+                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">45K</p>
+                      <p className="text-[11px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">пикселей</p>
+                    </div>
+                    <div>
+                      <p className="text-3xl lg:text-4xl font-extralight tracking-[-0.02em] text-foreground">2400</p>
+                      <p className="text-[11px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-1">DPI</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    {[
+                      { label: 'Коллекция', value: product.collection },
+                      { label: 'Пропорция', value: product.aspectRatio || '5:3' },
+                      { label: 'Макс. размер', value: product.maxWidth ? `${product.maxWidth}×${product.maxHeight || 320} см` : '600×320 см' },
+                      { label: 'Тип', value: product.type === 'mural' ? 'Мурал' : product.type === 'panel' ? 'Панно' : 'Фоновые обои' },
+                    ].map((row, i) => (
+                      <div key={i} className="flex justify-between py-2 border-b border-foreground/6 text-[14px] font-light">
+                        <span className="text-foreground/40">{row.label}</span>
+                        <span className="text-foreground/70">{row.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Recommended rooms */}
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.15em] text-foreground/40 font-light mb-4">
+                    Рекомендуемые помещения
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {product.roomTypes.map(r => {
+                      const label = roomTypes.find(rt => rt.id === r)?.label;
+                      return label ? (
+                        <span key={r} className="px-4 py-2 border border-foreground/12 text-[13px] font-light text-foreground/60">
+                          {label}
+                        </span>
+                      ) : null;
+                    })}
                   </div>
                 </div>
               </motion.div>
@@ -491,48 +439,26 @@ const Artwork = () => {
         </div>
       </section>
 
-      {/* ── How it works ── */}
-      <section className="section-lg border-t border-foreground/6">
-        <div className="container-wide">
-          <motion.div
-            className="mb-20"
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-caption mb-4">Процесс</p>
-            <h2 className="text-title">Как это работает</h2>
-          </motion.div>
-
-          <div className="max-w-2xl space-y-14">
-            {[
-              { step: '01', title: 'Выбор дизайна', desc: 'Выберите изображение из каталога или обсудите индивидуальную разработку' },
-              { step: '02', title: 'Адаптация под стену', desc: 'Масштабирование, цветокоррекция и композиция под размеры вашего пространства' },
-              { step: '03', title: 'Утверждение макета', desc: 'Визуализация в интерьере и финальное согласование перед печатью' },
-              { step: '04', title: 'Печать и доставка', desc: 'Производство на премиальных материалах, доставка по всей России' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                className="flex gap-8"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-              >
-                <span className="text-[11px] tracking-[0.2em] text-foreground/25 pt-1 shrink-0 font-light">{item.step}</span>
-                <div>
-                  <h3 className="text-[15px] font-light mb-2 text-foreground">{item.title}</h3>
-                  <p className="text-body">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
+      {/* ── Related products (same collection) ── */}
+      {relatedProducts.length > 0 && (
+        <section className="py-20 md:py-28 border-t border-foreground/6">
+          <div className="container-wide">
+            <div className="mb-12">
+              <p className="text-caption mb-3">Другие дизайны</p>
+              <h2 className="text-title">{product.collection}</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+              {relatedProducts.map((p, i) => (
+                <ProductCard key={p.id} product={p} index={i} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Companion Wallpapers ── */}
       {companionWallpapers.length > 0 && (
-        <section className="section border-t border-foreground/6">
+        <section className="py-20 md:py-28 border-t border-foreground/6">
           <div className="container-wide">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
               <div className="lg:col-span-4">
@@ -550,7 +476,7 @@ const Artwork = () => {
                       <div className="aspect-[4/5] overflow-hidden bg-muted mb-3">
                         <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
                       </div>
-                      <p className="text-[12px] font-light text-foreground/60">{wallpaper.name}</p>
+                      <p className="text-[13px] font-light text-foreground/60">{wallpaper.name}</p>
                     </Link>
                   ))}
                 </div>
@@ -560,22 +486,44 @@ const Artwork = () => {
         </section>
       )}
 
-      {/* ── Related products ── */}
-      {relatedProducts.length > 0 && (
-        <section className="section border-t border-foreground/6">
-          <div className="container-wide">
-            <div className="mb-12">
-              <p className="text-caption mb-3">Из этой коллекции</p>
-              <h2 className="text-title">{product.collection}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
-              {relatedProducts.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} />
-              ))}
-            </div>
+      {/* ── How it works ── */}
+      <section className="py-20 md:py-28 border-t border-foreground/6">
+        <div className="container-wide">
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-caption mb-4">Процесс</p>
+            <h2 className="text-title">Как это работает</h2>
+          </motion.div>
+
+          <div className="max-w-2xl space-y-12">
+            {[
+              { step: '01', title: 'Выбор дизайна', desc: 'Выберите изображение из каталога или обсудите индивидуальную разработку' },
+              { step: '02', title: 'Адаптация под стену', desc: 'Масштабирование, цветокоррекция и композиция под размеры вашего пространства' },
+              { step: '03', title: 'Утверждение макета', desc: 'Визуализация в интерьере и финальное согласование перед печатью' },
+              { step: '04', title: 'Печать и доставка', desc: 'Производство на премиальных материалах, доставка по всей России' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                className="flex gap-8"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <span className="text-[12px] tracking-[0.2em] text-foreground/25 pt-1 shrink-0 font-light">{item.step}</span>
+                <div>
+                  <h3 className="text-[16px] font-light mb-2 text-foreground">{item.title}</h3>
+                  <p className="text-body">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* ── Fullscreen Gallery Modal ── */}
       <AnimatePresence>
