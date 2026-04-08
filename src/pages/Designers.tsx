@@ -197,7 +197,7 @@ const Designers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center ${
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-16 items-center py-20 md:py-28 lg:py-36 ${
                   i % 2 === 1 ? 'lg:grid-flow-dense' : ''
                 }`}
               >
