@@ -9,6 +9,8 @@ import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { toast } from 'sonner';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import BackgroundWallpaper from './BackgroundWallpaper';
+import CanvasPanel from './CanvasPanel';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -58,6 +60,14 @@ const Artwork = () => {
         </div>
       </div>
     );
+  }
+
+  // Route to specialized templates by product type
+  if (product.type === 'companion') {
+    return <BackgroundWallpaper product={product} />;
+  }
+  if (product.type === 'panel') {
+    return <CanvasPanel product={product} />;
   }
 
   const getImageSrc = (imagePath: string) => imageMap[imagePath] || imagePath;
