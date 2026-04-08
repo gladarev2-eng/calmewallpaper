@@ -347,13 +347,13 @@ const Inspiration = () => {
                   <h3 className="text-white font-display font-light text-2xl mb-3">
                     {selectedItem.productName}
                   </h3>
-                  {selectedItem.description && (
+                  {'description' in selectedItem && selectedItem.description && (
                     <p className="text-white/50 text-[13px] font-light leading-relaxed mb-4">
-                      {selectedItem.description}
+                      {String(selectedItem.description)}
                     </p>
                   )}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {getMoodLabels(selectedItem.moods).map(mood => (
+                    {getMoodLabels([selectedItem.mood]).map(mood => (
                       <span key={mood} className="text-[10px] uppercase tracking-[0.1em] text-white/30 border border-white/10 px-2.5 py-1">
                         {mood}
                       </span>
