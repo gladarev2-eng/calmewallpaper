@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
@@ -9,10 +9,21 @@ import mural3 from '@/assets/mural-3.jpg';
 import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
+import social1 from '@/assets/social-1.jpg';
+import social2 from '@/assets/social-2.jpg';
+import social3 from '@/assets/social-3.jpg';
+import social4 from '@/assets/social-4.jpg';
+import social5 from '@/assets/social-5.jpg';
+import social6 from '@/assets/social-6.jpg';
+import social7 from '@/assets/social-7.jpg';
+import social8 from '@/assets/social-8.jpg';
+import social9 from '@/assets/social-9.jpg';
+import social10 from '@/assets/social-10.jpg';
 import { products, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
+const socialImages = [social1, social2, social3, social4, social5, social6, social7, social8, social9, social10];
 
 const quietWorldsSeries = [
   {
@@ -59,15 +70,22 @@ const Index = () => {
 
   const featuredProducts = products.filter(p => p.type !== 'companion').slice(0, 6);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroY = useTransform(heroProgress, [0, 1], ['0%', '25%']);
+
   return (
     <div>
-      {/* ── Hero ── */}
-      <section className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
+      {/* ── Hero with Parallax ── */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute inset-0 transition-opacity duration-[2s] ease-in-out"
-            style={{ opacity: i === currentSlide ? 1 : 0 }}
+            className="absolute inset-[-15%] transition-opacity duration-[2s] ease-in-out"
+            style={{ opacity: i === currentSlide ? 1 : 0, y: heroY }}
           >
             <img
               src={slide}
@@ -76,7 +94,7 @@ const Index = () => {
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
-          </div>
+          </motion.div>
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
@@ -442,6 +460,53 @@ const Index = () => {
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── 7. Social Media Lifestyle Grid ── */}
+      <section className="py-20 md:py-28">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-title mb-4 font-display">Следите за нами</h2>
+          <a
+            href="https://instagram.com/calmewallpaper"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[14px] font-light text-foreground/45 hover:text-foreground/70 transition-colors duration-700 tracking-[0.02em]"
+          >
+            @calmewallpaper
+          </a>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-[2px]">
+          {socialImages.map((img, i) => (
+            <motion.a
+              key={i}
+              href="https://instagram.com/calmewallpaper"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative aspect-square overflow-hidden group"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, duration: 0.6 }}
+            >
+              <img
+                src={img}
+                alt={`CALMÉ lifestyle ${i + 1}`}
+                loading="lazy"
+                width={768}
+                height={768}
+                className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-[400ms]" />
+            </motion.a>
+          ))}
         </div>
       </section>
     </div>
