@@ -193,7 +193,7 @@
     letter-spacing: 0.22em;
   }
 
-  /* Section spacing — generous */
+  /* Section spacing — generous with breathing room */
   .section {
     @apply py-24 md:py-32 lg:py-44;
   }
@@ -203,11 +203,19 @@
   }
 
   .section-lg {
-    @apply py-28 md:py-40 lg:py-52;
+    @apply py-28 md:py-40 lg:py-56;
   }
 
   .section-hero {
-    @apply py-32 md:py-44 lg:py-56;
+    @apply py-32 md:py-44 lg:py-60;
+  }
+
+  /* Section divider — editorial lookbook style */
+  .section-divider {
+    @apply w-full;
+    height: 1px;
+    background: hsl(var(--foreground) / 0.06);
+    margin: 0 auto;
   }
 
   /* Container variants */

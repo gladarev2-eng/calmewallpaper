@@ -11,7 +11,6 @@ import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 import { products, collections } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
-import { inspirationRoomTypes } from '@/data/inspiration';
 
 const heroSlides = [heroMural, mural1, mural2, mural3, mural5, mural6];
 
@@ -22,6 +21,30 @@ const roomCategories = [
   { id: 'kitchen', label: 'Кухня', image: mural5 },
   { id: 'bathroom', label: 'Ванная', image: mural6 },
   { id: 'horeca', label: 'HoReCa', image: mural2 },
+];
+
+const quietWorldsSeries = [
+  {
+    name: 'Silentia',
+    tagline: 'Тишина как визуальный язык',
+    poem: 'Туманные пейзажи и размытые горизонты. Цвет растворяется в пространстве, форма уступает атмосфере. Каждый мурал — медитативная пауза в ритме города.',
+    images: [mural2, heroMural],
+    link: '/collection/silentia',
+  },
+  {
+    name: 'Botanica',
+    tagline: 'Природа в масштабе стены',
+    poem: 'Ботанические композиции с детализацией до прожилок листа. Акварельная мягкость и тактильная достоверность — граница между принтом и живописью стирается.',
+    images: [mural3, mural5],
+    link: '/collection/botanica',
+  },
+  {
+    name: 'Forma',
+    tagline: 'Архитектура на плоскости',
+    poem: 'Геометрия, ритм, структура. Терракотовые арки и песочные формы создают диалог между стеной и пространством. Для тех, кто мыслит архитектурно.',
+    images: [mural4, mural1],
+    link: '/collection/forma',
+  },
 ];
 
 const Index = () => {
@@ -55,36 +78,44 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
           </div>
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
-          <motion.h1
-            className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-5 font-display"
-            style={{ textShadow: '0 2px 40px rgba(0,0,0,0.3)' }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-          >
-            Тихая архитектура стены
-          </motion.h1>
           <motion.p
-            className="text-[14px] md:text-[16px] font-light text-white/80 tracking-[0.02em] mb-12 max-w-lg"
+            className="text-hero-tagline text-white/50 mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 1, delay: 0.2 }}
           >
-            Авторские настенные муралы, созданные под ваш интерьер
+            Quiet Worlds
+          </motion.p>
+          <motion.h1
+            className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-6 font-display"
+            style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.4 }}
+          >
+            Погружающая визуальная<br className="hidden md:block" /> среда для интерьера
+          </motion.h1>
+          <motion.p
+            className="text-[14px] md:text-[16px] font-light text-white/70 tracking-[0.02em] mb-14 max-w-md leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.7 }}
+          >
+            Современные настенные муралы со сложной детализацией, созданные для выразительных интерьеров
           </motion.p>
           <motion.div
             className="flex flex-wrap gap-4"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 1 }}
           >
             <Link to="/catalog" className="btn-light">Смотреть коллекции</Link>
-            <Link to="/contacts" className="btn-light">Заказать образец</Link>
+            <Link to="/contacts" className="btn-light">Заказать консультацию</Link>
           </motion.div>
         </div>
 
@@ -107,8 +138,7 @@ const Index = () => {
       {/* ── Positioning block — image + 3 theses ── */}
       <section className="section bg-background">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-            {/* Image 4:5 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -124,28 +154,27 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Theses */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="lg:pt-8"
+              className="lg:pt-12"
             >
-              <p className="text-caption mb-10">Философия</p>
-              <div className="space-y-10">
+              <p className="text-caption mb-12">Философия</p>
+              <div className="space-y-12">
                 {[
                   {
                     title: 'Архитектурный подход',
                     desc: 'Каждый мурал проектируется как часть пространства — с учётом масштаба стены, освещения и окружающих материалов. Не декор, а визуальная архитектура.',
                   },
                   {
-                    title: 'Адаптация под интерьер',
-                    desc: 'Масштабируем, корректируем цвет и композицию под конкретное помещение. Изображение органично встраивается в ваш проект.',
+                    title: 'Сложная детализация',
+                    desc: 'Разрешение до 45 000 пикселей. Каждая текстура видна с расстояния 30 см — как живопись, перенесённая на стену.',
                   },
                   {
-                    title: 'Контроль результата',
-                    desc: 'Перед печатью вы утверждаете финальный макет с визуализацией в вашем интерьере. Никаких сюрпризов — только точный результат.',
+                    title: 'Адаптация и контроль',
+                    desc: 'Масштабируем, корректируем цвет и композицию. Перед печатью вы утверждаете макет с визуализацией в вашем интерьере.',
                   },
                 ].map((item, i) => (
                   <motion.div
@@ -154,9 +183,9 @@ const Index = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
-                    className="border-l-2 border-foreground/15 pl-6"
+                    className="border-l border-foreground/12 pl-8"
                   >
-                    <h3 className="text-[16px] md:text-[18px] font-light tracking-[-0.01em] text-foreground mb-3">
+                    <h3 className="text-h3 mb-3">
                       {item.title}
                     </h3>
                     <p className="text-body max-w-md">
@@ -169,6 +198,155 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* ── Divider ── */}
+      <div className="container-wide"><div className="divider" /></div>
+
+      {/* ── Unprecedented Detailing ── */}
+      <section className="section-lg bg-background">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+            {/* Left — large detail image */}
+            <motion.div
+              className="lg:col-span-7"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <div className="aspect-[5/4] overflow-hidden relative group">
+                <img
+                  src={mural6}
+                  alt="Сложная детализация муралов CALMÉ"
+                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.06]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                {/* Detail zoom indicator */}
+                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-light">
+                    Масштаб 1:1 — детализация текстуры
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right — specs */}
+            <motion.div
+              className="lg:col-span-5 lg:pl-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p className="text-caption mb-6">Беспрецедентная детализация</p>
+              <h2 className="text-title mb-8">
+                Сложность, которую<br />невозможно повторить
+              </h2>
+              <p className="text-body-lg mb-12">
+                Наши муралы создаются через сложный процесс цифрового синтеза и художественной 
+                доработки. Результат — изображения с глубиной и детализацией, недоступной 
+                стандартным фотообоям и печатным паттернам.
+              </p>
+
+              <div className="space-y-8">
+                {[
+                  { metric: '45 000 px', label: 'Разрешение по длинной стороне' },
+                  { metric: '2 400 DPI', label: 'Плотность печати' },
+                  { metric: 'до 6 м', label: 'Ширина без единого шва' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-baseline gap-6">
+                    <span className="text-[28px] md:text-[32px] font-display font-light tracking-[-0.02em] text-foreground shrink-0">
+                      {item.metric}
+                    </span>
+                    <span className="text-body">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="container-wide"><div className="divider" /></div>
+
+      {/* ── Quiet Worlds — Collection Showcase (Editorial) ── */}
+      <section className="section-lg bg-background">
+        <div className="container-wide">
+          <motion.div
+            className="mb-20 md:mb-28"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-caption mb-6">Quiet Worlds</p>
+            <h2 className="text-display mb-8 max-w-4xl">
+              Каждая серия —<br />самостоятельная история
+            </h2>
+          </motion.div>
+
+          <div className="space-y-28 md:space-y-40">
+            {quietWorldsSeries.map((series, i) => (
+              <motion.div
+                key={series.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.9 }}
+              >
+                <Link to={series.link} className="group block">
+                  <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end ${
+                    i % 2 === 1 ? 'lg:grid-flow-dense' : ''
+                  }`}>
+                    {/* Large image */}
+                    <div className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:col-start-6' : ''}`}>
+                      <div className="aspect-[4/5] overflow-hidden relative">
+                        <img
+                          src={series.images[0]}
+                          alt={series.name}
+                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.04]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Overlapping smaller image + text */}
+                    <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:col-start-1' : ''} flex flex-col gap-8`}>
+                      {/* Staggered image */}
+                      <div className="aspect-[3/4] overflow-hidden lg:-mt-32">
+                        <img
+                          src={series.images[1]}
+                          alt={`${series.name} деталь`}
+                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                        />
+                      </div>
+
+                      {/* Text */}
+                      <div className="lg:pl-2">
+                        <p className="text-caption mb-4">{series.tagline}</p>
+                        <h3 className="text-[28px] md:text-[36px] font-display font-light tracking-[-0.02em] mb-5 group-hover:text-foreground/70 transition-colors duration-700">
+                          {series.name}
+                        </h3>
+                        <p className="text-body-lg mb-8 max-w-sm">
+                          {series.poem}
+                        </p>
+                        <span className="link-arrow">
+                          Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="container-wide"><div className="divider" /></div>
 
       {/* ── Category showcase ── */}
       <section className="section bg-background">
@@ -214,25 +392,22 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Collections intro + catalog preview ── */}
+      {/* ── Featured Products ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
-            className="max-w-3xl mb-20 md:mb-28"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex items-end justify-between mb-16"
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
           >
-            <p className="text-caption mb-6">Коллекции</p>
-            <h2 className="text-title mb-8">
-              Каждая серия — самостоятельная художественная история
-            </h2>
-            <p className="text-body-lg max-w-xl">
-              Настенное изображение становится частью архитектуры пространства.
-              Мы создаём не узоры, а визуальные среды — на пересечении дизайна интерьера
-              и цифрового искусства.
-            </p>
+            <div>
+              <p className="text-caption mb-4">Каталог</p>
+              <h2 className="text-title">Избранные работы</h2>
+            </div>
+            <Link to="/catalog" className="link-arrow hidden md:flex">
+              Все работы <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
@@ -241,19 +416,16 @@ const Index = () => {
             ))}
           </div>
 
-          <motion.div
-            className="mt-20 text-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
-            <Link to="/catalog" className="btn-outline">
-              Все работы
+          <div className="mt-12 text-center md:hidden">
+            <Link to="/catalog" className="link-arrow">
+              Все работы <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
+
+      {/* ── Divider ── */}
+      <div className="container-wide"><div className="divider" /></div>
 
       {/* ── Inspiration — room categories ── */}
       <section className="section bg-background">
@@ -302,6 +474,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ── Divider ── */}
+      <div className="container-wide"><div className="divider" /></div>
+
       {/* ── Process ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
@@ -342,7 +517,7 @@ const Index = () => {
       {/* ── For designers ── */}
       <section className="section bg-card/30">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
