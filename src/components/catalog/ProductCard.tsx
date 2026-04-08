@@ -53,16 +53,17 @@ export const ProductCard = ({ product, index = 0, showPrice = true }: ProductCar
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.7, delay: index * 0.04 }}
     >
       <Link to={`/artwork/${product.slug}`} className="group block">
-        {/* Image — dominant element */}
-        <div className="overflow-hidden bg-muted relative aspect-[4/5]">
+        {/* Image — dominant element with zoom-in cursor */}
+        <div className="overflow-hidden bg-muted relative aspect-[4/5] cursor-zoom-in">
           <img
             src={getImageSrc(product.images[imageIndex] || product.images[0])}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04] animate-image-load"
+            className="w-full h-full object-cover transition-transform duration-[1.8s] ease-out group-hover:scale-[1.05]"
           />
 
           {/* Favorite */}

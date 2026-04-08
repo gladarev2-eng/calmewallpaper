@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
@@ -47,9 +47,36 @@ const quietWorldsSeries = [
   },
 ];
 
+const craftSteps = [
+  {
+    image: mural6,
+    title: 'Цифровой синтез',
+    desc: 'Каждое изображение рождается на пересечении нейросетевых моделей и ручной художественной доработки. Не шаблон — уникальная композиция.',
+  },
+  {
+    image: mural4,
+    title: 'Художественная режиссура',
+    desc: 'Арт-директор контролирует каждый слой: цвет, глубину, текстуру и настроение. Десятки итераций до финального утверждения.',
+  },
+  {
+    image: mural1,
+    title: 'Беспрецедентное разрешение',
+    desc: '45 000 пикселей по длинной стороне. Каждая прожилка камня или мазок кисти читается даже на расстоянии 30 см от стены.',
+  },
+];
+
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Parallax: image moves slower than scroll
+  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -64,22 +91,22 @@ const Index = () => {
 
   return (
     <div>
-      {/* ── Hero ── */}
-      <section className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
+      {/* ── Hero with Parallax ── */}
+      <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
-          <div
+          <motion.div
             key={i}
             className="absolute inset-0 transition-opacity duration-[2s] ease-in-out"
-            style={{ opacity: i === currentSlide ? 1 : 0 }}
+            style={{ opacity: i === currentSlide ? 1 : 0, y: heroY }}
           >
             <img
               src={slide}
               alt="CALMÉ"
-              className="w-full h-full object-cover"
+              className="w-full h-[120%] object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
-          </div>
+          </motion.div>
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
@@ -149,7 +176,7 @@ const Index = () => {
                 <img
                   src={mural2}
                   alt="CALMÉ в интерьере"
-                  className="w-full h-full object-cover animate-image-load"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </motion.div>
@@ -185,12 +212,8 @@ const Index = () => {
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
                     className="border-l border-foreground/12 pl-8"
                   >
-                    <h3 className="text-h3 mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-body max-w-md">
-                      {item.desc}
-                    </p>
+                    <h3 className="text-h3 mb-3">{item.title}</h3>
+                    <p className="text-body max-w-md">{item.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -202,69 +225,74 @@ const Index = () => {
       {/* ── Divider ── */}
       <div className="container-wide"><div className="divider" /></div>
 
-      {/* ── Unprecedented Detailing ── */}
+      {/* ── Our Craft — Sticky Split-Screen ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
-            {/* Left — large detail image */}
-            <motion.div
-              className="lg:col-span-7"
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-            >
-              <div className="aspect-[5/4] overflow-hidden relative group">
-                <img
-                  src={mural6}
-                  alt="Сложная детализация муралов CALMÉ"
-                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.06]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                {/* Detail zoom indicator */}
-                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-light">
-                    Масштаб 1:1 — детализация текстуры
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            {/* LEFT — Sticky text */}
+            <div className="lg:col-span-5">
+              <div className="lg:sticky lg:top-32">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <p className="text-caption mb-6">Наше ремесло</p>
+                  <h2 className="text-display mb-8">
+                    AI + Художественная<br />режиссура
+                  </h2>
+                  <p className="text-body-lg mb-10 max-w-md">
+                    Мы соединяем возможности нейросетевого синтеза с ручной художественной 
+                    доработкой. Каждый мурал проходит десятки итераций — от концепции до 
+                    финальной текстуры. Результат: изображения с глубиной и детализацией, 
+                    недоступной ни одному другому производителю.
                   </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right — specs */}
-            <motion.div
-              className="lg:col-span-5 lg:pl-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <p className="text-caption mb-6">Беспрецедентная детализация</p>
-              <h2 className="text-title mb-8">
-                Сложность, которую<br />невозможно повторить
-              </h2>
-              <p className="text-body-lg mb-12">
-                Наши муралы создаются через сложный процесс цифрового синтеза и художественной 
-                доработки. Результат — изображения с глубиной и детализацией, недоступной 
-                стандартным фотообоям и печатным паттернам.
-              </p>
-
-              <div className="space-y-8">
-                {[
-                  { metric: '45 000 px', label: 'Разрешение по длинной стороне' },
-                  { metric: '2 400 DPI', label: 'Плотность печати' },
-                  { metric: 'до 6 м', label: 'Ширина без единого шва' },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-baseline gap-6">
-                    <span className="text-[28px] md:text-[32px] font-display font-light tracking-[-0.02em] text-foreground shrink-0">
-                      {item.metric}
-                    </span>
-                    <span className="text-body">
-                      {item.label}
-                    </span>
+                  <div className="space-y-6 mb-12">
+                    {[
+                      { metric: '45 000 px', label: 'Разрешение по длинной стороне' },
+                      { metric: '2 400 DPI', label: 'Плотность печати' },
+                      { metric: 'до 6 м', label: 'Ширина без единого шва' },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-baseline gap-6">
+                        <span className="text-[28px] md:text-[32px] font-display font-light tracking-[-0.02em] text-foreground shrink-0">
+                          {item.metric}
+                        </span>
+                        <span className="text-body">{item.label}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <Link to="/studio" className="link-arrow">
+                    Подробнее о студии <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </motion.div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* RIGHT — Scrolling images */}
+            <div className="lg:col-span-7 space-y-6">
+              {craftSteps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="overflow-hidden cursor-zoom-in group aspect-[4/5]">
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.05]"
+                    />
+                  </div>
+                  <div className="pt-5 pb-4">
+                    <h3 className="text-h3 mb-2">{step.title}</h3>
+                    <p className="text-body max-w-md">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -303,35 +331,31 @@ const Index = () => {
                   }`}>
                     {/* Large image */}
                     <div className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:col-start-6' : ''}`}>
-                      <div className="aspect-[4/5] overflow-hidden relative">
+                      <div className="aspect-[4/5] overflow-hidden relative cursor-zoom-in">
                         <img
                           src={series.images[0]}
                           alt={series.name}
-                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.04]"
+                          className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.05]"
                         />
                       </div>
                     </div>
 
                     {/* Overlapping smaller image + text */}
                     <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:col-start-1' : ''} flex flex-col gap-8`}>
-                      {/* Staggered image */}
-                      <div className="aspect-[3/4] overflow-hidden lg:-mt-32">
+                      <div className="aspect-[3/4] overflow-hidden lg:-mt-32 cursor-zoom-in">
                         <img
                           src={series.images[1]}
                           alt={`${series.name} деталь`}
-                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                          className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.04]"
                         />
                       </div>
 
-                      {/* Text */}
                       <div className="lg:pl-2">
                         <p className="text-caption mb-4">{series.tagline}</p>
                         <h3 className="text-[28px] md:text-[36px] font-display font-light tracking-[-0.02em] mb-5 group-hover:text-foreground/70 transition-colors duration-700">
                           {series.name}
                         </h3>
-                        <p className="text-body-lg mb-8 max-w-sm">
-                          {series.poem}
-                        </p>
+                        <p className="text-body-lg mb-8 max-w-sm">{series.poem}</p>
                         <span className="link-arrow">
                           Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
                         </span>
@@ -375,11 +399,11 @@ const Index = () => {
                 transition={{ delay: i * 0.1, duration: 0.7 }}
               >
                 <Link to={cat.link} className="group block">
-                  <div className="aspect-[4/5] overflow-hidden mb-5 relative">
+                  <div className="aspect-[4/5] overflow-hidden mb-5 relative cursor-zoom-in">
                     <img
                       src={cat.image}
                       alt={cat.title}
-                      className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
+                      className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.05]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   </div>
@@ -449,17 +473,15 @@ const Index = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06, duration: 0.7 }}
               >
-                <Link to={`/inspiration?room=${room.id}`} className="group block relative overflow-hidden aspect-[4/5]">
+                <Link to={`/inspiration?room=${room.id}`} className="group block relative overflow-hidden aspect-[4/5] cursor-zoom-in">
                   <img
                     src={room.image}
                     alt={room.label}
-                    className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]"
+                    className="w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-[1.05]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-5">
-                    <p className="text-[13px] font-light text-white tracking-[0.02em]">
-                      {room.label}
-                    </p>
+                    <p className="text-[13px] font-light text-white tracking-[0.02em]">{room.label}</p>
                   </div>
                 </Link>
               </motion.div>
@@ -539,9 +561,7 @@ const Index = () => {
                 ))}
               </div>
               <div className="mt-12">
-                <Link to="/designers" className="btn-outline">
-                  Партнёрская программа
-                </Link>
+                <Link to="/designers" className="btn-outline">Партнёрская программа</Link>
               </div>
             </motion.div>
 
@@ -552,7 +572,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <div className="aspect-[4/5] overflow-hidden">
-                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover animate-image-load" />
+                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
@@ -568,19 +588,13 @@ const Index = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-title mb-6">
-              Расскажите о вашем пространстве
-            </h2>
+            <h2 className="text-title mb-6">Расскажите о вашем пространстве</h2>
             <p className="text-body-lg mb-12 max-w-lg mx-auto">
               Мы подберём решение и подготовим визуализацию в вашем интерьере
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/catalog" className="btn-primary">
-                Смотреть каталог
-              </Link>
-              <Link to="/contacts" className="btn-outline">
-                Связаться с нами
-              </Link>
+              <Link to="/catalog" className="btn-primary">Смотреть каталог</Link>
+              <Link to="/contacts" className="btn-outline">Связаться с нами</Link>
             </div>
           </motion.div>
         </div>
