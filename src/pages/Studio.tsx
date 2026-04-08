@@ -85,13 +85,13 @@ const Studio = () => {
         <div className="container-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Sticky Image */}
-            <div className="lg:sticky lg:top-24 lg:self-start">
+            <div className="lg:sticky lg:top-24 lg:self-start lg:h-[calc(100vh-6rem)] flex items-center">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="aspect-[4/5] lg:aspect-auto lg:h-screen"
+                className="aspect-[4/5] w-full overflow-hidden"
               >
                 <img src={mural1} alt="Философия CALMÉ" className="w-full h-full object-cover" />
               </motion.div>
