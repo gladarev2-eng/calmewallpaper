@@ -76,14 +76,19 @@ const FilterDropdown = ({ label, options, selectedValues, onChange, isColor }: D
                     <button
                       key={opt.id}
                       onClick={() => toggle(opt.id)}
-                      className={`w-7 h-7 rounded-full transition-all border ${
-                        selectedValues.includes(opt.id)
-                          ? 'ring-2 ring-foreground ring-offset-2 scale-110'
-                          : 'border-foreground/15 hover:scale-110'
-                      }`}
-                      style={{ backgroundColor: opt.hex }}
+                      className="relative w-8 h-8 flex items-center justify-center"
                       title={opt.label}
-                    />
+                    >
+                      {selectedValues.includes(opt.id) && (
+                        <span className="absolute inset-0 rounded-full border border-foreground/60" />
+                      )}
+                      <span
+                        className={`w-5 h-5 rounded-full transition-all duration-500 ${
+                          !selectedValues.includes(opt.id) ? 'border border-foreground/15 hover:scale-110' : ''
+                        }`}
+                        style={{ backgroundColor: opt.hex }}
+                      />
+                    </button>
                   ))}
                 </div>
                 {selectedValues.length > 0 && (
@@ -168,30 +173,6 @@ const Inspiration = () => {
   const getMoodLabels = (moods: MoodType[]) =>
     moods.map(m => moodTypes.find(mt => mt.id === m)?.label || m);
 
-  // Build immersive editorial layout: full-bleed, 50/50 splits, singles
-  const buildEditorialLayout = (items: InspirationItem[]) => {
-    const rows: { type: 'full' | 'split' | 'single'; items: InspirationItem[] }[] = [];
-    let idx = 0;
-    while (idx < items.length) {
-      const pattern = rows.length % 3;
-      if (pattern === 0 && idx < items.length) {
-        // Full-bleed landscape
-        rows.push({ type: 'full', items: [items[idx]] });
-        idx++;
-      } else if (pattern === 1 && idx + 1 < items.length) {
-        // 50/50 split
-        rows.push({ type: 'split', items: [items[idx], items[idx + 1]] });
-        idx += 2;
-      } else {
-        rows.push({ type: 'single', items: [items[idx]] });
-        idx++;
-      }
-    }
-    return rows;
-  };
-
-  const editorialRows = buildEditorialLayout(visibleItems);
-
   return (
     <div className="min-h-screen bg-background pt-16 sm:pt-20 lg:pt-24">
       {/* Header */}
@@ -249,150 +230,79 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Immersive Editorial Lookbook Grid */}
+      {/* Dense Masonry Grid optimized for 4:5 images */}
       <section className="pb-20 lg:pb-32">
-        <AnimatePresence mode="wait">
-          {filteredItems.length > 0 ? (
-            <motion.div
-              key="gallery"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="space-y-2"
-            >
-              {editorialRows.map((row, rowIdx) => {
-                if (row.type === 'full') {
-                  const item = row.items[0];
-                  return (
-                    <motion.div
-                      key={`row-${rowIdx}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: '-50px' }}
-                      transition={{ duration: 0.8 }}
+        <div className="container-wide">
+          <AnimatePresence mode="wait">
+            {filteredItems.length > 0 ? (
+              <motion.div
+                key="gallery"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+                className="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4"
+              >
+                {visibleItems.map((item, i) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-50px' }}
+                    transition={{ duration: 0.7, delay: (i % 3) * 0.05 }}
+                    className="mb-3 md:mb-4 break-inside-avoid"
+                  >
+                    <button
+                      onClick={() => setSelectedItem(item)}
+                      className="group block relative w-full overflow-hidden focus:outline-none"
                     >
-                      <button
-                        onClick={() => setSelectedItem(item)}
-                        className="group block relative w-full overflow-hidden aspect-[21/9] focus:outline-none"
-                      >
+                      <div className="aspect-[4/5] overflow-hidden">
                         <img
                           src={item.image}
                           alt={`${item.productName} в интерьере`}
                           className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-                            <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
-                              {getRoomLabel(item.room)}
-                            </p>
-                            <h3 className="text-white font-display font-light text-xl md:text-2xl">
-                              {item.productName}
-                            </h3>
-                          </div>
-                        </div>
-                      </button>
-                    </motion.div>
-                  );
-                }
-
-                if (row.type === 'split') {
-                  return (
-                    <div key={`row-${rowIdx}`} className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {row.items.map((item, i) => (
-                        <motion.div
-                          key={item.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, margin: '-50px' }}
-                          transition={{ duration: 0.8, delay: i * 0.1 }}
-                        >
-                          <button
-                            onClick={() => setSelectedItem(item)}
-                            className="group block relative w-full overflow-hidden aspect-[4/5] focus:outline-none"
-                          >
-                            <img
-                              src={item.image}
-                              alt={`${item.productName} в интерьере`}
-                              className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                                <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
-                                  {getRoomLabel(item.room)}
-                                </p>
-                                <h3 className="text-white font-display font-light text-lg">
-                                  {item.productName}
-                                </h3>
-                              </div>
-                            </div>
-                          </button>
-                        </motion.div>
-                      ))}
-                    </div>
-                  );
-                }
-
-                // single
-                const item = row.items[0];
-                return (
-                  <motion.div
-                    key={`row-${rowIdx}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-5xl mx-auto px-6"
-                  >
-                    <button
-                      onClick={() => setSelectedItem(item)}
-                      className="group block relative w-full overflow-hidden aspect-[16/10] focus:outline-none"
-                    >
-                      <img
-                        src={item.image}
-                        alt={`${item.productName} в интерьере`}
-                        className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
-                      />
+                      </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-2 font-light">
+                        <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                          <p className="text-[10px] uppercase tracking-[0.15em] text-white/60 mb-1.5 font-light">
                             {getRoomLabel(item.room)}
                           </p>
-                          <h3 className="text-white font-display font-light text-lg">
+                          <h3 className="text-white font-display font-light text-base md:text-lg">
                             {item.productName}
                           </h3>
                         </div>
                       </div>
                     </button>
                   </motion.div>
-                );
-              })}
-            </motion.div>
-          ) : (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center py-32"
-            >
-              <p className="text-body-lg mb-6">
-                По выбранным фильтрам ничего не найдено
-              </p>
-              <button onClick={clearAll} className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500 underline underline-offset-4">
-                Сбросить фильтры
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                ))}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-center py-32"
+              >
+                <p className="text-body-lg mb-6">
+                  По выбранным фильтрам ничего не найдено
+                </p>
+                <button onClick={clearAll} className="text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500 underline underline-offset-4">
+                  Сбросить фильтры
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {hasMore && (
-          <div className="text-center mt-20">
-            <button onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)} className="btn-outline">
-              Смотреть ещё
-            </button>
-          </div>
-        )}
+          {hasMore && (
+            <div className="text-center mt-20">
+              <button onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)} className="btn-outline">
+                Смотреть ещё
+              </button>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Lightbox */}
@@ -417,58 +327,51 @@ const Inspiration = () => {
               <div className="flex-1 min-h-0 overflow-hidden">
                 <img
                   src={selectedItem.image}
-                  alt={`${selectedItem.productName} в интерьере`}
-                  className="w-full h-full object-contain max-h-[70vh] lg:max-h-[85vh]"
+                  alt={selectedItem.productName}
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <div className="lg:w-80 flex-shrink-0 bg-card p-6 flex flex-col">
-                <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.15em] text-foreground/40 mb-4 font-light">
-                  <span>{getRoomLabel(selectedItem.room)}</span>
-                  {selectedItem.location && (
-                    <>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {selectedItem.location}
-                      </span>
-                    </>
-                  )}
-                </div>
-                <h2 className="text-h3 mb-4">{selectedItem.productName}</h2>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {getMoodLabels(selectedItem.mood).map(mood => (
-                    <span key={mood} className="px-2 py-1 text-[10px] uppercase tracking-[0.1em] border border-foreground/15 text-foreground/40 font-light">
-                      {mood}
-                    </span>
-                  ))}
-                </div>
-                <div className="border-t border-foreground/8 my-4" />
-                <p className="text-body mb-4">
-                  Понравился этот принт? Посмотрите его детально в каталоге
-                </p>
-                <Link
-                  to={`/artwork/${selectedItem.productId}`}
-                  className="btn-primary flex items-center justify-center gap-2"
-                  onClick={() => setSelectedItem(null)}
-                >
-                  Смотреть принт
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+
+              <div className="lg:w-80 flex flex-col justify-end p-6 lg:py-8">
                 <button
                   onClick={() => setSelectedItem(null)}
-                  className="hidden lg:flex items-center justify-center gap-2 mt-4 text-[12px] font-light text-foreground/50 hover:text-foreground/70 transition-colors duration-500"
+                  className="absolute top-4 right-4 text-white/50 hover:text-white/90 transition-colors"
                 >
-                  <X className="w-4 h-4" />
-                  Закрыть
+                  <X className="w-6 h-6" strokeWidth={1.5} />
                 </button>
+
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-white/40 mb-2 font-light">
+                    {getRoomLabel(selectedItem.room)}
+                  </p>
+                  <h3 className="text-white font-display font-light text-2xl mb-3">
+                    {selectedItem.productName}
+                  </h3>
+                  {selectedItem.description && (
+                    <p className="text-white/50 text-[13px] font-light leading-relaxed mb-4">
+                      {selectedItem.description}
+                    </p>
+                  )}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {getMoodLabels(selectedItem.moods).map(mood => (
+                      <span key={mood} className="text-[10px] uppercase tracking-[0.1em] text-white/30 border border-white/10 px-2.5 py-1">
+                        {mood}
+                      </span>
+                    ))}
+                  </div>
+
+                  {selectedItem.productId && (
+                    <Link
+                      to={`/artwork/${selectedItem.productId}`}
+                      onClick={() => setSelectedItem(null)}
+                      className="inline-flex items-center gap-2 text-[12px] font-light text-white/60 hover:text-white transition-colors duration-500"
+                    >
+                      Смотреть в каталоге <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
               </div>
             </motion.div>
-            <button
-              onClick={() => setSelectedItem(null)}
-              className="lg:hidden fixed top-4 right-4 z-20 w-10 h-10 bg-black/50 hover:bg-black/70 flex items-center justify-center transition-colors duration-500"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
           </motion.div>
         )}
       </AnimatePresence>

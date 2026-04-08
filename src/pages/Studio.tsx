@@ -162,7 +162,7 @@ const Studio = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="flex items-center p-8 md:p-14 lg:p-20 xl:p-24 min-h-[50vh] lg:min-h-screen bg-card/30"
+                className="flex items-center p-8 md:p-12 lg:p-16 xl:p-20 min-h-[50vh] lg:min-h-[80vh] bg-card/30"
               >
                 <div>
                   <p className="text-caption mb-5">Качество</p>

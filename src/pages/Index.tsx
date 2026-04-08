@@ -83,14 +83,6 @@ const Index = () => {
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
-          <motion.p
-            className="text-hero-tagline text-white/50 mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            Quiet Worlds
-          </motion.p>
           <motion.h1
             className="text-[2.5rem] md:text-[4rem] lg:text-[5.5rem] font-light text-white leading-[1] tracking-[-0.03em] mb-6 font-display"
             style={{ textShadow: '0 4px 60px rgba(0,0,0,0.4)' }}
@@ -135,7 +127,129 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Positioning block — image + 3 theses ── */}
+      {/* ── 1. Series Showcases ── */}
+      <section className="section-lg bg-background">
+        <div className="container-wide">
+          <div className="space-y-28 md:space-y-40">
+            {quietWorldsSeries.map((series, i) => (
+              <motion.div
+                key={series.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.9 }}
+              >
+                <Link to={series.link} className="group block">
+                  <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end ${
+                    i % 2 === 1 ? 'lg:grid-flow-dense' : ''
+                  }`}>
+                    <div className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:col-start-6' : ''}`}>
+                      <div className="aspect-[4/5] overflow-hidden relative">
+                        <img
+                          src={series.images[0]}
+                          alt={series.name}
+                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.04]"
+                        />
+                      </div>
+                    </div>
+                    <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:col-start-1' : ''} flex flex-col gap-8`}>
+                      <div className="aspect-[3/4] overflow-hidden lg:-mt-32">
+                        <img
+                          src={series.images[1]}
+                          alt={`${series.name} деталь`}
+                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div className="lg:pl-2">
+                        <p className="text-caption mb-4">{series.tagline}</p>
+                        <h3 className="text-[28px] md:text-[36px] font-display font-light tracking-[-0.02em] mb-5 group-hover:text-foreground/70 transition-colors duration-700">
+                          {series.name}
+                        </h3>
+                        <p className="text-body-lg mb-8 max-w-sm">
+                          {series.poem}
+                        </p>
+                        <span className="link-arrow">
+                          Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="container-wide"><div className="divider" /></div>
+
+      {/* ── 2. Unprecedented Detailing ── */}
+      <section className="section-lg bg-background">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+            <motion.div
+              className="lg:col-span-7"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+            >
+              <div className="aspect-[5/4] overflow-hidden relative group">
+                <img
+                  src={mural6}
+                  alt="Сложная детализация муралов CALMÉ"
+                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.06]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-light">
+                    Масштаб 1:1 — детализация текстуры
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="lg:col-span-5 lg:pl-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p className="text-caption mb-6">Беспрецедентная детализация</p>
+              <h2 className="text-title mb-8">
+                Сложность, которую<br />невозможно повторить
+              </h2>
+              <p className="text-body-lg mb-12">
+                Наши муралы создаются через сложный процесс цифрового синтеза и художественной 
+                доработки. Результат — изображения с глубиной и детализацией, недоступной 
+                стандартным фотообоям и печатным паттернам.
+              </p>
+
+              <div className="space-y-8">
+                {[
+                  { metric: '45 000 px', label: 'Разрешение по длинной стороне' },
+                  { metric: '2 400 DPI', label: 'Плотность печати' },
+                  { metric: 'до 6 м', label: 'Ширина без единого шва' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-baseline gap-6">
+                    <span className="text-[28px] md:text-[32px] font-display font-light tracking-[-0.02em] text-foreground shrink-0">
+                      {item.metric}
+                    </span>
+                    <span className="text-body">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container-wide"><div className="divider" /></div>
+
+      {/* ── 3. Philosophy ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
@@ -185,12 +299,8 @@ const Index = () => {
                     transition={{ delay: 0.2 + i * 0.1, duration: 0.6 }}
                     className="border-l border-foreground/12 pl-8"
                   >
-                    <h3 className="text-h3 mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-body max-w-md">
-                      {item.desc}
-                    </p>
+                    <h3 className="text-h3 mb-3">{item.title}</h3>
+                    <p className="text-body max-w-md">{item.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -199,156 +309,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Divider ── */}
       <div className="container-wide"><div className="divider" /></div>
 
-      {/* ── Unprecedented Detailing ── */}
-      <section className="section-lg bg-background">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
-            {/* Left — large detail image */}
-            <motion.div
-              className="lg:col-span-7"
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1 }}
-            >
-              <div className="aspect-[5/4] overflow-hidden relative group">
-                <img
-                  src={mural6}
-                  alt="Сложная детализация муралов CALMÉ"
-                  className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.06]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                {/* Detail zoom indicator */}
-                <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-light">
-                    Масштаб 1:1 — детализация текстуры
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right — specs */}
-            <motion.div
-              className="lg:col-span-5 lg:pl-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <p className="text-caption mb-6">Беспрецедентная детализация</p>
-              <h2 className="text-title mb-8">
-                Сложность, которую<br />невозможно повторить
-              </h2>
-              <p className="text-body-lg mb-12">
-                Наши муралы создаются через сложный процесс цифрового синтеза и художественной 
-                доработки. Результат — изображения с глубиной и детализацией, недоступной 
-                стандартным фотообоям и печатным паттернам.
-              </p>
-
-              <div className="space-y-8">
-                {[
-                  { metric: '45 000 px', label: 'Разрешение по длинной стороне' },
-                  { metric: '2 400 DPI', label: 'Плотность печати' },
-                  { metric: 'до 6 м', label: 'Ширина без единого шва' },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-baseline gap-6">
-                    <span className="text-[28px] md:text-[32px] font-display font-light tracking-[-0.02em] text-foreground shrink-0">
-                      {item.metric}
-                    </span>
-                    <span className="text-body">
-                      {item.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Divider ── */}
-      <div className="container-wide"><div className="divider" /></div>
-
-      {/* ── Quiet Worlds — Collection Showcase (Editorial) ── */}
-      <section className="section-lg bg-background">
-        <div className="container-wide">
-          <motion.div
-            className="mb-20 md:mb-28"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <p className="text-caption mb-6">Quiet Worlds</p>
-            <h2 className="text-display mb-8 max-w-4xl">
-              Каждая серия —<br />самостоятельная история
-            </h2>
-          </motion.div>
-
-          <div className="space-y-28 md:space-y-40">
-            {quietWorldsSeries.map((series, i) => (
-              <motion.div
-                key={series.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.9 }}
-              >
-                <Link to={series.link} className="group block">
-                  <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-end ${
-                    i % 2 === 1 ? 'lg:grid-flow-dense' : ''
-                  }`}>
-                    {/* Large image */}
-                    <div className={`lg:col-span-7 ${i % 2 === 1 ? 'lg:col-start-6' : ''}`}>
-                      <div className="aspect-[4/5] overflow-hidden relative">
-                        <img
-                          src={series.images[0]}
-                          alt={series.name}
-                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.04]"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Overlapping smaller image + text */}
-                    <div className={`lg:col-span-5 ${i % 2 === 1 ? 'lg:col-start-1' : ''} flex flex-col gap-8`}>
-                      {/* Staggered image */}
-                      <div className="aspect-[3/4] overflow-hidden lg:-mt-32">
-                        <img
-                          src={series.images[1]}
-                          alt={`${series.name} деталь`}
-                          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
-                        />
-                      </div>
-
-                      {/* Text */}
-                      <div className="lg:pl-2">
-                        <p className="text-caption mb-4">{series.tagline}</p>
-                        <h3 className="text-[28px] md:text-[36px] font-display font-light tracking-[-0.02em] mb-5 group-hover:text-foreground/70 transition-colors duration-700">
-                          {series.name}
-                        </h3>
-                        <p className="text-body-lg mb-8 max-w-sm">
-                          {series.poem}
-                        </p>
-                        <span className="link-arrow">
-                          Смотреть серию <ArrowRight className="w-3.5 h-3.5" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Divider ── */}
-      <div className="container-wide"><div className="divider" /></div>
-
-      {/* ── Category showcase ── */}
+      {/* ── 4. Directions ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
@@ -392,7 +355,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Featured Products ── */}
+      <div className="container-wide"><div className="divider" /></div>
+
+      {/* ── 5. Featured Works ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <motion.div
@@ -424,10 +389,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Divider ── */}
       <div className="container-wide"><div className="divider" /></div>
 
-      {/* ── Inspiration — room categories ── */}
+      {/* ── 6. In Interior ── */}
       <section className="section bg-background">
         <div className="container-wide">
           <div className="flex items-end justify-between mb-16">
@@ -474,10 +438,9 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Divider ── */}
       <div className="container-wide"><div className="divider" /></div>
 
-      {/* ── Process ── */}
+      {/* ── 7. How it works ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
           <motion.div
@@ -514,7 +477,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── For designers ── */}
+      {/* ── 8. For Designers & Partners ── */}
       <section className="section bg-card/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
@@ -559,7 +522,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── 9. CTA — Tell us about your space ── */}
       <section className="section-lg bg-background">
         <div className="container-narrow text-center">
           <motion.div
