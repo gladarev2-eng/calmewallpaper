@@ -232,9 +232,9 @@ const Inspiration = () => {
         </div>
       </div>
 
-      {/* Dense Masonry Grid optimized for 4:5 images */}
+      {/* Dense Masonry Grid — full-width, 4 columns */}
       <section className="pb-20 lg:pb-32">
-        <div className="container-wide">
+        <div style={{ width: '100%', maxWidth: 'none', padding: '0 2vw' }}>
           <AnimatePresence mode="wait">
             {filteredItems.length > 0 ? (
               <motion.div
@@ -243,8 +243,8 @@ const Inspiration = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
-                className="columns-1 md:columns-2 lg:columns-3 gap-3 md:gap-4"
-                style={{ columnFill: 'balance' as any }}
+                style={{ columnCount: 4, columnGap: '24px' }}
+                className="[column-count:1] md:[column-count:3] lg:[column-count:4]"
               >
                 {visibleItems.map((item, i) => (
                   <motion.div
