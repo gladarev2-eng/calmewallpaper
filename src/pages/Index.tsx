@@ -515,7 +515,7 @@ const Index = () => {
       </section>
 
       {/* ── For designers ── */}
-      <section className="section bg-card/30">
+      <section className="section-lg bg-card/30">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <motion.div
@@ -526,13 +526,14 @@ const Index = () => {
             >
               <p className="text-caption mb-6">Для дизайнеров и партнёров</p>
               <h2 className="text-title mb-8">Инструменты для профессионалов</h2>
-              <div className="space-y-8">
+              <div className="space-y-0 divide-y divide-foreground/8">
                 {[
                   { title: 'Адаптация цвета', text: 'Коррекция палитры под конкретный проект и освещение' },
                   { title: 'Масштабирование', text: 'Работа с нестандартными размерами и сложными формами стен' },
                   { title: 'Капсульные подборки', text: 'Персональная селекция работ под концепцию проекта' },
+                  { title: 'Бесплатные визуализации', text: 'Монтаж принтов на фото интерьера для презентации клиенту' },
                 ].map((item, i) => (
-                  <div key={i}>
+                  <div key={i} className="py-5 first:pt-0">
                     <h4 className="text-[14px] font-light mb-2 text-foreground">{item.title}</h4>
                     <p className="text-body">{item.text}</p>
                   </div>
@@ -552,7 +553,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               <div className="aspect-[4/5] overflow-hidden">
-                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover animate-image-load" />
+                <img src={mural5} alt="Для дизайнеров" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
