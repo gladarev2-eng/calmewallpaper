@@ -59,7 +59,9 @@ export const Header = () => {
             <Link 
               to="/" 
               className={`text-[15px] font-light uppercase tracking-[0.4em] font-display transition-colors duration-700 ${
-                !isScrolled && isDarkHero ? 'text-white' : 'text-foreground'
+                isScrolled ? 'text-foreground' 
+                : isDarkHero ? 'text-white' 
+                : 'text-foreground'
               }`}
             >
               Calmé
