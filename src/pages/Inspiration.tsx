@@ -253,7 +253,8 @@ const Inspiration = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.7, delay: (i % 3) * 0.05 }}
-                    className="mb-3 md:mb-4 break-inside-avoid"
+                    style={{ breakInside: 'avoid', marginBottom: '24px' }}
+                    className="w-full block"
                   >
                     <button
                       onClick={() => setSelectedItem(item)}
