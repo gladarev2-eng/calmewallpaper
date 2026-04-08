@@ -462,6 +462,53 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* ── 7. Social Media Lifestyle Grid ── */}
+      <section className="py-20 md:py-28">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-title mb-4 font-display">Следите за нами</h2>
+          <a
+            href="https://instagram.com/calmewallpaper"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[14px] font-light text-foreground/45 hover:text-foreground/70 transition-colors duration-700 tracking-[0.02em]"
+          >
+            @calmewallpaper
+          </a>
+        </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-[2px]">
+          {socialImages.map((img, i) => (
+            <motion.a
+              key={i}
+              href="https://instagram.com/calmewallpaper"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative aspect-square overflow-hidden group"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, duration: 0.6 }}
+            >
+              <img
+                src={img}
+                alt={`CALMÉ lifestyle ${i + 1}`}
+                loading="lazy"
+                width={768}
+                height={768}
+                className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-[400ms]" />
+            </motion.a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
