@@ -30,10 +30,13 @@ export const Header = () => {
   }, []);
 
   // Pages with dark hero backgrounds where header text should be white initially
-  const darkHeroPages = ['/', '/collection'];
+  const darkHeroPages = ['/', '/collection', '/inspiration'];
   const isDarkHero = darkHeroPages.some(p => 
     p === '/' ? location.pathname === '/' : location.pathname.startsWith(p)
   );
+
+  // When NOT on a dark hero page and NOT scrolled, use charcoal text for readability
+  const useCharcoalText = !isDarkHero && !isScrolled;
 
   return (
     <>

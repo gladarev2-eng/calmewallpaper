@@ -78,7 +78,10 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
+            {/* Bottom gradient for hero text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+            {/* Top gradient for navigation readability */}
+            <div className="absolute inset-x-0 top-0 h-[25%] bg-gradient-to-b from-black/45 to-transparent" />
           </div>
         ))}
 
