@@ -73,10 +73,10 @@ const Catalog = () => {
   const typeLabels: Record<string, string> = { all: 'Все', mural: 'Муралы', panel: 'Панно', companion: 'Фоновые обои' };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background" style={{ overflow: 'visible' }}>
       {/* Desktop Hero Banner */}
       <div className="hidden lg:block">
-        <div className="relative h-[35vh] min-h-[280px] overflow-hidden">
+        <div className="relative h-[35vh] min-h-[280px]" style={{ overflow: 'hidden' }}>
           <img
             src={heroMural}
             alt="Каталог CALMÉ"
