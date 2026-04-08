@@ -82,10 +82,10 @@ const Index = () => {
       {/* ── Hero with Parallax ── */}
       <section ref={heroRef} className="relative h-screen min-h-[700px] flex items-end overflow-hidden">
         {heroSlides.map((slide, i) => (
-          <div
+          <motion.div
             key={i}
-            className="absolute inset-0 transition-opacity duration-[2s] ease-in-out"
-            style={{ opacity: i === currentSlide ? 1 : 0 }}
+            className="absolute inset-[-15%] transition-opacity duration-[2s] ease-in-out"
+            style={{ opacity: i === currentSlide ? 1 : 0, y: heroY }}
           >
             <img
               src={slide}
@@ -94,7 +94,7 @@ const Index = () => {
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/5" />
-          </div>
+          </motion.div>
         ))}
 
         <div className="relative z-10 container-wide pb-20 md:pb-28 lg:pb-36">
