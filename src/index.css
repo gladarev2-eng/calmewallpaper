@@ -195,19 +195,19 @@
 
   /* Section spacing — generous with breathing room */
   .section {
-    @apply py-24 md:py-32 lg:py-44;
+    @apply py-28 md:py-36 lg:py-48;
   }
 
   .section-sm {
-    @apply py-16 md:py-24 lg:py-28;
+    @apply py-20 md:py-28 lg:py-32;
   }
 
   .section-lg {
-    @apply py-28 md:py-40 lg:py-56;
+    @apply py-32 md:py-44 lg:py-60;
   }
 
   .section-hero {
-    @apply py-32 md:py-44 lg:py-60;
+    @apply py-36 md:py-48 lg:py-64;
   }
 
   /* Section divider — editorial lookbook style */
