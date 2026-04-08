@@ -256,26 +256,26 @@
   }
 
   .text-body {
-    @apply text-[13px] leading-[1.85];
+    @apply text-[14px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.50);
+    color: hsl(var(--foreground) / 0.55);
   }
 
   .text-body-lg {
-    @apply text-[15px] md:text-[17px] leading-[1.85];
+    @apply text-[16px] md:text-[18px] leading-[1.85];
     font-weight: 300;
-    color: hsl(var(--foreground) / 0.50);
+    color: hsl(var(--foreground) / 0.55);
   }
 
   .text-caption {
-    @apply text-[10px] uppercase;
-    letter-spacing: 0.22em;
+    @apply text-[11px] uppercase;
+    letter-spacing: 0.2em;
     font-weight: 500;
     color: hsl(var(--foreground) / 0.45);
   }
 
   .text-label {
-    @apply text-[10px] uppercase;
+    @apply text-[11px] uppercase;
     letter-spacing: 0.14em;
     font-weight: 300;
   }
