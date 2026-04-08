@@ -62,6 +62,14 @@ const Artwork = () => {
     );
   }
 
+  // Route to specialized templates by product type
+  if (product.type === 'companion') {
+    return <BackgroundWallpaper product={product} />;
+  }
+  if (product.type === 'panel') {
+    return <CanvasPanel product={product} />;
+  }
+
   const getImageSrc = (imagePath: string) => imageMap[imagePath] || imagePath;
   const mainImage = getImageSrc(product.images[selectedImage]);
   const colorVariants = getColorVariants(product);
