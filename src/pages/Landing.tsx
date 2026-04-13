@@ -193,7 +193,7 @@ const Landing = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.12, duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ delay: i * 0.12, duration: 0.9,  }}
                 className="group"
               >
                 <div className="aspect-[3/4] overflow-hidden mb-6 relative">
