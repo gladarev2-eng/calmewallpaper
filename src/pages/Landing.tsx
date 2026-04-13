@@ -220,7 +220,7 @@ const Landing = () => {
 
       {/* 4. SCALE & DETAIL — Split Blocks */}
       <section className="py-0">
-        {/* Scale */}
+        {/* Detail (01) */}
         <div className="bg-card/30">
           <div className="container-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
@@ -229,44 +229,13 @@ const Landing = () => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.9 }}
-                className="aspect-square lg:aspect-auto lg:min-h-[600px]"
+                className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px]"
               >
-                <img src={mural2} alt="Масштаб до 6 метров" className="w-full h-full object-cover" />
+                <img src={mural5} alt="Детализация" className="w-full h-full object-cover" />
               </motion.div>
               <motion.div {...fadeUp} className="flex items-center p-10 md:p-14 lg:p-20 xl:p-24">
                 <div>
                   <span className="text-step-num">01</span>
-                  <h3 className="text-title mb-3">Масштаб</h3>
-                  <p className="text-[17px] text-muted-foreground mb-8 font-light">До 6 метров без единого шва</p>
-                  <p className="text-body-lg mb-10">
-                    Полотна печатаются единым куском на промышленном оборудовании. 
-                    Никаких стыков, смещений и видимых соединений — только цельная картина.
-                  </p>
-                  <div className="grid grid-cols-3 gap-4">
-                    {[
-                      { num: '6 м', label: 'макс. ширина' },
-                      { num: '45K', label: 'пикселей' },
-                      { num: '2400', label: 'DPI' },
-                    ].map((stat, i) => (
-                      <div key={i} className="text-center p-5 border border-foreground/8">
-                        <p className="text-2xl font-light mb-1" style={{ fontFamily: 'var(--font-display)' }}>{stat.num}</p>
-                        <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{stat.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-
-        {/* Detail */}
-        <div className="bg-background">
-          <div className="container-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <motion.div {...fadeUp} className="flex items-center p-10 md:p-14 lg:p-20 xl:p-24 order-2 lg:order-1">
-                <div>
-                  <span className="text-step-num">02</span>
                   <h3 className="text-title mb-3">Детализация</h3>
                   <p className="text-[17px] text-muted-foreground mb-8 font-light">Раскрывается при рассмотрении вблизи</p>
                   <p className="text-body-lg mb-10">
@@ -283,35 +252,17 @@ const Landing = () => {
                   </ul>
                 </div>
               </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9 }}
-                className="aspect-square lg:aspect-auto lg:min-h-[600px] order-1 lg:order-2"
-              >
-                <img src={mural5} alt="Детализация" className="w-full h-full object-cover" />
-              </motion.div>
             </div>
           </div>
         </div>
 
-        {/* Individuality */}
-        <div className="bg-card/30">
+        {/* Individuality (02) */}
+        <div className="bg-background">
           <div className="container-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9 }}
-                className="aspect-square lg:aspect-auto lg:min-h-[600px]"
-              >
-                <img src={mural1} alt="Индивидуальный подход" className="w-full h-full object-cover" />
-              </motion.div>
-              <motion.div {...fadeUp} className="flex items-center p-10 md:p-14 lg:p-20 xl:p-24">
+              <motion.div {...fadeUp} className="flex items-center p-10 md:p-14 lg:p-20 xl:p-24 order-2 lg:order-1">
                 <div>
-                  <span className="text-step-num">03</span>
+                  <span className="text-step-num">02</span>
                   <h3 className="text-title mb-3">Индивидуальность</h3>
                   <p className="text-[17px] text-muted-foreground mb-8 font-light">Адаптация под ваш интерьер</p>
                   <p className="text-body-lg mb-10">
@@ -321,6 +272,55 @@ const Landing = () => {
                   <div className="flex flex-wrap gap-3">
                     {['Цветокоррекция', 'Кадрирование', 'Визуализация', 'Подбор материала'].map((tag, i) => (
                       <span key={i} className="text-[12px] px-5 py-2.5 border border-foreground/10 text-foreground/70">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9 }}
+                className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px] order-1 lg:order-2"
+              >
+                <img src={mural1} alt="Индивидуальный подход" className="w-full h-full object-cover" />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scale (03) */}
+        <div className="bg-card/30">
+          <div className="container-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9 }}
+                className="aspect-[4/5] lg:aspect-auto lg:min-h-[600px]"
+              >
+                <img src={mural2} alt="Масштаб до 6 метров" className="w-full h-full object-cover" />
+              </motion.div>
+              <motion.div {...fadeUp} className="flex items-center p-10 md:p-14 lg:p-20 xl:p-24">
+                <div>
+                  <span className="text-step-num">03</span>
+                  <h3 className="text-title mb-3">Масштаб</h3>
+                  <p className="text-[17px] text-muted-foreground mb-8 font-light">До 6 метров без единого шва</p>
+                  <p className="text-body-lg mb-10">
+                    Полотна печатаются единым куском на промышленном оборудовании. 
+                    Никаких стыков, смещений и видимых соединений — только цельная картина.
+                  </p>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[
+                      { num: '6 м', label: 'макс. ширина' },
+                      { num: '45K', label: 'пикселей' },
+                      { num: '2400', label: 'DPI' },
+                    ].map((stat, i) => (
+                      <div key={i} className="text-center p-5 border border-foreground/8">
+                        <p className="text-2xl font-light mb-1" style={{ fontFamily: 'var(--font-display)' }}>{stat.num}</p>
+                        <p className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{stat.label}</p>
+                      </div>
                     ))}
                   </div>
                 </div>
