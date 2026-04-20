@@ -142,10 +142,21 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 1. Коллекции ── */}
+      {/* ── 1. Коллекции — editorial asymmetric grid ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
-          <div className="space-y-28 md:space-y-40">
+          <motion.div
+            className="max-w-2xl mb-24 md:mb-32"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-caption mb-5">Коллекции</p>
+            <h2 className="text-title">Тихие миры — серии муралов с собственным характером</h2>
+          </motion.div>
+
+          <div className="space-y-32 md:space-y-44 lg:space-y-56">
             {quietWorldsSeries.map((series, i) => (
               <motion.div
                 key={series.name}
