@@ -332,14 +332,13 @@ const Index = () => {
             viewport={{ once: true }}
           >
             <p className="text-caption mb-4">Направления</p>
-            <h2 className="text-title">Три формата для вашего пространства</h2>
+            <h2 className="text-title">Два формата для вашего пространства</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
             {[
-              { title: 'Идея на стене', desc: 'Полноформатные муралы до 6 метров без единого шва', image: mural1, link: '/catalog?type=mural' },
-              { title: 'Масштаб', desc: 'Готовые панно на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
-              { title: 'Микс стилей', desc: 'Фоновые обои-компаньоны для соседних стен', image: mural4, link: '/catalog?type=companion' },
+              { title: 'Муралы', desc: 'Полноформатные настенные полотна до 6 метров без единого шва — выразительная сцена для интерьера', image: mural1, link: '/catalog?type=mural' },
+              { title: 'Фоновые обои', desc: 'Текстуры и паттерны-компаньоны для соседних стен — спокойный фон под основной мурал', image: mural4, link: '/catalog?type=companion' },
             ].map((cat, i) => (
               <motion.div
                 key={i}
