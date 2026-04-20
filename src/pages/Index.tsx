@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Instagram } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -142,10 +142,21 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 1. Коллекции ── */}
+      {/* ── 1. Коллекции — editorial asymmetric grid ── */}
       <section className="section-lg bg-background">
         <div className="container-wide">
-          <div className="space-y-28 md:space-y-40">
+          <motion.div
+            className="max-w-2xl mb-24 md:mb-32"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <p className="text-caption mb-5">Коллекции</p>
+            <h2 className="text-title">Тихие миры — серии муралов с собственным характером</h2>
+          </motion.div>
+
+          <div className="space-y-32 md:space-y-44 lg:space-y-56">
             {quietWorldsSeries.map((series, i) => (
               <motion.div
                 key={series.name}
@@ -287,11 +298,11 @@ const Index = () => {
             <h2 className="text-title">Три формата для вашего пространства</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {[
-              { title: 'Муралы', desc: 'Полноформатные настенные полотна до 6 метров', image: mural1, link: '/catalog?type=mural' },
-              { title: 'Панно', desc: 'Готовые композиции на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
-              { title: 'Фоновые обои', desc: 'Текстуры и паттерны для соседних стен', image: mural4, link: '/catalog?type=companion' },
+              { title: 'Идея на стене', desc: 'Полноформатные муралы до 6 метров без единого шва', image: mural1, link: '/catalog?type=mural' },
+              { title: 'Масштаб', desc: 'Готовые панно на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
+              { title: 'Микс стилей', desc: 'Фоновые обои-компаньоны для соседних стен', image: mural4, link: '/catalog?type=companion' },
             ].map((cat, i) => (
               <motion.div
                 key={i}
@@ -463,50 +474,72 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 7. Social Media Lifestyle Grid ── */}
-      <section className="py-20 md:py-28">
-        <motion.div
-          className="text-center mb-12 md:mb-16"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-title mb-4 font-display">Следите за нами</h2>
-          <a
-            href="https://instagram.com/calmewallpaper"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[14px] font-light text-foreground/45 hover:text-foreground/70 transition-colors duration-700 tracking-[0.02em]"
+      {/* ── 7. Social Media — 4 networks ── */}
+      <section className="section-sm bg-background">
+        <div className="container-wide">
+          <motion.div
+            className="text-center max-w-xl mx-auto mb-20 md:mb-24"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            @calmewallpaper
-          </a>
-        </motion.div>
+            <p className="text-caption mb-6">Социальные сети</p>
+            <h2 className="text-title mb-6">Следите за нами</h2>
+            <p className="text-body-lg">
+              Вдохновляйтесь нашими проектами, смотрите закулисье производства и будьте в&nbsp;курсе новинок
+            </p>
+          </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-[2px]">
-          {socialImages.map((img, i) => (
-            <motion.a
-              key={i}
-              href="https://instagram.com/calmewallpaper"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative aspect-square overflow-hidden group"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 0.6 }}
-            >
-              <img
-                src={img}
-                alt={`CALMÉ lifestyle ${i + 1}`}
-                loading="lazy"
-                width={768}
-                height={768}
-                className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-[400ms]" />
-            </motion.a>
-          ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+            {[
+              { name: 'Instagram', handle: '@calmewallpaper', followers: '125K', url: 'https://instagram.com/calmewallpaper', image: social1, badge: 'IG' },
+              { name: 'Pinterest', handle: 'calme.studio', followers: '45K', url: 'https://pinterest.com/', image: social4, badge: 'P' },
+              { name: 'ВКонтакте', handle: 'calme.wallpaper', followers: '89K', url: 'https://vk.com/', image: social7, badge: 'VK' },
+              { name: 'Яндекс Дзен', handle: 'CALMÉ', followers: '32K', url: 'https://dzen.ru/', image: social9, badge: 'Я' },
+            ].map((s, i) => (
+              <motion.a
+                key={s.name}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block aspect-[4/5] overflow-hidden bg-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.7 }}
+              >
+                <img
+                  src={s.image}
+                  alt={s.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+
+                {/* top: handle */}
+                <div className="absolute top-5 left-5 right-5 flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-full bg-white/95 text-foreground flex items-center justify-center text-[10px] font-medium tracking-[0.05em]">
+                    {s.badge}
+                  </span>
+                  <div className="leading-tight">
+                    <p className="text-[13px] font-light text-white">{s.name}</p>
+                    <p className="text-[11px] text-white/60 tracking-[0.02em]">{s.handle}</p>
+                  </div>
+                </div>
+
+                {/* bottom: followers */}
+                <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
+                  <span className="text-[28px] md:text-[34px] font-display font-light text-white tracking-[-0.02em] leading-none">
+                    {s.followers}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 pb-1">
+                    подписчиков
+                  </span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
         </div>
       </section>
     </div>
