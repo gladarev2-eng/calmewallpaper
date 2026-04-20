@@ -231,54 +231,91 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 2. Беспрецедентная детализация ── */}
-      <section className="section-lg bg-background">
+      {/* ── 2. Преимущества: Детализация / Индивидуальность / Масштаб ── */}
+      <section className="section-lg bg-card/30">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9 }}
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={mural2} alt="Детализация" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
+          <div className="space-y-32 md:space-y-44 lg:space-y-56">
+            {[
+              {
+                step: '01',
+                caption: 'Детализация',
+                title: 'Сложность, которую невозможно повторить',
+                text: 'Каждый мурал создаётся через цифровой синтез и художественную доработку. Глубина и детализация недоступны стандартным фотообоям и печатным паттернам.',
+                metrics: [
+                  { value: '45 000 px', label: 'разрешение по длинной стороне' },
+                  { value: '2 400 DPI', label: 'плотность печати' },
+                ],
+                image: mural2,
+                reverse: false,
+              },
+              {
+                step: '02',
+                caption: 'Индивидуальность',
+                title: 'Адаптация под ваше пространство',
+                text: 'Цветовая коррекция, перекомпоновка и проработка деталей под конкретную стену. Каждый проект — отдельная работа арт-директора, а не выбор готового размера.',
+                metrics: [
+                  { value: '24 ч', label: 'визуализация в вашем интерьере' },
+                  { value: 'до 12', label: 'тональных и цветовых версий' },
+                ],
+                image: mural3,
+                reverse: true,
+              },
+              {
+                step: '03',
+                caption: 'Масштаб',
+                title: 'Без единого шва — на всю стену',
+                text: 'Печать на премиальных материалах европейского производства. Бесшовное полотно до 6 метров шириной — стена становится цельным художественным объектом.',
+                metrics: [
+                  { value: 'до 6 м', label: 'ширина без шва' },
+                  { value: '5–7 дней', label: 'производственный цикл' },
+                ],
+                image: mural4,
+                reverse: false,
+              },
+            ].map((block, i) => (
+              <motion.div
+                key={block.step}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.9 }}
+                className={`grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center ${
+                  block.reverse ? 'lg:grid-flow-dense' : ''
+                }`}
+              >
+                <div className={`lg:col-span-6 ${block.reverse ? 'lg:col-start-7' : ''}`}>
+                  <div className="aspect-[4/5] overflow-hidden bg-card">
+                    <img
+                      src={block.image}
+                      alt={block.caption}
+                      className="w-full h-full object-cover"
+                      style={{ animation: 'slowZoom 14s ease-out forwards' }}
+                    />
+                  </div>
+                </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: 0.15 }}
-              className="space-y-8"
-            >
-              <div>
-                <p className="text-caption mb-4">Беспрецедентная детализация</p>
-                <h2 className="text-title mb-6">Сложность, которую невозможно повторить</h2>
-                <p className="text-body-lg max-w-md">
-                  Наши муралы создаются через сложный процесс цифрового синтеза и художественной доработки. 
-                  Результат — изображения с глубиной и детализацией, недоступной стандартным фотообоям и печатным паттернам.
-                </p>
-              </div>
+                <div className={`lg:col-span-5 ${block.reverse ? 'lg:col-start-2 lg:row-start-1' : 'lg:col-start-8'}`}>
+                  <span className="text-step-num">{block.step}</span>
+                  <p className="text-caption mb-5">{block.caption}</p>
+                  <h3 className="text-title mb-7">{block.title}</h3>
+                  <p className="text-body-lg max-w-md mb-12">{block.text}</p>
 
-              <div className="space-y-6 pt-4">
-                <div className="flex items-baseline gap-6">
-                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">45 000 px</span>
-                  <span className="text-body">Разрешение по длинной стороне</span>
+                  <div className="space-y-6">
+                    {block.metrics.map((m) => (
+                      <div key={m.label}>
+                        <div className="flex items-baseline gap-5 mb-3">
+                          <span className="text-[28px] md:text-[34px] font-display font-light tracking-[-0.02em] whitespace-nowrap">
+                            {m.value}
+                          </span>
+                          <span className="text-body">{m.label}</span>
+                        </div>
+                        <div className="divider" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="divider" />
-                <div className="flex items-baseline gap-6">
-                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">2 400 DPI</span>
-                  <span className="text-body">Плотность печати</span>
-                </div>
-                <div className="divider" />
-                <div className="flex items-baseline gap-6">
-                  <span className="text-[32px] md:text-[40px] font-display font-light tracking-[-0.02em] whitespace-nowrap">до 6 м</span>
-                  <span className="text-body">Ширина без единого шва</span>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
