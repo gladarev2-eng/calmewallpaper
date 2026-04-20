@@ -298,11 +298,11 @@ const Index = () => {
             <h2 className="text-title">Три формата для вашего пространства</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
             {[
-              { title: 'Муралы', desc: 'Полноформатные настенные полотна до 6 метров', image: mural1, link: '/catalog?type=mural' },
-              { title: 'Панно', desc: 'Готовые композиции на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
-              { title: 'Фоновые обои', desc: 'Текстуры и паттерны для соседних стен', image: mural4, link: '/catalog?type=companion' },
+              { title: 'Идея на стене', desc: 'Полноформатные муралы до 6 метров без единого шва', image: mural1, link: '/catalog?type=mural' },
+              { title: 'Масштаб', desc: 'Готовые панно на холсте с подрамником', image: mural6, link: '/catalog?type=panel' },
+              { title: 'Микс стилей', desc: 'Фоновые обои-компаньоны для соседних стен', image: mural4, link: '/catalog?type=companion' },
             ].map((cat, i) => (
               <motion.div
                 key={i}
