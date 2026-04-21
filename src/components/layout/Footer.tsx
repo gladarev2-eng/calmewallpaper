@@ -61,12 +61,12 @@ export const Footer = () => {
       <div className="h-[1px] bg-background/10" />
 
       {/* Newsletter */}
-      <div className="container-wide py-20 md:py-28 lg:py-32">
-        <div className="max-w-lg mx-auto text-center mb-20 md:mb-28">
-          <h3 className="text-[22px] md:text-[26px] font-light tracking-[-0.02em] mb-5 text-background/90" style={{ fontFamily: 'var(--font-display)' }}>
+      <div className="container-wide py-12 md:py-16 lg:py-20">
+        <div className="max-w-lg mx-auto text-center mb-12 md:mb-16">
+          <h3 className="text-[20px] md:text-[22px] font-light tracking-[-0.02em] mb-3 text-background/90" style={{ fontFamily: 'var(--font-display)' }}>
             Будьте первыми
           </h3>
-          <p className="text-[14px] font-light text-background/45 leading-[1.8] mb-10 tracking-[0.01em]">
+          <p className="text-[13px] font-light text-background/45 leading-[1.7] mb-6 tracking-[0.01em]">
             Узнавайте первыми о новых коллекциях и закрытых пресейлах
           </p>
           <form onSubmit={handleSubscribe} className="flex items-end gap-4">
@@ -75,31 +75,31 @@ export const Footer = () => {
               placeholder="Ваш email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-transparent border-b border-background/20 focus:border-background/50 text-[14px] font-light text-background/80 placeholder:text-background/25 py-3 outline-none transition-colors duration-500"
+              className="flex-1 bg-transparent border-b border-background/20 focus:border-background/50 text-[13px] font-light text-background/80 placeholder:text-background/25 py-2 outline-none transition-colors duration-500"
             />
             <button
               type="submit"
-              className="text-[11px] uppercase tracking-[0.14em] font-light text-background/60 hover:text-background/90 transition-colors duration-500 pb-3 flex items-center gap-2 shrink-0"
+              className="text-[11px] uppercase tracking-[0.14em] font-light text-background/60 hover:text-background/90 transition-colors duration-500 pb-2 flex items-center gap-2 shrink-0"
             >
               Подписаться <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </form>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div>
-            <Link to="/" className="text-[15px] font-light uppercase tracking-[0.4em] block mb-5 text-background/90 font-display">
+            <Link to="/" className="text-[14px] font-light uppercase tracking-[0.4em] block mb-4 text-background/90 font-display">
               Calmé
             </Link>
-            <p className="text-[14px] font-light text-background/45 leading-[1.9] max-w-xs tracking-[0.01em]">
+            <p className="text-[13px] font-light text-background/45 leading-[1.8] max-w-xs tracking-[0.01em]">
               Индивидуальное производство настенных муралов для современных интерьеров
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <nav className="flex flex-col gap-4">
+            <nav className="flex flex-col gap-3">
               {[
                 { label: 'Каталог', href: '/catalog' },
                 { label: 'Вдохновение', href: '/inspiration' },
@@ -111,7 +111,7 @@ export const Footer = () => {
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="text-[13px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]"
+                  className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]"
                 >
                   {item.label}
                 </Link>
@@ -121,20 +121,42 @@ export const Footer = () => {
 
           {/* Contact */}
           <div>
-            <div className="flex flex-col gap-4">
-              <a href="tel:+79001234567" className="text-[13px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
+            <div className="flex flex-col gap-3">
+              <a href="tel:+79001234567" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
                 +7 (900) 123-45-67
               </a>
-              <a href="mailto:hello@calme.studio" className="text-[13px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
+              <a href="mailto:hello@calme.studio" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
                 hello@calme.studio
               </a>
             </div>
           </div>
+
+          {/* Socials */}
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.18em] font-light text-background/35 mb-5">
+              Соцсети
+            </p>
+            <div className="flex items-center gap-3">
+              {socials.map(s => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  title={s.label}
+                  className="w-10 h-10 flex items-center justify-center border border-background/15 text-background/55 hover:text-background/90 hover:border-background/40 transition-all duration-500"
+                >
+                  <span className="w-[18px] h-[18px] block">{s.icon}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="w-full h-[0.5px] bg-background/10 mt-16 lg:mt-20 mb-8" />
+        <div className="w-full h-[0.5px] bg-background/10 mt-12 lg:mt-14 mb-6" />
         
-        <p className="text-[11px] font-light text-background/25 uppercase tracking-[0.18em]">
+        <p className="text-[10.5px] font-light text-background/25 uppercase tracking-[0.18em]">
           © 2024 Calmé
         </p>
       </div>
