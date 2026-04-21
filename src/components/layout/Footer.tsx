@@ -62,30 +62,6 @@ export const Footer = () => {
 
       {/* Newsletter */}
       <div className="container-wide py-12 md:py-16 lg:py-20">
-        <div className="max-w-lg mx-auto text-center mb-12 md:mb-16">
-          <h3 className="text-[20px] md:text-[22px] font-light tracking-[-0.02em] mb-3 text-background/90" style={{ fontFamily: 'var(--font-display)' }}>
-            Будьте первыми
-          </h3>
-          <p className="text-[13px] font-light text-background/45 leading-[1.7] mb-6 tracking-[0.01em]">
-            Узнавайте первыми о новых коллекциях и закрытых пресейлах
-          </p>
-          <form onSubmit={handleSubscribe} className="flex items-end gap-4">
-            <input
-              type="email"
-              placeholder="Ваш email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-transparent border-b border-background/20 focus:border-background/50 text-[13px] font-light text-background/80 placeholder:text-background/25 py-2 outline-none transition-colors duration-500"
-            />
-            <button
-              type="submit"
-              className="text-[11px] uppercase tracking-[0.14em] font-light text-background/60 hover:text-background/90 transition-colors duration-500 pb-2 flex items-center gap-2 shrink-0"
-            >
-              Подписаться <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </form>
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div>
