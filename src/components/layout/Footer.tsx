@@ -1,7 +1,49 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Instagram } from 'lucide-react';
+
+const socials = [
+  {
+    label: 'Instagram',
+    href: 'https://instagram.com',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+        <rect x="3" y="3" width="18" height="18" rx="4" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Pinterest',
+    href: 'https://pinterest.com',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M11 7.5c2.8-.4 5 1 5 3.6 0 2.4-1.6 4.2-3.6 4.2-1 0-1.8-.5-2-1.3l-.5 2.2c-.2.8-.7 1.7-1.1 2.3" />
+      </svg>
+    ),
+  },
+  {
+    label: 'VK',
+    href: 'https://vk.com',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" className="w-full h-full">
+        <path d="M3.5 8.5c.6 4 3.2 7.5 7 8h1.2v-2.7c0-.5.2-.7.5-.7.4 0 .9.2 2 1.3.9.9 1.2 1.6 1.8 1.6h1.8c.6 0 .9-.3.7-.8-.2-.6-1.2-1.7-1.7-2.2-.6-.6-.5-.8 0-1.4 1-1.2 2.2-2.7 2.4-3.4.1-.4-.1-.7-.6-.7h-1.7c-.5 0-.7.2-.9.6-.6 1.4-1.7 3-2.2 3.4-.3.2-.5.1-.5-.4V8.6c0-.5-.1-.6-.5-.6h-2.6c-.3 0-.5.1-.5.3 0 .4.6.5.6 1.6v2.4c0 .6-.1.7-.4.7-.6 0-1.8-1.6-2.5-3.5-.1-.4-.3-.5-.8-.5H4c-.4 0-.5.2-.5.5z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Дзен',
+    href: 'https://dzen.ru',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-full h-full">
+        <path d="M12 3c0 4.5 0 9-9 9 4.5 0 9 0 9 9 0-9 4.5-9 9-9-9 0-9-4.5-9-9z" />
+      </svg>
+    ),
+  },
+];
 
 export const Footer = () => {
   const [email, setEmail] = useState('');
