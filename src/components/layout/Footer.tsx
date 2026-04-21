@@ -60,9 +60,8 @@ export const Footer = () => {
     <footer className="bg-foreground text-background">
       <div className="h-[1px] bg-background/10" />
 
-      {/* Newsletter */}
-      <div className="container-wide py-12 md:py-16 lg:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+      <div className="container-wide py-10 md:py-12 lg:py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div>
             <Link to="/" className="text-[14px] font-light uppercase tracking-[0.4em] block mb-4 text-background/90 font-display">
@@ -96,7 +95,7 @@ export const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
               <a href="tel:+79001234567" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
                 +7 (900) 123-45-67
@@ -104,6 +103,29 @@ export const Footer = () => {
               <a href="mailto:hello@calme.studio" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
                 hello@calme.studio
               </a>
+            </div>
+
+            {/* Newsletter (compact, под контактами) */}
+            <div className="pt-2">
+              <p className="text-[10px] uppercase tracking-[0.18em] font-light text-background/35 mb-3">
+                Подписка
+              </p>
+              <form onSubmit={handleSubscribe} className="flex items-end gap-3">
+                <input
+                  type="email"
+                  placeholder="Ваш email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 min-w-0 bg-transparent border-b border-background/20 focus:border-background/50 text-[12.5px] font-light text-background/80 placeholder:text-background/25 py-1.5 outline-none transition-colors duration-500"
+                />
+                <button
+                  type="submit"
+                  aria-label="Подписаться"
+                  className="text-background/55 hover:text-background/90 transition-colors duration-500 pb-1.5 shrink-0"
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </form>
             </div>
           </div>
 
@@ -130,36 +152,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="w-full h-[0.5px] bg-background/10 mt-12 lg:mt-14 mb-6" />
-
-        {/* Compact newsletter under socials & contacts */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-8">
-          <div className="max-w-sm">
-            <h3 className="text-[15px] font-light tracking-[-0.01em] mb-1.5 text-background/85" style={{ fontFamily: 'var(--font-display)' }}>
-              Будьте первыми
-            </h3>
-            <p className="text-[12px] font-light text-background/40 leading-[1.6] tracking-[0.01em]">
-              Узнавайте о новых коллекциях и закрытых пресейлах
-            </p>
-          </div>
-          <form onSubmit={handleSubscribe} className="flex items-end gap-4 md:max-w-sm md:w-full">
-            <input
-              type="email"
-              placeholder="Ваш email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 bg-transparent border-b border-background/20 focus:border-background/50 text-[13px] font-light text-background/80 placeholder:text-background/25 py-1.5 outline-none transition-colors duration-500"
-            />
-            <button
-              type="submit"
-              className="text-[11px] uppercase tracking-[0.14em] font-light text-background/60 hover:text-background/90 transition-colors duration-500 pb-1.5 flex items-center gap-2 shrink-0"
-            >
-              Подписаться <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </form>
-        </div>
-
-        <div className="w-full h-[0.5px] bg-background/10 mb-6" />
+        <div className="w-full h-[0.5px] bg-background/10 mt-10 lg:mt-12 mb-5" />
 
         <p className="text-[10.5px] font-light text-background/25 uppercase tracking-[0.18em]">
           © 2024 Calmé
