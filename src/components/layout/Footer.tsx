@@ -155,7 +155,7 @@ export const Footer = () => {
         <div className="w-full h-[0.5px] bg-background/10 mt-10 lg:mt-12 mb-5" />
 
         <p className="text-[10.5px] font-light text-background/25 uppercase tracking-[0.18em]">
-          © 2024 Окоём
+          © 2026 Окоём
         </p>
       </div>
     </footer>
