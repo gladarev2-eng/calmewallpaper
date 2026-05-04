@@ -79,7 +79,7 @@ const Catalog = () => {
         <div className="relative h-[35vh] min-h-[280px]" style={{ overflow: 'hidden' }}>
           <img
             src={heroMural}
-            alt="Каталог CALMÉ"
+            alt="Каталог ОКОЁМ"
             className="w-full h-full object-cover"
             style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />

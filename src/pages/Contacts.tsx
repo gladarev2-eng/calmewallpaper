@@ -38,13 +38,13 @@ const Contacts = () => {
 
   const messengers = [
     { name: 'WhatsApp', url: 'https://wa.me/79001234567', label: '+7 900 123-45-67' },
-    { name: 'Telegram', url: 'https://t.me/calme_studio', label: '@calme_studio' },
+    { name: 'Telegram', url: 'https://t.me/okoyom_studio', label: '@okoyom_studio' },
   ];
 
   const socials = [
-    { name: 'Instagram', url: 'https://instagram.com/calme.studio' },
-    { name: 'Pinterest', url: 'https://pinterest.com/calme_studio' },
-    { name: 'VK', url: 'https://vk.com/calme_studio' },
+    { name: 'Instagram', url: 'https://instagram.com/okoyom.studio' },
+    { name: 'Pinterest', url: 'https://pinterest.com/okoyom_studio' },
+    { name: 'VK', url: 'https://vk.com/okoyom_studio' },
   ];
 
   return (
@@ -75,11 +75,11 @@ const Contacts = () => {
                   <span>+7 (495) 123-45-67</span>
                 </a>
                 <a 
-                  href="mailto:hello@calme.studio" 
+                  href="mailto:hello@okoyom.studio" 
                   className="flex items-center gap-4 text-[15px] font-light text-foreground/60 hover:text-foreground transition-colors duration-500"
                 >
                   <Mail className="w-4 h-4 text-foreground/40" strokeWidth={1.5} />
-                  <span>hello@calme.studio</span>
+                  <span>hello@okoyom.studio</span>
                 </a>
               </div>
             </motion.div>
@@ -208,7 +208,7 @@ const Contacts = () => {
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
-            title="Карта шоурумов CALMÉ"
+            title="Карта шоурумов ОКОЁМ"
             className="w-full h-full grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
           />
         </div>
