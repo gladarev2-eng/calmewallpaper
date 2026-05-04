@@ -9,7 +9,7 @@ import mural4 from '@/assets/mural-4.jpg';
 import mural5 from '@/assets/mural-5.jpg';
 import mural6 from '@/assets/mural-6.jpg';
 
-const WHATSAPP_URL = 'https://wa.me/79001234567?text=Здравствуйте!%20Интересуют%20настенные%20покрытия%20CALMÉ';
+const WHATSAPP_URL = 'https://wa.me/79001234567?text=Здравствуйте!%20Интересуют%20настенные%20покрытия%20ОКОЁМ';
 const PHONE = '+74951234567';
 const PHONE_DISPLAY = '+7 (495) 123-45-67';
 
@@ -47,7 +47,7 @@ const Landing = () => {
       {/* Sticky Header */}
       <header className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="container-wide flex items-center justify-between h-14 sm:h-16">
-          <span className="text-sm font-thin uppercase tracking-[0.3em]" style={{ fontFamily: 'var(--font-display)' }}>Calmé</span>
+          <span className="text-sm font-thin uppercase tracking-[0.3em]" style={{ fontFamily: 'var(--font-display)' }}>Окоём</span>
           <div className="flex items-center gap-3 sm:gap-4">
             <a href={`tel:${PHONE}`} className="hidden sm:block text-[11px] font-extralight tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors">
               {PHONE_DISPLAY}
@@ -76,7 +76,7 @@ const Landing = () => {
           >
             <img
               src={slide}
-              alt="CALMÉ"
+              alt="ОКОЁМ"
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
@@ -152,7 +152,7 @@ const Landing = () => {
               Мы создаём архитектуру стены.
             </h2>
             <p className="text-body-lg max-w-2xl mx-auto">
-              CALMÉ — бутик настенных покрытий с фокусом на масштаб, детализацию и индивидуальный подход. 
+              ОКОЁМ — бутик настенных покрытий с фокусом на масштаб, детализацию и индивидуальный подход. 
               Каждый заказ — это персональная работа с изображением, материалом и вашим пространством.
             </p>
           </motion.div>
@@ -502,7 +502,7 @@ const Landing = () => {
               transition={{ delay: i * 0.1, duration: 0.7 }}
               className="aspect-square overflow-hidden"
             >
-              <img src={img} alt={`Работа CALMÉ ${i + 1}`} className="w-full h-full object-cover" />
+              <img src={img} alt={`Работа ОКОЁМ ${i + 1}`} className="w-full h-full object-cover" />
             </motion.div>
           ))}
         </div>
@@ -588,7 +588,7 @@ const Landing = () => {
         <div className="container-wide">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <span className="text-sm font-thin uppercase tracking-[0.3em]" style={{ fontFamily: 'var(--font-display)' }}>Calmé</span>
+              <span className="text-sm font-thin uppercase tracking-[0.3em]" style={{ fontFamily: 'var(--font-display)' }}>Окоём</span>
               <p className="text-[11px] text-background/40 mt-1 tracking-[0.05em]">Бутик настенных покрытий</p>
             </div>
             <div className="flex items-center gap-6">

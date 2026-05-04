@@ -1,4 +1,4 @@
-// Inspiration gallery data for CALMÉ
+// Inspiration gallery data for ОКОЁМ
 
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';

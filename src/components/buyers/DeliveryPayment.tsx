@@ -62,7 +62,7 @@ const DeliveryPayment = ({ image }: DeliveryPaymentProps) => {
         <div className="aspect-[4/3] overflow-hidden">
           <img 
             src={image} 
-            alt="Доставка CALMÉ"
+            alt="Доставка ОКОЁМ"
             className="w-full h-full object-cover"
           />
         </div>

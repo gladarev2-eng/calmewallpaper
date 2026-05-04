@@ -17,7 +17,7 @@ const Studio = () => {
         <div className="absolute inset-0">
           <img
             src={heroMural}
-            alt="CALMÉ Studio"
+            alt="ОКОЁМ Studio"
             className="w-full h-full object-cover"
             style={{ animation: 'slowZoom 12s ease-out forwards' }}
           />
@@ -72,7 +72,7 @@ const Studio = () => {
               </p>
             </div>
             <p className="text-body-lg max-w-xl mx-auto">
-              CALMÉ — это архитектурная композиция на стене. Изображения с глубокой 
+              ОКОЁМ — это архитектурная композиция на стене. Изображения с глубокой 
               детализацией и мягкой передачей цвета, приближенной к живописи, которые 
               становятся частью пространства, а не его украшением.
             </p>
@@ -93,7 +93,7 @@ const Studio = () => {
                 transition={{ duration: 0.8 }}
                 className="w-full overflow-hidden"
               >
-                <img src={mural1} alt="Философия CALMÉ" className="w-full object-cover rounded-[4px]" style={{ aspectRatio: '4 / 5' }} />
+                <img src={mural1} alt="Философия ОКОЁМ" className="w-full object-cover rounded-[4px]" style={{ aspectRatio: '4 / 5' }} />
               </motion.div>
             </div>
 

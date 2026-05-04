@@ -30,7 +30,7 @@ export const Header = () => {
               to="/" 
               className="text-[15px] font-light uppercase tracking-[0.4em] text-foreground font-display"
             >
-              Calmé
+              Окоём
             </Link>
 
             {/* Desktop Navigation */}
@@ -130,7 +130,7 @@ export const Header = () => {
               >
                 <div className="flex justify-between items-center p-6 sm:p-8">
                   <span className="text-sm font-light uppercase tracking-[0.3em] text-foreground/80 font-display">
-                    Calmé
+                    Окоём
                   </span>
                   <button
                     onClick={() => setIsMenuOpen(false)}

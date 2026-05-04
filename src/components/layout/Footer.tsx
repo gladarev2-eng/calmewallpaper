@@ -65,7 +65,7 @@ export const Footer = () => {
           {/* Brand */}
           <div>
             <Link to="/" className="text-[14px] font-light uppercase tracking-[0.4em] block mb-4 text-background/90 font-display">
-              Calmé
+              Окоём
             </Link>
             <p className="text-[13px] font-light text-background/45 leading-[1.8] max-w-xs tracking-[0.01em]">
               Индивидуальное производство настенных муралов для современных интерьеров
@@ -100,8 +100,8 @@ export const Footer = () => {
               <a href="tel:+79001234567" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
                 +7 (900) 123-45-67
               </a>
-              <a href="mailto:hello@calme.studio" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
-                hello@calme.studio
+              <a href="mailto:hello@okoyom.studio" className="text-[12.5px] font-light text-background/45 hover:text-background/75 transition-colors duration-700 tracking-[0.04em]">
+                hello@okoyom.studio
               </a>
             </div>
 
@@ -155,7 +155,7 @@ export const Footer = () => {
         <div className="w-full h-[0.5px] bg-background/10 mt-10 lg:mt-12 mb-5" />
 
         <p className="text-[10.5px] font-light text-background/25 uppercase tracking-[0.18em]">
-          © 2024 Calmé
+          © 2024 Окоём
         </p>
       </div>
     </footer>

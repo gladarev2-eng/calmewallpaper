@@ -89,7 +89,7 @@ const Index = () => {
           >
             <img
               src={slide}
-              alt="CALMÉ"
+              alt="ОКОЁМ"
               className="w-full h-full object-cover"
               style={{ animation: i === currentSlide ? 'slowZoom 12s ease-out forwards' : 'none' }}
             />
@@ -529,10 +529,10 @@ const Index = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
             {[
-              { name: 'Instagram', handle: '@calmewallpaper', followers: '125K', url: 'https://instagram.com/calmewallpaper', image: social1, badge: 'IG' },
-              { name: 'Pinterest', handle: 'calme.studio', followers: '45K', url: 'https://pinterest.com/', image: social4, badge: 'P' },
-              { name: 'ВКонтакте', handle: 'calme.wallpaper', followers: '89K', url: 'https://vk.com/', image: social7, badge: 'VK' },
-              { name: 'Яндекс Дзен', handle: 'CALMÉ', followers: '32K', url: 'https://dzen.ru/', image: social9, badge: 'Я' },
+              { name: 'Instagram', handle: '@okoyomwallpaper', followers: '125K', url: 'https://instagram.com/okoyomwallpaper', image: social1, badge: 'IG' },
+              { name: 'Pinterest', handle: 'okoyom.studio', followers: '45K', url: 'https://pinterest.com/', image: social4, badge: 'P' },
+              { name: 'ВКонтакте', handle: 'okoyom.wallpaper', followers: '89K', url: 'https://vk.com/', image: social7, badge: 'VK' },
+              { name: 'Яндекс Дзен', handle: 'ОКОЁМ', followers: '32K', url: 'https://dzen.ru/', image: social9, badge: 'Я' },
             ].map((s, i) => (
               <motion.a
                 key={s.name}

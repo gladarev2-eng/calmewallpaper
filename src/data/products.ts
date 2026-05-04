@@ -1,4 +1,4 @@
-// Product data for CALMÉ catalog
+// Product data for ОКОЁМ catalog
 
 export type ProductType = 'mural' | 'panel' | 'companion';
 export type PatternType = 'landscape' | 'botanical' | 'abstract' | 'architecture' | 'texture' | 'geometric';
