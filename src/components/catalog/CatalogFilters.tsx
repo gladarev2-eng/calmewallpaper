@@ -30,8 +30,6 @@ interface CatalogFiltersProps {
 const productTypes = [
   { id: 'all', label: 'Все' },
   { id: 'mural', label: 'Муралы' },
-  { id: 'panel', label: 'Панно' },
-  { id: 'companion', label: 'Фоновые обои' },
 ];
 
 const sortOptions = [
