@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, MapPin, Clock, Phone } from 'lucide-react';
 import heroMural from '@/assets/hero-mural.jpg';
 import mural1 from '@/assets/mural-1.jpg';
 import mural2 from '@/assets/mural-2.jpg';
@@ -252,49 +252,72 @@ const Studio = () => {
         </div>
       </section>
 
-      {/* Materials */}
-      <section className="section bg-background">
+      {/* Showroom */}
+      <section className="section-lg bg-background">
         <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <p className="text-caption mb-4">Эстетика</p>
-            <h2 className="text-title mb-6">Современная русская оптика</h2>
-            <p className="text-body-lg max-w-2xl">
-              Нас интересует русский визуальный код без прямого цитирования и декоративного шума: горизонты, дымка, сады, ботаника, мягкая геометрия, авангардные ритмы, ощущение старых альбомов и спокойных интерьеров. Мы соединяем это с современным цифровым изображением, чтобы мурал выглядел актуально, а не музейно.
-            </p>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="order-2 lg:order-1"
+            >
+              <p className="text-caption mb-5">Шоурум</p>
+              <h2 className="text-title mb-8">Лучше один раз увидеть вживую</h2>
+              <p className="text-body-lg mb-6">
+                Экран не передаёт главного — глубины цвета, фактуры материала и того, как мурал начинает работать в реальном масштабе. В шоуруме Окоём вы увидите изображения на стене так, как они будут жить в вашем интерьере.
+              </p>
+              <p className="text-body-lg mb-10">
+                Мы покажем образцы шести материалов на просвет и в касание, развернём фрагменты муралов в полный размер, подберём палитру под ваши ткани, дерево и свет. Встречу проводит куратор студии — без спешки и без давления.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {[
-              { name: 'Спокойный фон', desc: 'Мягкие абстракции, цветовые поля и деликатные фактуры для интерьеров, где стена должна поддерживать пространство.', image: mural4 },
-              { name: 'Выразительный акцент', desc: 'Ботаника, пейзажи, фигуративные и графические композиции для стен, которые становятся центром комнаты.', image: mural6 },
-              { name: 'Проектное решение', desc: 'Адаптация под большую площадь, высокие стены, коммерческие интерьеры и нестандартные архитектурные задачи.', image: mural1 },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group"
-              >
-                <div className="aspect-[4/5] overflow-hidden mb-5">
-                  <img src={item.image} alt={item.name} className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.04]" />
-                </div>
-                <h3 className="text-[15px] font-light mb-2 text-foreground">{item.name}</h3>
-                <p className="text-body">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+              <div className="space-y-5 mb-12">
+                {[
+                  { icon: MapPin, title: 'Москва, флагманский шоурум', text: 'ул. Большая Никитская, 24/1, стр. 5 · м. Арбатская' },
+                  { icon: Clock, title: 'Часы работы', text: 'Пн–Сб: 10:00–20:00 · Воскресенье — по записи' },
+                  { icon: Phone, title: 'Запись на визит', text: '+7 (495) 123-45-67 · приоритет для записанных гостей' },
+                ].map(({ icon: Icon, title, text }) => (
+                  <div key={title} className="flex items-start gap-4 pb-5 border-b border-foreground/8">
+                    <Icon className="w-4 h-4 mt-1 text-foreground/40 shrink-0" strokeWidth={1.25} />
+                    <div>
+                      <p className="text-[12px] uppercase tracking-[0.12em] text-foreground/40 font-light mb-1.5">{title}</p>
+                      <p className="text-[15px] font-light text-foreground/80 leading-relaxed">{text}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-          <div className="mt-14 text-center">
-            <Link to="/buyers" className="btn-outline">
-              Подробнее о процессе
-            </Link>
+              <div className="flex flex-wrap gap-4">
+                <Link to="/contacts" className="btn-primary">Записаться на визит</Link>
+                <Link to="/contacts" className="btn-outline inline-flex items-center gap-2">
+                  Шоурум в вашем городе <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.25} />
+                </Link>
+              </div>
+
+              <p className="text-[12px] font-light text-foreground/40 mt-8 leading-relaxed">
+                Представительства в Санкт-Петербурге и Казани. В других городах организуем выезд с образцами или присылаем материальный сет курьером.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="order-1 lg:order-2"
+            >
+              <div className="aspect-[4/5] overflow-hidden">
+                <img
+                  src={mural2}
+                  alt="Шоурум Окоём в Москве"
+                  className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-[1.5s]"
+                />
+              </div>
+              <p className="text-[11px] uppercase tracking-[0.15em] text-foreground/35 font-light mt-4">
+                Москва · Большая Никитская
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
