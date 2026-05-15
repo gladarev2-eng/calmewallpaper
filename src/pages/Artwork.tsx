@@ -82,21 +82,8 @@ const Artwork = () => {
   const bgPricePerSqm = Math.round(product.pricePerSqm * 0.55);
   const [bgWidth, setBgWidth] = useState(300);
   const [bgHeight, setBgHeight] = useState(260);
-  const [bgName, setBgName] = useState('');
-  const [bgPhone, setBgPhone] = useState('');
-  const [bgComment, setBgComment] = useState('');
   const bgArea = (bgWidth * bgHeight) / 10000;
   const bgTotal = Math.round(bgPricePerSqm * bgArea * selectedMaterial.priceCoefficient);
-
-  const handleBgInquiry = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!bgName.trim() || !bgPhone.trim()) {
-      toast.error('Укажите имя и телефон для связи');
-      return;
-    }
-    toast.success('Заявка отправлена', { description: 'Свяжемся с вами в ближайшее время' });
-    setBgName(''); setBgPhone(''); setBgComment('');
-  };
 
   const area = (width * height) / 10000;
   const basePrice = product.pricePerSqm * area;
