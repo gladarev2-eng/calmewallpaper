@@ -82,21 +82,8 @@ const Artwork = () => {
   const bgPricePerSqm = Math.round(product.pricePerSqm * 0.55);
   const [bgWidth, setBgWidth] = useState(300);
   const [bgHeight, setBgHeight] = useState(260);
-  const [bgName, setBgName] = useState('');
-  const [bgPhone, setBgPhone] = useState('');
-  const [bgComment, setBgComment] = useState('');
   const bgArea = (bgWidth * bgHeight) / 10000;
   const bgTotal = Math.round(bgPricePerSqm * bgArea * selectedMaterial.priceCoefficient);
-
-  const handleBgInquiry = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!bgName.trim() || !bgPhone.trim()) {
-      toast.error('Укажите имя и телефон для связи');
-      return;
-    }
-    toast.success('Заявка отправлена', { description: 'Свяжемся с вами в ближайшее время' });
-    setBgName(''); setBgPhone(''); setBgComment('');
-  };
 
   const area = (width * height) / 10000;
   const basePrice = product.pricePerSqm * area;
@@ -487,55 +474,63 @@ const Artwork = () => {
       {/* ── Фоновые покрытия в тон муралу ── */}
       <section className="py-16 md:py-20 border-t border-foreground/6 bg-card/30">
         <div className="container-wide">
+          <div className="max-w-2xl mb-12 md:mb-14">
+            <p className="text-caption mb-3">Дополните пространство</p>
+            <h2 className="font-display text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.02em]">
+              Фоновое покрытие в тон муралу
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
             {/* COL 1 — image */}
-            <div className="flex">
-              <div className="relative w-full overflow-hidden">
-                <img
-                  src={mainImage}
-                  alt={`Фоновое покрытие в тон ${product.name}`}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] hover:scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-foreground/5" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/75 font-light">
-                    в тон муралу
-                  </p>
-                </div>
+            <div className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[480px] overflow-hidden">
+              <img
+                src={mainImage}
+                alt={`Фоновое покрытие в тон ${product.name}`}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-foreground/5" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-white/80 font-light">
+                  в тон муралу
+                </p>
               </div>
             </div>
 
-            {/* COL 2 — description, advantages, calculator */}
+            {/* COL 2 — overview & advantages */}
             <div className="flex flex-col">
-              <p className="text-caption mb-3">Дополните пространство</p>
-              <h2 className="font-display text-[28px] md:text-[32px] leading-[1.15] mb-4">
-                Фоновое покрытие в тон муралу
-              </h2>
-              <p className="text-body mb-7">
+              <p className="text-body mb-8">
                 Изготовим однотонные фоновые обои для соседних стен — в любом цвете из палитры
-                «{product.name}» и на том же материале.
+                «{product.name}» и на том же материале, что и сам мурал.
               </p>
 
-              <div className="grid grid-cols-3 gap-3 pb-7 mb-7 border-b border-foreground/8">
+              <div className="space-y-5 pt-7 border-t border-foreground/8">
                 {[
-                  { icon: Palette, label: 'Любой цвет' },
-                  { icon: Layers, label: 'Тот же материал' },
-                  { icon: Ruler, label: 'Печать по стене' },
+                  { icon: Palette, title: 'Любой цвет из мурала', text: 'Подберём оттенок точно по образцу художественного полотна.' },
+                  { icon: Layers, title: 'Тот же материал', text: 'Единая фактура и качество печати по всей композиции.' },
+                  { icon: Ruler, title: 'Печать по размеру стены', text: 'Бесшовное полотно под точные параметры помещения.' },
                 ].map((f, i) => (
-                  <div key={i} className="space-y-1.5">
-                    <f.icon className="w-4 h-4 text-foreground/40" strokeWidth={1.4} />
-                    <p className="text-[10.5px] font-light text-foreground/55 leading-snug">{f.label}</p>
+                  <div key={i} className="flex gap-4">
+                    <f.icon className="w-4 h-4 text-foreground/45 mt-0.5 shrink-0" strokeWidth={1.4} />
+                    <div>
+                      <p className="text-[12px] uppercase tracking-[0.14em] font-light text-foreground/75 mb-1">{f.title}</p>
+                      <p className="text-[12.5px] font-light text-foreground/50 leading-[1.6]">{f.text}</p>
+                    </div>
                   </div>
                 ))}
               </div>
+            </div>
 
-              <div className="flex items-baseline justify-between mb-4">
+            {/* COL 3 — calculator */}
+            <div className="flex flex-col border-l-0 lg:border-l border-foreground/8 lg:pl-12">
+              <div className="flex items-baseline justify-between mb-7">
                 <p className="text-caption">Расчёт стоимости</p>
                 <p className="text-[12px] font-light text-foreground/50">
                   от {formatPrice(bgPricePerSqm)} ₽/м²
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-5 mb-5">
+
+              <div className="grid grid-cols-2 gap-5 mb-7">
                 <div>
                   <span className="text-[10px] text-foreground/35 uppercase tracking-[0.1em] block mb-1.5 font-light">Ширина, см</span>
                   <input
@@ -555,52 +550,25 @@ const Artwork = () => {
                   />
                 </div>
               </div>
-              <div className="space-y-1.5 mt-auto">
+
+              <div className="space-y-2 mt-auto">
                 <div className="flex justify-between text-[13px] font-light">
                   <span className="text-foreground/40">Площадь</span>
-                  <span className="text-foreground/60">{bgArea.toFixed(2)} м²</span>
+                  <span className="text-foreground/65">{bgArea.toFixed(2)} м²</span>
                 </div>
                 <div className="flex justify-between text-[13px] font-light">
                   <span className="text-foreground/40">Материал</span>
-                  <span className="text-foreground/60">{selectedMaterial.name}</span>
+                  <span className="text-foreground/65">{selectedMaterial.name}</span>
                 </div>
-                <div className="flex justify-between items-baseline pt-2 border-t border-foreground/8 mt-2">
+                <div className="flex justify-between items-baseline pt-3 mt-2 border-t border-foreground/8">
                   <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
-                  <span className="font-display text-2xl">{formatPrice(bgTotal)} ₽</span>
+                  <span className="font-display text-[26px] leading-none">{formatPrice(bgTotal)} ₽</span>
                 </div>
+                <p className="text-[10.5px] text-foreground/35 font-light leading-relaxed pt-3">
+                  Точную стоимость с учётом подготовки стены подтверждает менеджер при оформлении мурала.
+                </p>
               </div>
             </div>
-
-            {/* COL 3 — inquiry form */}
-            <form onSubmit={handleBgInquiry} className="flex flex-col h-full">
-              <p className="text-caption mb-5">Запросить расчёт</p>
-              <input
-                type="text"
-                value={bgName}
-                onChange={(e) => setBgName(e.target.value.slice(0, 100))}
-                placeholder="Имя"
-                className="input-field mb-4"
-              />
-              <input
-                type="tel"
-                value={bgPhone}
-                onChange={(e) => setBgPhone(e.target.value.slice(0, 30))}
-                placeholder="Телефон"
-                className="input-field mb-4"
-              />
-              <textarea
-                value={bgComment}
-                onChange={(e) => setBgComment(e.target.value.slice(0, 500))}
-                placeholder="Желаемый оттенок, помещение, сроки"
-                className="input-field resize-none flex-1 min-h-[120px] mb-5"
-              />
-              <button type="submit" className="btn-primary w-full">
-                Отправить запрос
-              </button>
-              <p className="text-[10.5px] text-foreground/30 text-center font-light leading-relaxed mt-3">
-                Подберём оттенок по образцу и пришлём визуализацию
-              </p>
-            </form>
           </div>
         </div>
       </section>
