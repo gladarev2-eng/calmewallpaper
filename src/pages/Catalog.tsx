@@ -23,6 +23,8 @@ const Catalog = () => {
 
   const filteredProducts = useMemo(() => {
     let result = products.filter(product => {
+      // Каталог содержит только муралы. Панно и фоновые обои исключены.
+      if (product.type !== 'mural') return false;
       if (selectedTypes.length > 0 && !selectedTypes.includes(product.type)) return false;
       if (selectedCollections.length > 0 && !selectedCollections.includes(product.collectionId)) return false;
       if (selectedColors.length > 0 && !product.colors.some(c => selectedColors.includes(c))) return false;
@@ -70,7 +72,7 @@ const Catalog = () => {
   };
 
   const currentType = selectedTypes[0] || 'all';
-  const typeLabels: Record<string, string> = { all: 'Все', mural: 'Муралы', panel: 'Панно', companion: 'Фоновые обои' };
+  const typeLabels: Record<string, string> = { all: 'Все', mural: 'Муралы' };
 
   return (
     <div className="min-h-screen bg-background" style={{ overflow: 'visible' }}>
@@ -109,7 +111,7 @@ const Catalog = () => {
       <div className="lg:hidden">
         <div className="container-wide pt-28 pb-6">
           <div className="flex items-center gap-5">
-            {['all', 'mural', 'panel', 'companion'].map(type => (
+            {['all', 'mural'].map(type => (
               <button
                 key={type}
                 onClick={() => { setSelectedTypes(type === 'all' ? [] : [type]); setSelectedSizes([]); setSelectedWidths([]); setVisibleCount(ITEMS_PER_PAGE); }}
