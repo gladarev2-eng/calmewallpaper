@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2, Palette, Layers, Ruler } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getProductById, materials, products, patternTypes, roomTypes, Material, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
@@ -78,7 +78,25 @@ const Artwork = () => {
     .filter(p => p.collectionId === product.collectionId && p.id !== product.id && p.colorVariantGroup !== product.colorVariantGroup)
     .slice(0, 3);
 
-  const companionWallpapers = products.filter(p => p.type === 'companion' && p.collectionId === product.collectionId);
+  // Расчёт фонового покрытия в тон муралу
+  const bgPricePerSqm = Math.round(product.pricePerSqm * 0.55);
+  const [bgWidth, setBgWidth] = useState(300);
+  const [bgHeight, setBgHeight] = useState(260);
+  const [bgName, setBgName] = useState('');
+  const [bgPhone, setBgPhone] = useState('');
+  const [bgComment, setBgComment] = useState('');
+  const bgArea = (bgWidth * bgHeight) / 10000;
+  const bgTotal = Math.round(bgPricePerSqm * bgArea * selectedMaterial.priceCoefficient);
+
+  const handleBgInquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bgName.trim() || !bgPhone.trim()) {
+      toast.error('Укажите имя и телефон для связи');
+      return;
+    }
+    toast.success('Заявка отправлена', { description: 'Свяжемся с вами в ближайшее время' });
+    setBgName(''); setBgPhone(''); setBgComment('');
+  };
 
   const area = (width * height) / 10000;
   const basePrice = product.pricePerSqm * area;
@@ -466,35 +484,142 @@ const Artwork = () => {
         </section>
       )}
 
-      {/* ── Companion Wallpapers ── */}
-      {companionWallpapers.length > 0 && (
-        <section className="py-20 md:py-28 border-t border-foreground/6">
-          <div className="container-wide">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-              <div className="lg:col-span-4">
-                <p className="text-caption mb-3">Обои-компаньоны</p>
-                <h2 className="text-title mb-4">Фоновые покрытия</h2>
-                <p className="text-body mb-6">Подобрали обои в тон для соседних стен.</p>
-                <Link to="/catalog?type=companion" className="link-arrow">
-                  Все фоновые обои <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
-              <div className="lg:col-span-8 relative overflow-hidden">
-                <div className="flex gap-5 overflow-x-auto scrollbar-hide pb-2" style={{ scrollSnapType: 'x mandatory' }}>
-                  {companionWallpapers.slice(0, 5).map((wallpaper) => (
-                    <Link key={wallpaper.id} to={`/artwork/${wallpaper.slug}`} className="group flex-shrink-0" style={{ width: '240px', scrollSnapAlign: 'start' }}>
-                      <div className="aspect-[4/5] overflow-hidden bg-muted mb-3">
-                        <img src={getImageSrc(wallpaper.images[0])} alt={wallpaper.name} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-[1.03]" />
-                      </div>
-                      <p className="text-[13px] font-light text-foreground/60">{wallpaper.name}</p>
-                    </Link>
-                  ))}
+      {/* ── Фоновые покрытия в тон муралу ── */}
+      <section className="py-20 md:py-28 border-t border-foreground/6 bg-card/30">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-stretch">
+            {/* LEFT — interior image */}
+            <div className="lg:col-span-6 xl:col-span-7">
+              <div className="relative aspect-[4/5] lg:aspect-auto lg:h-full overflow-hidden">
+                <img
+                  src={mainImage}
+                  alt={`Фоновое покрытие в тон ${product.name}`}
+                  className="w-full h-full object-cover transition-transform duration-[2s] hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-foreground/5" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-light">
+                    Фоновое покрытие · в тон муралу
+                  </p>
                 </div>
               </div>
             </div>
+
+            {/* RIGHT — copy + calculator + inquiry form */}
+            <div className="lg:col-span-6 xl:col-span-5">
+              <div className="space-y-7">
+                <div>
+                  <p className="text-caption mb-3">Дополните пространство</p>
+                  <h2 className="text-title mb-5">Фоновое покрытие в тон муралу</h2>
+                  <p className="text-body-lg">
+                    Изготовим однотонные фоновые обои для соседних стен — в любом цвете из палитры мурала
+                    «{product.name}» и на том же материале. Идеальное продолжение композиции,
+                    выверенное по тону и фактуре.
+                  </p>
+                </div>
+
+                {/* Преимущества */}
+                <div className="grid grid-cols-3 gap-4 pt-2">
+                  {[
+                    { icon: Palette, label: 'Любой цвет из мурала' },
+                    { icon: Layers, label: 'Тот же материал' },
+                    { icon: Ruler, label: 'Печать по размеру стены' },
+                  ].map((f, i) => (
+                    <div key={i} className="space-y-2">
+                      <f.icon className="w-4 h-4 text-foreground/40" strokeWidth={1.4} />
+                      <p className="text-[11px] font-light text-foreground/55 leading-snug">{f.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="border-t border-foreground/8" />
+
+                {/* Калькулятор */}
+                <div className="space-y-5">
+                  <div className="flex items-baseline justify-between">
+                    <p className="text-caption">Расчёт стоимости</p>
+                    <p className="text-[12px] font-light text-foreground/50">
+                      от {formatPrice(bgPricePerSqm)} ₽/м²
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <span className="text-[10px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Ширина, см</span>
+                      <input
+                        type="number"
+                        value={bgWidth}
+                        onChange={(e) => setBgWidth(Math.max(50, Math.min(800, Number(e.target.value))))}
+                        className="input-field"
+                      />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-foreground/35 uppercase tracking-[0.1em] block mb-2 font-light">Высота, см</span>
+                      <input
+                        type="number"
+                        value={bgHeight}
+                        onChange={(e) => setBgHeight(Math.max(50, Math.min(500, Number(e.target.value))))}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-[13px] font-light">
+                      <span className="text-foreground/40">Площадь</span>
+                      <span className="text-foreground/60">{bgArea.toFixed(2)} м²</span>
+                    </div>
+                    <div className="flex justify-between text-[13px] font-light">
+                      <span className="text-foreground/40">Материал</span>
+                      <span className="text-foreground/60">{selectedMaterial.name}</span>
+                    </div>
+                    <div className="flex justify-between items-baseline pt-1">
+                      <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
+                      <span className="font-display text-2xl">{formatPrice(bgTotal)} ₽</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-foreground/8" />
+
+                {/* Форма связи */}
+                <form onSubmit={handleBgInquiry} className="space-y-4">
+                  <p className="text-caption">Запросить расчёт</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      value={bgName}
+                      onChange={(e) => setBgName(e.target.value.slice(0, 100))}
+                      placeholder="Имя"
+                      className="input-field"
+                    />
+                    <input
+                      type="tel"
+                      value={bgPhone}
+                      onChange={(e) => setBgPhone(e.target.value.slice(0, 30))}
+                      placeholder="Телефон"
+                      className="input-field"
+                    />
+                  </div>
+                  <textarea
+                    value={bgComment}
+                    onChange={(e) => setBgComment(e.target.value.slice(0, 500))}
+                    placeholder="Комментарий — желаемый оттенок, помещение, сроки"
+                    rows={3}
+                    className="input-field resize-none"
+                  />
+                  <button type="submit" className="btn-primary w-full">
+                    Отправить запрос
+                  </button>
+                  <p className="text-[11px] text-foreground/30 text-center font-light leading-relaxed">
+                    Подберём оттенок по образцу мурала и пришлём визуализацию
+                  </p>
+                </form>
+              </div>
+            </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* ── How it works ── */}
       <section className="py-20 md:py-28 border-t border-foreground/6">
