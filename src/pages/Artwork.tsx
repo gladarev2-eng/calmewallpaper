@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { ChevronDown, X, ChevronLeft, ChevronRight, Check, ArrowRight, ZoomIn, Heart, MessageCircle, CheckCircle2, Palette, Layers, Ruler } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getProductById, materials, products, patternTypes, roomTypes, Material, collections, getColorVariants } from '@/data/products';
 import { ProductCard } from '@/components/catalog/ProductCard';
@@ -78,7 +78,25 @@ const Artwork = () => {
     .filter(p => p.collectionId === product.collectionId && p.id !== product.id && p.colorVariantGroup !== product.colorVariantGroup)
     .slice(0, 3);
 
-  const companionWallpapers = products.filter(p => p.type === 'companion' && p.collectionId === product.collectionId);
+  // Расчёт фонового покрытия в тон муралу
+  const bgPricePerSqm = Math.round(product.pricePerSqm * 0.55);
+  const [bgWidth, setBgWidth] = useState(300);
+  const [bgHeight, setBgHeight] = useState(260);
+  const [bgName, setBgName] = useState('');
+  const [bgPhone, setBgPhone] = useState('');
+  const [bgComment, setBgComment] = useState('');
+  const bgArea = (bgWidth * bgHeight) / 10000;
+  const bgTotal = Math.round(bgPricePerSqm * bgArea * selectedMaterial.priceCoefficient);
+
+  const handleBgInquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bgName.trim() || !bgPhone.trim()) {
+      toast.error('Укажите имя и телефон для связи');
+      return;
+    }
+    toast.success('Заявка отправлена', { description: 'Свяжемся с вами в ближайшее время' });
+    setBgName(''); setBgPhone(''); setBgComment('');
+  };
 
   const area = (width * height) / 10000;
   const basePrice = product.pricePerSqm * area;
