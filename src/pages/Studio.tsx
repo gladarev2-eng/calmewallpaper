@@ -263,26 +263,23 @@ const Studio = () => {
               transition={{ duration: 0.8 }}
               className="order-2 lg:order-1"
             >
-              <p className="text-caption mb-5">Шоурум</p>
-              <h2 className="text-title mb-8">Лучше один раз увидеть вживую</h2>
-              <p className="text-body-lg mb-6">
+              <p className="text-caption mb-4">Шоурум</p>
+              <h2 className="text-title mb-6">Лучше один раз увидеть вживую</h2>
+              <p className="text-body-lg mb-8">
                 Экран не передаёт главного — глубины цвета, фактуры материала и того, как мурал начинает работать в реальном масштабе. В шоуруме Окоём вы увидите изображения на стене так, как они будут жить в вашем интерьере.
               </p>
-              <p className="text-body-lg mb-10">
-                Мы покажем образцы шести материалов на просвет и в касание, развернём фрагменты муралов в полный размер, подберём палитру под ваши ткани, дерево и свет. Встречу проводит куратор студии — без спешки и без давления.
-              </p>
 
-              <div className="space-y-5 mb-12">
+              <div className="space-y-3 mb-8">
                 {[
                   { icon: MapPin, title: 'Москва, флагманский шоурум', text: 'ул. Большая Никитская, 24/1, стр. 5 · м. Арбатская' },
                   { icon: Clock, title: 'Часы работы', text: 'Пн–Сб: 10:00–20:00 · Воскресенье — по записи' },
                   { icon: Phone, title: 'Запись на визит', text: '+7 (495) 123-45-67 · приоритет для записанных гостей' },
                 ].map(({ icon: Icon, title, text }) => (
-                  <div key={title} className="flex items-start gap-4 pb-5 border-b border-foreground/8">
-                    <Icon className="w-4 h-4 mt-1 text-foreground/40 shrink-0" strokeWidth={1.25} />
+                  <div key={title} className="flex items-start gap-4 pb-3 border-b border-foreground/8">
+                    <Icon className="w-4 h-4 mt-0.5 text-foreground/40 shrink-0" strokeWidth={1.25} />
                     <div>
-                      <p className="text-[12px] uppercase tracking-[0.12em] text-foreground/40 font-light mb-1.5">{title}</p>
-                      <p className="text-[15px] font-light text-foreground/80 leading-relaxed">{text}</p>
+                      <p className="text-[11px] uppercase tracking-[0.12em] text-foreground/40 font-light mb-1">{title}</p>
+                      <p className="text-[14px] font-light text-foreground/80 leading-snug">{text}</p>
                     </div>
                   </div>
                 ))}
@@ -291,11 +288,11 @@ const Studio = () => {
               <div className="flex flex-wrap gap-4">
                 <Link to="/contacts" className="btn-primary">Записаться на визит</Link>
                 <Link to="/contacts" className="btn-outline inline-flex items-center gap-2">
-                  Шоурум в вашем городе <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.25} />
+                  Контакты <ArrowRight className="w-3.5 h-3.5" strokeWidth={1.25} />
                 </Link>
               </div>
 
-              <p className="text-[12px] font-light text-foreground/40 mt-8 leading-relaxed">
+              <p className="text-[12px] font-light text-foreground/40 mt-6 leading-relaxed">
                 Представительства в Санкт-Петербурге и Казани. В других городах организуем выезд с образцами или присылаем материальный сет курьером.
               </p>
             </motion.div>
