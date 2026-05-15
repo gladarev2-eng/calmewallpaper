@@ -483,7 +483,7 @@ const Artwork = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
             {/* COL 1 — image */}
-            <div className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[480px] overflow-hidden">
+            <div className="relative aspect-[4/5] overflow-hidden">
               <img
                 src={mainImage}
                 alt={`Фоновое покрытие в тон ${product.name}`}
@@ -564,8 +564,15 @@ const Artwork = () => {
                   <span className="text-foreground/40 text-[12px] font-light">Ориентировочно</span>
                   <span className="font-display text-[26px] leading-none">{formatPrice(bgTotal)} ₽</span>
                 </div>
-                <p className="text-[10.5px] text-foreground/35 font-light leading-relaxed pt-3">
-                  Точную стоимость с учётом подготовки стены подтверждает менеджер при оформлении мурала.
+                <button
+                  type="button"
+                  onClick={() => toast.success('Заявка отправлена', { description: 'Менеджер свяжется с вами для уточнения оттенка и сроков' })}
+                  className="btn-primary w-full mt-6"
+                >
+                  Отправить запрос
+                </button>
+                <p className="text-[10.5px] text-foreground/35 font-light leading-relaxed text-center pt-3">
+                  Подберём оттенок по образцу и пришлём визуализацию
                 </p>
               </div>
             </div>
