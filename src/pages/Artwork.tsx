@@ -9,6 +9,7 @@ import { useCart } from '@/context/CartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { toast } from 'sonner';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import BackgroundWallpaper from './BackgroundWallpaper';
 import CanvasPanel from './CanvasPanel';
 import heroMural from '@/assets/hero-mural.jpg';
@@ -320,8 +321,35 @@ const Artwork = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Material chips */}
-                <div className="flex flex-wrap gap-2 mb-10">
+                {/* Material selector — dropdown on mobile, chips on desktop */}
+                <div className="md:hidden mb-8">
+                  <span className="text-[10px] text-foreground/40 uppercase tracking-[0.12em] block mb-3 font-light">Материал</span>
+                  <Select
+                    value={selectedInfoMaterial.id}
+                    onValueChange={(val) => {
+                      const m = materials.find((mm) => mm.id === val);
+                      if (m) setSelectedInfoMaterial(m);
+                    }}
+                  >
+                    <SelectTrigger className="w-full h-12 rounded-none border-foreground/20 bg-transparent text-[13px] font-light text-foreground">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-none">
+                      {materials.filter(m => m.id !== 'canvas').map(mat => (
+                        <SelectItem key={mat.id} value={mat.id} className="text-[13px] font-light">
+                          <span className="flex items-center gap-2">
+                            {mat.name}
+                            {mat.priceCoefficient > 1 && (
+                              <span className="text-foreground/40">+{Math.round((mat.priceCoefficient - 1) * 100)}%</span>
+                            )}
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="hidden md:flex flex-wrap gap-2 mb-10">
                   {materials.filter(m => m.id !== 'canvas').map(mat => (
                     <button
                       key={mat.id}
@@ -344,7 +372,7 @@ const Artwork = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
                   {/* Material specs */}
-                  <div>
+                  <div className="order-2 lg:order-1">
                     <p className="text-body-lg mb-8">{selectedInfoMaterial.description}</p>
 
                     <div className="space-y-4 mb-8">
@@ -376,7 +404,7 @@ const Artwork = () => {
                   </div>
 
                   {/* Material texture preview */}
-                  <div className="overflow-hidden">
+                  <div className="overflow-hidden order-1 lg:order-2">
                     <div className="aspect-[4/3] overflow-hidden relative">
                       <img
                         src={mainImage}
